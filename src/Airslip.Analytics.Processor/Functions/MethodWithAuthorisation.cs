@@ -1,5 +1,3 @@
-using System.Net;
-using System.Threading.Tasks;
 using Airslip.Common.Auth.Data;
 using Airslip.Common.Auth.Functions.Attributes;
 using Microsoft.Azure.Functions.Worker;
@@ -7,8 +5,10 @@ using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.OpenApi.Models;
+using System.Net;
+using System.Threading.Tasks;
 
-namespace Airslip.Bootstrap.Function.Functions
+namespace Airslip.Analytics.Processor.Functions
 {
     public static class MethodWithAuthorisation
     {

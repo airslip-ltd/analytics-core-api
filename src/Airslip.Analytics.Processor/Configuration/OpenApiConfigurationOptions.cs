@@ -1,9 +1,9 @@
-using System;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Configurations;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.OpenApi.Models;
+using System;
 
-namespace Airslip.Bootstrap.Function.Configuration
+namespace Airslip.Analytics.Processor.Configuration
 {
     public class OpenApiConfigurationOptions : DefaultOpenApiConfigurationOptions
     {
