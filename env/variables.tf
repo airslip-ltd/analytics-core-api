@@ -12,3 +12,7 @@ variable "environment" {
 
 variable "admin_group_id" {}
 variable "deployment_agent_group_id" {}
+variable "max_size_gb" {}
+variable "sku_name" {}
+variable "administrator_login_password" {}
+variable "administrator_login" {}
