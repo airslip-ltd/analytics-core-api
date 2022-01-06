@@ -39,8 +39,8 @@ module "func_app_host" {
   source = "./tf_modules/Airslip.Terraform.Modules/recipes/function_app_multiple_apps"
 
   app_configuration = {
-    app_id = "${local.app_id}-proc",
-    short_app_id = "${local.short_app_id}-proc",
+    app_id = local.app_id,
+    short_app_id = local.short_app_id,
     short_environment = local.short_environment,
     location = local.location,
     tags = local.tags,

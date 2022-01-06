@@ -12,6 +12,8 @@ jobs:
     env:
       DOTNET_CORE_VERSION: 6.0.x
       TERRAFORM_MODULE_VERSION: 6.0.0
+      SOLUTION_PATH: ./src/Airslip.Analytics.Core.sln
+      FUNCTION_APP_PATH: ./src/Airslip.Analytics.Processor
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core SDK
@@ -27,10 +29,10 @@ jobs:
       run: nuget install Airslip.Terraform.Modules -Version ${{ env.TERRAFORM_MODULE_VERSION }} -OutputDirectory ./env/tf_modules -x
 
     - name: Build
-      run: dotnet build ./src/Airslip.Analytics.Core.sln
+      run: dotnet build ${{ env.SOLUTION_PATH }}
 
     - name: Publish the Processor Function App
-      run: dotnet publish ./src/Airslip.Analytics.Processor -c Release -o ProcessorApp
+      run: dotnet publish ${{ env.FUNCTION_APP_PATH }} -c Release -o ProcessorApp
 
     - name: Upload Processor Artifact
       uses: actions/upload-artifact@v2.2.2
