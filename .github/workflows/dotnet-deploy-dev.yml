@@ -30,7 +30,7 @@ jobs:
       run: dotnet build ./src/Airslip.Analytics.Core.sln
 
     - name: Publish the Processor Function App
-      run: dotnet publish ./src/Airslip.Analytics.Core.Processor -c Release -o ProcessorApp
+      run: dotnet publish ./src/Airslip.Analytics.Processor -c Release -o ProcessorApp
 
     - name: Upload Processor Artifact
       uses: actions/upload-artifact@v2.2.2
@@ -93,7 +93,7 @@ jobs:
       ENVIRONMENT_NAME: Development
       ENVIRONMENT_NAME_SHORT: dev
       PUBLISH_PATH: ./
-      APPSERVICE_NAME: customer-portal-api
+      APPSERVICE_NAME: analytics-core-api
     steps:
 
     - name: Download Processor Artifact
