@@ -360,7 +360,6 @@ override.tf.json
 *_override.tf.json
 *.lock.*
 *.secrets.tfvars
-secrets.tfvars
 env/tf_modules
 
 .DS_Store
