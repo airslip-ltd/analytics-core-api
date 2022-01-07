@@ -7,4 +7,8 @@
 	  <PackageReference Include="Airslip.Common.Repository.Types" Version="6.0.1" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Airslip.Common.Services.Handoff\Airslip.Common.Services.Handoff.csproj" />
+	</ItemGroup>
+
 </Project>

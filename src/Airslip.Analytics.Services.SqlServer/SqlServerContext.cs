@@ -12,16 +12,30 @@ public class SqlServerContext : AirslipSqlServerContextBase
     {
         
     }
-
-    public DbSet<MyEntity> MyEntities { get; set; }
+    
+    public DbSet<Account> Accounts { get; set; }
+    public DbSet<Bank> Banks { get; set; }
+    public DbSet<CountryCode> CountryCodes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
-            .Entity<MyEntity>()
-            .ToTable("MyEntities")
+            .Entity<Account>()
+            .ToTable("Accounts")
             .HasKey(b => b.Id)
-            .HasName("PK_MyEntities_Id");
+            .HasName("PK_Accounts_Id");
+        
+        modelBuilder
+            .Entity<Bank>()
+            .ToTable("Banks")
+            .HasKey(b => b.Id)
+            .HasName("PK_Banks_Id");
+        
+        modelBuilder
+            .Entity<CountryCode>()
+            .ToTable("CountryCodes")
+            .HasKey(b => b.Id)
+            .HasName("PK_CountryCodes_Id");
 
         modelBuilder
             .Entity<BasicAuditInformation>()

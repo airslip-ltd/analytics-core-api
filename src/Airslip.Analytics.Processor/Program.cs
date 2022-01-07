@@ -1,8 +1,10 @@
 using Airslip.Analytics.Core.Entities;
+using Airslip.Analytics.Core.Implementations;
+using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Core.Models;
+using Airslip.Analytics.Processor.Mappers;
 using Airslip.Analytics.Services.SqlServer;
 using Airslip.Common.Auth.Functions.Extensions;
-using Airslip.Common.Auth.Functions.Middleware;
 using Airslip.Common.Functions.Extensions;
 using Airslip.Common.Repository.Enums;
 using Airslip.Common.Repository.Extensions;
@@ -11,10 +13,11 @@ using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Services.AutoMapper;
 using Airslip.Common.Services.AutoMapper.Extensions;
 using Airslip.Common.Services.FluentValidation;
+using Airslip.Common.Services.Handoff;
+using Airslip.Common.Services.Handoff.Extensions;
 using Airslip.Common.Services.SqlServer;
-using Airslip.Common.Services.SqlServer.Implementations;
 using Airslip.Common.Types.Configuration;
-using Microsoft.Azure.Functions.Worker.Extensions.OpenApi.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -33,6 +36,7 @@ internal class Program
             IServiceProvider services = scope.ServiceProvider;
             SqlServerContext context = services.GetRequiredService<SqlServerContext>();
             context.Database.EnsureCreated();
+            context.Database.Migrate();
             // DbInitializer.Initialize(context);
         }
         
@@ -42,14 +46,8 @@ internal class Program
 
     private static IHost BuildWebHost(string[] args)
     {
-        var host = new HostBuilder()
-            .ConfigureFunctionsWorkerDefaults(worker =>
-            {
-                worker.UseNewtonsoftJson();
-                worker.UseMiddleware<ApiKeyAuthenticationMiddleware>();
-                worker.UseMiddleware<ApiKeyAuthorisationMiddleware>();
-            })
-            .ConfigureOpenApi()
+        IHost host = new HostBuilder()
+            .ConfigureFunctionsWorkerDefaults()
             .ConfigureHostConfiguration(builder =>
             {
                 builder.AddDefaultConfig(args);
@@ -69,19 +67,30 @@ internal class Program
                     .Configure<EnvironmentSettings>(context.Configuration.GetSection(nameof(EnvironmentSettings)))
                     .Configure<PublicApiSettings>(context.Configuration.GetSection(nameof(PublicApiSettings)))
                     .Configure<EventHubSettings>(context.Configuration.GetSection(nameof(EventHubSettings)));
-                    
+                
                 services
                     .AddAirslipFunctionAuth(context.Configuration)
                     .AddRepositories(RepositoryUserType.Service)
-                    .AddSingleton<IModelValidator<MyModel>, NullValidator<MyModel>>()
+                    .AddSingleton(typeof(IModelValidator<>), typeof(NullValidator<>))
                     .AddAutoMapper(cfg =>
                     {
-                        cfg.CreateMap<MyEntity, MyModel>().ReverseMap();
+                        cfg.AddRawYapilyData();
+                        cfg.CreateMap<AccountModel, Account>().ReverseMap();
+                        cfg.CreateMap<BankModel, Bank>().ReverseMap();
+                        cfg.CreateMap<BankCountryCodeModel, BankCountryCode>().ReverseMap();
                     }, MapperUsageType.Service);
 
                 services
                     .AddAirslipSqlServer<SqlServerContext>(context.Configuration)
+                    .AddScoped(typeof(IRegisterDataService<,,>), typeof(RegisterDataService<,,>))
                     .AddScoped(typeof(IEntitySearch<,>), typeof(EntitySearch<,>));
+
+                services.UseMessageHandoff(handoff =>
+                {
+                    handoff.Register<IRegisterDataService<Bank, BankModel, RawBankModel>>("yapily-banks");
+                    handoff.Register<IRegisterDataService<Account, AccountModel, RawAccountModel>>("yapily-accounts");
+                });
+
             })
             .Build();
         
