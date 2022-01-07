@@ -28,6 +28,7 @@ locals {
   administrator_login_password = var.administrator_login_password
   administrator_login = var.administrator_login
   max_size_gb = var.max_size_gb
+  ip_addresses = var.ip_addresses
 }
 
 module "ingredient_bowl" {
@@ -62,6 +63,8 @@ module "sql_server" {
     account_tier = "Standard",
     account_replication_type = "LRS"
   }
+
+  ip_addresses = local.ip_addresses
 
   db_configuration = {
     app_id = local.app_id,
