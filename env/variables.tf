@@ -16,6 +16,6 @@ variable "max_size_gb" {}
 variable "sku_name" {}
 variable "administrator_login_password" {}
 variable "administrator_login" {}
-variable "ip_addresses" {
+variable "additional_ip_addresses" {
   default = []
 }
