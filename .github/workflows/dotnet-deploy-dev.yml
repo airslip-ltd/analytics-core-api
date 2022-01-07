@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DOTNET_CORE_VERSION: 6.0.x
-      TERRAFORM_MODULE_VERSION: 6.0.0
+      TERRAFORM_MODULE_VERSION: 6.0.3
       SOLUTION_PATH: ./src/Airslip.Analytics.Core.sln
       FUNCTION_APP_PATH: ./src/Airslip.Analytics.Processor
     steps:
@@ -66,6 +66,13 @@ jobs:
       with:
         terraform_wrapper: false
 
+    - uses: cschleiden/replace-tokens@v1
+      with:
+        files: '[./env/secrets.tfvars"]'
+      env:
+        SQL_ADMIN_PASSWORD: ${{ secrets.SQL_ADMIN_PASSWORD }}
+        SQL_ADMIN_LOGIN: ${{ secrets.SQL_ADMIN_LOGIN }}
+
     - name: Terraform Update
       id: "terraform_update"
       env:
@@ -75,7 +82,7 @@ jobs:
         ARM_TENANT_ID: ${{ secrets.NON_PROD_ARM_TENANT_ID }}
       run: |
         terraform init -backend-config=variables/${{ env.ENVIRONMENT_NAME_SHORT }}/backend.tfvars
-        terraform plan -var-file=variables/${{ env.ENVIRONMENT_NAME_SHORT }}/variables.tfvars -out=terraform.tfplan
+        terraform plan -var-file=variables/${{ env.ENVIRONMENT_NAME_SHORT }}/variables.tfvars -var-file=variables/secrets.tfvars -out=terraform.tfplan
         terraform apply terraform.tfplan
         terraform output -json >> environment.json
       working-directory: ./env
