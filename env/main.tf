@@ -28,10 +28,10 @@ locals {
   administrator_login_password = var.administrator_login_password
   administrator_login = var.administrator_login
   max_size_gb = var.max_size_gb
-  ip_addresses = concat({
+  ip_addresses = concat([{
     start_ip_address = "0.0.0.0",
     end_ip_address = "0.0.0.0"
-  }, var.additional_ip_addresses)
+  }], var.additional_ip_addresses)
 }
 
 module "ingredient_bowl" {
