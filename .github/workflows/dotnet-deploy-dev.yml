@@ -68,7 +68,7 @@ jobs:
 
     - uses: cschleiden/replace-tokens@v1
       with:
-        files: '[./env/secrets.tfvars"]'
+        files: '["./env/secrets.tfvars"]'
       env:
         SQL_ADMIN_PASSWORD: ${{ secrets.SQL_ADMIN_PASSWORD }}
         SQL_ADMIN_LOGIN: ${{ secrets.SQL_ADMIN_LOGIN }}
