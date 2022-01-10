@@ -15,6 +15,7 @@ public class SqlServerContext : AirslipSqlServerContextBase
     
     public DbSet<Account> Accounts { get; set; }
     public DbSet<Bank> Banks { get; set; }
+    public DbSet<Transaction> Transactions { get; set; }
     public DbSet<CountryCode> CountryCodes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -30,6 +31,12 @@ public class SqlServerContext : AirslipSqlServerContextBase
             .ToTable("Banks")
             .HasKey(b => b.Id)
             .HasName("PK_Banks_Id");
+        
+        modelBuilder
+            .Entity<Transaction>()
+            .ToTable("Transactions")
+            .HasKey(b => b.Id)
+            .HasName("PK_Transactions_Id");
         
         modelBuilder
             .Entity<CountryCode>()

@@ -4,7 +4,7 @@ using Airslip.Common.Utilities.Extensions;
 using System;
 using System.Collections.Generic;
 
-namespace Airslip.Analytics.Core.Models
+namespace Airslip.Analytics.Core.Models.Raw
 {
     public record RawBankModel
     {
