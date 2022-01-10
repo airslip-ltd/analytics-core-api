@@ -1,5 +1,7 @@
 using Airslip.Analytics.Core.Models;
+using Airslip.Analytics.Core.Models.Raw;
 using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 
 namespace Airslip.Analytics.Processor.Mappers;

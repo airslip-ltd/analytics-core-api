@@ -2,6 +2,7 @@ using Airslip.Analytics.Core.Entities;
 using Airslip.Analytics.Core.Implementations;
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Core.Models;
+using Airslip.Analytics.Core.Models.Raw;
 using Airslip.Analytics.Processor.Mappers;
 using Airslip.Analytics.Services.SqlServer;
 using Airslip.Common.Auth.Functions.Extensions;
@@ -77,6 +78,7 @@ internal class Program
                         cfg.AddRawYapilyData();
                         cfg.CreateMap<AccountModel, Account>().ReverseMap();
                         cfg.CreateMap<BankModel, Bank>().ReverseMap();
+                        cfg.CreateMap<TransactionModel, Transaction>().ReverseMap();
                         cfg.CreateMap<BankCountryCodeModel, BankCountryCode>().ReverseMap();
                     }, MapperUsageType.Service);
 
@@ -89,6 +91,7 @@ internal class Program
                 {
                     handoff.Register<IRegisterDataService<Bank, BankModel, RawBankModel>>("yapily-banks");
                     handoff.Register<IRegisterDataService<Account, AccountModel, RawAccountModel>>("yapily-accounts");
+                    handoff.Register<IRegisterDataService<Account, AccountModel, RawAccountModel>>("yapily-transactions");
                 });
 
             })

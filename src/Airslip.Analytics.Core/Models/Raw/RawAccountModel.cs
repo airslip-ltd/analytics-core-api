@@ -5,7 +5,7 @@ using Airslip.Common.Utilities.Extensions;
 using JetBrains.Annotations;
 using System;
 
-namespace Airslip.Analytics.Core.Models
+namespace Airslip.Analytics.Core.Models.Raw
 {
     [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
     public record RawAccountModel
