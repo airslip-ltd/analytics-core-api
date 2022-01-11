@@ -14,7 +14,7 @@ namespace Airslip.Analytics.Core.Entities
     public class Transaction : IEntityWithOwnership, IFromDataSource
     {
         public string Id { get; set; } = string.Empty;
-        public BasicAuditInformation? AuditInformation { get; set; }
+        public virtual BasicAuditInformation? AuditInformation { get; set; }
         public EntityStatus EntityStatus { get; set; }
         public string? UserId { get; set; }
         public string? EntityId { get; set; }
@@ -26,7 +26,7 @@ namespace Airslip.Analytics.Core.Entities
         public string EmailAddress { get; set; } = string.Empty;
         public long? AuthorisedDate { get; set; }
         public long CapturedDate { get; set; }
-        public decimal Amount { get; set; }
+        public long Amount { get; set; }
         public string? CurrencyCode { get; set; }
         public string Description { get; set; } = string.Empty;
         public string? AddressLine { get; set; }
