@@ -181,7 +181,7 @@ jobs:
       uses: actions/download-artifact@v2.0.8
       with:
         name: Source
-        path: ${{ env.CONTEXT_PATH }}
+        path: ./src
 
     - name: Download Environment Settings Artifact
       uses: actions/download-artifact@v2.0.8
@@ -206,3 +206,7 @@ jobs:
       run: |
         dotnet ef database update --no-build --connection "${{ fromJson(steps.env_settings.outputs.envJson).database_connection_string.value }}"
       working-directory: ${{ env.CONTEXT_PATH }}
+
+    - uses: geekyeggo/delete-artifact@v1
+      with:
+        name: Source
