@@ -24,7 +24,7 @@ namespace Airslip.Analytics.Core.Models
         public string EmailAddress { get; set; } = string.Empty;
         public long? AuthorisedDate { get; set; }
         public long CapturedDate { get; set; }
-        public decimal Amount { get; set; }
+        public long Amount { get; set; }
         public string? CurrencyCode { get; set; }
         public string Description { get; set; } = string.Empty;
         public string? AddressLine { get; set; }

@@ -20,5 +20,9 @@ public static class MapperExtensions
                     })));
         mapperConfigurationExpression
             .CreateMap<RawAccountModel, AccountModel>();
+        mapperConfigurationExpression
+            .CreateMap<RawTransactionModel, TransactionModel>()
+            .ForPath(o => o.Amount,
+                exp => exp.MapFrom(model => (long) (model.Amount * 100) ));
     }
 }

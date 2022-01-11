@@ -1,3 +1,4 @@
+using Airslip.Analytics.Core.Constants;
 using Airslip.Analytics.Core.Entities;
 using Airslip.Analytics.Core.Implementations;
 using Airslip.Analytics.Core.Interfaces;
@@ -31,16 +32,7 @@ internal class Program
     public static void Main(string[] args)
     {
         IHost host = BuildWebHost(args);
-
-        using (IServiceScope scope = host.Services.CreateScope())
-        {
-            IServiceProvider services = scope.ServiceProvider;
-            SqlServerContext context = services.GetRequiredService<SqlServerContext>();
-            context.Database.EnsureCreated();
-            context.Database.Migrate();
-            // DbInitializer.Initialize(context);
-        }
-        
+   
         host.RunAsync()
             .Wait();
     }
@@ -89,9 +81,9 @@ internal class Program
 
                 services.UseMessageHandoff(handoff =>
                 {
-                    handoff.Register<IRegisterDataService<Bank, BankModel, RawBankModel>>("yapily-banks");
-                    handoff.Register<IRegisterDataService<Account, AccountModel, RawAccountModel>>("yapily-accounts");
-                    handoff.Register<IRegisterDataService<Account, AccountModel, RawAccountModel>>("yapily-transactions");
+                    handoff.Register<IRegisterDataService<Bank, BankModel, RawBankModel>>(Constants.EVENT_QUEUE_YAPILY_BANKS);
+                    handoff.Register<IRegisterDataService<Account, AccountModel, RawAccountModel>>(Constants.EVENT_QUEUE_YAPILY_ACCOUNTS);
+                    handoff.Register<IRegisterDataService<Transaction, TransactionModel, RawTransactionModel>>(Constants.EVENT_QUEUE_YAPILY_TRANSACTIONS);
                 });
 
             })
