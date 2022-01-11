@@ -103,8 +103,8 @@ jobs:
       ENVIRONMENT_NAME_SHORT: dev
       PUBLISH_PATH: ./
       APPSERVICE_NAME: analytics-core-api
-    steps:
 
+    steps:
     - name: Download Processor Artifact
       uses: actions/download-artifact@v2.0.8
       with:
@@ -127,11 +127,6 @@ jobs:
         LOGZ_IO_SERVICE_NAME: ${{ env.APPSERVICE_NAME }}
         LOGZ_IO_HOSTING_NAME: Azure
 
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
-      with:
-        terraform_wrapper: false
-
     - name: Extract Environment Settings
       id: "env_settings"
       run: |
@@ -140,11 +135,6 @@ jobs:
         content="${content//$'\n'/'%0A'}"
         content="${content//$'\r'/'%0D'}"
         echo "::set-output name=envJson::$content"
-
-    - name: Write Outputs
-      run: |
-        echo "${{ fromJson(steps.env_settings.outputs.envJson).resource_group_name.value }}"
-        echo "${{ fromJson(steps.env_settings.outputs.envJson).function_app_names.value[0] }}"
 
     - name: Get AppService publish profile
       id: publishprofile_processor
@@ -163,3 +153,47 @@ jobs:
         package: ./ProcessorApp
         publish-profile: ${{ steps.publishprofile_processor.outputs.profile }}
 
+  update-database:
+    needs: build-environment
+    runs-on: ubuntu-latest
+    environment: Development
+    env:
+      ENVIRONMENT_NAME: Development
+      ENVIRONMENT_NAME_SHORT: dev
+      PUBLISH_PATH: ./
+      CONTEXT_PATH: ./src/Airslip.Analytics.Services.SqlServer
+      APPSERVICE_NAME: analytics-core-api
+
+    steps:
+    - name: Dotnet tool install
+      run: dotnet tool install --global dotnet-ef
+
+    - name: Download Processor Artifact
+      uses: actions/download-artifact@v2.0.8
+      with:
+        name: ProcessorApp
+        path: ./ProcessorApp
+
+    - name: Download Environment Settings Artifact
+      uses: actions/download-artifact@v2.0.8
+      with:
+        name: Settings
+        path: ./
+
+    - name: Extract Environment Settings
+      id: "env_settings"
+      run: |
+        content=`cat ./environment.json`
+        content="${content//'%'/'%25'}"
+        content="${content//$'\n'/'%0A'}"
+        content="${content//$'\r'/'%0D'}"
+        echo "::set-output name=envJson::$content"
+
+    - name: Write Outputs
+      run: |
+        echo "${{ fromJson(steps.env_settings.outputs.envJson).database_connection_string.value }}"
+
+    - name: Migrate Database
+      run: |
+        dotnet ef database update --connection "${{ fromJson(steps.env_settings.outputs.envJson).database_connection_string.value }}"
+      working-directory: ${{ env.CONTEXT_PATH }}
