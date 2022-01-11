@@ -1,8 +1,7 @@
-namespace Airslip.Analytics.Core.Enums
+namespace Airslip.Analytics.Core.Enums;
+
+public enum DataSources
 {
-    public enum DataSources
-    {
-        Yapily,
-        Unknown
-    }
+    Yapily,
+    Unknown
 }

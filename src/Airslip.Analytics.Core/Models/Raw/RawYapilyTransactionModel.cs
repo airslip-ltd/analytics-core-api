@@ -8,7 +8,7 @@ using System;
 namespace Airslip.Analytics.Core.Models.Raw;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-public class RawTransactionModel
+public class RawYapilyTransactionModel
 {
     public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }

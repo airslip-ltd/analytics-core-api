@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Airslip.Analytics.Core.Models.Raw;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-public record RawBankModel
+public record RawYapilyBankModel
 {
     public string? Id { get; set; }
     public string TradingName { get; set; } = string.Empty;
