@@ -167,27 +167,31 @@ jobs:
     env:
       DOTNET_CORE_VERSION: 6.0.x
       CONTEXT_PATH: ./src/Airslip.Analytics.Services.SqlServer
+      SOLUTION_PATH: ./src/Airslip.Analytics.Core.sln
 
     steps:
-    - name: Setup .NET Core SDK
-      uses: actions/setup-dotnet@v1.7.2
-      with:
-        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
-
-    - name: Dotnet tool install
-      run: dotnet tool install --global dotnet-ef
-
-    - name: Download Source Artifact
-      uses: actions/download-artifact@v2.0.8
-      with:
-        name: Source
-        path: ./src
+    - uses: actions/checkout@v2
 
     - name: Download Environment Settings Artifact
       uses: actions/download-artifact@v2.0.8
       with:
         name: Settings
         path: ./
+    
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v1.7.2
+      with:
+        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+
+    - name: Add nuget feed
+      run: |
+        dotnet nuget add source --username ${{ secrets.PACKAGE_USER }} --password ${{ secrets.PACKAGE_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/airslip-ltd/index.json"
+
+    - name: Build
+      run: dotnet build ${{ env.SOLUTION_PATH }}
+
+    - name: Dotnet tool install
+      run: dotnet tool install --global dotnet-ef
 
     - name: Extract Environment Settings
       id: "env_settings"
@@ -204,9 +208,5 @@ jobs:
 
     - name: Migrate Database
       run: |
-        dotnet ef database update --no-build --connection "${{ fromJson(steps.env_settings.outputs.envJson).database_connection_string.value }}"
+        dotnet ef database update --connection "${{ fromJson(steps.env_settings.outputs.envJson).database_connection_string.value }}"
       working-directory: ${{ env.CONTEXT_PATH }}
-
-    - uses: geekyeggo/delete-artifact@v1
-      with:
-        name: Source
