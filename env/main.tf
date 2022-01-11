@@ -32,6 +32,12 @@ locals {
     start_ip_address = "0.0.0.0",
     end_ip_address = "0.0.0.0"
   }], var.additional_ip_addresses)
+  consumer_group = "data_analytics"
+}
+
+data "azurerm_eventhub_namespace" "yapily_event_hub" {
+  name = "airslip-${local.short_environment}-matching-yapily-events-namespace"
+  resource_group_name = "airslip-${local.short_environment}-matching-yapily-resources"
 }
 
 module "ingredient_bowl" {
@@ -131,7 +137,10 @@ module "func_app_host" {
     {
       function_app_name = "proc",
       app_settings = {
-          "ConnectionStrings:SqlServer": module.sql_server.connection_string
+        "ConnectionStrings:SqlServer": module.sql_server.connection_string,
+        "EnvironmentSettings:EnvironmentName": var.environment,
+        "YapilyEventHubConnectionString": data.azurerm_eventhub_namespace.yapily_event_hub.default_primary_connection_string,
+        "ConsumerGroup": local.consumer_group
       }
     }
   ]
