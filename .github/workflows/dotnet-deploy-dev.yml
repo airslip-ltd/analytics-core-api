@@ -195,5 +195,5 @@ jobs:
 
     - name: Migrate Database
       run: |
-        dotnet ef database update --connection "${{ fromJson(steps.env_settings.outputs.envJson).database_connection_string.value }}"
-      working-directory: ${{ env.CONTEXT_PATH }}
+        dotnet ef database update --no-build --connection "${{ fromJson(steps.env_settings.outputs.envJson).database_connection_string.value }}"
+      working-directory: ./ProcessorApp
