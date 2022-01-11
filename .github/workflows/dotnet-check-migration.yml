@@ -1,0 +1,47 @@
+name: Predict Migration Changes
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [ main ]
+
+jobs:
+  migration:
+    runs-on: ubuntu-latest
+    env:
+      DOTNET_CORE_VERSION: 6.0.x
+      BUILD_PATH: ./src/Airslip.Analytics.Core.sln
+      CONTEXT_PATH: ./src/Airslip.Analytics.Services.SqlServer
+      TARGET_MIGRATION: InitialCreate
+      PREVIOUS_MIGRATION: 0
+      
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v1.7.2
+      with:
+        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+
+    - name: Install dependencies
+      run: dotnet restore ${{ env.BUILD_PATH }}
+
+    - name: Build
+      run: dotnet build ${{ env.BUILD_PATH }} --no-restore
+
+    - name: Produce Migration Script
+      run: dotnet ef migrations script ${{ env.PREVIOUS_MIGRATION }} ${{ env.TARGET_MIGRATION }} --output ./migration.sql
+      working-directory: ${{ env.CONTEXT_PATH }}
+
+    - name: Upload migration script
+      uses: actions/github-script@v5
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '👋 Thanks for reporting!'
+          })
