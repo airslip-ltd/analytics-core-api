@@ -34,13 +34,6 @@ jobs:
     - name: Publish the Processor Function App
       run: dotnet publish ${{ env.FUNCTION_APP_PATH }} -c Release -o ProcessorApp
 
-    - name: Upload Source Artifact
-      uses: actions/upload-artifact@v2.2.2
-      with:
-        name: Source
-        path: ./src
-        if-no-files-found: error
-
     - name: Upload Processor Artifact
       uses: actions/upload-artifact@v2.2.2
       with:

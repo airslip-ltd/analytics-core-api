@@ -1,0 +1,29 @@
+﻿namespace Airslip.Analytics.Core.Enums;
+
+public enum AccountTypes
+{
+    CASH_TRADING,
+    CASH_INCOME,
+    CASH_PAYMENT,
+    CHARGE_CARD,
+    CHARGES,
+    COMMISSION,
+    CREDIT_CARD,
+    CURRENT,
+    E_MONEY,
+    LIMITED_LIQUIDITY_SAVINGS_ACCOUNT,
+    LOAN,
+    MARGINAL_LENDING,
+    MONEY_MARKET,
+    MORTGAGE,
+    NON_RESIDENT_EXTERNAL,
+    OTHER,
+    OVERDRAFT,
+    OVERNIGHT_DEPOSIT,
+    PREPAID_CARD,
+    SALARY,
+    SAVINGS,
+    SETTLEMENT,
+    TAX,
+    UNKNOWN
+}

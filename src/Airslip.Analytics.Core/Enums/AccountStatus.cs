@@ -1,8 +1,7 @@
-namespace Airslip.Analytics.Core.Enums
+namespace Airslip.Analytics.Core.Enums;
+
+public enum AccountStatus
 {
-    public enum AccountStatus
-    {
-        Active,
-        Expired
-    }
+    Active,
+    Expired
 }

@@ -8,7 +8,7 @@ public class SqlServerContextFactory : IDesignTimeDbContextFactory<SqlServerCont
     public SqlServerContext CreateDbContext(string[] args)
     {
         DbContextOptionsBuilder<SqlServerContext> optionsBuilder = new();
-        optionsBuilder.UseSqlServer("Server=tcp:gwdev-sqlserver.database.windows.net,1433;Initial Catalog=analytics;Persist Security Info=False;User ID=analytics_db_admin;Password=Secret1234.;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+        optionsBuilder.UseSqlServer("Server=(localdb);Integrated Security=true;");
 
         return new SqlServerContext(optionsBuilder.Options);
     }
