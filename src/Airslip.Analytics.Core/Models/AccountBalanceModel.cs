@@ -1,7 +1,8 @@
-using Airslip.Analytics.Core.Enums;
+﻿using Airslip.Analytics.Core.Enums;
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
+using Airslip.Common.Types.Enums;
 using Airslip.Common.Utilities.Extensions;
 using JetBrains.Annotations;
 using System;
@@ -10,20 +11,18 @@ using System.Collections.Generic;
 namespace Airslip.Analytics.Core.Models;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-public record BankModel : IModel, IFromDataSource
+public record AccountBalanceModel : IModelWithOwnership, IFromDataSource
 {
     public string? Id { get; set; }
-    public string TradingName { get; set; } = string.Empty;
-    public string AccountName { get; set; } = string.Empty;
-    public string EnvironmentType { get; set; } = string.Empty;
-    public List<BankCountryCodeModel> CountryCodes { get; set; } = new();
     public EntityStatus EntityStatus { get; set; }
+    public string? UserId { get; set; }
+    public string? EntityId { get; set; }
+    public AirslipUserType AirslipUserType { get; set; }
+    public string AccountId { get; set; } = string.Empty;
+    public BalanceStatus BalanceStatus { get; init; }
+    public long Balance { get; init; }
+    public string? Currency { get; init; }
+    public List<AccountBalanceDetailModel> Details { get; init; } = new();
     public DataSources DataSource { get; set; } = DataSources.Unknown;
     public long TimeStamp { get; set; } = DateTime.UtcNow.ToUnixTimeMilliseconds();
-}
-
-[UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-public class BankCountryCodeModel
-{
-    public string? Id { get; set; }
 }
