@@ -8,4 +8,5 @@ output "function_app_names" {
 
 output "database_connection_string" {
   value = module.sql_server.connection_string
+  sensitive = true
 }
