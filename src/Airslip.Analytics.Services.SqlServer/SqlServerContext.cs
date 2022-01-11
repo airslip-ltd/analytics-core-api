@@ -14,12 +14,31 @@ public class SqlServerContext : AirslipSqlServerContextBase
     }
     
     public DbSet<Account> Accounts { get; set; }
+    public DbSet<AccountBalance> AccountBalances { get; set; }
     public DbSet<Bank> Banks { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
     public DbSet<CountryCode> CountryCodes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder
+            .Entity<AccountBalance>()
+            .ToTable("AccountBalances")
+            .HasKey(b => b.Id)
+            .HasName("PK_AccountBalances_Id");
+        
+        modelBuilder
+            .Entity<AccountBalanceDetail>()
+            .ToTable("AccountBalanceDetails")
+            .HasKey(b => b.Id)
+            .HasName("PK_AccountBalanceDetails_Id");
+        
+        modelBuilder
+            .Entity<AccountBalanceCreditLine>()
+            .ToTable("AccountBalanceCreditLines")
+            .HasKey(b => b.Id)
+            .HasName("PK_AccountBalanceCreditLines_Id");
+        
         modelBuilder
             .Entity<Account>()
             .ToTable("Accounts")

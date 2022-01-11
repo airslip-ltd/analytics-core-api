@@ -68,6 +68,10 @@ internal class Program
                     .AddAutoMapper(cfg =>
                     {
                         cfg.AddRawYapilyData();
+                        
+                        cfg.CreateMap<AccountBalanceModel, AccountBalance>().ReverseMap();
+                        cfg.CreateMap<AccountBalanceDetailModel, AccountBalanceDetail>().ReverseMap();
+                        cfg.CreateMap<AccountBalanceCreditLineModel, AccountBalanceCreditLine>().ReverseMap();
                         cfg.CreateMap<AccountModel, Account>().ReverseMap();
                         cfg.CreateMap<BankModel, Bank>().ReverseMap();
                         cfg.CreateMap<TransactionModel, Transaction>().ReverseMap();
@@ -84,6 +88,7 @@ internal class Program
                     handoff.Register<IRegisterDataService<Bank, BankModel, RawBankModel>>(Constants.EVENT_QUEUE_YAPILY_BANKS);
                     handoff.Register<IRegisterDataService<Account, AccountModel, RawAccountModel>>(Constants.EVENT_QUEUE_YAPILY_ACCOUNTS);
                     handoff.Register<IRegisterDataService<Transaction, TransactionModel, RawTransactionModel>>(Constants.EVENT_QUEUE_YAPILY_TRANSACTIONS);
+                    handoff.Register<IRegisterDataService<AccountBalance, AccountBalanceModel, RawYapilyBalanceModel>>(Constants.EVENT_QUEUE_YAPILY_BALANCES);
                 });
 
             })

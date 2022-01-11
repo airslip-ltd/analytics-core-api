@@ -21,6 +21,7 @@
 	
 	<ItemGroup>
 	  <Folder Include="Database\InitialCreate" />
+	  <Folder Include="Migrations" />
 	</ItemGroup>
 	
 	<ItemGroup>
