@@ -48,6 +48,8 @@ jobs:
 
     - name: Upload migration script
       uses: actions/github-script@v5
+      env: 
+        SCRIPT_CONTENTS: ${{ steps.read_file.outputs.contents }}
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
         script: |
@@ -55,5 +57,5 @@ jobs:
             issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: steps.read_file.outputs.contents
+            body: process.env.SCRIPT_CONTENTS
           })
