@@ -1,0 +1,5 @@
+CREATE OR ALTER PROC dbo.SomeAnalytic 
+AS
+BEGIN
+SELECT 1 as Id
+END
