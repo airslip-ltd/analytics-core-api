@@ -14,7 +14,6 @@ jobs:
       TERRAFORM_MODULE_VERSION: 6.0.3
       SOLUTION_PATH: ./src/Airslip.Analytics.Core.sln
       FUNCTION_APP_PATH: ./src/Airslip.Analytics.Processor
-      CONTEXT_PATH: ./src/Airslip.Analytics.Services.SqlServer
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core SDK
@@ -35,11 +34,11 @@ jobs:
     - name: Publish the Processor Function App
       run: dotnet publish ${{ env.FUNCTION_APP_PATH }} -c Release -o ProcessorApp
 
-    - name: Upload DbContext Artifact
+    - name: Upload Source Artifact
       uses: actions/upload-artifact@v2.2.2
       with:
-        name: DbContext
-        path: ${{ env.CONTEXT_PATH }}
+        name: Source
+        path: ./src
         if-no-files-found: error
 
     - name: Upload Processor Artifact
@@ -167,7 +166,7 @@ jobs:
     environment: Development
     env:
       DOTNET_CORE_VERSION: 6.0.x
-      CONTEXT_PATH: ./src
+      CONTEXT_PATH: ./src/Airslip.Analytics.Services.SqlServer
 
     steps:
     - name: Setup .NET Core SDK
@@ -178,10 +177,10 @@ jobs:
     - name: Dotnet tool install
       run: dotnet tool install --global dotnet-ef
 
-    - name: Download DbContext Artifact
+    - name: Download Source Artifact
       uses: actions/download-artifact@v2.0.8
       with:
-        name: DbContext
+        name: Source
         path: ${{ env.CONTEXT_PATH }}
 
     - name: Download Environment Settings Artifact
