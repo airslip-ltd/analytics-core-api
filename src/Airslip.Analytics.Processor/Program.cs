@@ -67,14 +67,9 @@ internal class Program
                     .AddSingleton(typeof(IModelValidator<>), typeof(NullValidator<>))
                     .AddAutoMapper(cfg =>
                     {
-                        cfg.AddRawYapilyData();
-                        cfg.CreateMap<AccountBalanceModel, AccountBalance>().ReverseMap();
-                        cfg.CreateMap<AccountBalanceDetailModel, AccountBalanceDetail>().ReverseMap();
-                        cfg.CreateMap<AccountBalanceCreditLineModel, AccountBalanceCreditLine>().ReverseMap();
-                        cfg.CreateMap<AccountModel, Account>().ReverseMap();
-                        cfg.CreateMap<BankModel, Bank>().ReverseMap();
-                        cfg.CreateMap<TransactionModel, Transaction>().ReverseMap();
-                        cfg.CreateMap<BankCountryCodeModel, BankCountryCode>().ReverseMap();
+                        cfg
+                            .AddRawYapilyData()
+                            .AddEntityModelMappings();
                         
                     }, MapperUsageType.Service);
 
