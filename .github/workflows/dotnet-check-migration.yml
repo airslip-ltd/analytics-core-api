@@ -40,6 +40,12 @@ jobs:
       run: dotnet ef migrations script ${{ env.PREVIOUS_MIGRATION }} ${{ env.TARGET_MIGRATION }} --output ./migration.sql
       working-directory: ${{ env.CONTEXT_PATH }}
 
+    - name: Read file contents
+      id: read_file
+      uses: andstor/file-reader-action@v1
+      with:
+        path: "./migration.sql"
+
     - name: Upload migration script
       uses: actions/github-script@v5
       with:
@@ -49,5 +55,5 @@ jobs:
             issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: '👋 Thanks for reporting!'
+            body: '${ steps.read_file.outputs.contents }'
           })
