@@ -34,6 +34,13 @@ jobs:
     - name: Publish the Processor Function App
       run: dotnet publish ${{ env.FUNCTION_APP_PATH }} -c Release -o ProcessorApp
 
+    - name: Upload Source Artifact
+      uses: actions/upload-artifact@v2.2.2
+      with:
+        name: Source
+        path: ./src
+        if-no-files-found: error
+
     - name: Upload Processor Artifact
       uses: actions/upload-artifact@v2.2.2
       with:
@@ -168,11 +175,11 @@ jobs:
     - name: Dotnet tool install
       run: dotnet tool install --global dotnet-ef
 
-    - name: Download Processor Artifact
+    - name: Download Source Artifact
       uses: actions/download-artifact@v2.0.8
       with:
-        name: ProcessorApp
-        path: ./ProcessorApp
+        name: Source
+        path: ./src
 
     - name: Download Environment Settings Artifact
       uses: actions/download-artifact@v2.0.8
@@ -196,4 +203,4 @@ jobs:
     - name: Migrate Database
       run: |
         dotnet ef database update --no-build --connection "${{ fromJson(steps.env_settings.outputs.envJson).database_connection_string.value }}"
-      working-directory: ./ProcessorApp
+      working-directory: ${{ env.CONTEXT_PATH }}
