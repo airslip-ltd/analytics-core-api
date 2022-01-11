@@ -3,6 +3,7 @@ using Airslip.Analytics.Core.Models;
 using Airslip.Analytics.Core.Models.Raw;
 using Airslip.Common.Utilities;
 using AutoMapper;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 
@@ -29,14 +30,26 @@ public static class MapperExtensions
         
         // Ignore the incoming Id so we can create a new entry every time we receive an update
         mapperConfigurationExpression.CreateMap<RawYapilyBalanceModel, AccountBalanceModel>()
-            .ForPath(o => o.Id, _ => CommonFunctions.GetId());
+            .ForMember(o => o.Id, 
+            opt => opt.MapFrom<CustomResolver>());
         mapperConfigurationExpression.CreateMap<RawYapilyBalanceDetailModel, AccountBalanceDetailModel>();
         mapperConfigurationExpression.CreateMap<RawYapilyCreditLineModel, AccountBalanceCreditLineModel>();
 
-        // mapperConfigurationExpression.CreateMap<RawYapilySyncRequestModel, SyncRequestModel>()
-        //     .ForSourceMember(o => o.YapilyAccountId, 
-        //         exp => exp.DoNotValidate());
+        mapperConfigurationExpression.CreateMap<RawYapilySyncRequestModel, SyncRequestModel>()
+            .ForMember(o => o.AccountId, 
+                exp => exp
+                    .MapFrom(p => p.YapilyAccountId));
         return mapperConfigurationExpression;
+    }
+
+    [UsedImplicitly]
+    private class CustomResolver : IValueResolver<RawYapilyBalanceModel, AccountBalanceModel, string?>
+    {
+        public string Resolve(RawYapilyBalanceModel source, AccountBalanceModel destination, string? member, 
+            ResolutionContext context)
+        {
+            return CommonFunctions.GetId();
+        }
     }
 
     public static IMapperConfigurationExpression AddEntityModelMappings(this IMapperConfigurationExpression cfg)
@@ -48,8 +61,7 @@ public static class MapperExtensions
         cfg.CreateMap<BankModel, Bank>().ReverseMap();
         cfg.CreateMap<TransactionModel, Transaction>().ReverseMap();
         cfg.CreateMap<BankCountryCodeModel, BankCountryCode>().ReverseMap();
-        
-        // mapperConfigurationExpression.CreateMap<SyncRequestModel, SyncRequest>().ReverseMap();
+        cfg.CreateMap<SyncRequestModel, SyncRequest>().ReverseMap();
 
         return cfg;
     }

@@ -3,8 +3,12 @@ using Airslip.Analytics.Core.Interfaces;
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Utilities;
 using Airslip.Common.Utilities.Extensions;
+using Microsoft.Data.SqlClient;
+using Polly;
+using Polly.Retry;
 using Serilog;
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Airslip.Analytics.Core.Implementations
@@ -29,6 +33,12 @@ namespace Airslip.Analytics.Core.Implementations
 
         public async Task RegisterData(TRawModel rawModel, DataSources dataSource)
         {
+            int maxRetryAttempts = 3;
+            
+            AsyncRetryPolicy? retryPolicy = Policy
+                .Handle<SqlException>()
+                .RetryAsync(maxRetryAttempts);
+
             try
             {
                 TModel model = _modelMapper
@@ -38,10 +48,17 @@ namespace Airslip.Analytics.Core.Implementations
                 model.TimeStamp = DateTime.UtcNow.ToUnixTimeMilliseconds();
                 
                 string id = model.Id ?? string.Empty;
-                if (model is IModelWithOwnership ownedModel)
-                    await _repository.Upsert(id, model, ownedModel.UserId);
-                else
-                    await _repository.Upsert(id, model);
+                await retryPolicy.ExecuteAsync(async () =>
+                {
+                    if (model is IModelWithOwnership ownedModel)
+                        await _repository.Upsert(id, model, ownedModel.UserId);
+                    else
+                        await _repository.Upsert(id, model);
+                });
+            }
+            catch (SqlException se)
+            {
+                _logger.Fatal(se, "SqlException exception for the data source {DataSource} with data packet {Model}", dataSource, rawModel);
             }
             catch (Exception e)
             {
