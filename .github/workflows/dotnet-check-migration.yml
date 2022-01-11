@@ -37,14 +37,14 @@ jobs:
       run: dotnet build ${{ env.BUILD_PATH }} --no-restore
 
     - name: Produce Migration Script
-      run: dotnet ef migrations script ${{ env.PREVIOUS_MIGRATION }} ${{ env.TARGET_MIGRATION }} --output ./migration.sql
+      run: dotnet ef migrations script ${{ env.PREVIOUS_MIGRATION }} ${{ env.TARGET_MIGRATION }} --output migration.sql
       working-directory: ${{ env.CONTEXT_PATH }}
 
     - name: Read file contents
       id: read_file
       uses: andstor/file-reader-action@v1
       with:
-        path: "./migration.sql"
+        path: "${{ env.CONTEXT_PATH }}/migration.sql"
 
     - name: Upload migration script
       uses: actions/github-script@v5
