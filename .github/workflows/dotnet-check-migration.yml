@@ -24,6 +24,9 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
 
+    - name: Dotnet tool install
+      run: dotnet tool install --global dotnet-ef
+
     - name: Add nuget feed
       run: dotnet nuget add source --username ${{ secrets.PACKAGE_USER }} --password ${{ secrets.PACKAGE_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/airslip-ltd/index.json"
 
