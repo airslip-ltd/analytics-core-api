@@ -31,7 +31,9 @@ public static class MapperExtensions
         // Ignore the incoming Id so we can create a new entry every time we receive an update
         mapperConfigurationExpression.CreateMap<RawYapilyBalanceModel, AccountBalanceModel>()
             .ForMember(o => o.Id, 
-            opt => opt.MapFrom<CustomResolver>());
+            opt => opt.MapFrom<CustomResolver>())
+            .ForMember(o => o.AccountId,
+                opt => opt.MapFrom(p=> p.Id));
         mapperConfigurationExpression.CreateMap<RawYapilyBalanceDetailModel, AccountBalanceDetailModel>();
         mapperConfigurationExpression.CreateMap<RawYapilyCreditLineModel, AccountBalanceCreditLineModel>();
 
