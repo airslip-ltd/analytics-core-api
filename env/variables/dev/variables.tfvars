@@ -11,3 +11,6 @@ additional_ip_addresses = [
         end_ip_address = "88.202.245.245"
     }
 ]
+apim_hostname = "https://dev-app.airslip.com"
+portal_url = "https://dev-secure.airslip.com"
+additional_hosts = ["https://airslip-portal.ngrok.io"]

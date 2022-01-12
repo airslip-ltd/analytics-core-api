@@ -33,6 +33,11 @@ locals {
     end_ip_address = "0.0.0.0"
   }], var.additional_ip_addresses)
   consumer_group = "data_analytics"
+  apim_hostname = var.apim_hostname
+  app_tier = var.web_tier
+  app_size = var.web_size
+  portal_url = var.portal_url
+  additional_hosts = var.additional_hosts
 }
 
 data "azurerm_eventhub_namespace" "yapily_event_hub" {
@@ -102,6 +107,34 @@ module "sql_server" {
       max_size_gb = local.max_size_gb
     }
   ]
+}
+
+module "api_management" {
+  source = "./tf_modules/Airslip.Terraform.Modules/recipes/api_only"
+
+  app_configuration = {
+    app_id = local.app_id,
+    short_environment = local.short_environment,
+    location = local.location,
+    tags = local.tags,
+    app_tier = local.app_tier,
+    app_size = local.app_size,
+    health_check_path = "",
+    apim_hostname = local.apim_hostname
+  }
+
+  resource_group = {
+    use_existing = true,
+    resource_group_name = module.ingredient_bowl.name,
+    resource_group_location = module.ingredient_bowl.location
+  }
+
+  allowed_hosts = concat([ local.portal_url ], local.additional_hosts)
+
+  app_settings = {
+    "ConnectionStrings:SqlServer": module.sql_server.connection_string,
+    "EnvironmentSettings:EnvironmentName": var.environment
+  }
 }
 
 module "func_app_host" {
