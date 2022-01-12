@@ -6,6 +6,7 @@ using Airslip.Analytics.Core.Models;
 using Airslip.Analytics.Core.Models.Raw;
 using Airslip.Analytics.Processor.Mappers;
 using Airslip.Analytics.Services.SqlServer;
+using Airslip.Analytics.Services.SqlServer.Implementations;
 using Airslip.Common.Auth.Functions.Extensions;
 using Airslip.Common.Functions.Extensions;
 using Airslip.Common.Repository.Enums;
@@ -86,6 +87,9 @@ internal class Program
                     handoff.Register<IRegisterDataService<AccountBalance, AccountBalanceModel, RawYapilyBalanceModel>>(Constants.EVENT_QUEUE_YAPILY_BALANCES);
                     handoff.Register<IRegisterDataService<SyncRequest, SyncRequestModel, RawYapilySyncRequestModel>>(Constants.EVENT_QUEUE_YAPILY_SYNC_REQUESTS);
                 });
+                
+                services
+                    .AddScoped<IAnalyticsProcess<AccountBalanceModel>, GenerateAccountBalanceSnapshot>();
 
             })
             .Build();

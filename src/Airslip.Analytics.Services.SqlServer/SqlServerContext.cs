@@ -15,6 +15,7 @@ public class SqlServerContext : AirslipSqlServerContextBase
     
     public DbSet<Account> Accounts { get; set; }
     public DbSet<AccountBalance> AccountBalances { get; set; }
+    public DbSet<AccountBalanceSnapshot> AccountBalanceSnapshots { get; set; }
     public DbSet<Bank> Banks { get; set; }
     public DbSet<SyncRequest> SyncRequests { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
@@ -22,6 +23,12 @@ public class SqlServerContext : AirslipSqlServerContextBase
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder
+            .Entity<AccountBalanceSnapshot>()
+            .ToTable("AccountBalanceSnapshots")
+            .HasKey(b => b.Id)
+            .HasName("PK_AccountBalanceSnapshots_Id");
+        
         modelBuilder
             .Entity<AccountBalance>()
             .ToTable("AccountBalances")
