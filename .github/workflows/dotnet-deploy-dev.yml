@@ -14,6 +14,7 @@ jobs:
       TERRAFORM_MODULE_VERSION: 6.0.3
       SOLUTION_PATH: ./src/Airslip.Analytics.Core.sln
       FUNCTION_APP_PATH: ./src/Airslip.Analytics.Processor
+      WEB_APP_PATH: ./src/Airslip.Analytics.Api
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core SDK
@@ -34,11 +35,21 @@ jobs:
     - name: Publish the Processor Function App
       run: dotnet publish ${{ env.FUNCTION_APP_PATH }} -c Release -o ProcessorApp
 
+    - name: Publish the App
+      run: dotnet publish ${{ env.WEB_APP_PATH }} -c Release -o WebApp
+
     - name: Upload Processor Artifact
       uses: actions/upload-artifact@v2.2.2
       with:
         name: ProcessorApp
         path: ./ProcessorApp/**
+        if-no-files-found: error
+
+    - name: Upload Web Artifact
+      uses: actions/upload-artifact@v2.2.2
+      with:
+        name: WebApp
+        path: ./WebApp/**
         if-no-files-found: error
 
     - name: Upload Environment Artifact
