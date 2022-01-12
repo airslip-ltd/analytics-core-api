@@ -19,3 +19,17 @@ variable "administrator_login" {}
 variable "additional_ip_addresses" {
   default = []
 }
+
+variable "apim_hostname" {}
+variable "web_tier" {
+  description = "The tier used for the app service plan"
+  default = "PremiumV2"
+}
+variable "web_size" {
+  description = "The size used for the app service plan"
+  default = "P1v2"
+}
+variable "portal_url" {}
+variable "additional_hosts" {
+  default = []
+}
