@@ -19,7 +19,7 @@ public static class MigrationExtensions
             if (stream == null) continue;
             using StreamReader reader = new(stream);
             string sqlScript = reader.ReadToEnd();
-            migrationBuilder.Sql($"EXEC(N'{sqlScript}')");
+            migrationBuilder.Sql($"EXEC(N'{sqlScript.Replace("'", "''")}')");
         }
     }
 }

@@ -20,13 +20,15 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-	  <Folder Include="Database\InitialCreate" />
 	  <Folder Include="Migrations" />
 	</ItemGroup>
 	
 	<ItemGroup>
+	  <EmbeddedResource Include="Database\AccountBalances\Functions\dbo.getId.udf.sql" />
+	  <EmbeddedResource Include="Database\AccountBalances\Functions\dbo.round5min.udf.sql" />
+	  <EmbeddedResource Include="Database\AccountBalances\Views\dbo.getNewID.viw.sql" />
 	  <None Remove="Database\InitialCreate\Procedures\dbo.SomeAnaltyic.sql" />
-	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.SomeAnaltyic.sql" />
+	  <EmbeddedResource Include="Database\AccountBalances\Procedures\dbo.CreateAccountBalanceSnapshot.prc.sql" />
 	</ItemGroup>
 
 </Project>
