@@ -1,6 +1,5 @@
 using Airslip.Analytics.Core.Constants;
 using Airslip.Analytics.Core.Entities;
-using Airslip.Analytics.Core.Implementations;
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Core.Models;
 using Airslip.Analytics.Core.Models.Raw;

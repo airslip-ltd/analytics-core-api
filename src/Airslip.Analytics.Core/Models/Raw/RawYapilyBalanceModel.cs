@@ -1,6 +1,5 @@
 ﻿using Airslip.Analytics.Core.Enums;
 using Airslip.Common.Repository.Types.Enums;
-using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Types.Enums;
 using JetBrains.Annotations;
 using System.Collections.Generic;

@@ -1,6 +1,7 @@
-using Airslip.Analytics.Core.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Services.Handoff.Interfaces;
+using Airslip.Common.Types.Enums;
+using Airslip.Common.Types.Interfaces;
 using System.Threading.Tasks;
 
 namespace Airslip.Analytics.Core.Interfaces
