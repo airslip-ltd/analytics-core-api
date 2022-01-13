@@ -3,10 +3,9 @@
 	<Import Project="..\common.props" />
 
 	<ItemGroup>
-	  <PackageReference Include="Airslip.Common.Repository" Version="6.0.2" />
+	  <PackageReference Include="Airslip.Common.Repository" Version="6.0.4" />
 	  <PackageReference Include="Airslip.Common.Repository.Types" Version="6.0.2" />
 	  <PackageReference Include="Airslip.Common.Services.Handoff" Version="6.0.0" />
-	  <PackageReference Include="Microsoft.Data.SqlClient" Version="2.1.4" />
 	  <PackageReference Include="Polly" Version="7.2.2" />
 	</ItemGroup>
 

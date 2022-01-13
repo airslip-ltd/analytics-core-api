@@ -52,7 +52,6 @@ namespace Airslip.Analytics.Services.SqlServer.Implementations
                     .Create(rawModel);
                 
                 model.DataSource = dataSource;
-                model.TimeStamp = DateTime.UtcNow.ToUnixTimeMilliseconds();
                 
                 string id = model.Id ?? string.Empty;
                 int count = 0;
@@ -76,7 +75,7 @@ namespace Airslip.Analytics.Services.SqlServer.Implementations
                     if (result is FailedActionResultModel<TModel> failed)
                     {
                         _logger.Error("Repository action failed with code {ErrorCode} for model {Model}", 
-                            failed.ErrorCode, rawModel);
+                            failed.ErrorCode, model);
                     }
                 });
             }
