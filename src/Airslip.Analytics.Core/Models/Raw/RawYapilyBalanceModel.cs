@@ -21,4 +21,5 @@ public record RawYapilyBalanceModel
     public long Balance { get; init; }
     public string? Currency { get; init; }
     public List<RawYapilyBalanceDetailModel> Details { get; init; } = new();
+    public long TimeStamp { get; set; }
 }

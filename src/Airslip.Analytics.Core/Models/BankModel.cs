@@ -19,7 +19,7 @@ public record BankModel : IModel, IFromDataSource
     public List<BankCountryCodeModel> CountryCodes { get; set; } = new();
     public EntityStatus EntityStatus { get; set; }
     public DataSources DataSource { get; set; } = DataSources.Unknown;
-    public long TimeStamp { get; set; } = DateTime.UtcNow.ToUnixTimeMilliseconds();
+    public long TimeStamp { get; set; }
 }
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]

@@ -24,7 +24,7 @@ public record RawYapilyAccountModel
     public string? SortCode { get; set; }
     public string? AccountNumber { get; set; }
     public long CreatedTimeStamp { get; set; } = DateTime.UtcNow.ToUnixTimeMilliseconds();
-    public long TimeStamp { get; set; } = DateTime.UtcNow.ToUnixTimeMilliseconds();
     public string InstitutionId { get; set; } = string.Empty;
     public AccountStatus AccountStatus { get; set; } = AccountStatus.Active;
+    public long TimeStamp { get; set; }
 }
