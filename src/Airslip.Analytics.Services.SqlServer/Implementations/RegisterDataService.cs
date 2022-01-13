@@ -1,20 +1,20 @@
-using Airslip.Analytics.Core.Enums;
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Repository.Types.Models;
 using Airslip.Common.Types.Enums;
+using Airslip.Common.Types.Interfaces;
 using Airslip.Common.Utilities;
 using Airslip.Common.Utilities.Extensions;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Polly;
 using Polly.Retry;
 using Serilog;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Airslip.Analytics.Core.Implementations
+namespace Airslip.Analytics.Services.SqlServer.Implementations
 {
     public class RegisterDataService<TEntity, TModel, TRawModel> : IRegisterDataService<TEntity, TModel, TRawModel>
         where TModel : class, IModel, IFromDataSource
@@ -42,8 +42,9 @@ namespace Airslip.Analytics.Core.Implementations
             int maxRetryAttempts = 3;
             
             AsyncRetryPolicy? retryPolicy = Policy
-                .Handle<SqlException>()
-                .RetryAsync(maxRetryAttempts);
+                .Handle<DbUpdateException>()
+                .WaitAndRetryAsync(maxRetryAttempts,  retryAttempt => 
+                    TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 
             try
             {
@@ -54,9 +55,14 @@ namespace Airslip.Analytics.Core.Implementations
                 model.TimeStamp = DateTime.UtcNow.ToUnixTimeMilliseconds();
                 
                 string id = model.Id ?? string.Empty;
+                int count = 0;
                 await retryPolicy.ExecuteAsync(async () =>
                 {
+                    count++;
+                    if (count > 1) _logger.Information("Retrying attempt {Attempt}", count);
+                    
                     string? userId = model is IModelWithOwnership ownedModel ? ownedModel.UserId : null;
+
                     RepositoryActionResultModel<TModel> result = await _repository.Upsert(id, model, userId);
 
                     if (result is SuccessfulActionResultModel<TModel> {CurrentVersion: { }} success)
@@ -66,11 +72,17 @@ namespace Airslip.Analytics.Core.Implementations
                             await analyticsProcess.Execute(success.CurrentVersion);
                         }
                     }
+
+                    if (result is FailedActionResultModel<TModel> failed)
+                    {
+                        _logger.Error("Repository action failed with code {ErrorCode} for model {Model}", 
+                            failed.ErrorCode, rawModel);
+                    }
                 });
             }
-            catch (SqlException se)
+            catch (DbUpdateException se)
             {
-                _logger.Fatal(se, "SqlException exception for the data source {DataSource} with data packet {Model}", dataSource, rawModel);
+                _logger.Fatal(se, "DbUpdateException exception for the data source {DataSource} with data packet {Model}", dataSource, rawModel);
             }
             catch (Exception e)
             {
