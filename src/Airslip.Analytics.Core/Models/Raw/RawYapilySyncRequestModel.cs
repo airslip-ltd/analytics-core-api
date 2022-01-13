@@ -23,4 +23,5 @@ public class RawYapilySyncRequestModel
     public SyncStatus SyncStatus { get; set; }
     public int RecordCount { get; set; }
     public string? TracingId { get; set; }
+    public long TimeStamp { get; set; }
 }

@@ -31,5 +31,5 @@ public class RawYapilyTransactionModel
     public string? EntityId { get; set; }
     public AirslipUserType AirslipUserType { get; set; }
     public DataSources DataSource { get; set; } = DataSources.Unknown;
-    public long TimeStamp { get; set; } = DateTime.UtcNow.ToUnixTimeMilliseconds();
+    public long TimeStamp { get; set; }
 }

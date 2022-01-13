@@ -17,5 +17,5 @@ public record RawYapilyBankModel
     public List<string> CountryCodes { get; set; } = new();
     public EntityStatus EntityStatus { get; set; }
     public DataSources DataSource { get; set; } = DataSources.Unknown;
-    public long TimeStamp { get; set; } = DateTime.UtcNow.ToUnixTimeMilliseconds();
+    public long TimeStamp { get; set; }
 }

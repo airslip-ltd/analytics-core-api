@@ -33,5 +33,5 @@ public class TransactionModel : IModelWithOwnership, IFromDataSource
     public string? TransactionIdentifier { get; set; }
     public string? Reference { get; set; }
     public DataSources DataSource { get; set; } = DataSources.Unknown;
-    public long TimeStamp { get; set; } = DateTime.UtcNow.ToUnixTimeMilliseconds();
+    public long TimeStamp { get; set; }
 }

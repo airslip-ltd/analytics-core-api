@@ -27,5 +27,5 @@ public class SyncRequestModel : IModelWithOwnership, IFromDataSource
     public int RecordCount { get; set; }
     public string? TracingId { get; set; }
     public DataSources DataSource { get; set; } = DataSources.Unknown;
-    public long TimeStamp { get; set; } = DateTime.UtcNow.ToUnixTimeMilliseconds();
+    public long TimeStamp { get; set; }
 }

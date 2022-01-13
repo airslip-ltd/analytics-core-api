@@ -24,5 +24,5 @@ public record AccountBalanceModel : IModelWithOwnership, IFromDataSource
     public string? Currency { get; init; }
     public List<AccountBalanceDetailModel> Details { get; init; } = new();
     public DataSources DataSource { get; set; } = DataSources.Unknown;
-    public long TimeStamp { get; set; } = DateTime.UtcNow.ToUnixTimeMilliseconds();
+    public long TimeStamp { get; set; }
 }
