@@ -3,8 +3,10 @@ using Airslip.Analytics.Core.Entities;
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Core.Models;
 using Airslip.Analytics.Core.Models.Raw;
+using Airslip.Analytics.Processor.Extensions;
 using Airslip.Analytics.Processor.Mappers;
 using Airslip.Analytics.Services.SqlServer;
+using Airslip.Analytics.Services.SqlServer.Extensions;
 using Airslip.Analytics.Services.SqlServer.Implementations;
 using Airslip.Common.Auth.Functions.Extensions;
 using Airslip.Common.Functions.Extensions;
@@ -65,31 +67,16 @@ internal class Program
                     .AddAirslipFunctionAuth(context.Configuration)
                     .AddRepositories(RepositoryUserType.Service)
                     .AddSingleton(typeof(IModelValidator<>), typeof(NullValidator<>))
-                    .AddAutoMapper(cfg =>
-                    {
-                        cfg
-                            .AddRawYapilyData()
-                            .AddEntityModelMappings();
-                        
-                    }, MapperUsageType.Service);
+                    .AddAutoMapper(ServiceRegistration.RegisterMappings, MapperUsageType.Service);
 
                 services
                     .AddAirslipSqlServer<SqlServerContext>(context.Configuration)
+                    .AddAnalyticsProcesses()
                     .AddScoped(typeof(IRegisterDataService<,,>), typeof(RegisterDataService<,,>))
                     .AddScoped(typeof(IEntitySearch<,>), typeof(EntitySearch<,>));
 
-                services.UseMessageHandoff(handoff =>
-                {
-                    handoff.Register<IRegisterDataService<Bank, BankModel, RawYapilyBankModel>>(Constants.EVENT_QUEUE_YAPILY_BANKS);
-                    handoff.Register<IRegisterDataService<Account, AccountModel, RawYapilyAccountModel>>(Constants.EVENT_QUEUE_YAPILY_ACCOUNTS);
-                    handoff.Register<IRegisterDataService<Transaction, TransactionModel, RawYapilyTransactionModel>>(Constants.EVENT_QUEUE_YAPILY_TRANSACTIONS);
-                    handoff.Register<IRegisterDataService<AccountBalance, AccountBalanceModel, RawYapilyBalanceModel>>(Constants.EVENT_QUEUE_YAPILY_BALANCES);
-                    handoff.Register<IRegisterDataService<SyncRequest, SyncRequestModel, RawYapilySyncRequestModel>>(Constants.EVENT_QUEUE_YAPILY_SYNC_REQUESTS);
-                });
+                services.UseMessageHandoff(ServiceRegistration.RegisterHandoff);
                 
-                services
-                    .AddScoped<IAnalyticsProcess<AccountBalanceModel>, GenerateAccountBalanceSnapshot>();
-
             })
             .Build();
         

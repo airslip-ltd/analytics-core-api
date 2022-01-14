@@ -16,15 +16,16 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-	  <Folder Include="Migrations" />
+	  <EmbeddedResource Include="Database\Core\Functions\dbo.getId.udf.sql" />
+	  <EmbeddedResource Include="Database\Core\Functions\dbo.round5min.udf.sql" />
+	  <EmbeddedResource Include="Database\Core\Views\dbo.getNewID.viw.sql" />
+	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.UpdateAccountBalanceSummary.prc.sql" />
+	  <None Remove="Database\InitialCreate\Procedures\dbo.SomeAnaltyic.sql" />
+	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.CreateAccountBalanceSnapshot.prc.sql" />
 	</ItemGroup>
 	
 	<ItemGroup>
-	  <EmbeddedResource Include="Database\AccountBalances\Functions\dbo.getId.udf.sql" />
-	  <EmbeddedResource Include="Database\AccountBalances\Functions\dbo.round5min.udf.sql" />
-	  <EmbeddedResource Include="Database\AccountBalances\Views\dbo.getNewID.viw.sql" />
-	  <None Remove="Database\InitialCreate\Procedures\dbo.SomeAnaltyic.sql" />
-	  <EmbeddedResource Include="Database\AccountBalances\Procedures\dbo.CreateAccountBalanceSnapshot.prc.sql" />
+	  <Folder Include="Database\Core" />
 	</ItemGroup>
 
 </Project>

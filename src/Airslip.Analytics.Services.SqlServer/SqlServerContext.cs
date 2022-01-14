@@ -16,18 +16,27 @@ public class SqlServerContext : AirslipSqlServerContextBase
     public DbSet<Account> Accounts { get; set; }
     public DbSet<AccountBalance> AccountBalances { get; set; }
     public DbSet<AccountBalanceSnapshot> AccountBalanceSnapshots { get; set; }
+    public DbSet<AccountBalanceSummary> AccountBalanceSummary { get; set; }
     public DbSet<Bank> Banks { get; set; }
+    public DbSet<BusinessBalance> BusinessBalances { get; set; }
     public DbSet<SyncRequest> SyncRequests { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
     public DbSet<CountryCode> CountryCodes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // Table names
         modelBuilder
             .Entity<AccountBalanceSnapshot>()
             .ToTable("AccountBalanceSnapshots")
             .HasKey(b => b.Id)
             .HasName("PK_AccountBalanceSnapshots_Id");
+        
+        modelBuilder
+            .Entity<AccountBalanceSummary>()
+            .ToTable("AccountBalanceSummaries")
+            .HasKey(b => b.Id)
+            .HasName("PK_AccountBalanceSummaries_Id");
         
         modelBuilder
             .Entity<AccountBalance>()
@@ -60,6 +69,12 @@ public class SqlServerContext : AirslipSqlServerContextBase
             .HasName("PK_Banks_Id");
         
         modelBuilder
+            .Entity<BusinessBalance>()
+            .ToTable("BusinessBalances")
+            .HasKey(b => b.Id)
+            .HasName("PK_BusinessBalances_Id");
+        
+        modelBuilder
             .Entity<Transaction>()
             .ToTable("Transactions")
             .HasKey(b => b.Id)
@@ -82,5 +97,17 @@ public class SqlServerContext : AirslipSqlServerContextBase
             .ToTable("AuditInformation")
             .HasKey(b => b.Id)
             .HasName("PK_AuditInformation_Id");
+        
+        // Defaults
+        
+        modelBuilder
+            .Entity<AccountBalanceSummary>()
+            .Property(b => b.Id)
+            .HasDefaultValueSql("dbo.getId()");
+        
+        modelBuilder
+            .Entity<BusinessBalance>()
+            .Property(b => b.Id)
+            .HasDefaultValueSql("dbo.getId()");
     }
 }
