@@ -25,8 +25,9 @@ public class GenerateBusinessBalanceSnapshot : IAnalyticsProcess<AccountBalanceM
         
         return _context
             .Database
-            .ExecuteSqlRawAsync("EXEC dbo.CreateBusinessBalanceSnapshot @EntityId = {0}, @AirslipUserType = {1}",
+            .ExecuteSqlRawAsync("EXEC dbo.CreateBusinessBalanceSnapshot @EntityId = {0}, @AirslipUserType = {1}, @Id = {2}",
                 model.EntityId, 
-                model.AirslipUserType);
+                model.AirslipUserType,
+                model.Id);
     }
 }
