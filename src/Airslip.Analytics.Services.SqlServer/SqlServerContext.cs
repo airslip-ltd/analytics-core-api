@@ -19,6 +19,7 @@ public class SqlServerContext : AirslipSqlServerContextBase
     public DbSet<AccountBalanceSummary> AccountBalanceSummary { get; set; }
     public DbSet<Bank> Banks { get; set; }
     public DbSet<BusinessBalance> BusinessBalances { get; set; }
+    public DbSet<BusinessBalanceSnapshot> BusinessBalanceSnapshots { get; set; }
     public DbSet<SyncRequest> SyncRequests { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
     public DbSet<CountryCode> CountryCodes { get; set; }
@@ -73,6 +74,12 @@ public class SqlServerContext : AirslipSqlServerContextBase
             .ToTable("BusinessBalances")
             .HasKey(b => b.Id)
             .HasName("PK_BusinessBalances_Id");
+        
+        modelBuilder
+            .Entity<BusinessBalanceSnapshot>()
+            .ToTable("BusinessBalanceSnapshots")
+            .HasKey(b => b.Id)
+            .HasName("PK_BusinessBalanceSnapshots_Id");
         
         modelBuilder
             .Entity<Transaction>()

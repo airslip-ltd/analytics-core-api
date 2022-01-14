@@ -1,4 +1,6 @@
+using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Services.SqlServer;
+using Airslip.Analytics.Services.SqlServer.Implementations;
 using Airslip.Common.Auth.AspNetCore.Extensions;
 using Airslip.Common.Auth.AspNetCore.Middleware;
 using Airslip.Common.Middleware;
@@ -104,6 +106,9 @@ builder.Services
     .AddScoped(typeof(IEntitySearch<,>), typeof(EntitySearch<,>))
     .AddAirslipSqlServer<SqlServerContext>(builder.Configuration)
     .AddScoped(typeof(IEntitySearch<,>), typeof(EntitySearch<,>));
+
+
+builder.Services.AddScoped<IBalanceService, BalanceService>();
 
 builder.Services
     .UseHealthChecks();
