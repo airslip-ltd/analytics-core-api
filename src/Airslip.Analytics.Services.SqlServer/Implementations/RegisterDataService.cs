@@ -68,7 +68,10 @@ namespace Airslip.Analytics.Services.SqlServer.Implementations
                     {
                         foreach (IAnalyticsProcess<TModel> analyticsProcess in _postProcessors)
                         {
-                            await analyticsProcess.Execute(success.CurrentVersion);
+                            int affectedRows = await 
+                                analyticsProcess.Execute(success.CurrentVersion);
+                            _logger.Information("Executed analytics task, {AffectedRows}", 
+                                affectedRows);
                         }
                     }
 

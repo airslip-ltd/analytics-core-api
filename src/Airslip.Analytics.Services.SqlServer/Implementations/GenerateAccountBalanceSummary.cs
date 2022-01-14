@@ -18,14 +18,14 @@ public class GenerateAccountBalanceSummary : IAnalyticsProcess<AccountBalanceMod
         _context = dbContext;
     }
     
-    public Task Execute(AccountBalanceModel model)
+    public Task<int> Execute(AccountBalanceModel model)
     {
         if (model.EntityId == null) 
-            return Task.CompletedTask;
+            return Task.FromResult(0);
         
         return _context
             .Database
-            .ExecuteSqlRawAsync("EXECUTE dbo.UpdateAccountBalanceSummary @p0, @p1", 
+            .ExecuteSqlRawAsync("EXEC dbo.UpdateAccountBalanceSummary @EntityId = {0}, @AirslipUserType = {1}", 
                 model.EntityId, 
                 model.AirslipUserType);
     }

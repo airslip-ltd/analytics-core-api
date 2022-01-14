@@ -18,16 +18,16 @@ public class GenerateAccountBalanceSnapshot : IAnalyticsProcess<AccountBalanceMo
         _context = dbContext;
     }
     
-    public Task Execute(AccountBalanceModel model)
+    public Task<int> Execute(AccountBalanceModel model)
     {
         if (model.EntityId == null || model.Id == null) 
-            return Task.CompletedTask;
+            return Task.FromResult(0);
         
         return _context
             .Database
-            .ExecuteSqlRawAsync("EXECUTE dbo.CreateAccountBalanceSnapshot @p0, @p1, @p2", 
+            .ExecuteSqlRawAsync("EXEC dbo.CreateAccountBalanceSnapshot @EntityId = {0}, @AirslipUserType = {1}, @Id = {2}",
                 model.EntityId, 
-                model.AirslipUserType, 
+                model.AirslipUserType,
                 model.Id);
     }
 }
