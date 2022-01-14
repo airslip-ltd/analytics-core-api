@@ -2,6 +2,7 @@ using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Core.Models;
 using Airslip.Common.Repository.Types.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
 
 namespace Airslip.Analytics.Services.SqlServer.Implementations;
@@ -12,7 +13,9 @@ public class GenerateAccountBalanceSnapshot : IAnalyticsProcess<AccountBalanceMo
 
     public GenerateAccountBalanceSnapshot(IContext context)
     {
-        _context = context as DbContext;
+        if (context is not DbContext dbContext) 
+            throw new ArgumentException("Invalid context", nameof(context));
+        _context = dbContext;
     }
     
     public Task Execute(AccountBalanceModel model)

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Airslip.Analytics.Services.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    [Migration("20220111154204_SyncRequests")]
-    partial class SyncRequests
+    [Migration("20220114105708_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -205,6 +205,73 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.ToTable("AccountBalanceDetails", (string)null);
                 });
 
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.AccountBalanceSnapshot", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AccountId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("AirslipUserType")
+                        .HasColumnType("int");
+
+                    b.Property<long>("Balance")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Currency")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EntityId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("TimeStamp")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id")
+                        .HasName("PK_AccountBalanceSnapshots_Id");
+
+                    b.ToTable("AccountBalanceSnapshots", (string)null);
+                });
+
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.AccountBalanceSummary", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)")
+                        .HasDefaultValueSql("dbo.getId()");
+
+                    b.Property<string>("AccountId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("AirslipUserType")
+                        .HasColumnType("int");
+
+                    b.Property<long>("Balance")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Currency")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EntityId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("TimeStamp")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id")
+                        .HasName("PK_AccountBalanceSummaries_Id");
+
+                    b.ToTable("AccountBalanceSummaries", (string)null);
+                });
+
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.Bank", b =>
                 {
                     b.Property<string>("Id")
@@ -256,6 +323,37 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.HasIndex("BankId");
 
                     b.ToTable("BankCountryCode");
+                });
+
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.BusinessBalance", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)")
+                        .HasDefaultValueSql("dbo.getId()");
+
+                    b.Property<int>("AirslipUserType")
+                        .HasColumnType("int");
+
+                    b.Property<long>("Balance")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Currency")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EntityId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("TimeStamp")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id")
+                        .HasName("PK_BusinessBalances_Id");
+
+                    b.ToTable("BusinessBalances", (string)null);
                 });
 
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.CountryCode", b =>

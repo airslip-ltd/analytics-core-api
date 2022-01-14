@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Airslip.Analytics.Services.SqlServer.Extensions;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -9,6 +10,44 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddSqlFiles("Core");
+            
+            migrationBuilder.CreateTable(
+                name: "AccountBalanceSnapshots",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    EntityId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AirslipUserType = table.Column<int>(type: "int", nullable: false),
+                    AccountId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Balance = table.Column<long>(type: "bigint", nullable: false),
+                    TimeStamp = table.Column<long>(type: "bigint", nullable: false),
+                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AccountBalanceSnapshots_Id", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AccountBalanceSummaries",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValueSql: "dbo.getId()"),
+                    AccountId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EntityId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AirslipUserType = table.Column<int>(type: "int", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Balance = table.Column<long>(type: "bigint", nullable: false),
+                    TimeStamp = table.Column<long>(type: "bigint", nullable: false),
+                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AccountBalanceSummaries_Id", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AuditInformation",
                 columns: table => new
@@ -24,6 +63,23 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AuditInformation_Id", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BusinessBalances",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValueSql: "dbo.getId()"),
+                    EntityId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AirslipUserType = table.Column<int>(type: "int", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Balance = table.Column<long>(type: "bigint", nullable: false),
+                    TimeStamp = table.Column<long>(type: "bigint", nullable: false),
+                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BusinessBalances_Id", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -115,6 +171,38 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     table.PrimaryKey("PK_Banks_Id", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Banks_AuditInformation_AuditInformationId",
+                        column: x => x.AuditInformationId,
+                        principalTable: "AuditInformation",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SyncRequests",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AuditInformationId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    EntityStatus = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EntityId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AirslipUserType = table.Column<int>(type: "int", nullable: false),
+                    AccountId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UsageType = table.Column<int>(type: "int", nullable: false),
+                    AccountType = table.Column<int>(type: "int", nullable: false),
+                    LastCardDigits = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FromDate = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SyncStatus = table.Column<int>(type: "int", nullable: false),
+                    RecordCount = table.Column<int>(type: "int", nullable: false),
+                    TracingId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DataSource = table.Column<int>(type: "int", nullable: false),
+                    TimeStamp = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SyncRequests_Id", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SyncRequests_AuditInformation_AuditInformationId",
                         column: x => x.AuditInformationId,
                         principalTable: "AuditInformation",
                         principalColumn: "Id");
@@ -254,9 +342,16 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 column: "AuditInformationId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SyncRequests_AuditInformationId",
+                table: "SyncRequests",
+                column: "AuditInformationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Transactions_AuditInformationId",
                 table: "Transactions",
                 column: "AuditInformationId");
+            
+            migrationBuilder.AddSqlFiles(nameof(InitialCreate));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -265,13 +360,25 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 name: "AccountBalanceCreditLines");
 
             migrationBuilder.DropTable(
+                name: "AccountBalanceSnapshots");
+
+            migrationBuilder.DropTable(
+                name: "AccountBalanceSummaries");
+
+            migrationBuilder.DropTable(
                 name: "Accounts");
 
             migrationBuilder.DropTable(
                 name: "BankCountryCode");
 
             migrationBuilder.DropTable(
+                name: "BusinessBalances");
+
+            migrationBuilder.DropTable(
                 name: "CountryCodes");
+
+            migrationBuilder.DropTable(
+                name: "SyncRequests");
 
             migrationBuilder.DropTable(
                 name: "Transactions");
