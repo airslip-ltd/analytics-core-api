@@ -10,7 +10,8 @@ merge into AccountBalanceSummaries as abs
             select x.AccountId, x.EntityId, x.AirslipUserType, x.UpdatedOn, x.Balance, x.TimeStamp, x.Currency
             from (select distinct AccountId
                   from AccountBalanceSnapshots
-                  where EntityId = @EntityId and AirslipUserType = @AirslipUserType) c
+                  where EntityId = @EntityId
+                    and AirslipUserType = @AirslipUserType) c
                 cross apply (select top 1 *
                                   from AccountBalanceSnapshots t
                                   where t.EntityId = @EntityId
@@ -20,11 +21,15 @@ merge into AccountBalanceSummaries as abs
     on
                 abs.AccountId = y.AccountId and abs.EntityId = y.EntityId and abs.AirslipUserType = y.AirslipUserType
     when matched then
-        update set abs.UpdatedOn = y.UpdatedOn, abs.Balance = y.Balance, abs.TimeStamp = y.TimeStamp
+        update
+            set abs.Movement  = dbo.calcMovement(y.Balance, abs.Balance),
+                abs.UpdatedOn = y.UpdatedOn,
+                abs.Balance   = y.Balance,
+                abs.TimeStamp = y.TimeStamp
     when not matched then
         insert
-            (AccountId, EntityId, AirslipUserType, UpdatedOn, Balance, TimeStamp, Currency)
-            values (y.AccountId, y.EntityId, y.AirslipUserType, y.UpdatedOn, y.Balance, y.TimeStamp, y.Currency);
+            (AccountId, EntityId, AirslipUserType, UpdatedOn, Balance, TimeStamp, Currency, Movement)
+            values (y.AccountId, y.EntityId, y.AirslipUserType, y.UpdatedOn, y.Balance, y.TimeStamp, y.Currency, 0);
 
 merge into BusinessBalances as bb
     using
@@ -37,7 +42,8 @@ merge into BusinessBalances as bb
                    x.Currency
             from (select distinct AccountId
                 from AccountBalanceSnapshots
-                where EntityId = @EntityId and AirslipUserType = @AirslipUserType) c
+                where EntityId = @EntityId
+                and AirslipUserType = @AirslipUserType) c
                 cross apply (select top 1 *
                 from AccountBalanceSnapshots t
                 where t.EntityId = @EntityId
@@ -48,10 +54,14 @@ merge into BusinessBalances as bb
     on
                 bb.EntityId = y.EntityId and bb.AirslipUserType = y.AirslipUserType
     when matched then
-        update set bb.UpdatedOn = y.UpdatedOn, bb.Balance = y.Balance, bb.TimeStamp = y.TimeStamp
+        update
+            set bb.Movement  = dbo.calcMovement(y.Balance, bb.Balance),
+                bb.UpdatedOn = y.UpdatedOn,
+                bb.Balance   = y.Balance,
+                bb.TimeStamp = y.TimeStamp
     when not matched then
         insert
-            (EntityId, AirslipUserType, UpdatedOn, Balance, TimeStamp, Currency)
-            values (y.EntityId, y.AirslipUserType, y.UpdatedOn, y.Balance, y.TimeStamp, y.Currency);
+            (EntityId, AirslipUserType, UpdatedOn, Balance, TimeStamp, Currency, Movement)
+            values (y.EntityId, y.AirslipUserType, y.UpdatedOn, y.Balance, y.TimeStamp, y.Currency, 0);
 
 end

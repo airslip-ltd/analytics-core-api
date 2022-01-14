@@ -40,6 +40,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     AirslipUserType = table.Column<int>(type: "int", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Balance = table.Column<long>(type: "bigint", nullable: false),
+                    Movement = table.Column<double>(type: "float", nullable: false),
                     TimeStamp = table.Column<long>(type: "bigint", nullable: false),
                     Currency = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -74,12 +75,30 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     AirslipUserType = table.Column<int>(type: "int", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Balance = table.Column<long>(type: "bigint", nullable: false),
+                    Movement = table.Column<double>(type: "float", nullable: false),
                     TimeStamp = table.Column<long>(type: "bigint", nullable: false),
                     Currency = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BusinessBalances_Id", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BusinessBalanceSnapshots",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    EntityId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AirslipUserType = table.Column<int>(type: "int", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Balance = table.Column<long>(type: "bigint", nullable: false),
+                    TimeStamp = table.Column<long>(type: "bigint", nullable: false),
+                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BusinessBalanceSnapshots_Id", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -373,6 +392,9 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
             migrationBuilder.DropTable(
                 name: "BusinessBalances");
+
+            migrationBuilder.DropTable(
+                name: "BusinessBalanceSnapshots");
 
             migrationBuilder.DropTable(
                 name: "CountryCodes");

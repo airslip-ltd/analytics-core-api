@@ -11,7 +11,8 @@ public static class Services
     {
         services
             .AddScoped<IAnalyticsProcess<AccountBalanceModel>, GenerateAccountBalanceSnapshot>()
-            .AddScoped<IAnalyticsProcess<AccountBalanceModel>, GenerateAccountBalanceSummary>();
+            .AddScoped<IAnalyticsProcess<AccountBalanceModel>, GenerateAccountBalanceSummary>()
+            .AddScoped<IAnalyticsProcess<AccountBalanceModel>, GenerateBusinessBalanceSnapshot>();
 
 
         return services;

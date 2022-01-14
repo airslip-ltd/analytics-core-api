@@ -7,14 +7,13 @@ using System;
 namespace Airslip.Analytics.Core.Entities;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-public record BusinessBalance : IEntityWithId
+public record BusinessBalanceSnapshot : IEntityWithId
 {
     public string Id { get; set; } = string.Empty;
     public string? EntityId { get; set; }
     public AirslipUserType AirslipUserType { get; set; }
     public DateTime UpdatedOn { get; set; }
     public long Balance { get; init; }
-    public double Movement { get; set; }
     public long TimeStamp { get; set; } = DateTime.UtcNow.ToUnixTimeMilliseconds();
     public string? Currency { get; init; }
 }

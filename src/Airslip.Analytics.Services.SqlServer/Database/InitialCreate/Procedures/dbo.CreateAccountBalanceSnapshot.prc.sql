@@ -15,3 +15,4 @@ where a.EntityId = @EntityId
   and a.AirslipUserType = @AirslipUserType
   and ab.Id = @Id
 order by AB.TimeStamp DESC
+

@@ -15,6 +15,7 @@ public record AccountBalanceSummary : IEntityWithId
     public AirslipUserType AirslipUserType { get; set; }
     public DateTime UpdatedOn { get; set; }
     public long Balance { get; init; }
+    public double Movement { get; set; }
     public long TimeStamp { get; set; } = DateTime.UtcNow.ToUnixTimeMilliseconds();
     public string? Currency { get; init; }
 }
