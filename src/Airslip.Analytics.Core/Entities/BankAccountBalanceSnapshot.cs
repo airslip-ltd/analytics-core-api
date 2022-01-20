@@ -7,7 +7,7 @@ using System;
 namespace Airslip.Analytics.Core.Entities;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-public record AccountBalanceSnapshot : IEntityWithId
+public record BankAccountBalanceSnapshot : IEntityWithId
 {
     public string Id { get; set; } = string.Empty;
     public string? EntityId { get; set; }
