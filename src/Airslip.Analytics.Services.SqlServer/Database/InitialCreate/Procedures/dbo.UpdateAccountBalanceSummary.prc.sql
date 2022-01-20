@@ -13,7 +13,7 @@ merge into BankAccountBalanceSummaries as abs
                   where EntityId = @EntityId
                     and AirslipUserType = @AirslipUserType) c
                 cross apply (select top 1 *
-                                  from AccountBalanceSnapshots t
+                                  from BankAccountBalanceSnapshots t
                                   where t.EntityId = @EntityId
                                     and t.AirslipUserType = @AirslipUserType
                                     and t.AccountId = c.AccountId

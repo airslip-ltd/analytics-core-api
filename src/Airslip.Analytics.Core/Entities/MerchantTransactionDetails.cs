@@ -1,0 +1,51 @@
+﻿using Airslip.Common.Repository.Types.Entities;
+using Airslip.Common.Repository.Types.Enums;
+using Airslip.Common.Repository.Types.Interfaces;
+using Airslip.Common.Types.Enums;
+using Airslip.Common.Types.Interfaces;
+using System;
+using System.Collections.Generic;
+
+namespace Airslip.Analytics.Core.Entities;
+
+public record MerchantTransaction : IFromDataSource, IEntityWithOwnership
+{
+    public string Id { get; set; } = string.Empty;
+    public virtual BasicAuditInformation? AuditInformation { get; set; }
+    public EntityStatus EntityStatus { get; set; }
+    public string? UserId { get; set; }
+    public string? EntityId { get; set; }
+    public AirslipUserType AirslipUserType { get; set; }
+    public DataSources DataSource { get; set; }
+    public long TimeStamp { get; set; }
+
+    public string TrackingId { get; set; } = string.Empty;
+        
+    public string? InternalId { get; init; }
+    public string? Source { get; init; }
+    public string? TransactionNumber { get; init; }
+    public string? RefundCode { get; init; }
+    public DateTime? Datetime { get; init; }
+    public string? BankStatementDescription { get; init; }
+    public string? BankStatementTransactionIdentifier { get; init; }
+    public string? StoreLocationId { get; init; }
+    public string? StoreAddress { get; init; }
+    public bool? OnlinePurchase { get; init; }
+    public long? Subtotal { get; init; }
+    public long? ServiceCharge { get; init; }
+    public long? Total { get; init; }
+    public string? CurrencyCode { get; init; }
+    public string? CustomerEmail { get; init; }
+    public string? OperatorName { get; init; }
+        
+    public DateTime? Date { get; init; }
+    public string? Time { get; init; }
+    public string? Till { get; init; }
+    public string? Number { get; init; }
+    public string? Store { get; init; }
+
+    public virtual ICollection<MerchantDiscount> Discounts { get; init; } = new List<MerchantDiscount>();
+    public virtual ICollection<MerchantVat> VatRates { get; init; } = new List<MerchantVat>();
+    public virtual ICollection<MerchantProduct> Products { get; init; } = new List<MerchantProduct>();
+    public virtual ICollection<MerchantPaymentDetail> PaymentDetails { get; init; } = new List<MerchantPaymentDetail>();
+}
