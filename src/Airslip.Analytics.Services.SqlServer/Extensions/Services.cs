@@ -10,9 +10,9 @@ public static class Services
     public static IServiceCollection AddAnalyticsProcesses(this IServiceCollection services)
     {
         services
-            .AddScoped<IAnalyticsProcess<AccountBalanceModel>, GenerateAccountBalanceSnapshot>()
-            .AddScoped<IAnalyticsProcess<AccountBalanceModel>, GenerateAccountBalanceSummary>()
-            .AddScoped<IAnalyticsProcess<AccountBalanceModel>, GenerateBusinessBalanceSnapshot>();
+            .AddScoped<IAnalyticsProcess<BankAccountBalanceModel>, GenerateAccountBalanceSnapshot>()
+            .AddScoped<IAnalyticsProcess<BankAccountBalanceModel>, GenerateAccountBalanceSummary>()
+            .AddScoped<IAnalyticsProcess<BankAccountBalanceModel>, GenerateBusinessBalanceSnapshot>();
 
 
         return services;

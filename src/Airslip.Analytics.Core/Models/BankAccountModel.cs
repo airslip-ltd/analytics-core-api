@@ -1,14 +1,16 @@
 ﻿using Airslip.Analytics.Core.Enums;
 using Airslip.Common.Repository.Types.Enums;
+using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Types.Enums;
+using Airslip.Common.Types.Interfaces;
 using Airslip.Common.Utilities.Extensions;
 using JetBrains.Annotations;
 using System;
 
-namespace Airslip.Analytics.Core.Models.Raw;
+namespace Airslip.Analytics.Core.Models;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-public record RawYapilyAccountModel
+public record BankAccountModel : IModelWithOwnership, IFromDataSource
 {
     public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
@@ -24,7 +26,7 @@ public record RawYapilyAccountModel
     public string? SortCode { get; set; }
     public string? AccountNumber { get; set; }
     public long CreatedTimeStamp { get; set; } = DateTime.UtcNow.ToUnixTimeMilliseconds();
+    public long TimeStamp { get; set; }
     public string InstitutionId { get; set; } = string.Empty;
     public AccountStatus AccountStatus { get; set; } = AccountStatus.Active;
-    public long TimeStamp { get; set; }
 }

@@ -10,7 +10,7 @@ using System;
 namespace Airslip.Analytics.Core.Models;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-public class SyncRequestModel : IModelWithOwnership, IFromDataSource
+public class BankSyncRequestModel : IModelWithOwnership, IFromDataSource
 {
     public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }

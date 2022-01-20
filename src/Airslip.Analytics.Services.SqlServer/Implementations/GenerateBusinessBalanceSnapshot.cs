@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Airslip.Analytics.Services.SqlServer.Implementations;
 
-public class GenerateBusinessBalanceSnapshot : IAnalyticsProcess<AccountBalanceModel>
+public class GenerateBusinessBalanceSnapshot : IAnalyticsProcess<BankAccountBalanceModel>
 {
     private readonly DbContext _context;
 
@@ -18,7 +18,7 @@ public class GenerateBusinessBalanceSnapshot : IAnalyticsProcess<AccountBalanceM
         _context = dbContext;
     }
     
-    public Task<int> Execute(AccountBalanceModel model)
+    public Task<int> Execute(BankAccountBalanceModel model)
     {
         if (model.EntityId == null || model.Id == null) 
             return Task.FromResult(0);

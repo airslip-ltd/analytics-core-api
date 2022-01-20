@@ -1,7 +1,7 @@
 using Airslip.Analytics.Core.Enums;
 using JetBrains.Annotations;
 
-namespace Airslip.Analytics.Core.Models.Raw;
+namespace Airslip.Analytics.Core.Models.Raw.Yapily;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
 public class RawYapilyCreditLineModel

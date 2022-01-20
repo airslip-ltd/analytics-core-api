@@ -9,7 +9,7 @@ using System;
 namespace Airslip.Analytics.Core.Models;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-public class TransactionModel : IModelWithOwnership, IFromDataSource
+public class BankTransactionModel : IModelWithOwnership, IFromDataSource
 {
     public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
