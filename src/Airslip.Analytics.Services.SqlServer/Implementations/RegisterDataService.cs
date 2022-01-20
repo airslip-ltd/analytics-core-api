@@ -77,8 +77,8 @@ namespace Airslip.Analytics.Services.SqlServer.Implementations
 
                     if (result is FailedActionResultModel<TModel> failed)
                     {
-                        _logger.Error("Repository action failed with code {ErrorCode} for model {Model}", 
-                            failed.ErrorCode, model);
+                        _logger.Error("Repository action failed with code {ErrorCode} for model {@ValidationResult}", 
+                            failed.ErrorCode, failed.ValidationResult);
                     }
                 });
             }
