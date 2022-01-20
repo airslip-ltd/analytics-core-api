@@ -95,9 +95,9 @@ public class SqlServerContext : AirslipSqlServerContextBase
         
         modelBuilder
             .Entity<CountryCode>()
-            .ToTable("BankCountryCodes")
+            .ToTable("CountryCodes")
             .HasKey(b => b.Id)
-            .HasName("PK_BankCountryCodes_Id");
+            .HasName("PK_CountryCodes_Id");
 
         modelBuilder
             .Entity<BasicAuditInformation>()
