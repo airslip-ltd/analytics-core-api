@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Airslip.Analytics.Core.Models;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-public class CurrentSnapshotModel : ISuccess
+public class BankCurrentSnapshotModel : ISuccess
 {
     public long Balance { get; set; }
     public long TimeStamp { get; set; }

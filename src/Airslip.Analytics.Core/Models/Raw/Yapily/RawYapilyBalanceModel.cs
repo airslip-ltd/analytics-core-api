@@ -4,7 +4,7 @@ using Airslip.Common.Types.Enums;
 using JetBrains.Annotations;
 using System.Collections.Generic;
 
-namespace Airslip.Analytics.Core.Models.Raw;
+namespace Airslip.Analytics.Core.Models.Raw.Yapily;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
 public record RawYapilyBalanceModel

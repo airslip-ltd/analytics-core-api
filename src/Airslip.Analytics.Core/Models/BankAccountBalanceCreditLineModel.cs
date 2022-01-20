@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 namespace Airslip.Analytics.Core.Models;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-public class AccountBalanceCreditLineModel : IModel
+public class BankAccountBalanceCreditLineModel : IModel
 {
     public string? Id { get; set; } = CommonFunctions.GetId();
     public EntityStatus EntityStatus { get; set; }

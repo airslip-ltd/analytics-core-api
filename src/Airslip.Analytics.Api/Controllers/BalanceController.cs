@@ -36,7 +36,7 @@ namespace Airslip.Analytics.Api.Controllers
         }
         
         [HttpGet]
-        [ProducesResponseType(typeof(CurrentSnapshotModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BankCurrentSnapshotModel), StatusCodes.Status200OK)]
         [ProducesResponseType( typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAccounts()
         {
@@ -61,7 +61,7 @@ namespace Airslip.Analytics.Api.Controllers
             
             
             
-            return HandleResponse<CurrentSnapshotModel>(response);
+            return HandleResponse<BankCurrentSnapshotModel>(response);
         }
     }
 }

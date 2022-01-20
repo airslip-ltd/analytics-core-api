@@ -62,12 +62,12 @@ internal class Program
                     .Configure<EnvironmentSettings>(context.Configuration.GetSection(nameof(EnvironmentSettings)))
                     .Configure<PublicApiSettings>(context.Configuration.GetSection(nameof(PublicApiSettings)))
                     .Configure<EventHubSettings>(context.Configuration.GetSection(nameof(EventHubSettings)));
-                
+
                 services
-                    .AddAirslipFunctionAuth(context.Configuration)
                     .AddRepositories(RepositoryUserType.Service)
                     .AddSingleton(typeof(IModelValidator<>), typeof(NullValidator<>))
-                    .AddAutoMapper(ServiceRegistration.RegisterMappings, MapperUsageType.Service);
+                    .AddAutoMapper(ServiceRegistration.RegisterMappings, MapperUsageType.Service)
+                    .AddAirslipFunctionAuth(context.Configuration);
 
                 services
                     .AddAirslipSqlServer<SqlServerContext>(context.Configuration)

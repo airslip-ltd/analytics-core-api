@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Airslip.Analytics.Core.Models;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-public record AccountBalanceModel : IModelWithOwnership, IFromDataSource
+public record BankAccountBalanceModel : IModelWithOwnership, IFromDataSource
 {
     public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
@@ -22,7 +22,7 @@ public record AccountBalanceModel : IModelWithOwnership, IFromDataSource
     public BalanceStatus BalanceStatus { get; init; }
     public long Balance { get; init; }
     public string? Currency { get; init; }
-    public List<AccountBalanceDetailModel> Details { get; init; } = new();
+    public List<BankAccountBalanceDetailModel> Details { get; init; } = new();
     public DataSources DataSource { get; set; } = DataSources.Unknown;
     public long TimeStamp { get; set; }
 }
