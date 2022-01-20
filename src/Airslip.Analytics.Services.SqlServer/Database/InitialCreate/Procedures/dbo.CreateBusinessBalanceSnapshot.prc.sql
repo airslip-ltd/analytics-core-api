@@ -11,7 +11,7 @@ select @UpdatedOn = dbo.round5min(DATEADD(ss, TimeStamp / 1000, '19700101'))
 from AccountBalances
 where Id = @Id
 
-    insert into BusinessBalanceSnapshots
+    insert into BankBusinessBalanceSnapshots
 (Id, EntityId, AirslipUserType, UpdatedOn, Balance, TimeStamp, Currency)
 select dbo.getId(),
        x.EntityId,
@@ -21,11 +21,11 @@ select dbo.getId(),
        MAX(x.TimeStamp) as TimeStamp,
        x.Currency
 from (select distinct AccountId
-    from AccountBalanceSnapshots
+    from BankAccountBalanceSnapshots
     where EntityId = @EntityId
     and AirslipUserType = @AirslipUserType) c
     cross apply (select top 1 *
-    from AccountBalanceSnapshots t
+    from BankAccountBalanceSnapshots t
     where t.EntityId = @EntityId
     and t.AirslipUserType = @AirslipUserType
     and t.AccountId = c.AccountId

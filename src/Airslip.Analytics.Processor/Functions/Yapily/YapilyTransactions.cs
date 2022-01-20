@@ -5,12 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
-namespace Airslip.Analytics.Processor.Functions
+namespace Airslip.Analytics.Processor.Functions.Yapily
 {
-    public static class YapilyAccounts
+    public static class YapilyTransactions
     {
-        [Function(nameof(YapilyAccounts))]
-        public static async Task Run([EventHubTrigger(Constants.EVENT_QUEUE_YAPILY_ACCOUNTS, 
+        [Function(nameof(YapilyTransactions))]
+        public static async Task Run([EventHubTrigger(Constants.EVENT_QUEUE_YAPILY_TRANSACTIONS, 
             Connection = "YapilyEventHubConnectionString",
             ConsumerGroup = "%ConsumerGroup%",
             IsBatched = false)] string myEventHubMessage, FunctionContext context)
@@ -19,7 +19,7 @@ namespace Airslip.Analytics.Processor.Functions
                 .InstanceServices
                 .GetService<IMessageHandoffService>() ?? throw new NotImplementedException();
 
-            await messageService.ProcessMessage(Constants.EVENT_QUEUE_YAPILY_ACCOUNTS, myEventHubMessage);
+            await messageService.ProcessMessage(Constants.EVENT_QUEUE_YAPILY_TRANSACTIONS, myEventHubMessage);
         }
     }
 }

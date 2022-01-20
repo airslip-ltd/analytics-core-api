@@ -56,14 +56,14 @@ public static class MapperExtensions
 
     public static IMapperConfigurationExpression AddEntityModelMappings(this IMapperConfigurationExpression cfg)
     {
-        cfg.CreateMap<AccountBalanceModel, AccountBalance>().ReverseMap();
-        cfg.CreateMap<AccountBalanceDetailModel, AccountBalanceDetail>().ReverseMap();
-        cfg.CreateMap<AccountBalanceCreditLineModel, AccountBalanceCreditLine>().ReverseMap();
-        cfg.CreateMap<AccountModel, Account>().ReverseMap();
+        cfg.CreateMap<AccountBalanceModel, BankAccountBalance>().ReverseMap();
+        cfg.CreateMap<AccountBalanceDetailModel, BankAccountBalanceDetail>().ReverseMap();
+        cfg.CreateMap<AccountBalanceCreditLineModel, BankAccountBalanceCreditLine>().ReverseMap();
+        cfg.CreateMap<AccountModel, BankAccount>().ReverseMap();
         cfg.CreateMap<BankModel, Bank>().ReverseMap();
-        cfg.CreateMap<TransactionModel, Transaction>().ReverseMap();
+        cfg.CreateMap<TransactionModel, BankTransaction>().ReverseMap();
         cfg.CreateMap<BankCountryCodeModel, BankCountryCode>().ReverseMap();
-        cfg.CreateMap<SyncRequestModel, SyncRequest>().ReverseMap();
+        cfg.CreateMap<SyncRequestModel, BankSyncRequest>().ReverseMap();
 
         return cfg;
     }

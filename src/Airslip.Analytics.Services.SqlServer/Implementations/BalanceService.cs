@@ -28,7 +28,7 @@ public class BalanceService : IBalanceService
     
     public async Task<IResponse> GetCurrentBalance()
     {
-        IQueryable<CurrentSnapshotModel> qBalance = from businessBalance in _context.BusinessBalances
+        IQueryable<CurrentSnapshotModel> qBalance = from businessBalance in _context.BankBusinessBalances
             where businessBalance.EntityId.Equals(_userToken.EntityId)
             where businessBalance.AirslipUserType == _userToken.AirslipUserType
             select new CurrentSnapshotModel
@@ -38,7 +38,7 @@ public class BalanceService : IBalanceService
                 Movement = businessBalance.Movement
             };
         
-        IQueryable<SnapshotMetric> qSnapshot = from accountBalanceSnapshot in _context.BusinessBalanceSnapshots
+        IQueryable<SnapshotMetric> qSnapshot = from accountBalanceSnapshot in _context.BankBusinessBalanceSnapshots
             where accountBalanceSnapshot.EntityId.Equals(_userToken.EntityId)
             where accountBalanceSnapshot.AirslipUserType == _userToken.AirslipUserType
             orderby accountBalanceSnapshot.TimeStamp

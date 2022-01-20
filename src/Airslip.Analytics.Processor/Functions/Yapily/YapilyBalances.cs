@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
-namespace Airslip.Analytics.Processor.Functions
+namespace Airslip.Analytics.Processor.Functions.Yapily
 {
     public static class YapilyBalances
     {

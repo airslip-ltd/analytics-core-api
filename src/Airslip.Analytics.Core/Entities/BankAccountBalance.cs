@@ -12,7 +12,7 @@ using System.Collections.Generic;
 namespace Airslip.Analytics.Core.Entities;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-public record AccountBalance : IEntityWithOwnership, IFromDataSource
+public record BankAccountBalance : IEntityWithOwnership, IFromDataSource
 {
     public string Id { get; set; } = string.Empty;
     public virtual BasicAuditInformation? AuditInformation { get; set; }
@@ -24,7 +24,7 @@ public record AccountBalance : IEntityWithOwnership, IFromDataSource
     public BalanceStatus BalanceStatus { get; init; }
     public long Balance { get; init; }
     public string? Currency { get; init; }
-    public virtual ICollection<AccountBalanceDetail> Details { get; init; } = new List<AccountBalanceDetail>();
+    public virtual ICollection<BankAccountBalanceDetail> Details { get; init; } = new List<BankAccountBalanceDetail>();
     public DataSources DataSource { get; set; } = DataSources.Unknown;
     public long TimeStamp { get; set; } = DateTime.UtcNow.ToUnixTimeMilliseconds();
 }

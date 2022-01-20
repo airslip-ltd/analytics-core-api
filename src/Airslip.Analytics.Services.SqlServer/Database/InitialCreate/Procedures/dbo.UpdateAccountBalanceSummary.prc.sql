@@ -4,12 +4,12 @@ create or alter proc dbo.UpdateAccountBalanceSummary(
 )
 as
 begin
-merge into AccountBalanceSummaries as abs
+merge into BankAccountBalanceSummaries as abs
     using
         (
             select x.AccountId, x.EntityId, x.AirslipUserType, x.UpdatedOn, x.Balance, x.TimeStamp, x.Currency
             from (select distinct AccountId
-                  from AccountBalanceSnapshots
+                  from BankAccountBalanceSnapshots
                   where EntityId = @EntityId
                     and AirslipUserType = @AirslipUserType) c
                 cross apply (select top 1 *
@@ -31,7 +31,7 @@ merge into AccountBalanceSummaries as abs
             (AccountId, EntityId, AirslipUserType, UpdatedOn, Balance, TimeStamp, Currency, Movement)
             values (y.AccountId, y.EntityId, y.AirslipUserType, y.UpdatedOn, y.Balance, y.TimeStamp, y.Currency, 0);
 
-merge into BusinessBalances as bb
+merge into BankBusinessBalances as bb
     using
         (
             select x.EntityId,
@@ -41,11 +41,11 @@ merge into BusinessBalances as bb
                    MAX(x.TimeStamp) as TimeStamp,
                    x.Currency
             from (select distinct AccountId
-                from AccountBalanceSnapshots
+                from BankAccountBalanceSnapshots
                 where EntityId = @EntityId
                 and AirslipUserType = @AirslipUserType) c
                 cross apply (select top 1 *
-                from AccountBalanceSnapshots t
+                from BankAccountBalanceSnapshots t
                 where t.EntityId = @EntityId
                 and t.AirslipUserType = @AirslipUserType
                 and t.AccountId = c.AccountId

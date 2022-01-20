@@ -10,7 +10,7 @@ using System;
 namespace Airslip.Analytics.Core.Entities;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-public class Transaction : IEntityWithOwnership, IFromDataSource
+public class BankTransaction : IEntityWithOwnership, IFromDataSource
 {
     public string Id { get; set; } = string.Empty;
     public virtual BasicAuditInformation? AuditInformation { get; set; }

@@ -13,55 +13,55 @@ public class SqlServerContext : AirslipSqlServerContextBase
         
     }
     
-    public DbSet<Account> Accounts { get; set; }
-    public DbSet<AccountBalance> AccountBalances { get; set; }
-    public DbSet<AccountBalanceSnapshot> AccountBalanceSnapshots { get; set; }
-    public DbSet<AccountBalanceSummary> AccountBalanceSummary { get; set; }
+    public DbSet<BankAccount> BankAccounts { get; set; }
+    public DbSet<BankAccountBalance> BankAccountBalances { get; set; }
+    public DbSet<BankAccountBalanceSnapshot> BankAccountBalanceSnapshots { get; set; }
+    public DbSet<BankAccountBalanceSummary> BankAccountBalanceSummary { get; set; }
     public DbSet<Bank> Banks { get; set; }
-    public DbSet<BusinessBalance> BusinessBalances { get; set; }
-    public DbSet<BusinessBalanceSnapshot> BusinessBalanceSnapshots { get; set; }
-    public DbSet<SyncRequest> SyncRequests { get; set; }
-    public DbSet<Transaction> Transactions { get; set; }
+    public DbSet<BankBusinessBalance> BankBusinessBalances { get; set; }
+    public DbSet<BankBusinessBalanceSnapshot> BankBusinessBalanceSnapshots { get; set; }
+    public DbSet<BankSyncRequest> BankSyncRequests { get; set; }
+    public DbSet<BankTransaction> BankTransactions { get; set; }
     public DbSet<CountryCode> CountryCodes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Table names
         modelBuilder
-            .Entity<AccountBalanceSnapshot>()
-            .ToTable("AccountBalanceSnapshots")
+            .Entity<BankAccountBalanceSnapshot>()
+            .ToTable("BankAccountBalanceSnapshots")
             .HasKey(b => b.Id)
-            .HasName("PK_AccountBalanceSnapshots_Id");
+            .HasName("PK_BankAccountBalanceSnapshots_Id");
         
         modelBuilder
-            .Entity<AccountBalanceSummary>()
-            .ToTable("AccountBalanceSummaries")
+            .Entity<BankAccountBalanceSummary>()
+            .ToTable("BankAccountBalanceSummaries")
             .HasKey(b => b.Id)
-            .HasName("PK_AccountBalanceSummaries_Id");
+            .HasName("PK_BankAccountBalanceSummaries_Id");
         
         modelBuilder
-            .Entity<AccountBalance>()
-            .ToTable("AccountBalances")
+            .Entity<BankAccountBalance>()
+            .ToTable("BankAccountBalances")
             .HasKey(b => b.Id)
-            .HasName("PK_AccountBalances_Id");
+            .HasName("PK_BankAccountBalances_Id");
         
         modelBuilder
-            .Entity<AccountBalanceDetail>()
-            .ToTable("AccountBalanceDetails")
+            .Entity<BankAccountBalanceDetail>()
+            .ToTable("BankAccountBalanceDetails")
             .HasKey(b => b.Id)
-            .HasName("PK_AccountBalanceDetails_Id");
+            .HasName("PK_BankAccountBalanceDetails_Id");
         
         modelBuilder
-            .Entity<AccountBalanceCreditLine>()
-            .ToTable("AccountBalanceCreditLines")
+            .Entity<BankAccountBalanceCreditLine>()
+            .ToTable("BankAccountBalanceCreditLines")
             .HasKey(b => b.Id)
-            .HasName("PK_AccountBalanceCreditLines_Id");
+            .HasName("PK_BankAccountBalanceCreditLines_Id");
         
         modelBuilder
-            .Entity<Account>()
-            .ToTable("Accounts")
+            .Entity<BankAccount>()
+            .ToTable("BankAccounts")
             .HasKey(b => b.Id)
-            .HasName("PK_Accounts_Id");
+            .HasName("PK_BankAccounts_Id");
         
         modelBuilder
             .Entity<Bank>()
@@ -70,34 +70,34 @@ public class SqlServerContext : AirslipSqlServerContextBase
             .HasName("PK_Banks_Id");
         
         modelBuilder
-            .Entity<BusinessBalance>()
-            .ToTable("BusinessBalances")
+            .Entity<BankBusinessBalance>()
+            .ToTable("BankBusinessBalances")
             .HasKey(b => b.Id)
-            .HasName("PK_BusinessBalances_Id");
+            .HasName("PK_BankBusinessBalances_Id");
         
         modelBuilder
-            .Entity<BusinessBalanceSnapshot>()
-            .ToTable("BusinessBalanceSnapshots")
+            .Entity<BankBusinessBalanceSnapshot>()
+            .ToTable("BankBusinessBalanceSnapshots")
             .HasKey(b => b.Id)
-            .HasName("PK_BusinessBalanceSnapshots_Id");
+            .HasName("PK_BankBusinessBalanceSnapshots_Id");
         
         modelBuilder
-            .Entity<Transaction>()
-            .ToTable("Transactions")
+            .Entity<BankTransaction>()
+            .ToTable("BankTransactions")
             .HasKey(b => b.Id)
-            .HasName("PK_Transactions_Id");
+            .HasName("PK_BankTransactions_Id");
         
         modelBuilder
-            .Entity<SyncRequest>()
-            .ToTable("SyncRequests")
+            .Entity<BankSyncRequest>()
+            .ToTable("BankSyncRequests")
             .HasKey(b => b.Id)
-            .HasName("PK_SyncRequests_Id");
+            .HasName("PK_BankSyncRequests_Id");
         
         modelBuilder
             .Entity<CountryCode>()
-            .ToTable("CountryCodes")
+            .ToTable("BankCountryCodes")
             .HasKey(b => b.Id)
-            .HasName("PK_CountryCodes_Id");
+            .HasName("PK_BankCountryCodes_Id");
 
         modelBuilder
             .Entity<BasicAuditInformation>()
@@ -108,12 +108,12 @@ public class SqlServerContext : AirslipSqlServerContextBase
         // Defaults
         
         modelBuilder
-            .Entity<AccountBalanceSummary>()
+            .Entity<BankAccountBalanceSummary>()
             .Property(b => b.Id)
             .HasDefaultValueSql("dbo.getId()");
         
         modelBuilder
-            .Entity<BusinessBalance>()
+            .Entity<BankBusinessBalance>()
             .Property(b => b.Id)
             .HasDefaultValueSql("dbo.getId()");
     }
