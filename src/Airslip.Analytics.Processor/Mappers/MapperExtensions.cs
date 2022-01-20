@@ -58,6 +58,8 @@ public static class MapperExtensions
             .ForPath(o => o.Id,
                 exp =>
                     exp.MapFrom(model => $"{model.EntityId}:{model.Transaction.TransactionNumber}"))
+            .ForMember(o => o.TimeStamp, opt => 
+                opt.MapFrom(p => DateTime.UtcNow.ToUnixTimeMilliseconds()))
             .ForPath(o => o.Datetime, exp =>
                 exp.MapFrom(model =>
                     model.Transaction.Datetime == null
@@ -107,8 +109,6 @@ public static class MapperExtensions
                 exp.MapFrom(model => model.Transaction.StoreAddress))
             .ForPath(o => o.StoreLocationId, exp =>
                 exp.MapFrom(model => model.Transaction.StoreLocationId))
-            .ForPath(o => o.TimeStamp, exp =>
-                exp.MapFrom(model => model.CreatedTimeStamp))
             .ForPath(o => o.TrackingId, exp =>
                 exp.MapFrom(model => model.TrackingId))
             .ForPath(o => o.TransactionNumber, exp =>
@@ -206,10 +206,7 @@ public static class MapperExtensions
         cfg.CreateMap<BankCountryCodeModel, BankCountryCode>().ReverseMap();
         cfg.CreateMap<BankSyncRequestModel, BankSyncRequest>().ReverseMap();
 
-        cfg.CreateMap<MerchantTransactionModel, MerchantTransaction>()
-            .ForMember(o => o.TimeStamp, opt => 
-                opt.MapFrom(p => DateTime.UtcNow.ToUnixTimeMilliseconds()))
-            .ReverseMap();
+        cfg.CreateMap<MerchantTransactionModel, MerchantTransaction>().ReverseMap();
         cfg.CreateMap<MerchantCardDetailModel, MerchantCardDetail>().MatchOnId().ReverseMap();
         cfg.CreateMap<MerchantPaymentDetailModel, MerchantPaymentDetail>().MatchOnId().ReverseMap();
         cfg.CreateMap<MerchantDiscountModel, MerchantDiscount>().MatchOnId().ReverseMap();
