@@ -6,6 +6,7 @@ using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Types.Enums;
 using Airslip.Common.Types.Transaction;
 using Airslip.Common.Utilities;
+using Airslip.Common.Utilities.Extensions;
 using AutoMapper;
 using AutoMapper.EquivalencyExpression;
 using JetBrains.Annotations;
@@ -205,7 +206,10 @@ public static class MapperExtensions
         cfg.CreateMap<BankCountryCodeModel, BankCountryCode>().ReverseMap();
         cfg.CreateMap<BankSyncRequestModel, BankSyncRequest>().ReverseMap();
 
-        cfg.CreateMap<MerchantTransactionModel, MerchantTransaction>().ReverseMap();
+        cfg.CreateMap<MerchantTransactionModel, MerchantTransaction>()
+            .ForMember(o => o.TimeStamp, opt => 
+                opt.MapFrom(p => DateTime.UtcNow.ToUnixTimeMilliseconds()))
+            .ReverseMap();
         cfg.CreateMap<MerchantCardDetailModel, MerchantCardDetail>().MatchOnId().ReverseMap();
         cfg.CreateMap<MerchantPaymentDetailModel, MerchantPaymentDetail>().MatchOnId().ReverseMap();
         cfg.CreateMap<MerchantDiscountModel, MerchantDiscount>().MatchOnId().ReverseMap();
