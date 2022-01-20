@@ -22,7 +22,44 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.Account", b =>
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.Bank", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AccountName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AuditInformationId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("DataSource")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EntityStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("EnvironmentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("TimeStamp")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("TradingName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id")
+                        .HasName("PK_Banks_Id");
+
+                    b.HasIndex("AuditInformationId");
+
+                    b.ToTable("Banks", (string)null);
+                });
+
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankAccount", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -85,14 +122,14 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id")
-                        .HasName("PK_Accounts_Id");
+                        .HasName("PK_BankAccounts_Id");
 
                     b.HasIndex("AuditInformationId");
 
-                    b.ToTable("Accounts", (string)null);
+                    b.ToTable("BankAccounts", (string)null);
                 });
 
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.AccountBalance", b =>
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankAccountBalance", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -132,27 +169,30 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id")
-                        .HasName("PK_AccountBalances_Id");
+                        .HasName("PK_BankAccountBalances_Id");
 
                     b.HasIndex("AuditInformationId");
 
-                    b.ToTable("AccountBalances", (string)null);
+                    b.ToTable("BankAccountBalances", (string)null);
                 });
 
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.AccountBalanceCreditLine", b =>
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankAccountBalanceCreditLine", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AccountBalanceDetailId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("Balance")
                         .HasColumnType("bigint");
 
                     b.Property<int>("BalanceStatus")
                         .HasColumnType("int");
+
+                    b.Property<string>("BankAccountBalanceDetailId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("CreditLineType")
                         .HasColumnType("int");
@@ -161,21 +201,21 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id")
-                        .HasName("PK_AccountBalanceCreditLines_Id");
+                        .HasName("PK_BankAccountBalanceCreditLines_Id");
 
-                    b.HasIndex("AccountBalanceDetailId");
+                    b.HasIndex("BankAccountBalanceDetailId");
 
-                    b.ToTable("AccountBalanceCreditLines", (string)null);
+                    b.ToTable("BankAccountBalanceCreditLines", (string)null);
                 });
 
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.AccountBalanceDetail", b =>
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankAccountBalanceDetail", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AccountBalanceId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("Balance")
                         .HasColumnType("bigint");
@@ -185,6 +225,9 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
                     b.Property<int>("BalanceType")
                         .HasColumnType("int");
+
+                    b.Property<string>("BankAccountBalanceId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("CreditLineIncluded")
                         .HasColumnType("bit");
@@ -196,14 +239,14 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id")
-                        .HasName("PK_AccountBalanceDetails_Id");
+                        .HasName("PK_BankAccountBalanceDetails_Id");
 
-                    b.HasIndex("AccountBalanceId");
+                    b.HasIndex("BankAccountBalanceId");
 
-                    b.ToTable("AccountBalanceDetails", (string)null);
+                    b.ToTable("BankAccountBalanceDetails", (string)null);
                 });
 
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.AccountBalanceSnapshot", b =>
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankAccountBalanceSnapshot", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -231,12 +274,12 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id")
-                        .HasName("PK_AccountBalanceSnapshots_Id");
+                        .HasName("PK_BankAccountBalanceSnapshots_Id");
 
-                    b.ToTable("AccountBalanceSnapshots", (string)null);
+                    b.ToTable("BankAccountBalanceSnapshots", (string)null);
                 });
 
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.AccountBalanceSummary", b =>
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankAccountBalanceSummary", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
@@ -268,46 +311,72 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id")
-                        .HasName("PK_AccountBalanceSummaries_Id");
+                        .HasName("PK_BankAccountBalanceSummaries_Id");
 
-                    b.ToTable("AccountBalanceSummaries", (string)null);
+                    b.ToTable("BankAccountBalanceSummaries", (string)null);
                 });
 
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.Bank", b =>
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankBusinessBalance", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)")
+                        .HasDefaultValueSql("dbo.getId()");
+
+                    b.Property<int>("AirslipUserType")
+                        .HasColumnType("int");
+
+                    b.Property<long>("Balance")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Currency")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EntityId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Movement")
+                        .HasColumnType("float");
+
+                    b.Property<long>("TimeStamp")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id")
+                        .HasName("PK_BankBusinessBalances_Id");
+
+                    b.ToTable("BankBusinessBalances", (string)null);
+                });
+
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankBusinessBalanceSnapshot", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("AccountName")
-                        .IsRequired()
+                    b.Property<int>("AirslipUserType")
+                        .HasColumnType("int");
+
+                    b.Property<long>("Balance")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Currency")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AuditInformationId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("DataSource")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EntityStatus")
-                        .HasColumnType("int");
-
-                    b.Property<string>("EnvironmentType")
-                        .IsRequired()
+                    b.Property<string>("EntityId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("TimeStamp")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("TradingName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id")
-                        .HasName("PK_Banks_Id");
+                        .HasName("PK_BankBusinessBalanceSnapshots_Id");
 
-                    b.HasIndex("AuditInformationId");
-
-                    b.ToTable("Banks", (string)null);
+                    b.ToTable("BankBusinessBalanceSnapshots", (string)null);
                 });
 
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankCountryCode", b =>
@@ -326,81 +395,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.ToTable("BankCountryCode");
                 });
 
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.BusinessBalance", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)")
-                        .HasDefaultValueSql("dbo.getId()");
-
-                    b.Property<int>("AirslipUserType")
-                        .HasColumnType("int");
-
-                    b.Property<long>("Balance")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Currency")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EntityId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Movement")
-                        .HasColumnType("float");
-
-                    b.Property<long>("TimeStamp")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id")
-                        .HasName("PK_BusinessBalances_Id");
-
-                    b.ToTable("BusinessBalances", (string)null);
-                });
-
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.BusinessBalanceSnapshot", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AirslipUserType")
-                        .HasColumnType("int");
-
-                    b.Property<long>("Balance")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Currency")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EntityId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("TimeStamp")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id")
-                        .HasName("PK_BusinessBalanceSnapshots_Id");
-
-                    b.ToTable("BusinessBalanceSnapshots", (string)null);
-                });
-
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.CountryCode", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id")
-                        .HasName("PK_CountryCodes_Id");
-
-                    b.ToTable("CountryCodes", (string)null);
-                });
-
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.SyncRequest", b =>
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankSyncRequest", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -457,14 +452,14 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id")
-                        .HasName("PK_SyncRequests_Id");
+                        .HasName("PK_BankSyncRequests_Id");
 
                     b.HasIndex("AuditInformationId");
 
-                    b.ToTable("SyncRequests", (string)null);
+                    b.ToTable("BankSyncRequests", (string)null);
                 });
 
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.Transaction", b =>
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankTransaction", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -544,11 +539,22 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id")
-                        .HasName("PK_Transactions_Id");
+                        .HasName("PK_BankTransactions_Id");
 
                     b.HasIndex("AuditInformationId");
 
-                    b.ToTable("Transactions", (string)null);
+                    b.ToTable("BankTransactions", (string)null);
+                });
+
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.CountryCode", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id")
+                        .HasName("PK_CountryCodes_Id");
+
+                    b.ToTable("CountryCodes", (string)null);
                 });
 
             modelBuilder.Entity("Airslip.Common.Repository.Types.Entities.BasicAuditInformation", b =>
@@ -580,42 +586,6 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.ToTable("AuditInformation", (string)null);
                 });
 
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.Account", b =>
-                {
-                    b.HasOne("Airslip.Common.Repository.Types.Entities.BasicAuditInformation", "AuditInformation")
-                        .WithMany()
-                        .HasForeignKey("AuditInformationId");
-
-                    b.Navigation("AuditInformation");
-                });
-
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.AccountBalance", b =>
-                {
-                    b.HasOne("Airslip.Common.Repository.Types.Entities.BasicAuditInformation", "AuditInformation")
-                        .WithMany()
-                        .HasForeignKey("AuditInformationId");
-
-                    b.Navigation("AuditInformation");
-                });
-
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.AccountBalanceCreditLine", b =>
-                {
-                    b.HasOne("Airslip.Analytics.Core.Entities.AccountBalanceDetail", null)
-                        .WithMany("CreditLines")
-                        .HasForeignKey("AccountBalanceDetailId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.AccountBalanceDetail", b =>
-                {
-                    b.HasOne("Airslip.Analytics.Core.Entities.AccountBalance", null)
-                        .WithMany("Details")
-                        .HasForeignKey("AccountBalanceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.Bank", b =>
                 {
                     b.HasOne("Airslip.Common.Repository.Types.Entities.BasicAuditInformation", "AuditInformation")
@@ -623,6 +593,38 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasForeignKey("AuditInformationId");
 
                     b.Navigation("AuditInformation");
+                });
+
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankAccount", b =>
+                {
+                    b.HasOne("Airslip.Common.Repository.Types.Entities.BasicAuditInformation", "AuditInformation")
+                        .WithMany()
+                        .HasForeignKey("AuditInformationId");
+
+                    b.Navigation("AuditInformation");
+                });
+
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankAccountBalance", b =>
+                {
+                    b.HasOne("Airslip.Common.Repository.Types.Entities.BasicAuditInformation", "AuditInformation")
+                        .WithMany()
+                        .HasForeignKey("AuditInformationId");
+
+                    b.Navigation("AuditInformation");
+                });
+
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankAccountBalanceCreditLine", b =>
+                {
+                    b.HasOne("Airslip.Analytics.Core.Entities.BankAccountBalanceDetail", null)
+                        .WithMany("CreditLines")
+                        .HasForeignKey("BankAccountBalanceDetailId");
+                });
+
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankAccountBalanceDetail", b =>
+                {
+                    b.HasOne("Airslip.Analytics.Core.Entities.BankAccountBalance", null)
+                        .WithMany("Details")
+                        .HasForeignKey("BankAccountBalanceId");
                 });
 
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankCountryCode", b =>
@@ -634,7 +636,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.SyncRequest", b =>
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankSyncRequest", b =>
                 {
                     b.HasOne("Airslip.Common.Repository.Types.Entities.BasicAuditInformation", "AuditInformation")
                         .WithMany()
@@ -643,28 +645,28 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Navigation("AuditInformation");
                 });
 
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.Transaction", b =>
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankTransaction", b =>
                 {
                     b.HasOne("Airslip.Common.Repository.Types.Entities.BasicAuditInformation", "AuditInformation")
                         .WithMany()
                         .HasForeignKey("AuditInformationId");
 
                     b.Navigation("AuditInformation");
-                });
-
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.AccountBalance", b =>
-                {
-                    b.Navigation("Details");
-                });
-
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.AccountBalanceDetail", b =>
-                {
-                    b.Navigation("CreditLines");
                 });
 
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.Bank", b =>
                 {
                     b.Navigation("CountryCodes");
+                });
+
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankAccountBalance", b =>
+                {
+                    b.Navigation("Details");
+                });
+
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankAccountBalanceDetail", b =>
+                {
+                    b.Navigation("CreditLines");
                 });
 #pragma warning restore 612, 618
         }
