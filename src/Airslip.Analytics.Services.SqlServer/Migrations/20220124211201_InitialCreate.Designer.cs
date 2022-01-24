@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Airslip.Analytics.Services.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    [Migration("20220124200729_InitialCreate")]
+    [Migration("20220124211201_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -608,6 +608,9 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
                     b.Property<string>("ProductId")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductStatus")
+                        .HasColumnType("int");
 
                     b.Property<double?>("Quantity")
                         .HasColumnType("float");

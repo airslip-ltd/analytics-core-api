@@ -424,6 +424,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ManualUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Dimensions = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProductStatus = table.Column<int>(type: "int", nullable: false),
                     MerchantTransactionId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
