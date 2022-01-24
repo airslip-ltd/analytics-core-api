@@ -44,8 +44,5 @@ public record MerchantTransaction : IFromDataSource, IEntityWithOwnership
     public string? Number { get; init; }
     public string? Store { get; init; }
 
-    public virtual ICollection<MerchantDiscount> Discounts { get; init; } = new List<MerchantDiscount>();
-    public virtual ICollection<MerchantVat> VatRates { get; init; } = new List<MerchantVat>();
     public virtual ICollection<MerchantProduct> Products { get; init; } = new List<MerchantProduct>();
-    public virtual ICollection<MerchantPaymentDetail> PaymentDetails { get; init; } = new List<MerchantPaymentDetail>();
 }

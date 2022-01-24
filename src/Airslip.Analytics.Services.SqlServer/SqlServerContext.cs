@@ -13,12 +13,10 @@ public class SqlServerContext : AirslipSqlServerContextBase
         
     }
     
-    public DbSet<MerchantCardDetail> MerchantCardDetails { get; set; }
-    public DbSet<MerchantPaymentDetail> MerchantPaymentDetails { get; set; }
-    public DbSet<MerchantDiscount> MerchantDiscounts { get; set; }
+    public DbSet<MerchantRefund> MerchantRefunds { get; set; }
+    public DbSet<MerchantRefundItem> MerchantRefundItems { get; set; }
     public DbSet<MerchantProduct> MerchantProducts { get; set; }
     public DbSet<MerchantTransaction> MerchantTransactions { get; set; }
-    public DbSet<MerchantVat> MerchantVat { get; set; }
     
     public DbSet<BankAccount> BankAccounts { get; set; }
     public DbSet<BankAccountBalance> BankAccountBalances { get; set; }
@@ -113,23 +111,17 @@ public class SqlServerContext : AirslipSqlServerContextBase
             .HasName("PK_AuditInformation_Id");
         
         modelBuilder
-            .Entity<MerchantCardDetail>()
-            .ToTable("MerchantCardDetails")
+            .Entity<MerchantRefund>()
+            .ToTable("MerchantRefunds")
             .HasKey(b => b.Id)
-            .HasName("PK_MerchantCardDetails_Id");
+            .HasName("PK_MerchantRefunds_Id");
 
         modelBuilder
-            .Entity<MerchantPaymentDetail>()
-            .ToTable("MerchantPaymentDetails")
+            .Entity<MerchantRefundItem>()
+            .ToTable("MerchantRefundItems")
             .HasKey(b => b.Id)
-            .HasName("PK_MerchantPaymentDetails_Id");
+            .HasName("PK_MerchantRefundItems_Id");
 
-        modelBuilder
-            .Entity<MerchantDiscount>()
-            .ToTable("MerchantDiscounts")
-            .HasKey(b => b.Id)
-            .HasName("PK_MerchantDiscounts_Id");
-    
         modelBuilder
             .Entity<MerchantProduct>()
             .ToTable("MerchantProducts")
@@ -142,12 +134,6 @@ public class SqlServerContext : AirslipSqlServerContextBase
             .HasKey(b => b.Id)
             .HasName("PK_MerchantTransactions_Id");
 
-        modelBuilder
-            .Entity<MerchantVat>()
-            .ToTable("MerchantVats")
-            .HasKey(b => b.Id)
-            .HasName("PK_MerchantVats_Id");
-
         // Defaults
         
         modelBuilder
@@ -159,17 +145,6 @@ public class SqlServerContext : AirslipSqlServerContextBase
             .Entity<BankBusinessBalance>()
             .Property(b => b.Id)
             .HasDefaultValueSql("dbo.getId()");
-        
-        
-        // Precision
-        
-        modelBuilder.Entity<MerchantVat>()
-            .Property(i => i.Rate)
-            .HasColumnType("smallmoney");
-        
-        modelBuilder.Entity<MerchantProduct>()
-            .Property(i => i.VatRate)
-            .HasColumnType("smallmoney");
         
     }
 }

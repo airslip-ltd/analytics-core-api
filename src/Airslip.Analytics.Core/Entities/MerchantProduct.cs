@@ -1,8 +1,8 @@
-using Airslip.Analytics.Core.Interfaces;
+using Airslip.Common.Repository.Types.Interfaces;
 
-namespace Airslip.Analytics.Core.Models;
+namespace Airslip.Analytics.Core.Entities;
 
-public class MerchantProductModel : IModelWithId
+public class MerchantProduct : IEntityWithId
 {
     public string Id { get; set; } = string.Empty;
     public string? TransactionProductId { get; init; }

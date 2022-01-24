@@ -1,6 +1,6 @@
 using Airslip.Analytics.Core.Entities;
+using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Core.Models;
-using Airslip.Analytics.Core.Models.Raw;
 using Airslip.Analytics.Core.Models.Raw.Yapily;
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Types.Enums;
@@ -10,7 +10,6 @@ using Airslip.Common.Utilities.Extensions;
 using AutoMapper;
 using AutoMapper.EquivalencyExpression;
 using JetBrains.Annotations;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 
@@ -57,7 +56,7 @@ public static class MapperExtensions
             .CreateMap<TransactionEnvelope, MerchantTransactionModel>()
             .ForPath(o => o.Id,
                 exp =>
-                    exp.MapFrom(model => $"{model.EntityId}:{model.Transaction.TransactionNumber}"))
+                    exp.MapFrom(model => model.Transaction.TransactionId))
             .ForMember(o => o.TimeStamp, opt => 
                 opt.MapFrom(p => DateTime.UtcNow.ToUnixTimeMilliseconds()))
             .ForPath(o => o.Datetime, exp =>
@@ -121,67 +120,29 @@ public static class MapperExtensions
                 exp.MapFrom(model => model.Transaction.BankStatementDescription))
             .ForPath(o => o.BankStatementTransactionIdentifier, exp =>
                 exp.MapFrom(model => model.Transaction.BankStatementTransactionIdentifier))
-            .ForPath(o => o.Discounts, exp =>
-                exp.MapFrom(model => (model.Transaction.Discounts ?? Array.Empty<DiscountRequest>()).Select(o => 
-                    new MerchantDiscountModel
-                    {
-                        Id = CommonFunctions.GetId(),
-                        Amount = o.Amount,
-                        Name = o.Name
-                    })))
+            
             .ForPath(o => o.Products, exp =>
-                exp.MapFrom(model => (model.Transaction.Products ?? Array.Empty<ProductRequest>()).Select(o => 
-                    new MerchantProductModel
-                    {
-                        Id = CommonFunctions.GetId(),
-                        Code = o.Code,
-                        Description = o.Description,
-                        Dimensions = o.Dimensions,
-                        Ean = o.Ean,
-                        Item = o.Item,
-                        Manufacturer = o.Manufacturer,
-                        Quantity = o.Quantity,
-                        Sku = o.Sku,
-                        Subtotal = o.Subtotal,
-                        Total = o.Total,
-                        Upc = o.Upc,
-                        Url = o.Url,
-                        ImageUrl = o.ImageUrl,
-                        ManualUrl = o.ManualUrl,
-                        ModelNumber = o.ModelNumber,
-                        ReleaseDate = o.ReleaseDate,
-                        VatAmount = o.VatRate != null ? o.VatRate.Amount : null,
-                        VatRate =  o.VatRate != null ? o.VatRate.Rate : null,
-                        VatCode = o.VatRate != null ? o.VatRate.Code : null
-                    })))
-            .ForPath(o => o.PaymentDetails, exp =>
-                exp.MapFrom(model => (model.Transaction.PaymentDetails ?? Array.Empty<PaymentDetailRequest>()).Select(o => 
-                    new MerchantPaymentDetailModel()
-                    {
-                        Id = CommonFunctions.GetId(),
-                        Amount = o.Amount,
-                        Method = o.Method,
-                        CardDetails = (o.CardDetails ?? Array.Empty<CardDetailRequest>()).Select(p => new MerchantCardDetailModel()
-                        {
-                            Id = CommonFunctions.GetId(),
-                            Aid = p.Aid,
-                            Tid = p.Tid,
-                            AuthCode = p.AuthCode,
-                            CardScheme = p.CardScheme,
-                            PanSequence = p.PanSequence,
-                            MaskedPanNumber = p.MaskedPanNumber
-                        }).ToList()
-                    })))
-            .ForPath(o => o.VatRates, exp =>
-                exp.MapFrom(model => (model.Transaction.VatRates ?? Array.Empty<VatRequest>()).Select(o => 
-                    new MerchantVatModel()
-                    {
-                        Id = CommonFunctions.GetId(),
-                        Amount = o.Amount,
-                        Code = o.Code,
-                        Rate = o.Rate
-                    })));
+                exp.MapFrom(model => model.Transaction.Products))
+            .ForPath(o => o.Refunds, exp =>
+                exp.MapFrom(model => model.Transaction.Refunds));
 
+        mapperConfigurationExpression
+            .CreateMap<TransactionRefundDetail, MerchantRefundModel>()
+            .ForMember(o => o.ModifiedTime, exp =>
+                exp.MapFrom<DateTimeResolver>())
+            .ForPath(o => o.Items, exp =>
+                exp.MapFrom(s => s.Items));
+        
+        mapperConfigurationExpression
+            .CreateMap<TransactionRefundItem, MerchantRefundItemModel>()
+            .ForMember(o => o.Id, exp =>
+                exp.MapFrom(s => s.TransactionProductId));
+        
+        mapperConfigurationExpression
+            .CreateMap<TransactionProduct, MerchantProductModel>()
+            .ForMember(o => o.Id, exp =>
+                exp.MapFrom(s => s.TransactionProductId));
+        
         return mapperConfigurationExpression;
     }
 
@@ -195,8 +156,22 @@ public static class MapperExtensions
         }
     }
 
+    
+    [UsedImplicitly]
+    private class DateTimeResolver : IValueResolver<TransactionRefundDetail, MerchantRefundModel, DateTime>
+    {
+        public DateTime Resolve(TransactionRefundDetail source, MerchantRefundModel destination, DateTime destMember,
+            ResolutionContext context)
+        {
+            if (source.ModifiedTime?.Value != null && source.ModifiedTime.Format != null)
+                return DateTime.ParseExact(source.ModifiedTime.Value, source.ModifiedTime.Format, null);
+            return DateTime.UtcNow;
+        }
+    }
+    
     public static IMapperConfigurationExpression AddEntityModelMappings(this IMapperConfigurationExpression cfg)
     {
+        cfg.AddCollectionMappers();
         cfg.CreateMap<BankAccountBalanceModel, BankAccountBalance>().ReverseMap();
         cfg.CreateMap<BankAccountBalanceDetailModel, BankAccountBalanceDetail>().ReverseMap();
         cfg.CreateMap<BankAccountBalanceCreditLineModel, BankAccountBalanceCreditLine>().ReverseMap();
@@ -207,11 +182,11 @@ public static class MapperExtensions
         cfg.CreateMap<BankSyncRequestModel, BankSyncRequest>().ReverseMap();
 
         cfg.CreateMap<MerchantTransactionModel, MerchantTransaction>().ReverseMap();
-        cfg.CreateMap<MerchantCardDetailModel, MerchantCardDetail>().MatchOnId().ReverseMap();
-        cfg.CreateMap<MerchantPaymentDetailModel, MerchantPaymentDetail>().MatchOnId().ReverseMap();
-        cfg.CreateMap<MerchantDiscountModel, MerchantDiscount>().MatchOnId().ReverseMap();
         cfg.CreateMap<MerchantProductModel, MerchantProduct>().MatchOnId().ReverseMap();
-        cfg.CreateMap<MerchantVatModel, MerchantVat>().MatchOnId().ReverseMap();
+        cfg.CreateMap<MerchantRefundModel, MerchantRefund>().MatchOnId().ReverseMap();
+        cfg.CreateMap<MerchantRefundItemModel, MerchantRefundItem>()
+            .ForMember(o => o.Id, exp => exp.MapFrom(s => s.TransactionProductId))
+            .MatchOnId().ReverseMap();
         
         return cfg;
     }
