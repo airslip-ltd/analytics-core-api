@@ -607,6 +607,9 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Property<string>("ProductId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ProductStatus")
+                        .HasColumnType("int");
+
                     b.Property<double?>("Quantity")
                         .HasColumnType("float");
 

@@ -1,4 +1,5 @@
 using Airslip.Common.Repository.Types.Interfaces;
+using Airslip.Common.Types.Enums;
 
 namespace Airslip.Analytics.Core.Entities;
 
@@ -32,4 +33,5 @@ public class MerchantProduct : IEntityWithId
     public string? Url { get; init; }
     public string? ManualUrl { get; init; }
     public string? Dimensions { get; init; }
+    public ProductStatus ProductStatus { get; init; } = ProductStatus.Active;
 }
