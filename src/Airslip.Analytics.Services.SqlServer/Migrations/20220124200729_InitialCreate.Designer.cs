@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Airslip.Analytics.Services.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    [Migration("20220120131137_AddMerchantTransactions")]
-    partial class AddMerchantTransactions
+    [Migration("20220124200729_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -559,91 +559,10 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.ToTable("CountryCodes", (string)null);
                 });
 
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantCardDetail", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Aid")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AuthCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CardScheme")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskedPanNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MerchantPaymentDetailId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("PanSequence")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tid")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id")
-                        .HasName("PK_MerchantCardDetails_Id");
-
-                    b.HasIndex("MerchantPaymentDetailId");
-
-                    b.ToTable("MerchantCardDetails", (string)null);
-                });
-
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantDiscount", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<long?>("Amount")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("MerchantTransactionId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id")
-                        .HasName("PK_MerchantDiscounts_Id");
-
-                    b.HasIndex("MerchantTransactionId");
-
-                    b.ToTable("MerchantDiscounts", (string)null);
-                });
-
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantPaymentDetail", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<long?>("Amount")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("MerchantTransactionId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Method")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id")
-                        .HasName("PK_MerchantPaymentDetails_Id");
-
-                    b.HasIndex("MerchantTransactionId");
-
-                    b.ToTable("MerchantPaymentDetails", (string)null);
-                });
-
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantProduct", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -651,13 +570,13 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Property<string>("Dimensions")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long?>("DiscountAmount")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Ean")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Item")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ManualUrl")
@@ -672,20 +591,44 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Property<string>("ModelNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Quantity")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("ReleaseDate")
+                    b.Property<string>("ParentTransactionProductId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("Price")
                         .HasColumnType("bigint");
+
+                    b.Property<long?>("PriceIncTax")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ProductCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("Quantity")
+                        .HasColumnType("float");
 
                     b.Property<string>("Sku")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("Subtotal")
+                    b.Property<double?>("TaxPercent")
+                        .HasColumnType("float");
+
+                    b.Property<long?>("TaxValue")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("Total")
+                    b.Property<long?>("TaxValueAfterDiscount")
                         .HasColumnType("bigint");
+
+                    b.Property<long?>("TotalPrice")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("TransactionProductId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Upc")
                         .HasColumnType("nvarchar(max)");
@@ -693,14 +636,17 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("VatAmount")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("VatCode")
+                    b.Property<string>("VariantId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("VatRate")
-                        .HasColumnType("smallmoney");
+                    b.Property<long?>("WarrantyExpiryDateTime")
+                        .HasColumnType("bigint");
+
+                    b.Property<double?>("Weight")
+                        .HasColumnType("float");
+
+                    b.Property<string>("WeightUnit")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id")
                         .HasName("PK_MerchantProducts_Id");
@@ -708,6 +654,66 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.HasIndex("MerchantTransactionId");
 
                     b.ToTable("MerchantProducts", (string)null);
+                });
+
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantRefund", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("Fee")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("ModifiedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("Shipping")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("Tax")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("Total")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id")
+                        .HasName("PK_MerchantRefunds_Id");
+
+                    b.ToTable("MerchantRefunds", (string)null);
+                });
+
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantRefundItem", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("MerchantRefundId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProductId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("Qty")
+                        .HasColumnType("float");
+
+                    b.Property<long?>("Refund")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("TransactionProductId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VariantId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id")
+                        .HasName("PK_MerchantRefundItems_Id");
+
+                    b.HasIndex("MerchantRefundId");
+
+                    b.ToTable("MerchantRefundItems", (string)null);
                 });
 
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantTransaction", b =>
@@ -811,31 +817,6 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.ToTable("MerchantTransactions", (string)null);
                 });
 
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantVat", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<long?>("Amount")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MerchantTransactionId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<decimal?>("Rate")
-                        .HasColumnType("smallmoney");
-
-                    b.HasKey("Id")
-                        .HasName("PK_MerchantVats_Id");
-
-                    b.HasIndex("MerchantTransactionId");
-
-                    b.ToTable("MerchantVats", (string)null);
-                });
-
             modelBuilder.Entity("Airslip.Common.Repository.Types.Entities.BasicAuditInformation", b =>
                 {
                     b.Property<string>("Id")
@@ -933,32 +914,18 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Navigation("AuditInformation");
                 });
 
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantCardDetail", b =>
-                {
-                    b.HasOne("Airslip.Analytics.Core.Entities.MerchantPaymentDetail", null)
-                        .WithMany("CardDetails")
-                        .HasForeignKey("MerchantPaymentDetailId");
-                });
-
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantDiscount", b =>
-                {
-                    b.HasOne("Airslip.Analytics.Core.Entities.MerchantTransaction", null)
-                        .WithMany("Discounts")
-                        .HasForeignKey("MerchantTransactionId");
-                });
-
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantPaymentDetail", b =>
-                {
-                    b.HasOne("Airslip.Analytics.Core.Entities.MerchantTransaction", null)
-                        .WithMany("PaymentDetails")
-                        .HasForeignKey("MerchantTransactionId");
-                });
-
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantProduct", b =>
                 {
                     b.HasOne("Airslip.Analytics.Core.Entities.MerchantTransaction", null)
                         .WithMany("Products")
                         .HasForeignKey("MerchantTransactionId");
+                });
+
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantRefundItem", b =>
+                {
+                    b.HasOne("Airslip.Analytics.Core.Entities.MerchantRefund", null)
+                        .WithMany("Items")
+                        .HasForeignKey("MerchantRefundId");
                 });
 
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantTransaction", b =>
@@ -968,13 +935,6 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasForeignKey("AuditInformationId");
 
                     b.Navigation("AuditInformation");
-                });
-
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantVat", b =>
-                {
-                    b.HasOne("Airslip.Analytics.Core.Entities.MerchantTransaction", null)
-                        .WithMany("VatRates")
-                        .HasForeignKey("MerchantTransactionId");
                 });
 
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.Bank", b =>
@@ -992,20 +952,14 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Navigation("CreditLines");
                 });
 
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantPaymentDetail", b =>
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantRefund", b =>
                 {
-                    b.Navigation("CardDetails");
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantTransaction", b =>
                 {
-                    b.Navigation("Discounts");
-
-                    b.Navigation("PaymentDetails");
-
                     b.Navigation("Products");
-
-                    b.Navigation("VatRates");
                 });
 #pragma warning restore 612, 618
         }
