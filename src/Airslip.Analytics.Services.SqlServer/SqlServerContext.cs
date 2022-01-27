@@ -17,7 +17,7 @@ public class SqlServerContext : AirslipSqlServerContextBase
     public DbSet<MerchantRefundItem> MerchantRefundItems { get; set; }
     public DbSet<MerchantProduct> MerchantProducts { get; set; }
     public DbSet<MerchantTransaction> MerchantTransactions { get; set; }
-    
+    public DbSet<MerchantMetricSnapshot> MerchantMetricSnapshots { get; set; }
     public DbSet<BankAccount> BankAccounts { get; set; }
     public DbSet<BankAccountBalance> BankAccountBalances { get; set; }
     public DbSet<BankAccountBalanceSnapshot> BankAccountBalanceSnapshots { get; set; }
@@ -134,6 +134,12 @@ public class SqlServerContext : AirslipSqlServerContextBase
             .HasKey(b => b.Id)
             .HasName("PK_MerchantTransactions_Id");
 
+        modelBuilder
+            .Entity<MerchantMetricSnapshot>()
+            .ToTable("MerchantMetricSnapshots")
+            .HasKey(b => b.Id)
+            .HasName("PK_MerchantMetricSnapshots_Id");
+
         // Defaults
         
         modelBuilder
@@ -143,6 +149,11 @@ public class SqlServerContext : AirslipSqlServerContextBase
         
         modelBuilder
             .Entity<BankBusinessBalance>()
+            .Property(b => b.Id)
+            .HasDefaultValueSql("dbo.getId()");
+        
+        modelBuilder
+            .Entity<MerchantMetricSnapshot>()
             .Property(b => b.Id)
             .HasDefaultValueSql("dbo.getId()");
         

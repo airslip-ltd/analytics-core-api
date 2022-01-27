@@ -113,6 +113,27 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MerchantMetricSnapshots",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValueSql: "dbo.getId()"),
+                    EntityId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AirslipUserType = table.Column<int>(type: "int", nullable: false),
+                    Year = table.Column<int>(type: "int", nullable: true),
+                    Month = table.Column<int>(type: "int", nullable: true),
+                    Day = table.Column<int>(type: "int", nullable: true),
+                    OrderCount = table.Column<int>(type: "int", nullable: false),
+                    TotalSales = table.Column<long>(type: "bigint", nullable: false),
+                    SaleCount = table.Column<int>(type: "int", nullable: false),
+                    TotalRefunds = table.Column<long>(type: "bigint", nullable: false),
+                    RefundCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MerchantMetricSnapshots_Id", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BankAccountBalances",
                 columns: table => new
                 {
@@ -562,6 +583,9 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
             migrationBuilder.DropTable(
                 name: "CountryCodes");
+
+            migrationBuilder.DropTable(
+                name: "MerchantMetricSnapshots");
 
             migrationBuilder.DropTable(
                 name: "MerchantProducts");

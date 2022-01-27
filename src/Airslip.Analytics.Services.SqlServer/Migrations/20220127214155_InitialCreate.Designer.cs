@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Airslip.Analytics.Services.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    [Migration("20220127204557_InitialCreate")]
+    [Migration("20220127214155_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -557,6 +557,49 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasName("PK_CountryCodes_Id");
 
                     b.ToTable("CountryCodes", (string)null);
+                });
+
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantMetricSnapshot", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)")
+                        .HasDefaultValueSql("dbo.getId()");
+
+                    b.Property<int>("AirslipUserType")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Day")
+                        .HasColumnType("int");
+
+                    b.Property<string>("EntityId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Month")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RefundCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SaleCount")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TotalRefunds")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TotalSales")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id")
+                        .HasName("PK_MerchantMetricSnapshots_Id");
+
+                    b.ToTable("MerchantMetricSnapshots", (string)null);
                 });
 
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantProduct", b =>

@@ -22,6 +22,7 @@
 	  <EmbeddedResource Include="Database\Core\Functions\dbo.round5min.udf.sql" />
 	  <EmbeddedResource Include="Database\Core\Views\dbo.getNewID.viw.sql" />
 	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.CreateBusinessBalanceSnapshot.prc.sql" />
+	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.CreateMerchantMetricSnapshot.prc.sql" />
 	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.UpdateAccountBalanceSummary.prc.sql" />
 	  <None Remove="Database\InitialCreate\Procedures\dbo.SomeAnaltyic.sql" />
 	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.CreateAccountBalanceSnapshot.prc.sql" />
