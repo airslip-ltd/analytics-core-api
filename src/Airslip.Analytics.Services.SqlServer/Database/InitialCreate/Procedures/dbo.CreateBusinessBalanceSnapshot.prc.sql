@@ -11,7 +11,7 @@ select @UpdatedOn = dbo.round5min(DATEADD(ss, TimeStamp / 1000, '19700101'))
 from BankAccountBalances
 where Id = @Id
 
-    insert into BankBusinessBalanceSnapshotas
+    insert into BankBusinessBalanceSnapshots
 (Id, EntityId, AirslipUserType, UpdatedOn, Balance, TimeStamp, Currency)
 select dbo.getId(),
        x.EntityId,

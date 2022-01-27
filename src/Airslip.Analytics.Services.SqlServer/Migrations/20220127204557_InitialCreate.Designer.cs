@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Airslip.Analytics.Services.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    [Migration("20220124211201_InitialCreate")]
+    [Migration("20220127204557_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -670,6 +670,9 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Property<long?>("Fee")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("MerchantTransactionId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("ModifiedTime")
                         .HasColumnType("datetime2");
 
@@ -684,6 +687,8 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
                     b.HasKey("Id")
                         .HasName("PK_MerchantRefunds_Id");
+
+                    b.HasIndex("MerchantTransactionId");
 
                     b.ToTable("MerchantRefunds", (string)null);
                 });
@@ -751,6 +756,9 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Property<DateTime?>("Datetime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("Day")
+                        .HasColumnType("int");
+
                     b.Property<string>("EntityId")
                         .HasColumnType("nvarchar(max)");
 
@@ -759,6 +767,9 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
                     b.Property<string>("InternalId")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Month")
+                        .HasColumnType("int");
 
                     b.Property<string>("Number")
                         .HasColumnType("nvarchar(max)");
@@ -811,6 +822,9 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Year")
+                        .HasColumnType("int");
 
                     b.HasKey("Id")
                         .HasName("PK_MerchantTransactions_Id");
@@ -924,6 +938,13 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasForeignKey("MerchantTransactionId");
                 });
 
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantRefund", b =>
+                {
+                    b.HasOne("Airslip.Analytics.Core.Entities.MerchantTransaction", null)
+                        .WithMany("Refunds")
+                        .HasForeignKey("MerchantTransactionId");
+                });
+
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantRefundItem", b =>
                 {
                     b.HasOne("Airslip.Analytics.Core.Entities.MerchantRefund", null)
@@ -963,6 +984,8 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantTransaction", b =>
                 {
                     b.Navigation("Products");
+
+                    b.Navigation("Refunds");
                 });
 #pragma warning restore 612, 618
         }

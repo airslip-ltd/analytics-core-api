@@ -39,6 +39,9 @@ public record MerchantTransactionModel : IFromDataSource, IModelWithOwnership
     public string? Till { get; init; }
     public string? Number { get; init; }
     public string? Store { get; init; }
+    public int? Year { get; set; }
+    public int? Month { get; set; }
+    public int? Day { get; set; }
     public List<MerchantProductModel> Products { get; init; } = new();
     public List<MerchantRefundModel> Refunds { get; init; } = new();
 }
