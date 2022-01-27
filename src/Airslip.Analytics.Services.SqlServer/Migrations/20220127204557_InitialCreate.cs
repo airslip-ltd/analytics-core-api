@@ -113,23 +113,6 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MerchantRefunds",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Shipping = table.Column<long>(type: "bigint", nullable: true),
-                    Fee = table.Column<long>(type: "bigint", nullable: true),
-                    Tax = table.Column<long>(type: "bigint", nullable: true),
-                    Total = table.Column<long>(type: "bigint", nullable: true),
-                    ModifiedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MerchantRefunds_Id", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "BankAccountBalances",
                 columns: table => new
                 {
@@ -316,7 +299,10 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     Time = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Till = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Store = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Store = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Year = table.Column<int>(type: "int", nullable: true),
+                    Month = table.Column<int>(type: "int", nullable: true),
+                    Day = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -325,28 +311,6 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         name: "FK_MerchantTransactions_AuditInformation_AuditInformationId",
                         column: x => x.AuditInformationId,
                         principalTable: "AuditInformation",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MerchantRefundItems",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    TransactionProductId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProductId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VariantId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Qty = table.Column<double>(type: "float", nullable: true),
-                    Refund = table.Column<long>(type: "bigint", nullable: true),
-                    MerchantRefundId = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MerchantRefundItems_Id", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_MerchantRefundItems_MerchantRefunds_MerchantRefundId",
-                        column: x => x.MerchantRefundId,
-                        principalTable: "MerchantRefunds",
                         principalColumn: "Id");
                 });
 
@@ -438,6 +402,29 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MerchantRefunds",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Shipping = table.Column<long>(type: "bigint", nullable: true),
+                    Fee = table.Column<long>(type: "bigint", nullable: true),
+                    Tax = table.Column<long>(type: "bigint", nullable: true),
+                    Total = table.Column<long>(type: "bigint", nullable: true),
+                    ModifiedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MerchantTransactionId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MerchantRefunds_Id", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MerchantRefunds_MerchantTransactions_MerchantTransactionId",
+                        column: x => x.MerchantTransactionId,
+                        principalTable: "MerchantTransactions",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BankAccountBalanceCreditLines",
                 columns: table => new
                 {
@@ -456,6 +443,28 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         name: "FK_BankAccountBalanceCreditLines_BankAccountBalanceDetails_BankAccountBalanceDetailId",
                         column: x => x.BankAccountBalanceDetailId,
                         principalTable: "BankAccountBalanceDetails",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MerchantRefundItems",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TransactionProductId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProductId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VariantId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Qty = table.Column<double>(type: "float", nullable: true),
+                    Refund = table.Column<long>(type: "bigint", nullable: true),
+                    MerchantRefundId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MerchantRefundItems_Id", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MerchantRefundItems_MerchantRefunds_MerchantRefundId",
+                        column: x => x.MerchantRefundId,
+                        principalTable: "MerchantRefunds",
                         principalColumn: "Id");
                 });
 
@@ -510,6 +519,11 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 column: "MerchantRefundId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MerchantRefunds_MerchantTransactionId",
+                table: "MerchantRefunds",
+                column: "MerchantTransactionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MerchantTransactions_AuditInformationId",
                 table: "MerchantTransactions",
                 column: "AuditInformationId");
@@ -562,13 +576,13 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 name: "Banks");
 
             migrationBuilder.DropTable(
-                name: "MerchantTransactions");
-
-            migrationBuilder.DropTable(
                 name: "MerchantRefunds");
 
             migrationBuilder.DropTable(
                 name: "BankAccountBalances");
+
+            migrationBuilder.DropTable(
+                name: "MerchantTransactions");
 
             migrationBuilder.DropTable(
                 name: "AuditInformation");

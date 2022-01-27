@@ -18,9 +18,7 @@ public record MerchantTransaction : IFromDataSource, IEntityWithOwnership
     public AirslipUserType AirslipUserType { get; set; }
     public DataSources DataSource { get; set; }
     public long TimeStamp { get; set; }
-
     public string TrackingId { get; set; } = string.Empty;
-        
     public string? InternalId { get; init; }
     public string? Source { get; init; }
     public string? TransactionNumber { get; init; }
@@ -37,12 +35,16 @@ public record MerchantTransaction : IFromDataSource, IEntityWithOwnership
     public string? CurrencyCode { get; init; }
     public string? CustomerEmail { get; init; }
     public string? OperatorName { get; init; }
-        
     public DateTime? Date { get; init; }
     public string? Time { get; init; }
     public string? Till { get; init; }
     public string? Number { get; init; }
     public string? Store { get; init; }
 
+    public int? Year { get; set; }
+    public int? Month { get; set; }
+    public int? Day { get; set; }
+    
     public virtual ICollection<MerchantProduct> Products { get; init; } = new List<MerchantProduct>();
+    public virtual ICollection<MerchantRefund> Refunds { get; init; } = new List<MerchantRefund>();
 }

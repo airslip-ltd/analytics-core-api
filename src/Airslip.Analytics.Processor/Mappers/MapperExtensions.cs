@@ -59,12 +59,15 @@ public static class MapperExtensions
                     exp.MapFrom(model => model.Transaction.TransactionId))
             .ForMember(o => o.TimeStamp, opt => 
                 opt.MapFrom(p => DateTime.UtcNow.ToUnixTimeMilliseconds()))
-            .ForPath(o => o.Datetime, exp =>
-                exp.MapFrom(model =>
-                    model.Transaction.Datetime == null
-                        ? (DateTime?) null
-                        : DateTime.Parse(model.Transaction.Datetime, null,
-                            System.Globalization.DateTimeStyles.RoundtripKind)))
+            // .ForPath(o => o.Datetime, exp =>
+            //     exp.MapFrom(model =>
+            //         model.Transaction.Datetime == null
+            //             ? (DateTime?) null
+            //             : DateTime.Parse(model.Transaction.Datetime, null,
+            //                 System.Globalization.DateTimeStyles.RoundtripKind)))
+            
+            .ForMember(o => o.Datetime, exp =>
+                exp.MapFrom<TransactionDateTimeResolver>())
             .ForPath(o => o.Date, exp =>
                 exp.MapFrom(model =>
                     model.Transaction.TransactionDetail != null ? model.Transaction.TransactionDetail.Date : null))
@@ -155,7 +158,6 @@ public static class MapperExtensions
             return CommonFunctions.GetId();
         }
     }
-
     
     [UsedImplicitly]
     private class DateTimeResolver : IValueResolver<TransactionRefundDetail, MerchantRefundModel, DateTime>
@@ -166,6 +168,23 @@ public static class MapperExtensions
             if (source.ModifiedTime?.Value != null && source.ModifiedTime.Format != null)
                 return DateTime.ParseExact(source.ModifiedTime.Value, source.ModifiedTime.Format, null);
             return DateTime.UtcNow;
+        }
+    }
+    
+    [UsedImplicitly]
+    private class TransactionDateTimeResolver : IValueResolver<TransactionEnvelope, MerchantTransactionModel, DateTime?>
+    {
+        public DateTime? Resolve(TransactionEnvelope source, MerchantTransactionModel destination, DateTime? destMember,
+            ResolutionContext context)
+        {
+            if (source.Transaction.Datetime == null) return null;
+            
+            DateTime theDate = DateTime.Parse(source.Transaction.Datetime, null,
+                System.Globalization.DateTimeStyles.RoundtripKind);
+            destination.Year = theDate.Year;
+            destination.Month = theDate.Month;
+            destination.Day = theDate.Day;
+            return theDate;
         }
     }
     
