@@ -22,26 +22,29 @@ namespace Airslip.Analytics.Api.Controllers
     [ApiController]    
     [ApiVersion("1.0")]
     [Produces(Json.MediaType)]
-    [Route("v{version:apiVersion}/balance")]
+    [Route("v{version:apiVersion}/snapshot")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class AccountsController : ApiControllerBase
+    public class SnapshotController : ApiControllerBase
     {
-        private readonly IBalanceService _balanceService;
+        private readonly IDashboardSnapshotService _dashboardSnapshotService;
 
-        public AccountsController(IBalanceService balanceService, ITokenDecodeService<UserToken> tokenDecodeService, 
+        public SnapshotController(IDashboardSnapshotService dashboardSnapshotService, ITokenDecodeService<UserToken> tokenDecodeService, 
             IOptions<PublicApiSettings> publicApiOptions, ILogger logger) 
             : base(tokenDecodeService, publicApiOptions, logger)
         {
-            _balanceService = balanceService;
+            _dashboardSnapshotService = dashboardSnapshotService;
         }
         
         [HttpGet]
+        [Route("{snapshotType}")]
         [ProducesResponseType(typeof(DashboardSnapshotModel), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetAccounts()
+        public async Task<IActionResult> GetSnapshot([FromRoute]DashboardSnapshotType snapshotType,
+            [FromQuery]int dayRange = 7,
+            [FromQuery]int statRange = 10)
         {
-            IResponse response = await _balanceService
-                .GetCurrentBalance();
+            IResponse response = await _dashboardSnapshotService
+                .GetSnapshotFor(snapshotType, dayRange, statRange);
             
             return HandleResponse<DashboardSnapshotModel>(response);
         }

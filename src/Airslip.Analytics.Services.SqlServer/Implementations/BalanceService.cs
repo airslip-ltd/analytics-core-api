@@ -28,10 +28,10 @@ public class BalanceService : IBalanceService
     
     public async Task<IResponse> GetCurrentBalance()
     {
-        IQueryable<BankCurrentSnapshotModel> qBalance = from businessBalance in _context.BankBusinessBalances
+        IQueryable<DashboardSnapshotModel> qBalance = from businessBalance in _context.BankBusinessBalances
             where businessBalance.EntityId.Equals(_userToken.EntityId)
             where businessBalance.AirslipUserType == _userToken.AirslipUserType
-            select new BankCurrentSnapshotModel
+            select new DashboardSnapshotModel
             {
                 Balance = businessBalance.Balance,
                 TimeStamp = businessBalance.TimeStamp,
@@ -48,7 +48,7 @@ public class BalanceService : IBalanceService
                 TimeStamp = accountBalanceSnapshot.TimeStamp
             };
 
-        BankCurrentSnapshotModel? response = await qBalance.FirstOrDefaultAsync();
+        DashboardSnapshotModel? response = await qBalance.FirstOrDefaultAsync();
 
         if (response == null) return new NotFoundResponse("BusinessBalance", _userToken.EntityId);
 

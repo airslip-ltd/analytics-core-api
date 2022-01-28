@@ -1,4 +1,5 @@
 using Airslip.Analytics.Core.Entities;
+using Airslip.Analytics.Core.Entities.Unmapped;
 using Airslip.Common.Repository.Types.Entities;
 using Airslip.Common.Services.SqlServer.Implementations;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +29,10 @@ public class SqlServerContext : AirslipSqlServerContextBase
     public DbSet<BankSyncRequest> BankSyncRequests { get; set; }
     public DbSet<BankTransaction> BankTransactions { get; set; }
     public DbSet<CountryCode> CountryCodes { get; set; }
-
+    
+    // from stored procedures
+    public virtual DbSet<DashboardMetricSnapshot> DashboardMetricSnapshots { get; set; }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Table names
@@ -157,5 +161,16 @@ public class SqlServerContext : AirslipSqlServerContextBase
             .Property(b => b.Id)
             .HasDefaultValueSql("dbo.getId()");
         
+        // Types
+        
+        modelBuilder
+            .Entity<MerchantMetricSnapshot>()
+            .Property(b => b.MetricDate)
+            .HasColumnType("date");
+        
+        // Keyless
+        modelBuilder
+            .Entity<DashboardMetricSnapshot>()
+            .HasNoKey();
     }
 }

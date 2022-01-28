@@ -108,7 +108,10 @@ builder.Services
     .AddScoped(typeof(IEntitySearch<,>), typeof(EntitySearch<,>));
 
 
-builder.Services.AddScoped<IBalanceService, BalanceService>();
+builder
+    .Services
+    .AddScoped<IBalanceService, BalanceService>()
+    .AddScoped<IDashboardSnapshotService, DashboardSnapshotService>();
 
 builder.Services
     .UseHealthChecks();

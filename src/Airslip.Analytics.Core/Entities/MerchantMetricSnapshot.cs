@@ -12,6 +12,7 @@ public record MerchantMetricSnapshot : IEntityWithId
     public string Id { get; set; } = string.Empty;
     public string? EntityId { get; set; }
     public AirslipUserType AirslipUserType { get; set; }
+    public DateTime? MetricDate { get; set; } 
     public int? Year { get; set; }
     public int? Month { get; set; }
     public int? Day { get; set; }
