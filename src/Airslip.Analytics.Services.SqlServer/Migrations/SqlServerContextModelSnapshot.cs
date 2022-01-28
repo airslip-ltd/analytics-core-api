@@ -573,6 +573,9 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Property<string>("EntityId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("MetricDate")
+                        .HasColumnType("date");
+
                     b.Property<int?>("Month")
                         .HasColumnType("int");
 
@@ -873,6 +876,26 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.HasIndex("AuditInformationId");
 
                     b.ToTable("MerchantTransactions", (string)null);
+                });
+
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.Unmapped.DashboardMetricSnapshot", b =>
+                {
+                    b.Property<long>("Balance")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Day")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("MetricDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Month")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.ToTable("DashboardMetricSnapshots");
                 });
 
             modelBuilder.Entity("Airslip.Common.Repository.Types.Entities.BasicAuditInformation", b =>

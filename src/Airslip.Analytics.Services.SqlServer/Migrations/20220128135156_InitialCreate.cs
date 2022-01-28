@@ -119,6 +119,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValueSql: "dbo.getId()"),
                     EntityId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AirslipUserType = table.Column<int>(type: "int", nullable: false),
+                    MetricDate = table.Column<DateTime>(type: "date", nullable: true),
                     Year = table.Column<int>(type: "int", nullable: true),
                     Month = table.Column<int>(type: "int", nullable: true),
                     Day = table.Column<int>(type: "int", nullable: true),

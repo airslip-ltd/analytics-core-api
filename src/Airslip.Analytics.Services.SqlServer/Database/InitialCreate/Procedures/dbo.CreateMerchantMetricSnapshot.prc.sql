@@ -58,9 +58,7 @@ where Id = @Id
             mms.RefundCount  = y.RefundCount
     when not matched then
         insert (EntityId, AirslipUserType, MetricDate, Year, Month, Day, TotalSales, SaleCount, TotalRefunds,
-                RefundCount)
+                RefundCount, OrderCount)
         VALUES (@EntityId, @AirslipUserType, datefromparts(@Year, @Month, @Day), @Year, @Month, @Day, y.TotalSales,
                 y.SaleCount, y.TotalRefunds,
-                y.RefundCount);
-go
-
+                y.RefundCount, y.OrderCount);

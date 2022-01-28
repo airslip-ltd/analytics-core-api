@@ -31,10 +31,12 @@ public class SqlServerContext : AirslipSqlServerContextBase
     public DbSet<CountryCode> CountryCodes { get; set; }
     
     // from stored procedures
-    public virtual DbSet<DashboardMetricSnapshot> DashboardMetricSnapshots { get; set; }
+    // public virtual DbSet<DashboardMetricSnapshot> DashboardMetricSnapshots { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<DashboardMetricSnapshot>().HasNoKey().ToView(null);
+        
         // Table names
         modelBuilder
             .Entity<BankAccountBalanceSnapshot>()
@@ -167,10 +169,6 @@ public class SqlServerContext : AirslipSqlServerContextBase
             .Entity<MerchantMetricSnapshot>()
             .Property(b => b.MetricDate)
             .HasColumnType("date");
-        
-        // Keyless
-        modelBuilder
-            .Entity<DashboardMetricSnapshot>()
-            .HasNoKey();
+
     }
 }

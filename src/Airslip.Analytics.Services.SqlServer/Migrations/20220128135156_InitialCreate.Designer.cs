@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Airslip.Analytics.Services.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    [Migration("20220127214155_InitialCreate")]
+    [Migration("20220128135156_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -575,6 +575,9 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Property<string>("EntityId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("MetricDate")
+                        .HasColumnType("date");
+
                     b.Property<int?>("Month")
                         .HasColumnType("int");
 
@@ -875,6 +878,26 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.HasIndex("AuditInformationId");
 
                     b.ToTable("MerchantTransactions", (string)null);
+                });
+
+            modelBuilder.Entity("Airslip.Analytics.Core.Entities.Unmapped.DashboardMetricSnapshot", b =>
+                {
+                    b.Property<long>("Balance")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Day")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("MetricDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Month")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.ToTable("DashboardMetricSnapshots");
                 });
 
             modelBuilder.Entity("Airslip.Common.Repository.Types.Entities.BasicAuditInformation", b =>
