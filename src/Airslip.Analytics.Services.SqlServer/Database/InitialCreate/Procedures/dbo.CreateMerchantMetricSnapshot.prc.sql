@@ -62,3 +62,4 @@ where Id = @Id
         VALUES (@EntityId, @AirslipUserType, datefromparts(@Year, @Month, @Day), @Year, @Month, @Day, y.TotalSales,
                 y.SaleCount, y.TotalRefunds,
                 y.RefundCount, y.OrderCount);
+
