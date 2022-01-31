@@ -46,8 +46,8 @@ data "azurerm_eventhub_namespace" "yapily_event_hub" {
 }
 
 data "azurerm_eventhub_namespace" "integration_hub" {
-  name = "airslip-${local.short_environment}-integration-events-namespace"
-  resource_group_name = "airslip-${local.short_environment}-integration-resources"
+  name = "airslip-${local.short_environment}-merchant-integrations-namespace"
+  resource_group_name = "airslip-${local.short_environment}-merchant-integrations-resources"
 }
 
 module "ingredient_bowl" {
