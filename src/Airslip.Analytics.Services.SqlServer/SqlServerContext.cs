@@ -30,6 +30,9 @@ public class SqlServerContext : AirslipSqlServerContextBase
     public DbSet<BankTransaction> BankTransactions { get; set; }
     public DbSet<CountryCode> CountryCodes { get; set; }
     
+    public DbSet<BankAccountMetricSnapshot> BankAccountMetricSnapshots { get; set; }
+    //
+    
     // from stored procedures
     // public virtual DbSet<DashboardMetricSnapshot> DashboardMetricSnapshots { get; set; }
     
@@ -146,6 +149,12 @@ public class SqlServerContext : AirslipSqlServerContextBase
             .HasKey(b => b.Id)
             .HasName("PK_MerchantMetricSnapshots_Id");
 
+        modelBuilder
+            .Entity<BankAccountMetricSnapshot>()
+            .ToTable("BankAccountMetricSnapshots")
+            .HasKey(b => b.Id)
+            .HasName("PK_BankAccountMetricSnapshots_Id");
+        
         // Defaults
         
         modelBuilder
@@ -163,10 +172,20 @@ public class SqlServerContext : AirslipSqlServerContextBase
             .Property(b => b.Id)
             .HasDefaultValueSql("dbo.getId()");
         
+        modelBuilder
+            .Entity<BankAccountMetricSnapshot>()
+            .Property(b => b.Id)
+            .HasDefaultValueSql("dbo.getId()");
+        
         // Types
         
         modelBuilder
             .Entity<MerchantMetricSnapshot>()
+            .Property(b => b.MetricDate)
+            .HasColumnType("date");
+        
+        modelBuilder
+            .Entity<BankAccountMetricSnapshot>()
             .Property(b => b.MetricDate)
             .HasColumnType("date");
 
