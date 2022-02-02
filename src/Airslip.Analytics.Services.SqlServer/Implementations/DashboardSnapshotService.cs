@@ -4,10 +4,8 @@ using Airslip.Analytics.Core.Models;
 using Airslip.Common.Auth.Interfaces;
 using Airslip.Common.Auth.Models;
 using Airslip.Common.Repository.Types.Interfaces;
-using Airslip.Common.Repository.Types.Models;
 using Airslip.Common.Types.Interfaces;
 using Airslip.Common.Utilities.Extensions;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -66,11 +64,9 @@ public class DashboardSnapshotService : IDashboardSnapshotService
             DayRange = dayRange,
             TimeStamp = primary.MetricDate.ToUnixTimeMilliseconds(),
             Movement = movement,
-            Metrics = metrics.OrderBy(o => o.MetricDate).Select(o => new SnapshotMetric()
-            {
-                Balance = o.Balance,
-                TimeStamp = o.MetricDate.ToUnixTimeMilliseconds()
-            }).ToList()
+            Metrics = metrics.OrderBy(o => o.MetricDate)
+                .Select(o => new SnapshotMetric(o.MetricDate.ToUnixTimeMilliseconds(), o.Balance)
+            ).ToList()
         };
 
         return result;

@@ -42,11 +42,7 @@ public class BalanceService : IBalanceService
             where accountBalanceSnapshot.EntityId.Equals(_userToken.EntityId)
             where accountBalanceSnapshot.AirslipUserType == _userToken.AirslipUserType
             orderby accountBalanceSnapshot.TimeStamp
-            select new SnapshotMetric
-            {
-                Balance = accountBalanceSnapshot.Balance,
-                TimeStamp = accountBalanceSnapshot.TimeStamp
-            };
+            select new SnapshotMetric(accountBalanceSnapshot.TimeStamp, accountBalanceSnapshot.Balance);
 
         DashboardSnapshotModel? response = await qBalance.FirstOrDefaultAsync();
 
@@ -58,10 +54,7 @@ public class BalanceService : IBalanceService
 
         while (response.Metrics.Count < 10)
         {
-            response.Metrics.Insert(0, new SnapshotMetric
-            {
-                Balance = 0
-            });
+            response.Metrics.Insert(0, new SnapshotMetric(0, 0));
         }
         
         return response;

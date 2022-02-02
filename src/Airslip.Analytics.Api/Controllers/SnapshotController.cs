@@ -27,12 +27,16 @@ namespace Airslip.Analytics.Api.Controllers
     public class SnapshotController : ApiControllerBase
     {
         private readonly IDashboardSnapshotService _dashboardSnapshotService;
+        private readonly IRevenueAndRefundsService _revenueAndRefundsService;
 
-        public SnapshotController(IDashboardSnapshotService dashboardSnapshotService, ITokenDecodeService<UserToken> tokenDecodeService, 
+        public SnapshotController(IDashboardSnapshotService dashboardSnapshotService,
+            IRevenueAndRefundsService revenueAndRefundsService,
+            ITokenDecodeService<UserToken> tokenDecodeService, 
             IOptions<PublicApiSettings> publicApiOptions, ILogger logger) 
             : base(tokenDecodeService, publicApiOptions, logger)
         {
             _dashboardSnapshotService = dashboardSnapshotService;
+            _revenueAndRefundsService = revenueAndRefundsService;
         }
         
         [HttpGet]
@@ -47,6 +51,19 @@ namespace Airslip.Analytics.Api.Controllers
                 .GetSnapshotFor(snapshotType, dayRange, statRange);
             
             return HandleResponse<DashboardSnapshotModel>(response);
+        }
+        
+        [HttpGet]
+        [Route("revenue")]
+        [ProducesResponseType(typeof(RevenueAndRefundsByYearModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetRevenue(
+            [FromQuery]int year = 7)
+        {
+            IResponse response = await _revenueAndRefundsService
+                .GetRevenueAndRefunds(year);
+            
+            return HandleResponse<RevenueAndRefundsByYearModel>(response);
         }
     }
 }
