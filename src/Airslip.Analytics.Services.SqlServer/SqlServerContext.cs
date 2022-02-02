@@ -39,6 +39,7 @@ public class SqlServerContext : AirslipSqlServerContextBase
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<DashboardMetricSnapshot>().HasNoKey().ToView(null);
+        modelBuilder.Entity<RevenueAndRefundsByYear>().HasNoKey().ToView(null);
         
         // Table names
         modelBuilder

@@ -1,7 +1,11 @@
 namespace Airslip.Analytics.Core.Models;
 
-public class SnapshotMetric
+public enum PeriodType
 {
-    public long TimeStamp { get; set; }
-    public long Balance { get; set; }
+    Minute,
+    Hour,
+    Day,
+    Week,
+    Month,
+    Year
 }
