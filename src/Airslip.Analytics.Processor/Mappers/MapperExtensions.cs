@@ -32,7 +32,9 @@ public static class MapperExtensions
         mapperConfigurationExpression
             .CreateMap<RawYapilyTransactionModel, BankTransactionModel>()
             .ForPath(o => o.Amount,
-                exp => exp.MapFrom(model => (long) (model.Amount * 100) ));
+                exp => exp.MapFrom(model => (long) (model.Amount * 100) ))
+            .ForMember(o => o.Year,
+                opt => opt.MapFrom<BankTransactionDateTimeResolver>());
         
         // Ignore the incoming Id so we can create a new entry every time we receive an update
         mapperConfigurationExpression.CreateMap<RawYapilyBalanceModel, BankAccountBalanceModel>()
@@ -185,6 +187,20 @@ public static class MapperExtensions
             destination.Month = theDate.Month;
             destination.Day = theDate.Day;
             return theDate;
+        }
+    }
+    
+    [UsedImplicitly]
+    private class BankTransactionDateTimeResolver : IValueResolver<RawYapilyTransactionModel, BankTransactionModel, int?>
+    {
+        public int? Resolve(RawYapilyTransactionModel source, BankTransactionModel destination, int? destMember,
+            ResolutionContext context)
+        {
+            DateTime theDate = source.CapturedDate.ToUtcDate();
+            destination.Year = theDate.Year;
+            destination.Month = theDate.Month;
+            destination.Day = theDate.Day;
+            return theDate.Year;
         }
     }
     

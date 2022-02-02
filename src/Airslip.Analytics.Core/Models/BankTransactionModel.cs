@@ -34,4 +34,7 @@ public class BankTransactionModel : IModelWithOwnership, IFromDataSource
     public string? Reference { get; set; }
     public DataSources DataSource { get; set; } = DataSources.Unknown;
     public long TimeStamp { get; set; }
+    public int? Year { get; set; }
+    public int? Month { get; set; }
+    public int? Day { get; set; }
 }

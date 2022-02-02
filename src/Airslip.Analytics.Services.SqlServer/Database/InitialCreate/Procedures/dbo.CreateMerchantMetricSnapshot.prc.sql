@@ -9,6 +9,7 @@ Declare @Year as int, @Month as int, @Day as int
 select @Year = Year, @Month = Month, @Day = Day
 from MerchantTransactions
 where Id = @Id
+    
     merge into MerchantMetricSnapshots as mms
     using
         (
