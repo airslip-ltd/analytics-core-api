@@ -12,7 +12,7 @@ jobs:
       DOTNET_CORE_VERSION: 6.0.x
       BUILD_PATH: ./src/Airslip.Analytics.Core.sln
       CONTEXT_PATH: ./src/Airslip.Analytics.Services.SqlServer
-      TARGET_MIGRATION: AddMerchantTransactions
+      TARGET_MIGRATION: BankAccountMetrics
       PREVIOUS_MIGRATION: InitialCreate
       
     steps:
