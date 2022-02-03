@@ -32,6 +32,7 @@
 	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.UpdateAccountBalanceSummary.prc.sql" />
 	  <EmbeddedResource Include="Database\NegativeBalances\Functions\dbo.calcMovement.udf.sql" />
 	  <EmbeddedResource Include="Database\NegativeBalances\Procedures\dbo.CreateAccountBalanceSnapshot.prc.sql" />
+	  <EmbeddedResource Include="Database\NullValueInRevenue\Procedures\dbo.GetRevenueAndRefundsByYear.prc.sql" />
 	  <None Remove="Database\InitialCreate\Procedures\dbo.SomeAnaltyic.sql" />
 	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.CreateAccountBalanceSnapshot.prc.sql" />
 	</ItemGroup>
