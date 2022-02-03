@@ -1,10 +1,8 @@
 name: Production - Build and Deploy
 
 on:
- workflow_dispatch:
- push:
-   branches:
-     - main
+  release:
+    types: [published]
 
 jobs:
   build:
