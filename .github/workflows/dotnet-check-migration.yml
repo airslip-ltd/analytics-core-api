@@ -12,8 +12,8 @@ jobs:
       DOTNET_CORE_VERSION: 6.0.x
       BUILD_PATH: ./src/Airslip.Analytics.Core.sln
       CONTEXT_PATH: ./src/Airslip.Analytics.Services.SqlServer
-      TARGET_MIGRATION: BankAccountMetrics
-      PREVIOUS_MIGRATION: InitialCreate
+      TARGET_MIGRATION: NegativeBalances
+      PREVIOUS_MIGRATION: BankAccountMetrics
       
     steps:
     - uses: actions/checkout@v2
