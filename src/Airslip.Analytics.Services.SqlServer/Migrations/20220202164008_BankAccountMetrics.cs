@@ -55,7 +55,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
             
             // Migrate data
             migrationBuilder.Sql(@"
-                update BankTransaction
+                update BankTransactions
                 set     Year = datepart(year, dbo.round5min(DATEADD(ss, CapturedDate / 1000, '19700101'))),
                         Month = datepart(month, dbo.round5min(DATEADD(ss, CapturedDate / 1000, '19700101'))),
                         Day = datepart(day, dbo.round5min(DATEADD(ss, CapturedDate / 1000, '19700101')))");
