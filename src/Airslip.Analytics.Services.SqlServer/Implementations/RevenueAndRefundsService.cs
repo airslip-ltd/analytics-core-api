@@ -1,4 +1,5 @@
 using Airslip.Analytics.Core.Entities.Unmapped;
+using Airslip.Analytics.Core.Extensions;
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Core.Models;
 using Airslip.Common.Auth.Interfaces;
@@ -45,13 +46,13 @@ public class RevenueAndRefundsService : IRevenueAndRefundsService
                 new Series("Revenue", 
                     metrics.Select(o => new TimelyMetric(o.Month, formatter.GetAbbreviatedMonthName(o.Month),
                     o.TotalSales, PeriodType.Month)),
-                    metrics.Select( o=> o.TotalSales)
+                    metrics.Select( o=> o.TotalSales.ToPositiveCurrency())
                     
                     ),
              new Series("Refunds", metrics.Select(o => new TimelyMetric(o.Month, 
                  formatter.GetAbbreviatedMonthName(o.Month),
                  o.TotalRefunds, PeriodType.Month)),
-                 metrics.Select( o=> o.TotalRefunds))   
+                 metrics.Select( o=> o.TotalRefunds.ToPositiveCurrency()))   
             }
         );
         

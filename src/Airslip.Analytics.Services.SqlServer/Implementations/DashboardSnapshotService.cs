@@ -1,4 +1,5 @@
 using Airslip.Analytics.Core.Entities.Unmapped;
+using Airslip.Analytics.Core.Extensions;
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Core.Models;
 using Airslip.Common.Auth.Interfaces;
@@ -60,12 +61,13 @@ public class DashboardSnapshotService : IDashboardSnapshotService
 
         DashboardSnapshotModel result = new()
         {
-            Balance = primary.Balance,
+            Balance = primary.Balance.ToPositiveCurrency(),
             DayRange = dayRange,
             TimeStamp = primary.MetricDate.ToUnixTimeMilliseconds(),
             Movement = movement,
             Metrics = metrics.OrderBy(o => o.MetricDate)
-                .Select(o => new SnapshotMetric(o.MetricDate.ToUnixTimeMilliseconds(), o.Balance)
+                .Select(o => new SnapshotMetric(o.MetricDate.ToUnixTimeMilliseconds(), 
+                    o.Balance.ToPositiveCurrency())
             ).ToList()
         };
 
