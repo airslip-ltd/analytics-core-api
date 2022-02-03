@@ -60,7 +60,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         Month = datepart(month, dbo.round5min(DATEADD(ss, CapturedDate / 1000, '19700101'))),
                         Day = datepart(day, dbo.round5min(DATEADD(ss, CapturedDate / 1000, '19700101')))");
             
-            migrationBuilder.Sql(@"merge into BankAccountMetricSnapshots as bam
+            migrationBuilder.Sql(@"merge into BankAccountMetricSnapshots as bams
 using
     (
         select count(*)                                                as TransactionCount,
