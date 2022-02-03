@@ -1,3 +1,4 @@
+using Airslip.Analytics.Core.Extensions;
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Core.Models;
 using Airslip.Common.Auth.Interfaces;
@@ -33,7 +34,7 @@ public class BalanceService : IBalanceService
             where businessBalance.AirslipUserType == _userToken.AirslipUserType
             select new DashboardSnapshotModel
             {
-                Balance = businessBalance.Balance,
+                Balance = businessBalance.Balance.ToPositiveCurrency(),
                 TimeStamp = businessBalance.TimeStamp,
                 Movement = businessBalance.Movement
             };
@@ -42,7 +43,7 @@ public class BalanceService : IBalanceService
             where accountBalanceSnapshot.EntityId.Equals(_userToken.EntityId)
             where accountBalanceSnapshot.AirslipUserType == _userToken.AirslipUserType
             orderby accountBalanceSnapshot.TimeStamp
-            select new SnapshotMetric(accountBalanceSnapshot.TimeStamp, accountBalanceSnapshot.Balance);
+            select new SnapshotMetric(accountBalanceSnapshot.TimeStamp, accountBalanceSnapshot.Balance.ToPositiveCurrency());
 
         DashboardSnapshotModel? response = await qBalance.FirstOrDefaultAsync();
 

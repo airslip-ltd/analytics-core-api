@@ -8,7 +8,7 @@ namespace Airslip.Analytics.Core.Models;
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
 public class DashboardSnapshotModel : ISuccess
 {
-    public long Balance { get; set; }
+    public double Balance { get; set; }
     public long TimeStamp { get; set; }
     public double Movement { get; set; }
     public List<SnapshotMetric> Metrics { get; set; } = new();
