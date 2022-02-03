@@ -39,7 +39,7 @@ public static class MapperExtensions
         // Ignore the incoming Id so we can create a new entry every time we receive an update
         mapperConfigurationExpression.CreateMap<RawYapilyBalanceModel, BankAccountBalanceModel>()
             .ForMember(o => o.Id, 
-            opt => opt.MapFrom<CustomResolver>())
+            opt => opt.MapFrom<UniqueIdResolver<RawYapilyBalanceModel, BankAccountBalanceModel>>())
             .ForMember(o => o.AccountId,
                 opt => opt.MapFrom(p=> p.Id));
         mapperConfigurationExpression.CreateMap<RawYapilyBalanceDetailModel, BankAccountBalanceDetailModel>();
@@ -61,13 +61,6 @@ public static class MapperExtensions
                     exp.MapFrom(model => model.Transaction.TransactionId))
             .ForMember(o => o.TimeStamp, opt => 
                 opt.MapFrom(p => DateTime.UtcNow.ToUnixTimeMilliseconds()))
-            // .ForPath(o => o.Datetime, exp =>
-            //     exp.MapFrom(model =>
-            //         model.Transaction.Datetime == null
-            //             ? (DateTime?) null
-            //             : DateTime.Parse(model.Transaction.Datetime, null,
-            //                 System.Globalization.DateTimeStyles.RoundtripKind)))
-            
             .ForMember(o => o.Datetime, exp =>
                 exp.MapFrom<TransactionDateTimeResolver>())
             .ForPath(o => o.Date, exp =>
@@ -141,23 +134,43 @@ public static class MapperExtensions
         mapperConfigurationExpression
             .CreateMap<TransactionRefundItem, MerchantRefundItemModel>()
             .ForMember(o => o.Id, exp =>
-                exp.MapFrom(s => s.TransactionProductId));
+                exp.MapFrom<TransactionRefundResolver>());
         
         mapperConfigurationExpression
             .CreateMap<TransactionProduct, MerchantProductModel>()
             .ForMember(o => o.Id, exp =>
-                exp.MapFrom(s => s.TransactionProductId));
+                exp.MapFrom<TransactionProductResolver>());
         
         return mapperConfigurationExpression;
     }
 
     [UsedImplicitly]
-    private class CustomResolver : IValueResolver<RawYapilyBalanceModel, BankAccountBalanceModel, string?>
+    private class UniqueIdResolver<TSource, TDest> : IValueResolver<TSource, TDest, string?>
     {
-        public string Resolve(RawYapilyBalanceModel source, BankAccountBalanceModel destination, string? member, 
+        public string Resolve(TSource source, TDest destination, string? member, 
             ResolutionContext context)
         {
             return CommonFunctions.GetId();
+        }
+    }
+    
+    [UsedImplicitly]
+    private class TransactionProductResolver : IValueResolver<TransactionProduct, MerchantProductModel, string>
+    {
+        public string Resolve(TransactionProduct source, MerchantProductModel destination, string destMember,
+            ResolutionContext context)
+        {
+            return source.TransactionProductId ?? CommonFunctions.GetId();
+        }
+    }
+    
+    [UsedImplicitly]
+    private class TransactionRefundResolver : IValueResolver<TransactionRefundItem, MerchantRefundItemModel, string>
+    {
+        public string Resolve(TransactionRefundItem source, MerchantRefundItemModel destination, string destMember,
+            ResolutionContext context)
+        {
+            return source.TransactionProductId ?? CommonFunctions.GetId();
         }
     }
     
