@@ -6,4 +6,3 @@ begin
 
     return (@curr - @prev) * 100.0 / @prev
 end
-go
