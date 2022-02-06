@@ -10,4 +10,9 @@ public static class CurrencyExtensions
         
         return Convert.ToDouble(value) / 100;
     }
+    
+    public static double ToCurrency(this long value)
+    {
+        return Convert.ToDouble(value) / 100;
+    }
 }

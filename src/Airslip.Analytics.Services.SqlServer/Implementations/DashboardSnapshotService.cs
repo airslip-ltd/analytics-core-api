@@ -5,6 +5,7 @@ using Airslip.Analytics.Core.Models;
 using Airslip.Common.Auth.Interfaces;
 using Airslip.Common.Auth.Models;
 using Airslip.Common.Repository.Types.Interfaces;
+using Airslip.Common.Types.Failures;
 using Airslip.Common.Types.Interfaces;
 using Airslip.Common.Utilities.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -17,9 +18,9 @@ namespace Airslip.Analytics.Services.SqlServer.Implementations;
 
 public class DashboardSnapshotService : IDashboardSnapshotService
 {
-    private readonly DbContext _context;
+    private readonly SqlServerContext _context;
 
-    private static Dictionary<DashboardSnapshotType, string> procedureNames = new()
+    private static readonly Dictionary<DashboardSnapshotType, string> procedureNames = new()
     {
         { DashboardSnapshotType.TotalSales, "dbo.GetTotalSalesSnapshot" },
         { DashboardSnapshotType.TotalRefunds, "dbo.GetTotalRefundsSnapshot" }
@@ -29,13 +30,30 @@ public class DashboardSnapshotService : IDashboardSnapshotService
 
     public DashboardSnapshotService(IContext context, ITokenDecodeService<UserToken> userToken)
     {
-        if (context is not DbContext dbContext) 
+        if (context is not SqlServerContext dbContext) 
             throw new ArgumentException("Invalid context", nameof(context));
-        _userToken = userToken.GetCurrentToken();
         _context = dbContext;
+        _userToken = userToken.GetCurrentToken();
     }
     
     public async Task<IResponse> GetSnapshotFor(DashboardSnapshotType dashboardSnapshotType, int dayRange, int statRange)
+    {
+        IResponse result;
+        
+        switch (dashboardSnapshotType)
+        {
+            case DashboardSnapshotType.CurrentBalance:
+                result = await _getCurrentBalance();
+                break;
+            default:
+                result = await _getGenericSnapshot(dashboardSnapshotType, dayRange, statRange);
+                break;
+        }
+
+        return result;
+    }
+
+    private async Task<IResponse> _getGenericSnapshot(DashboardSnapshotType dashboardSnapshotType, int dayRange, int statRange)
     {
         string procName = procedureNames[dashboardSnapshotType];
         
@@ -59,7 +77,7 @@ public class DashboardSnapshotService : IDashboardSnapshotService
             _ => (primary.Balance - secondary.Balance) / secondary.Balance * 100
         };
 
-        DashboardSnapshotModel result = new()
+        return new DashboardSnapshotModel()
         {
             Balance = primary.Balance.ToPositiveCurrency(),
             DayRange = dayRange,
@@ -68,9 +86,41 @@ public class DashboardSnapshotService : IDashboardSnapshotService
             Metrics = metrics.OrderBy(o => o.MetricDate)
                 .Select(o => new SnapshotMetric(o.MetricDate.ToUnixTimeMilliseconds(), 
                     o.Balance.ToPositiveCurrency())
-            ).ToList()
+                ).ToList()
         };
+    }
+    
+    private async Task<IResponse> _getCurrentBalance()
+    {
+        IQueryable<DashboardSnapshotModel> qBalance = from businessBalance in _context.BankBusinessBalances
+            where businessBalance.EntityId.Equals(_userToken.EntityId)
+            where businessBalance.AirslipUserType == _userToken.AirslipUserType
+            select new DashboardSnapshotModel
+            {
+                Balance = businessBalance.Balance.ToPositiveCurrency(),
+                TimeStamp = businessBalance.TimeStamp,
+                Movement = businessBalance.Movement
+            };
+        
+        IQueryable<SnapshotMetric> qSnapshot = from accountBalanceSnapshot in _context.BankBusinessBalanceSnapshots
+            where accountBalanceSnapshot.EntityId.Equals(_userToken.EntityId)
+            where accountBalanceSnapshot.AirslipUserType == _userToken.AirslipUserType
+            orderby accountBalanceSnapshot.TimeStamp
+            select new SnapshotMetric(accountBalanceSnapshot.TimeStamp, accountBalanceSnapshot.Balance.ToPositiveCurrency());
 
-        return result;
+        DashboardSnapshotModel? response = await qBalance.FirstOrDefaultAsync();
+
+        if (response == null) return new NotFoundResponse("BusinessBalance", _userToken.EntityId);
+
+        response.Metrics = await qSnapshot
+            .Take(10)
+            .ToListAsync();
+
+        while (response.Metrics.Count < 10)
+        {
+            response.Metrics.Insert(0, new SnapshotMetric(0, 0));
+        }
+        
+        return response;
     }
 }

@@ -11,5 +11,6 @@ public interface IDashboardSnapshotService
 public enum DashboardSnapshotType
 {
     TotalSales,
-    TotalRefunds
+    TotalRefunds,
+    CurrentBalance
 }

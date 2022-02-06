@@ -5,5 +5,5 @@ namespace Airslip.Analytics.Core.Interfaces;
 
 public interface IBalanceService
 {
-    Task<IResponse> GetCurrentBalance();
+    Task<IResponse> GetAccountBalances();
 }
