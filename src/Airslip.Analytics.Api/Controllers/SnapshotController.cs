@@ -30,7 +30,8 @@ namespace Airslip.Analytics.Api.Controllers
         private readonly IRevenueAndRefundsService _revenueAndRefundsService;
         private readonly IDebitsAndCreditsService _debitsAndCreditsService;
 
-        public SnapshotController(IDashboardSnapshotService dashboardSnapshotService,
+        public SnapshotController(
+            IDashboardSnapshotService dashboardSnapshotService,
             IRevenueAndRefundsService revenueAndRefundsService,
             IDebitsAndCreditsService debitsAndCreditsService,
             ITokenDecodeService<UserToken> tokenDecodeService, 

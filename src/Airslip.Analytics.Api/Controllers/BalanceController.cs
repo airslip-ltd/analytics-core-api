@@ -36,14 +36,15 @@ namespace Airslip.Analytics.Api.Controllers
         }
         
         [HttpGet]
-        [ProducesResponseType(typeof(DashboardSnapshotModel), StatusCodes.Status200OK)]
+        [Route("summary")]
+        [ProducesResponseType(typeof(AccountBalanceSummaryResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAccounts()
         {
             IResponse response = await _balanceService
-                .GetCurrentBalance();
+                .GetAccountBalances();
             
-            return HandleResponse<DashboardSnapshotModel>(response);
+            return HandleResponse<AccountBalanceSummaryResponse>(response);
         }
         
         // Balance by account
