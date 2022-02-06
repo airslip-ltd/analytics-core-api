@@ -16,12 +16,12 @@ using System.Threading.Tasks;
 
 namespace Airslip.Analytics.Services.SqlServer.Implementations;
 
-public class RevenueAndRefundsService : IRevenueAndRefundsService
+public class DebitsAndCreditsService : IDebitsAndCreditsService
 {
     private readonly DbContext _context;
     private readonly UserToken _userToken;
 
-    public RevenueAndRefundsService(IContext context, ITokenDecodeService<UserToken> userToken)
+    public DebitsAndCreditsService(IContext context, ITokenDecodeService<UserToken> userToken)
     {
         if (context is not DbContext dbContext) 
             throw new ArgumentException("Invalid context", nameof(context));
@@ -29,30 +29,30 @@ public class RevenueAndRefundsService : IRevenueAndRefundsService
         _context = dbContext;
     }
     
-    public async Task<IResponse> GetRevenueAndRefunds(int year)
+    public async Task<IResponse> GetDebitsAndCredits(int year)
     {
-        IQueryable<RevenueAndRefundsByYear> q = _context
-            .Set<RevenueAndRefundsByYear>()
-            .FromSqlRaw("dbo.GetRevenueAndRefundsByYear @Year = {0}, @EntityId = {1}, @AirslipUserType = {2}",
+        IQueryable<DebitsAndCreditsByYear> q = _context
+            .Set<DebitsAndCreditsByYear>()
+            .FromSqlRaw("dbo.GetCreditsAndDebitsByYear @Year = {0}, @EntityId = {1}, @AirslipUserType = {2}",
                 year, 
                 _userToken.EntityId,
                 _userToken.AirslipUserType);
 
-        List<RevenueAndRefundsByYear> metrics = await q.ToListAsync();
+        List<DebitsAndCreditsByYear> metrics = await q.ToListAsync();
         DateTimeFormatInfo formatter = CultureInfo.CurrentCulture.DateTimeFormat;
         DashboardGraphSeriesModel result = new(year,
             new []
             {
-                new Series("Revenue", 
+                new Series("Receivables", 
                     metrics.Select(o => new TimelyMetric(o.Month, formatter.GetAbbreviatedMonthName(o.Month),
-                    o.TotalSales, PeriodType.Month)),
-                    metrics.Select( o=> o.TotalSales.ToPositiveCurrency())
+                    o.TotalCredit, PeriodType.Month)),
+                    metrics.Select( o=> o.TotalCredit.ToPositiveCurrency())
                     
                     ),
-             new Series("Refunds", metrics.Select(o => new TimelyMetric(o.Month, 
+             new Series("Payables", metrics.Select(o => new TimelyMetric(o.Month, 
                  formatter.GetAbbreviatedMonthName(o.Month),
-                 o.TotalRefunds, PeriodType.Month)),
-                 metrics.Select( o=> o.TotalRefunds.ToPositiveCurrency()))   
+                 o.TotalDebit, PeriodType.Month)),
+                 metrics.Select( o=> o.TotalDebit.ToPositiveCurrency()))   
             }
         );
         

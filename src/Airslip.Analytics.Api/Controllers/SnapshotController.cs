@@ -28,15 +28,18 @@ namespace Airslip.Analytics.Api.Controllers
     {
         private readonly IDashboardSnapshotService _dashboardSnapshotService;
         private readonly IRevenueAndRefundsService _revenueAndRefundsService;
+        private readonly IDebitsAndCreditsService _debitsAndCreditsService;
 
         public SnapshotController(IDashboardSnapshotService dashboardSnapshotService,
             IRevenueAndRefundsService revenueAndRefundsService,
+            IDebitsAndCreditsService debitsAndCreditsService,
             ITokenDecodeService<UserToken> tokenDecodeService, 
             IOptions<PublicApiSettings> publicApiOptions, ILogger logger) 
             : base(tokenDecodeService, publicApiOptions, logger)
         {
             _dashboardSnapshotService = dashboardSnapshotService;
             _revenueAndRefundsService = revenueAndRefundsService;
+            _debitsAndCreditsService = debitsAndCreditsService;
         }
         
         [HttpGet]
@@ -55,7 +58,7 @@ namespace Airslip.Analytics.Api.Controllers
         
         [HttpGet]
         [Route("revenue")]
-        [ProducesResponseType(typeof(RevenueAndRefundsByYearModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(DashboardGraphSeriesModel), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetRevenue(
             [FromQuery]int year = 7)
@@ -63,7 +66,20 @@ namespace Airslip.Analytics.Api.Controllers
             IResponse response = await _revenueAndRefundsService
                 .GetRevenueAndRefunds(year);
             
-            return HandleResponse<RevenueAndRefundsByYearModel>(response);
+            return HandleResponse<DashboardGraphSeriesModel>(response);
+        }
+        
+        [HttpGet]
+        [Route("cashflow")]
+        [ProducesResponseType(typeof(DashboardGraphSeriesModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetCashflow(
+            [FromQuery]int year = 7)
+        {
+            IResponse response = await _debitsAndCreditsService
+                .GetDebitsAndCredits(year);
+            
+            return HandleResponse<DashboardGraphSeriesModel>(response);
         }
     }
 }

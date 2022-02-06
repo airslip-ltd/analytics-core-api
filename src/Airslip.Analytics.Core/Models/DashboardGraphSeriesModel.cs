@@ -3,4 +3,4 @@ using System.Collections.Generic;
 
 namespace Airslip.Analytics.Core.Models;
 
-public record RevenueAndRefundsByYearModel(int Year, IEnumerable<Series> Series) : ISuccess;
+public record DashboardGraphSeriesModel(int Year, IEnumerable<Series> Series) : ISuccess;

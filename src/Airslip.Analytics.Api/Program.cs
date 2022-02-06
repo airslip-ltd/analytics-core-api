@@ -112,7 +112,8 @@ builder
     .Services
     .AddScoped<IBalanceService, BalanceService>()
     .AddScoped<IDashboardSnapshotService, DashboardSnapshotService>()
-    .AddScoped<IRevenueAndRefundsService, RevenueAndRefundsService>();
+    .AddScoped<IRevenueAndRefundsService, RevenueAndRefundsService>()
+    .AddScoped<IDebitsAndCreditsService, DebitsAndCreditsService>();
 
 builder.Services
     .UseHealthChecks();
