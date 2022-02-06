@@ -31,15 +31,12 @@ public class SqlServerContext : AirslipSqlServerContextBase
     public DbSet<CountryCode> CountryCodes { get; set; }
     
     public DbSet<BankAccountMetricSnapshot> BankAccountMetricSnapshots { get; set; }
-    //
-    
-    // from stored procedures
-    // public virtual DbSet<DashboardMetricSnapshot> DashboardMetricSnapshots { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<DashboardMetricSnapshot>().HasNoKey().ToView(null);
         modelBuilder.Entity<RevenueAndRefundsByYear>().HasNoKey().ToView(null);
+        modelBuilder.Entity<DebitsAndCreditsByYear>().HasNoKey().ToView(null);
         
         // Table names
         modelBuilder
