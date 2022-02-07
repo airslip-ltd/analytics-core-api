@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Airslip.Analytics.Core.Interfaces;
 
-public interface IDebitsAndCreditsService
+public interface ITransactionService
 {
-    Task<IResponse> GetDebitsAndCredits(int year, string? accountId);
+    Task<IResponse> GetAccountTransactions(int limit, string? accountId);
 }

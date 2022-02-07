@@ -75,10 +75,11 @@ namespace Airslip.Analytics.Api.Controllers
         [ProducesResponseType(typeof(DashboardGraphSeriesModel), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetCashflow(
-            [FromQuery]int year = 7)
+            [FromQuery]int year = 7,
+            [FromQuery]string? accountId = null)
         {
             IResponse response = await _debitsAndCreditsService
-                .GetDebitsAndCredits(year);
+                .GetDebitsAndCredits(year, accountId);
             
             return HandleResponse<DashboardGraphSeriesModel>(response);
         }
