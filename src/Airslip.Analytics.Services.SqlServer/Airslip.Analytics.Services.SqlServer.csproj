@@ -17,6 +17,7 @@
 	</ItemGroup>
 	
 	<ItemGroup>
+	  <EmbeddedResource Include="Database\AccountBalancesSupport\Procedures\dbo.GetCreditsAndDebitsByYear.prc.sql" />
 	  <EmbeddedResource Include="Database\AccountMetricSnapshots\Procedures\dbo.GetCreditsAndDebitsByYear.prc.sql" />
 	  <EmbeddedResource Include="Database\BankAccountMetrics\Functions\dbo.getYearMonths.udf.sql" />
 	  <EmbeddedResource Include="Database\BankAccountMetrics\Procedures\dbo.CreateBankAccountMetricSnapshots.prc.sql" />

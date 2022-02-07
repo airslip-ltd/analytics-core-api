@@ -111,6 +111,7 @@ builder.Services
 builder
     .Services
     .AddScoped<IBalanceService, BalanceService>()
+    .AddScoped<ITransactionService, TransactionService>()
     .AddScoped<IDashboardSnapshotService, DashboardSnapshotService>()
     .AddScoped<IRevenueAndRefundsService, RevenueAndRefundsService>()
     .AddScoped<IDebitsAndCreditsService, DebitsAndCreditsService>();

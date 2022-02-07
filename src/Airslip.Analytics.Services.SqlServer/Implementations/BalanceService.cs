@@ -4,7 +4,6 @@ using Airslip.Analytics.Core.Models;
 using Airslip.Common.Auth.Interfaces;
 using Airslip.Common.Auth.Models;
 using Airslip.Common.Repository.Types.Interfaces;
-using Airslip.Common.Types.Failures;
 using Airslip.Common.Types.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -35,10 +34,12 @@ public class BalanceService : IBalanceService
             where bankAccount.AirslipUserType == _userToken.AirslipUserType
             select new AccountBalanceSummaryModel
             (
+                bankAccount.AccountId,
                 bankAccount.InstitutionId,
                 bankAccount.AccountStatus,
                 bankAccount.SortCode,
                 bankAccount.AccountNumber,
+                bankAccount.CurrencyCode,
                 bankAccountBalanceSummary.Balance.ToCurrency(),
                 bankAccountBalanceSummary.UpdatedOn
             );
