@@ -37,7 +37,7 @@ namespace Airslip.Analytics.Services.SqlServer.Implementations
             _postProcessors = postProcessors;
         }
 
-        public async Task RegisterData(TRawModel rawModel, DataSources dataSource)
+        private async Task RegisterData(TRawModel rawModel, DataSources dataSource)
         {
             int maxRetryAttempts = 3;
             
@@ -92,17 +92,12 @@ namespace Airslip.Analytics.Services.SqlServer.Implementations
             }
         }
 
-        public Task RegisterData(string message, DataSources dataSource)
+        public Task Execute(string message, DataSources dataSource)
         {
             // Turn to object
             TRawModel bankTransaction = Json.Deserialize<TRawModel>(message);
 
             return RegisterData( bankTransaction, dataSource);
-        }
-
-        public Task Execute(string message)
-        {
-            return RegisterData(message, DataSources.Yapily);
         }
     }
 }

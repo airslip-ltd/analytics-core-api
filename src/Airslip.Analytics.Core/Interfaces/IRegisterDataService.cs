@@ -10,7 +10,6 @@ namespace Airslip.Analytics.Core.Interfaces
         where TModel : class, IModel, IFromDataSource
         where TEntity : class, IEntity, IFromDataSource
     {
-        Task RegisterData(TRawModel rawModel, DataSources dataSource);
-        Task RegisterData(string message, DataSources dataSource);
+        
     }
 }

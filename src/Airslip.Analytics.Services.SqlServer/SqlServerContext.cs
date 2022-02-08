@@ -14,6 +14,8 @@ public class SqlServerContext : AirslipSqlServerContextBase
         
     }
     
+    public DbSet<MerchantAccount> MerchantAccounts { get; set; }
+    public DbSet<MerchantAccountMetricSnapshot> MerchantAccountMetricSnapshots { get; set; }
     public DbSet<MerchantRefund> MerchantRefunds { get; set; }
     public DbSet<MerchantRefundItem> MerchantRefundItems { get; set; }
     public DbSet<MerchantProduct> MerchantProducts { get; set; }
@@ -153,6 +155,18 @@ public class SqlServerContext : AirslipSqlServerContextBase
             .HasKey(b => b.Id)
             .HasName("PK_BankAccountMetricSnapshots_Id");
         
+        modelBuilder
+            .Entity<MerchantAccount>()
+            .ToTable("MerchantAccounts")
+            .HasKey(b => b.Id)
+            .HasName("PK_MerchantAccounts_Id");
+        
+        modelBuilder
+            .Entity<MerchantAccountMetricSnapshot>()
+            .ToTable("MerchantAccountMetricSnapshots")
+            .HasKey(b => b.Id)
+            .HasName("PK_MerchantAccountMetricSnapshots_Id");
+        
         // Defaults
         
         modelBuilder
@@ -175,7 +189,17 @@ public class SqlServerContext : AirslipSqlServerContextBase
             .Property(b => b.Id)
             .HasDefaultValueSql("dbo.getId()");
         
+        modelBuilder
+            .Entity<MerchantAccountMetricSnapshot>()
+            .Property(b => b.Id)
+            .HasDefaultValueSql("dbo.getId()");
+        
         // Types
+        
+        modelBuilder
+            .Entity<MerchantAccountMetricSnapshot>()
+            .Property(b => b.MetricDate)
+            .HasColumnType("date");
         
         modelBuilder
             .Entity<MerchantMetricSnapshot>()

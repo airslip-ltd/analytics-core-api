@@ -1,3 +1,4 @@
+using Airslip.Analytics.Core.Entities;
 using Airslip.Analytics.Core.Extensions;
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Core.Models;
@@ -5,6 +6,7 @@ using Airslip.Common.Auth.Interfaces;
 using Airslip.Common.Auth.Models;
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Types.Interfaces;
+using Airslip.Common.Utilities.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -25,15 +27,15 @@ public class TransactionService : ITransactionService
         _userToken = tokenDecodeService.GetCurrentToken();
     }
     
-    public async Task<IResponse> GetAccountTransactions(int limit, string? accountId)
+    public async Task<IResponse> GetBankingTransactions(int limit, string? accountId)
     {
-        IQueryable<BankTransactionSummaryModel> qBalance = from bankTransaction in _context.BankTransactions
+        IQueryable<TransactionSummaryModel> qBalance = from bankTransaction in _context.BankTransactions
             join bankAccount in _context.BankAccounts on bankTransaction.AccountId equals bankAccount.AccountId
             where bankTransaction.EntityId.Equals(_userToken.EntityId)
             where bankTransaction.AirslipUserType == _userToken.AirslipUserType
             where accountId == null || bankTransaction.AccountId.Equals(accountId)
             orderby bankTransaction.CapturedDate descending 
-            select new BankTransactionSummaryModel
+            select new TransactionSummaryModel
             (
                 bankTransaction.Id,
                 bankTransaction.BankId,
@@ -41,6 +43,27 @@ public class TransactionService : ITransactionService
                 bankTransaction.CurrencyCode ?? bankAccount.CurrencyCode,
                 bankTransaction.CapturedDate,
                 bankTransaction.Description
+            );
+
+        return new BankTransactionSummaryResponse(await qBalance.Take(limit).ToListAsync());
+    }
+
+    public async Task<IResponse> GetMerchantTransactions(int limit, string? accountId)
+    {
+        IQueryable<TransactionSummaryModel> qBalance = from merchantTransaction in _context.MerchantTransactions
+            join merchantAccount in _context.MerchantAccounts on merchantTransaction.AccountId equals merchantAccount.Id
+            where merchantTransaction.EntityId.Equals(_userToken.EntityId)
+            where merchantTransaction.AirslipUserType == _userToken.AirslipUserType
+            where accountId == null || merchantTransaction.AccountId.Equals(accountId)
+            orderby merchantTransaction.Datetime descending 
+            select new TransactionSummaryModel
+            (
+                merchantTransaction.Id,
+                merchantAccount.Provider,
+                merchantTransaction.Total.ToCurrency(),
+                merchantTransaction.CurrencyCode,
+                merchantTransaction.Datetime.Value.ToUnixTimeMilliseconds(),
+                merchantTransaction.Description
             );
 
         return new BankTransactionSummaryResponse(await qBalance.Take(limit).ToListAsync());

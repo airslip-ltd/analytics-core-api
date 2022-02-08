@@ -1,6 +1,7 @@
 using Airslip.Analytics.Core.Entities;
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Core.Models;
+using Airslip.Analytics.Core.Models.Raw.Api2Cart;
 using Airslip.Analytics.Core.Models.Raw.Yapily;
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Types.Enums;
@@ -52,6 +53,17 @@ public static class MapperExtensions
         return mapperConfigurationExpression;
     }
     
+    public static IMapperConfigurationExpression AddRawApi2CartData(this IMapperConfigurationExpression mapperConfigurationExpression)
+    {
+        mapperConfigurationExpression
+            .CreateMap<RawApi2CartAccountModel, MerchantAccountModel>()
+            .ForPath(o => o.AuthenticationState, 
+                exp => exp.MapFrom(model => model
+                    .State.CurrentState));
+
+        return mapperConfigurationExpression;
+    }
+    
     public static IMapperConfigurationExpression AddRawTransaction(this IMapperConfigurationExpression mapperConfigurationExpression)
     {
         mapperConfigurationExpression
@@ -71,6 +83,8 @@ public static class MapperExtensions
                     model.Transaction.TransactionDetail != null ? model.Transaction.TransactionDetail.Number : null))
             .ForPath(o => o.Source, exp =>
                 exp.MapFrom(model => model.Transaction.Source))
+            .ForMember(o => o.Description, exp =>
+                exp.MapFrom<TransactionDescriptionResolver>())
             .ForPath(o => o.Store, exp =>
                 exp.MapFrom(model =>
                     model.Transaction.TransactionDetail != null ? model.Transaction.TransactionDetail.Store : null))
@@ -110,6 +124,8 @@ public static class MapperExtensions
                 exp.MapFrom(model => model.TrackingId))
             .ForPath(o => o.TransactionNumber, exp =>
                 exp.MapFrom(model => model.Transaction.TransactionNumber))
+            .ForPath(o => o.AccountId, exp =>
+                exp.MapFrom(model => model.AccountId))
             .ForPath(o => o.UserId, exp =>
                 exp.MapFrom(model => model.UserId))
             .ForPath(o => o.AirslipUserType, exp =>
@@ -203,6 +219,17 @@ public static class MapperExtensions
         }
     }
     
+    public class TransactionDescriptionResolver : IValueResolver<TransactionEnvelope, MerchantTransactionModel, string?>
+    {
+        public string? Resolve(TransactionEnvelope source, MerchantTransactionModel destination, string? destMember,
+            ResolutionContext context)
+        {
+            if (source.Transaction.Products == null || source.Transaction.Products.Count == 0) return source.Transaction.TransactionNumber;
+
+            return source.Transaction.Products.First().Name;
+        }
+    }
+    
     [UsedImplicitly]
     private class BankTransactionDateTimeResolver : IValueResolver<RawYapilyTransactionModel, BankTransactionModel, int?>
     {
@@ -229,6 +256,7 @@ public static class MapperExtensions
         cfg.CreateMap<BankCountryCodeModel, BankCountryCode>().ReverseMap();
         cfg.CreateMap<BankSyncRequestModel, BankSyncRequest>().ReverseMap();
 
+        cfg.CreateMap<MerchantAccountModel, MerchantAccount>().ReverseMap();
         cfg.CreateMap<MerchantTransactionModel, MerchantTransaction>().ReverseMap();
         cfg.CreateMap<MerchantProductModel, MerchantProduct>().MatchOnId().ReverseMap();
         cfg.CreateMap<MerchantRefundModel, MerchantRefund>().MatchOnId().ReverseMap();

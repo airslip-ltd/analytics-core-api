@@ -1,4 +1,4 @@
 namespace Airslip.Analytics.Core.Models;
 
-public record BankTransactionSummaryModel(string Id, string InstitutionId, double Amount, 
+public record TransactionSummaryModel(string Id, string Source, double Amount, 
     string CurrencyCode, long CapturedDate, string Description);

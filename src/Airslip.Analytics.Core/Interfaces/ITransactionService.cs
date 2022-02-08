@@ -5,5 +5,6 @@ namespace Airslip.Analytics.Core.Interfaces;
 
 public interface ITransactionService
 {
-    Task<IResponse> GetAccountTransactions(int limit, string? accountId);
+    Task<IResponse> GetBankingTransactions(int limit, string? accountId);
+    Task<IResponse> GetMerchantTransactions(int limit, string? accountId);
 }

@@ -36,22 +36,33 @@ namespace Airslip.Analytics.Api.Controllers
         }
         
         [HttpGet]
-        [Route("recent")]
+        [Route("banking/recent")]
         [ProducesResponseType(typeof(BankTransactionSummaryResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetAccounts(
+        public async Task<IActionResult> GetBankingRecent(
             [FromQuery]int limit = 10,
             [FromQuery]string? accountId = null
             )
         {
             IResponse response = await _transactionService
-                .GetAccountTransactions(limit, accountId);
+                .GetBankingTransactions(limit, accountId);
             
             return HandleResponse<BankTransactionSummaryResponse>(response);
         }
         
-        // Balance by account
-        // Metric by account
-        
+        [HttpGet]
+        [Route("merchant/recent")]
+        [ProducesResponseType(typeof(BankTransactionSummaryResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetMerchantRecent(
+            [FromQuery]int limit = 10,
+            [FromQuery]string? accountId = null
+        )
+        {
+            IResponse response = await _transactionService
+                .GetMerchantTransactions(limit, accountId);
+            
+            return HandleResponse<BankTransactionSummaryResponse>(response);
+        }
     }
 }

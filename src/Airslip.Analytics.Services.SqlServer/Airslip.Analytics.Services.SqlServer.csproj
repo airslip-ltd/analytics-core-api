@@ -9,7 +9,7 @@
 	<ItemGroup>
 	  <PackageReference Include="Airslip.Common.Repository.Types" Version="6.0.2" />
 	  <PackageReference Include="Airslip.Common.Services.SqlServer" Version="6.0.1" />
-	  <PackageReference Include="Airslip.Common.Types" Version="6.0.5" />
+	  <PackageReference Include="Airslip.Common.Types" Version="6.0.10" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.1">
 	    <PrivateAssets>all</PrivateAssets>
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -19,6 +19,7 @@
 	<ItemGroup>
 	  <EmbeddedResource Include="Database\AccountBalancesSupport\Procedures\dbo.GetCreditsAndDebitsByYear.prc.sql" />
 	  <EmbeddedResource Include="Database\AccountMetricSnapshots\Procedures\dbo.GetCreditsAndDebitsByYear.prc.sql" />
+	  <EmbeddedResource Include="Database\AddMerchantAccount\Procedures\dbo.CreateMerchantAccountMetricSnapshot.prc.sql" />
 	  <EmbeddedResource Include="Database\BankAccountMetrics\Functions\dbo.getYearMonths.udf.sql" />
 	  <EmbeddedResource Include="Database\BankAccountMetrics\Procedures\dbo.CreateBankAccountMetricSnapshots.prc.sql" />
 	  <EmbeddedResource Include="Database\Core\Functions\dbo.calcMovement.udf.sql" />
