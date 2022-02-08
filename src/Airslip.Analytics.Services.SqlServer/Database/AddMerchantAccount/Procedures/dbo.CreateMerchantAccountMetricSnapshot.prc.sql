@@ -8,7 +8,7 @@ Declare @Year as int, @Month as int, @Day as int, @AccountId as varchar(33)
 
 select @Year = Year, @Month = Month, @Day = Day, @AccountId = AccountId
 from MerchantTransactions
-where Id = @Id;
+where Id = @Id
 
     merge into MerchantAccountMetricSnapshots as mms
     using
@@ -65,5 +65,3 @@ where Id = @Id;
                 RefundCount, OrderCount)
         VALUES (y.AccountId, y.EntityId, y.AirslipUserType, datefromparts(y.Year, y.Month, y.Day), y.Year, y.Month,
                 y.Day, y.TotalSales, y.SaleCount, y.TotalRefunds, y.RefundCount, y.OrderCount);
-
-go

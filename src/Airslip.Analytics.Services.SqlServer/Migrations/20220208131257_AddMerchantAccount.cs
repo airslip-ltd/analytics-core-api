@@ -15,6 +15,12 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 table: "MerchantTransactions",
                 type: "nvarchar(max)",
                 nullable: true);
+            
+            migrationBuilder.AddColumn<string>(
+                name: "Description",
+                table: "MerchantTransactions",
+                type: "nvarchar(max)",
+                nullable: true);
 
             migrationBuilder.CreateTable(
                 name: "MerchantAccountMetricSnapshots",
@@ -83,6 +89,10 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
             migrationBuilder.DropColumn(
                 name: "AccountId",
+                table: "MerchantTransactions");
+            
+            migrationBuilder.DropColumn(
+                name: "Description",
                 table: "MerchantTransactions");
         }
     }

@@ -963,6 +963,9 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Property<int?>("Day")
                         .HasColumnType("int");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("EntityId")
                         .HasColumnType("nvarchar(max)");
 
