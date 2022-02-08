@@ -20,6 +20,9 @@
 	  <EmbeddedResource Include="Database\AccountBalancesSupport\Procedures\dbo.GetCreditsAndDebitsByYear.prc.sql" />
 	  <EmbeddedResource Include="Database\AccountMetricSnapshots\Procedures\dbo.GetCreditsAndDebitsByYear.prc.sql" />
 	  <EmbeddedResource Include="Database\AddMerchantAccount\Procedures\dbo.CreateMerchantAccountMetricSnapshot.prc.sql" />
+	  <EmbeddedResource Include="Database\AddMerchantAccount\Procedures\dbo.GetRevenueAndRefundsByYear.prc.sql" />
+	  <EmbeddedResource Include="Database\AddMerchantAccount\Procedures\dbo.GetTotalRefundsSnapshot.prc.sql" />
+	  <EmbeddedResource Include="Database\AddMerchantAccount\Procedures\dbo.GetTotalSalesSnapshot.prc.sql" />
 	  <EmbeddedResource Include="Database\BankAccountMetrics\Functions\dbo.getYearMonths.udf.sql" />
 	  <EmbeddedResource Include="Database\BankAccountMetrics\Procedures\dbo.CreateBankAccountMetricSnapshots.prc.sql" />
 	  <EmbeddedResource Include="Database\Core\Functions\dbo.calcMovement.udf.sql" />

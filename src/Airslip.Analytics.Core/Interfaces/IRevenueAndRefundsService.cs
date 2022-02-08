@@ -5,5 +5,5 @@ namespace Airslip.Analytics.Core.Interfaces;
 
 public interface IRevenueAndRefundsService
 {
-    Task<IResponse> GetRevenueAndRefunds(int year);
+    Task<IResponse> GetRevenueAndRefunds(int year, string? accountId);
 }

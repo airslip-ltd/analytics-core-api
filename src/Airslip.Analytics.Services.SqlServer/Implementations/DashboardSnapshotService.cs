@@ -36,7 +36,8 @@ public class DashboardSnapshotService : IDashboardSnapshotService
         _userToken = userToken.GetCurrentToken();
     }
     
-    public async Task<IResponse> GetSnapshotFor(DashboardSnapshotType dashboardSnapshotType, int dayRange, int statRange)
+    public async Task<IResponse> GetSnapshotFor(DashboardSnapshotType dashboardSnapshotType, int dayRange, 
+        int statRange, string? accountId)
     {
         IResponse result;
         
@@ -46,24 +47,26 @@ public class DashboardSnapshotService : IDashboardSnapshotService
                 result = await _getCurrentBalance();
                 break;
             default:
-                result = await _getGenericSnapshot(dashboardSnapshotType, dayRange, statRange);
+                result = await _getGenericSnapshot(dashboardSnapshotType, dayRange, statRange, accountId);
                 break;
         }
 
         return result;
     }
 
-    private async Task<IResponse> _getGenericSnapshot(DashboardSnapshotType dashboardSnapshotType, int dayRange, int statRange)
+    private async Task<IResponse> _getGenericSnapshot(DashboardSnapshotType dashboardSnapshotType, int dayRange,
+        int statRange, string? accountId)
     {
         string procName = procedureNames[dashboardSnapshotType];
         
         IQueryable<DashboardMetricSnapshot> q = _context
             .Set<DashboardMetricSnapshot>()
-            .FromSqlRaw($"{procName} @DayRange = {{0}}, @StatRange = {{1}}, @EntityId = {{2}}, @AirslipUserType = {{3}}",
+            .FromSqlRaw($"{procName} @DayRange = {{0}}, @StatRange = {{1}}, @EntityId = {{2}}, @AirslipUserType = {{3}}, @AccountId = {{4}}",
                 dayRange, 
                 statRange,
                 _userToken.EntityId,
-                _userToken.AirslipUserType);
+                _userToken.AirslipUserType,
+                accountId == null ? DBNull.Value : accountId);
 
         List<DashboardMetricSnapshot> metrics = await q.ToListAsync();
 

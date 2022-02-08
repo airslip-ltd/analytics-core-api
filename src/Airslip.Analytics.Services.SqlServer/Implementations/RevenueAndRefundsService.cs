@@ -29,14 +29,15 @@ public class RevenueAndRefundsService : IRevenueAndRefundsService
         _context = dbContext;
     }
     
-    public async Task<IResponse> GetRevenueAndRefunds(int year)
+    public async Task<IResponse> GetRevenueAndRefunds(int year, string? accountId)
     {
         IQueryable<RevenueAndRefundsByYear> q = _context
             .Set<RevenueAndRefundsByYear>()
-            .FromSqlRaw("dbo.GetRevenueAndRefundsByYear @Year = {0}, @EntityId = {1}, @AirslipUserType = {2}",
+            .FromSqlRaw("dbo.GetRevenueAndRefundsByYear @Year = {0}, @EntityId = {1}, @AirslipUserType = {2}, @AccountId = {3}",
                 year, 
                 _userToken.EntityId,
-                _userToken.AirslipUserType);
+                _userToken.AirslipUserType,
+                accountId == null ? DBNull.Value : accountId);
 
         List<RevenueAndRefundsByYear> metrics = await q.ToListAsync();
         DateTimeFormatInfo formatter = CultureInfo.CurrentCulture.DateTimeFormat;

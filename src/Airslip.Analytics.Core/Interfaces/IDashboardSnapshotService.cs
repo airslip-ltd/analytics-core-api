@@ -5,7 +5,7 @@ namespace Airslip.Analytics.Core.Interfaces;
 
 public interface IDashboardSnapshotService
 {
-    Task<IResponse> GetSnapshotFor(DashboardSnapshotType dashboardSnapshotType, int dayRange, int statRange);
+    Task<IResponse> GetSnapshotFor(DashboardSnapshotType dashboardSnapshotType, int dayRange, int statRange, string? accountId);
 }
 
 public enum DashboardSnapshotType

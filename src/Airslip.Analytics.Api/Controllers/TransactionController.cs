@@ -36,8 +36,20 @@ namespace Airslip.Analytics.Api.Controllers
         }
         
         [HttpGet]
+        [Route("commerce/accounts")]
+        [ProducesResponseType(typeof(SimpleListResponse<MerchantAccountSummaryModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetCommerceAccounts()
+        {
+            IResponse response = await _transactionService
+                .GetMerchantAccounts();
+            
+            return HandleResponse<SimpleListResponse<MerchantAccountSummaryModel>>(response);
+        }
+        
+        [HttpGet]
         [Route("banking/recent")]
-        [ProducesResponseType(typeof(BankTransactionSummaryResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(SimpleListResponse<TransactionSummaryModel>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetBankingRecent(
             [FromQuery]int limit = 10,
@@ -47,12 +59,12 @@ namespace Airslip.Analytics.Api.Controllers
             IResponse response = await _transactionService
                 .GetBankingTransactions(limit, accountId);
             
-            return HandleResponse<BankTransactionSummaryResponse>(response);
+            return HandleResponse<SimpleListResponse<TransactionSummaryModel>>(response);
         }
         
         [HttpGet]
-        [Route("merchant/recent")]
-        [ProducesResponseType(typeof(BankTransactionSummaryResponse), StatusCodes.Status200OK)]
+        [Route("commerce/recent")]
+        [ProducesResponseType(typeof(SimpleListResponse<TransactionSummaryModel>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetMerchantRecent(
             [FromQuery]int limit = 10,
@@ -60,9 +72,9 @@ namespace Airslip.Analytics.Api.Controllers
         )
         {
             IResponse response = await _transactionService
-                .GetMerchantTransactions(limit, accountId);
+                .GetCommerceTransactions(limit, accountId);
             
-            return HandleResponse<BankTransactionSummaryResponse>(response);
+            return HandleResponse<SimpleListResponse<TransactionSummaryModel>>(response);
         }
     }
 }

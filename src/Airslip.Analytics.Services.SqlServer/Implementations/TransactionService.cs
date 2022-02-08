@@ -45,10 +45,10 @@ public class TransactionService : ITransactionService
                 bankTransaction.Description
             );
 
-        return new BankTransactionSummaryResponse(await qBalance.Take(limit).ToListAsync());
+        return new SimpleListResponse<TransactionSummaryModel>(await qBalance.Take(limit).ToListAsync());
     }
 
-    public async Task<IResponse> GetMerchantTransactions(int limit, string? accountId)
+    public async Task<IResponse> GetCommerceTransactions(int limit, string? accountId)
     {
         IQueryable<TransactionSummaryModel> qBalance = from merchantTransaction in _context.MerchantTransactions
             join merchantAccount in _context.MerchantAccounts on merchantTransaction.AccountId equals merchantAccount.Id
@@ -66,6 +66,23 @@ public class TransactionService : ITransactionService
                 merchantTransaction.Description
             );
 
-        return new BankTransactionSummaryResponse(await qBalance.Take(limit).ToListAsync());
+        return new SimpleListResponse<TransactionSummaryModel>(await qBalance.Take(limit).ToListAsync());
+    }
+
+    public async Task<IResponse> GetMerchantAccounts()
+    {
+        IQueryable<MerchantAccountSummaryModel> qBalance = from merchantAccount in _context.MerchantAccounts
+            where merchantAccount.EntityId.Equals(_userToken.EntityId)
+            where merchantAccount.AirslipUserType == _userToken.AirslipUserType
+            orderby merchantAccount.Name descending 
+            select new MerchantAccountSummaryModel()
+                {
+                    Id = merchantAccount.Id,
+                    Name = merchantAccount.Name,
+                    Provider = merchantAccount.Provider,
+                    AuthenticationState = merchantAccount.AuthenticationState
+                };
+
+        return new SimpleListResponse<MerchantAccountSummaryModel>(await qBalance.ToListAsync());
     }
 }
