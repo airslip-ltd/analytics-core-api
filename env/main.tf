@@ -50,6 +50,11 @@ data "azurerm_eventhub_namespace" "integration_hub" {
   resource_group_name = "airslip-${local.short_environment}-merchant-integrations-resources"
 }
 
+data "azurerm_eventhub_namespace" "api2cart" {
+  name = "airslip-${local.short_environment}-adapter-api2cart-events-namespace"
+  resource_group_name = "airslip-${local.short_environment}-adapter-api2cart-resources"
+}
+
 module "ingredient_bowl" {
   source              = "./tf_modules/Airslip.Terraform.Modules/modules/core/resource_group"
 
@@ -178,6 +183,7 @@ module "func_app_host" {
         "ConnectionStrings:SqlServer": module.sql_server.connection_string,
         "EnvironmentSettings:EnvironmentName": var.environment,
         "YapilyEventHubConnectionString": data.azurerm_eventhub_namespace.yapily_event_hub.default_primary_connection_string,
+        "Api2CartEventHubConnectionString": data.azurerm_eventhub_namespace.api2cart.default_primary_connection_string,
         "TransactionEventHubConnectionString": data.azurerm_eventhub_namespace.integration_hub.default_primary_connection_string,
         "ConsumerGroup": local.consumer_group
       }
