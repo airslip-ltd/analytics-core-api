@@ -65,6 +65,7 @@ internal class Program
 
                 services
                     .AddRepositories(RepositoryUserType.Service)
+                    .AddEntitySearch()
                     .AddSingleton(typeof(IModelValidator<>), typeof(NullValidator<>))
                     .AddAutoMapper(ServiceRegistration.RegisterMappings, MapperUsageType.Service)
                     .AddAirslipFunctionAuth(context.Configuration);
@@ -72,8 +73,7 @@ internal class Program
                 services
                     .AddAirslipSqlServer<SqlServerContext>(context.Configuration)
                     .AddAnalyticsProcesses()
-                    .AddScoped(typeof(IRegisterDataService<,,>), typeof(RegisterDataService<,,>))
-                    .AddScoped(typeof(IEntitySearch<,>), typeof(EntitySearch<,>));
+                    .AddScoped(typeof(IRegisterDataService<,,>), typeof(RegisterDataService<,,>));
 
                 services.UseMessageHandoff(ServiceRegistration.RegisterHandoff);
                 

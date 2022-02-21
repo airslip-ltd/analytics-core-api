@@ -1,4 +1,3 @@
-using Airslip.Analytics.Core.Entities;
 using Airslip.Analytics.Core.Extensions;
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Core.Models;
