@@ -24,7 +24,7 @@ namespace Airslip.Analytics.Reports.Implementations
             _userToken = tokenDecodeService.GetCurrentToken();
         }
         
-        public async Task<IResponse> Execute(EntitySearchQueryModel entitySearchQueryModel)
+        public async Task<IResponse> Execute(EntitySearchQueryModel query)
         {
             IQueryable<BankTransactionReportQuery> q = from item in _context.BankTransactions
                 select new BankTransactionReportQuery
@@ -58,7 +58,7 @@ namespace Airslip.Analytics.Reports.Implementations
                 };
             
             EntitySearchResponse<BankTransactionReportResponse> searchResults = await _entitySearch
-                .GetSearchResults(q, entitySearchQueryModel, 
+                .GetSearchResults(q, query, 
                     new List<SearchFilterModel>()
                     {
                         new(nameof(BankTransactionReportQuery.EntityId), _userToken.EntityId),
