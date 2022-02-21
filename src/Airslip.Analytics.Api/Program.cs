@@ -103,10 +103,8 @@ builder.Services
 
 builder.Services
     .AddRepositories()
-    .AddScoped(typeof(IEntitySearch<,>), typeof(EntitySearch<,>))
-    .AddAirslipSqlServer<SqlServerContext>(builder.Configuration)
-    .AddScoped(typeof(IEntitySearch<,>), typeof(EntitySearch<,>));
-
+    .AddEntitySearch()
+    .AddAirslipSqlServer<SqlServerContext>(builder.Configuration);
 
 builder
     .Services
