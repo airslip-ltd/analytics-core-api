@@ -211,6 +211,11 @@ public class SqlServerContext : AirslipSqlServerContextBase
             .Property(b => b.MetricDate)
             .HasColumnType("date");
         
+        // Custom keys
+        modelBuilder.Entity<BankCountryCode>().HasKey(e => new
+        {
+            e.Id, e.BankId
+        });
         
         // Relationships
         modelBuilder.Entity<Bank>()

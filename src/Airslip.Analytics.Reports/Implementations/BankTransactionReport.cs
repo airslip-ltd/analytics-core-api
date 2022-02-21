@@ -27,10 +27,12 @@ namespace Airslip.Analytics.Reports.Implementations
         public async Task<IResponse> Execute(EntitySearchQueryModel query)
         {
             IQueryable<BankTransactionReportQuery> q = from item in _context.BankTransactions
+                join bank in _context.Banks on item.BankId equals bank.Id
                 select new BankTransactionReportQuery
                 {
                     Id = item.Id,
                     Amount = item.Amount,
+                    TradingName = bank.TradingName,
                     Day = item.Day,
                     Description = item.Description,
                     Month = item.Month,
