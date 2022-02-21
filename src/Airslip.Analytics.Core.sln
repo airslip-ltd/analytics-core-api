@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airslip.Analytics.Services.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airslip.Analytics.Api", "Airslip.Analytics.Api\Airslip.Analytics.Api.csproj", "{970C3683-310E-4F6D-A015-36FA3A8DB9EA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airslip.Analytics.Reports", "Airslip.Analytics.Reports\Airslip.Analytics.Reports.csproj", "{0325D932-6E81-458D-A720-AF25AE3AF755}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +46,9 @@ Global
 		{970C3683-310E-4F6D-A015-36FA3A8DB9EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{970C3683-310E-4F6D-A015-36FA3A8DB9EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{970C3683-310E-4F6D-A015-36FA3A8DB9EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0325D932-6E81-458D-A720-AF25AE3AF755}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0325D932-6E81-458D-A720-AF25AE3AF755}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0325D932-6E81-458D-A720-AF25AE3AF755}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0325D932-6E81-458D-A720-AF25AE3AF755}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -31,8 +31,8 @@ public class SqlServerContext : AirslipSqlServerContextBase
     public DbSet<BankSyncRequest> BankSyncRequests { get; set; }
     public DbSet<BankTransaction> BankTransactions { get; set; }
     public DbSet<CountryCode> CountryCodes { get; set; }
-    
     public DbSet<BankAccountMetricSnapshot> BankAccountMetricSnapshots { get; set; }
+    public DbSet<BasicAuditInformation> AuditInformation { get; set; } = null!;
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -210,6 +210,19 @@ public class SqlServerContext : AirslipSqlServerContextBase
             .Entity<BankAccountMetricSnapshot>()
             .Property(b => b.MetricDate)
             .HasColumnType("date");
+        
+        
+        // Relationships
+        modelBuilder.Entity<Bank>()
+            .HasMany(t => t.CountryCodes)
+            .WithOne(t => t.Bank)
+            .HasForeignKey(x => x.BankId)
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+        
+        modelBuilder.Entity<BankTransaction>()
+            .HasOne(t => t.AuditInformation)
+            .WithOne();
 
     }
 }

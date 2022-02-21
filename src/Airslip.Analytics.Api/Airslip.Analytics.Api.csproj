@@ -35,6 +35,7 @@
 	</ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Airslip.Analytics.Reports\Airslip.Analytics.Reports.csproj" />
       <ProjectReference Include="..\Airslip.Analytics.Services.SqlServer\Airslip.Analytics.Services.SqlServer.csproj" />
     </ItemGroup>
 

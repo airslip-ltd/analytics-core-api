@@ -1,4 +1,5 @@
 using Airslip.Analytics.Core.Interfaces;
+using Airslip.Analytics.Reports;
 using Airslip.Analytics.Services.SqlServer;
 using Airslip.Analytics.Services.SqlServer.Implementations;
 using Airslip.Common.Auth.AspNetCore.Extensions;
@@ -98,12 +99,13 @@ builder.Services
 builder.Services
     .AddAutoMapper(mce =>
     {
-
+        mce.AddReportingMappings();
     });
 
 builder.Services
     .AddRepositories()
     .AddEntitySearch()
+    .AddReportingServices()
     .AddAirslipSqlServer<SqlServerContext>(builder.Configuration);
 
 builder
