@@ -10,6 +10,8 @@ namespace Airslip.Analytics.Reports
         {
             mapperConfigurationExpression
                 .CreateMap<BankTransactionReportQuery, BankTransactionReportResponse>();
+            mapperConfigurationExpression
+                .CreateMap<CommerceTransactionReportQuery, CommerceTransactionReportResponse>();
 
             return mapperConfigurationExpression;
         }

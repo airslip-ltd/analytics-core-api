@@ -25,23 +25,37 @@ namespace Airslip.Analytics.Api.Controllers;
 public class ReportController : ApiControllerBase
 {
     private readonly IBankTransactionReport _bankTransactionReport;
+    private readonly ICommerceTransactionReport _commerceTransactionReport;
 
     public ReportController(ITokenDecodeService<UserToken> tokenDecodeService, 
         IBankTransactionReport bankTransactionReport,
+        ICommerceTransactionReport commerceTransactionReport,
         IOptions<PublicApiSettings> publicApiOptions, ILogger logger) : base(tokenDecodeService, 
         publicApiOptions, logger)
     {
         _bankTransactionReport = bankTransactionReport;
+        _commerceTransactionReport = commerceTransactionReport;
     }
     
     [HttpPost]
     [ProducesResponseType( typeof(EntitySearchResponse<BankTransactionReportResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
     [Route("bank-transactions")]
-    public async Task<IActionResult> Search([FromBody] EntitySearchQueryModel query)
+    public async Task<IActionResult> BankTransactions([FromBody] EntitySearchQueryModel query)
     {
         IResponse response = await _bankTransactionReport.Execute(query);
 
         return HandleResponse<EntitySearchResponse<BankTransactionReportResponse>>(response);
+    }
+    
+    [HttpPost]
+    [ProducesResponseType( typeof(EntitySearchResponse<CommerceTransactionReportResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
+    [Route("commerce-transactions")]
+    public async Task<IActionResult> CommerceTransactions([FromBody] EntitySearchQueryModel query)
+    {
+        IResponse response = await _commerceTransactionReport.Execute(query);
+
+        return HandleResponse<EntitySearchResponse<CommerceTransactionReportResponse>>(response);
     }
 }

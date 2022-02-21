@@ -9,6 +9,7 @@ public static class Services
     public static IServiceCollection AddReportingServices(this IServiceCollection services)
     {
         return services
-            .AddScoped<IBankTransactionReport, BankTransactionReport>();
+            .AddScoped<IBankTransactionReport, BankTransactionReport>()
+            .AddScoped<ICommerceTransactionReport, CommerceTransactionReport>();
     }
 }
