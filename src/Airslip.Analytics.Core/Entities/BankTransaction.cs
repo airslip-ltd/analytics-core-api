@@ -1,3 +1,4 @@
+using Airslip.Analytics.Core.Interfaces;
 using Airslip.Common.Repository.Types.Entities;
 using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
@@ -10,7 +11,7 @@ using System;
 namespace Airslip.Analytics.Core.Entities;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-public class BankTransaction : IEntityWithOwnership, IFromDataSource
+public class BankTransaction : IEntityWithOwnership, IFromDataSource, IReportableWithAccount
 {
     public string Id { get; set; } = string.Empty;
     public virtual BasicAuditInformation? AuditInformation { get; set; }

@@ -1,4 +1,5 @@
 ﻿using Airslip.Analytics.Core.Enums;
+using Airslip.Analytics.Core.Interfaces;
 using Airslip.Common.Repository.Types.Entities;
 using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
@@ -12,7 +13,7 @@ using System.Collections.Generic;
 namespace Airslip.Analytics.Core.Entities;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-public record BankAccountBalance : IEntityWithOwnership, IFromDataSource
+public record BankAccountBalance : IEntityWithOwnership, IFromDataSource, IReportableWithAccount, IReportableWithCurrency
 {
     public string Id { get; set; } = string.Empty;
     public virtual BasicAuditInformation? AuditInformation { get; set; }

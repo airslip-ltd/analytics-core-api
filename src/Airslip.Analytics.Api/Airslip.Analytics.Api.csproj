@@ -25,10 +25,10 @@
 		<PackageReference Include="Airslip.Common.Security" Version="6.0.0" />
 		<PackageReference Include="Airslip.Common.Auth" Version="6.0.0" />
 		<PackageReference Include="Airslip.Common.Auth.AspNetCore" Version="6.0.1" />
-		<PackageReference Include="Airslip.Common.Types" Version="6.0.10" />
+		<PackageReference Include="Airslip.Common.Types" Version="6.0.11" />
 		<PackageReference Include="Airslip.Common.Monitoring" Version="6.0.0" />
-		<PackageReference Include="Airslip.Common.Repository" Version="6.1.1" />
-		<PackageReference Include="Airslip.Common.Repository.Types" Version="6.1.2" />
+		<PackageReference Include="Airslip.Common.Repository" Version="6.1.2" />
+		<PackageReference Include="Airslip.Common.Repository.Types" Version="6.1.3" />
 		<PackageReference Include="Airslip.Common.Services.AutoMapper" Version="6.0.0" />
 		<PackageReference Include="Airslip.Common.Services.SqlServer" Version="6.1.1" />
 		<PackageReference Include="Airslip.Common.Middleware" Version="6.0.0" />
