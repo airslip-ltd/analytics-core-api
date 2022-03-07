@@ -1,4 +1,5 @@
-﻿using Airslip.Common.Repository.Types.Entities;
+﻿using Airslip.Analytics.Core.Enums;
+using Airslip.Common.Repository.Types.Entities;
 using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Types.Enums;
@@ -18,7 +19,7 @@ public class Bank : IEntity, IFromDataSource
     public EntityStatus EntityStatus { get; set; }
     public string TradingName { get; set; } = string.Empty;
     public string AccountName { get; set; } = string.Empty;
-    public string EnvironmentType { get; set; } = string.Empty;
+    public EnvironmentType EnvironmentType { get; set; } = EnvironmentType.Sandbox;
     public virtual ICollection<BankCountryCode> CountryCodes { get; set; } = new List<BankCountryCode>();
     public DataSources DataSource { get; set; } = DataSources.Unknown;
     public long TimeStamp { get; set; } = DateTime.UtcNow.ToUnixTimeMilliseconds();

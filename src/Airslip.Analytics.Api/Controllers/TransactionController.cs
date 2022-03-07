@@ -37,14 +37,14 @@ namespace Airslip.Analytics.Api.Controllers
         
         [HttpGet]
         [Route("commerce/accounts")]
-        [ProducesResponseType(typeof(SimpleListResponse<MerchantAccountSummaryModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(SimpleListResponse<IntegrationSummaryModel>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetCommerceAccounts()
         {
             IResponse response = await _transactionService
                 .GetMerchantAccounts();
             
-            return HandleResponse<SimpleListResponse<MerchantAccountSummaryModel>>(response);
+            return HandleResponse<SimpleListResponse<IntegrationSummaryModel>>(response);
         }
         
         [HttpGet]

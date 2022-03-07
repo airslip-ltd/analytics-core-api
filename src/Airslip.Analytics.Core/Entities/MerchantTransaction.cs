@@ -1,4 +1,5 @@
-﻿using Airslip.Common.Repository.Types.Entities;
+﻿using Airslip.Analytics.Core.Interfaces;
+using Airslip.Common.Repository.Types.Entities;
 using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Types.Enums;
@@ -8,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Airslip.Analytics.Core.Entities;
 
-public record MerchantTransaction : IFromDataSource, IEntityWithOwnership
+public record MerchantTransaction : IFromDataSource, IEntityWithOwnership, IReportableWithAccount
 {
     public string Id { get; set; } = string.Empty;
     public virtual BasicAuditInformation? AuditInformation { get; set; }

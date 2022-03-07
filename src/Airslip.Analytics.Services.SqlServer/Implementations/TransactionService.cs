@@ -1,3 +1,4 @@
+using Airslip.Analytics.Core.Enums;
 using Airslip.Analytics.Core.Extensions;
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Core.Models;
@@ -29,7 +30,7 @@ public class TransactionService : ITransactionService
     public async Task<IResponse> GetBankingTransactions(int limit, string? accountId)
     {
         IQueryable<TransactionSummaryModel> qBalance = from bankTransaction in _context.BankTransactions
-            join bankAccount in _context.BankAccounts on bankTransaction.AccountId equals bankAccount.AccountId
+            join bankAccount in _context.Integrations on bankTransaction.AccountId equals bankAccount.Id
             where bankTransaction.EntityId.Equals(_userToken.EntityId)
             where bankTransaction.AirslipUserType == _userToken.AirslipUserType
             where accountId == null || bankTransaction.AccountId.Equals(accountId)
@@ -39,7 +40,7 @@ public class TransactionService : ITransactionService
                 bankTransaction.Id,
                 bankTransaction.BankId,
                 bankTransaction.Amount.ToCurrency(),
-                bankTransaction.CurrencyCode ?? bankAccount.CurrencyCode,
+                bankTransaction.CurrencyCode,
                 bankTransaction.CapturedDate,
                 bankTransaction.Description
             );
@@ -50,7 +51,7 @@ public class TransactionService : ITransactionService
     public async Task<IResponse> GetCommerceTransactions(int limit, string? accountId)
     {
         IQueryable<TransactionSummaryModel> qBalance = from merchantTransaction in _context.MerchantTransactions
-            join merchantAccount in _context.MerchantAccounts on merchantTransaction.AccountId equals merchantAccount.Id
+            join merchantAccount in _context.Integrations on merchantTransaction.AccountId equals merchantAccount.Id
             where merchantTransaction.EntityId.Equals(_userToken.EntityId)
             where merchantTransaction.AirslipUserType == _userToken.AirslipUserType
             where accountId == null || merchantTransaction.AccountId.Equals(accountId)
@@ -58,7 +59,7 @@ public class TransactionService : ITransactionService
             select new TransactionSummaryModel
             (
                 merchantTransaction.Id,
-                merchantAccount.Provider,
+                merchantAccount.IntegrationProviderId,
                 merchantTransaction.Total.ToCurrency(),
                 merchantTransaction.CurrencyCode,
                 merchantTransaction.Datetime.Value.ToUnixTimeMilliseconds(),
@@ -70,18 +71,19 @@ public class TransactionService : ITransactionService
 
     public async Task<IResponse> GetMerchantAccounts()
     {
-        IQueryable<MerchantAccountSummaryModel> qBalance = from merchantAccount in _context.MerchantAccounts
-            where merchantAccount.EntityId.Equals(_userToken.EntityId)
-            where merchantAccount.AirslipUserType == _userToken.AirslipUserType
-            orderby merchantAccount.Name descending 
-            select new MerchantAccountSummaryModel()
+        IQueryable<IntegrationSummaryModel> qBalance = from integration in _context.Integrations
+            where integration.EntityId.Equals(_userToken.EntityId)
+            where integration.AirslipUserType == _userToken.AirslipUserType
+            where integration.IntegrationType == IntegrationType.Commerce
+            orderby integration.Name descending 
+            select new IntegrationSummaryModel
                 {
-                    Id = merchantAccount.Id,
-                    Name = merchantAccount.Name,
-                    Provider = merchantAccount.Provider,
-                    AuthenticationState = merchantAccount.AuthenticationState
+                    Id = integration.Id,
+                    Name = integration.Name,
+                    IntegrationProviderId = integration.IntegrationProviderId,
+                    AuthenticationState = integration.AuthenticationState
                 };
 
-        return new SimpleListResponse<MerchantAccountSummaryModel>(await qBalance.ToListAsync());
+        return new SimpleListResponse<IntegrationSummaryModel>(await qBalance.ToListAsync());
     }
 }

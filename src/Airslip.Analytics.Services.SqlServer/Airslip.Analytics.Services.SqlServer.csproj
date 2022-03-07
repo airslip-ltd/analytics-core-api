@@ -7,9 +7,10 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-	  <PackageReference Include="Airslip.Common.Repository.Types" Version="6.1.2" />
+	  <PackageReference Include="Airslip.Common.Repository.Types" Version="6.1.3" />
 	  <PackageReference Include="Airslip.Common.Services.SqlServer" Version="6.1.1" />
-	  <PackageReference Include="Airslip.Common.Types" Version="6.0.10" />
+	  <PackageReference Include="Airslip.Common.Types" Version="6.0.11" />
+		<PackageReference Include="Humanizer.Core" Version="2.14.1" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.1">
 	    <PrivateAssets>all</PrivateAssets>
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -17,27 +18,22 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-	  <EmbeddedResource Include="Database\AccountBalancesSupport\Procedures\dbo.GetCreditsAndDebitsByYear.prc.sql" />
-	  <EmbeddedResource Include="Database\AccountMetricSnapshots\Procedures\dbo.GetCreditsAndDebitsByYear.prc.sql" />
-	  <EmbeddedResource Include="Database\AddMerchantAccount\Procedures\dbo.CreateMerchantAccountMetricSnapshot.prc.sql" />
-	  <EmbeddedResource Include="Database\AddMerchantAccount\Procedures\dbo.GetRevenueAndRefundsByYear.prc.sql" />
-	  <EmbeddedResource Include="Database\AddMerchantAccount\Procedures\dbo.GetTotalRefundsSnapshot.prc.sql" />
-	  <EmbeddedResource Include="Database\AddMerchantAccount\Procedures\dbo.GetTotalSalesSnapshot.prc.sql" />
-	  <EmbeddedResource Include="Database\BankAccountMetrics\Functions\dbo.getYearMonths.udf.sql" />
-	  <EmbeddedResource Include="Database\BankAccountMetrics\Procedures\dbo.CreateBankAccountMetricSnapshots.prc.sql" />
 	  <EmbeddedResource Include="Database\Core\Functions\dbo.calcMovement.udf.sql" />
 	  <EmbeddedResource Include="Database\Core\Functions\dbo.getId.udf.sql" />
 	  <EmbeddedResource Include="Database\Core\Functions\dbo.getMetricDateRange.udf.sql" />
 	  <EmbeddedResource Include="Database\Core\Functions\dbo.round5min.udf.sql" />
 	  <EmbeddedResource Include="Database\Core\Views\dbo.getNewID.viw.sql" />
+	  <EmbeddedResource Include="Database\InitialCreate\Functions\dbo.calcMovement.udf.sql" />
+	  <EmbeddedResource Include="Database\InitialCreate\Functions\dbo.getYearMonths.udf.sql" />
+	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.CreateBankAccountMetricSnapshots.prc.sql" />
 	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.CreateBusinessBalanceSnapshot.prc.sql" />
+	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.CreateMerchantAccountMetricSnapshot.prc.sql" />
 	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.CreateMerchantMetricSnapshot.prc.sql" />
+	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.GetCreditsAndDebitsByYear.prc.sql" />
+	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.GetRevenueAndRefundsByYear.prc.sql" />
 	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.GetTotalRefundsSnapshot.prc.sql" />
 	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.GetTotalSalesSnapshot.prc.sql" />
 	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.UpdateAccountBalanceSummary.prc.sql" />
-	  <EmbeddedResource Include="Database\NegativeBalances\Functions\dbo.calcMovement.udf.sql" />
-	  <EmbeddedResource Include="Database\NegativeBalances\Procedures\dbo.CreateAccountBalanceSnapshot.prc.sql" />
-	  <EmbeddedResource Include="Database\NullValueInRevenue\Procedures\dbo.GetRevenueAndRefundsByYear.prc.sql" />
 	  <None Remove="Database\InitialCreate\Procedures\dbo.SomeAnaltyic.sql" />
 	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.CreateAccountBalanceSnapshot.prc.sql" />
 	</ItemGroup>

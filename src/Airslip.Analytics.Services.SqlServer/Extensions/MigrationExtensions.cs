@@ -1,3 +1,7 @@
+using Airslip.Analytics.Core.Interfaces;
+using Airslip.Common.Repository.Types.Interfaces;
+using Humanizer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using System.Collections.Generic;
 using System.IO;
@@ -21,5 +25,49 @@ public static class MigrationExtensions
             string sqlScript = reader.ReadToEnd();
             migrationBuilder.Sql($"EXEC(N'{sqlScript.Replace("'", "''")}')");
         }
+    }
+    
+    public static ModelBuilder AddTableWithDefaults<TEntity>(this ModelBuilder modelBuilder, string? tableName = null)
+        where TEntity : class, IEntityWithId
+    {
+        tableName ??= typeof(TEntity).Name.Pluralize();
+
+        modelBuilder
+            .Entity<TEntity>()
+            .ToTable(tableName)
+            .HasKey(b => b.Id)
+            .HasName($"PK_{tableName}_Id");
+
+        modelBuilder.Entity<TEntity>().Property(o => o.Id).HasColumnType("varchar (50)");
+        if (typeof(IEntity).IsAssignableFrom(typeof(TEntity)))
+            modelBuilder.Entity<TEntity>().Property("AuditInformationId").HasColumnType("varchar (50)");
+        if (typeof(IEntityWithOwnership).IsAssignableFrom(typeof(TEntity)))
+        {
+            modelBuilder.Entity<TEntity>().Property("EntityId").HasColumnType("varchar (50)");
+            modelBuilder.Entity<TEntity>().Property("UserId").HasColumnType("varchar (50)");
+        }
+        if (typeof(IReportableWithOwnership).IsAssignableFrom(typeof(TEntity)))
+        {
+            modelBuilder.Entity<TEntity>().Property("EntityId").HasColumnType("varchar (50)");
+        }
+        if (typeof(IReportableWithCurrency).IsAssignableFrom(typeof(TEntity)))
+        {
+            modelBuilder.Entity<TEntity>().Property("Currency").HasColumnType("varchar (5)");
+        }
+        if (typeof(IReportableWithAccount).IsAssignableFrom(typeof(TEntity)))
+        {
+            modelBuilder.Entity<TEntity>().Property("AccountId").HasColumnType("varchar (50)");
+        }
+        return modelBuilder;
+    }
+    public static ModelBuilder AddDatabaseGeneratedId<TEntity>(this ModelBuilder modelBuilder)
+        where TEntity : class, IEntityWithId
+    {
+        modelBuilder
+            .Entity<TEntity>()
+            .Property(b => b.Id)
+            .HasDefaultValueSql("dbo.getId()");
+
+        return modelBuilder;
     }
 }

@@ -16,12 +16,12 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 name: "AuditInformation",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CreatedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Id = table.Column<string>(type: "varchar (50)", nullable: false),
+                    CreatedByUserId = table.Column<string>(type: "varchar (50)", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedByUserId = table.Column<string>(type: "varchar (50)", nullable: true),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedByUserId = table.Column<string>(type: "varchar (50)", nullable: true),
                     DateDeleted = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -33,14 +33,14 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 name: "BankAccountBalanceSnapshots",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    EntityId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Id = table.Column<string>(type: "varchar (50)", nullable: false),
+                    EntityId = table.Column<string>(type: "varchar (50)", nullable: true),
                     AirslipUserType = table.Column<int>(type: "int", nullable: false),
-                    AccountId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AccountId = table.Column<string>(type: "varchar (5)", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Balance = table.Column<long>(type: "bigint", nullable: false),
                     TimeStamp = table.Column<long>(type: "bigint", nullable: false),
-                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Currency = table.Column<string>(type: "varchar (5)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -51,15 +51,15 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 name: "BankAccountBalanceSummaries",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValueSql: "dbo.getId()"),
-                    AccountId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EntityId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Id = table.Column<string>(type: "varchar (50)", nullable: false, defaultValueSql: "dbo.getId()"),
+                    AccountId = table.Column<string>(type: "varchar (50)", nullable: true),
+                    EntityId = table.Column<string>(type: "varchar (50)", nullable: true),
                     AirslipUserType = table.Column<int>(type: "int", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Balance = table.Column<long>(type: "bigint", nullable: false),
                     Movement = table.Column<double>(type: "float", nullable: false),
                     TimeStamp = table.Column<long>(type: "bigint", nullable: false),
-                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Currency = table.Column<string>(type: "varchar (5)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -67,17 +67,41 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BankAccountMetricSnapshots",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "varchar (50)", nullable: false, defaultValueSql: "dbo.getId()"),
+                    AccountId = table.Column<string>(type: "varchar (50)", nullable: false),
+                    EntityId = table.Column<string>(type: "varchar (50)", nullable: true),
+                    AirslipUserType = table.Column<int>(type: "int", nullable: false),
+                    MetricDate = table.Column<DateTime>(type: "date", nullable: true),
+                    Year = table.Column<int>(type: "int", nullable: true),
+                    Month = table.Column<int>(type: "int", nullable: true),
+                    Day = table.Column<int>(type: "int", nullable: true),
+                    TotalTransaction = table.Column<long>(type: "bigint", nullable: false),
+                    TransactionCount = table.Column<int>(type: "int", nullable: false),
+                    TotalCredit = table.Column<long>(type: "bigint", nullable: false),
+                    CreditCount = table.Column<int>(type: "int", nullable: false),
+                    TotalDebit = table.Column<long>(type: "bigint", nullable: false),
+                    DebitCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BankAccountMetricSnapshots_Id", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BankBusinessBalances",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValueSql: "dbo.getId()"),
-                    EntityId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Id = table.Column<string>(type: "varchar (50)", nullable: false, defaultValueSql: "dbo.getId()"),
+                    EntityId = table.Column<string>(type: "varchar (50)", nullable: true),
                     AirslipUserType = table.Column<int>(type: "int", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Balance = table.Column<long>(type: "bigint", nullable: false),
                     Movement = table.Column<double>(type: "float", nullable: false),
                     TimeStamp = table.Column<long>(type: "bigint", nullable: false),
-                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Currency = table.Column<string>(type: "varchar (5)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -88,13 +112,13 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 name: "BankBusinessBalanceSnapshots",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    EntityId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Id = table.Column<string>(type: "varchar (50)", nullable: false),
+                    EntityId = table.Column<string>(type: "varchar (50)", nullable: true),
                     AirslipUserType = table.Column<int>(type: "int", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Balance = table.Column<long>(type: "bigint", nullable: false),
                     TimeStamp = table.Column<long>(type: "bigint", nullable: false),
-                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Currency = table.Column<string>(type: "varchar (5)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -105,7 +129,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 name: "CountryCodes",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Id = table.Column<string>(type: "varchar (50)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -113,11 +137,34 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MerchantAccountMetricSnapshots",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "varchar (50)", nullable: false, defaultValueSql: "dbo.getId()"),
+                    AccountId = table.Column<string>(type: "varchar (50)", nullable: false),
+                    EntityId = table.Column<string>(type: "varchar (50)", nullable: true),
+                    AirslipUserType = table.Column<int>(type: "int", nullable: false),
+                    MetricDate = table.Column<DateTime>(type: "date", nullable: true),
+                    Year = table.Column<int>(type: "int", nullable: true),
+                    Month = table.Column<int>(type: "int", nullable: true),
+                    Day = table.Column<int>(type: "int", nullable: true),
+                    OrderCount = table.Column<int>(type: "int", nullable: false),
+                    TotalSales = table.Column<long>(type: "bigint", nullable: false),
+                    SaleCount = table.Column<int>(type: "int", nullable: false),
+                    TotalRefunds = table.Column<long>(type: "bigint", nullable: false),
+                    RefundCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MerchantAccountMetricSnapshots_Id", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MerchantMetricSnapshots",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValueSql: "dbo.getId()"),
-                    EntityId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Id = table.Column<string>(type: "varchar (50)", nullable: false, defaultValueSql: "dbo.getId()"),
+                    EntityId = table.Column<string>(type: "varchar (50)", nullable: true),
                     AirslipUserType = table.Column<int>(type: "int", nullable: false),
                     MetricDate = table.Column<DateTime>(type: "date", nullable: true),
                     Year = table.Column<int>(type: "int", nullable: true),
@@ -138,16 +185,16 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 name: "BankAccountBalances",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AuditInformationId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Id = table.Column<string>(type: "varchar (50)", nullable: false),
+                    AuditInformationId = table.Column<string>(type: "varchar (50)", nullable: true),
                     EntityStatus = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EntityId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "varchar (50)", nullable: true),
+                    EntityId = table.Column<string>(type: "varchar (50)", nullable: true),
                     AirslipUserType = table.Column<int>(type: "int", nullable: false),
-                    AccountId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AccountId = table.Column<string>(type: "varchar (50)", nullable: false),
                     BalanceStatus = table.Column<int>(type: "int", nullable: false),
                     Balance = table.Column<long>(type: "bigint", nullable: false),
-                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Currency = table.Column<string>(type: "varchar (5)", nullable: true),
                     DataSource = table.Column<int>(type: "int", nullable: false),
                     TimeStamp = table.Column<long>(type: "bigint", nullable: false)
                 },
@@ -162,48 +209,15 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BankAccounts",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AuditInformationId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    EntityStatus = table.Column<int>(type: "int", nullable: false),
-                    AccountStatus = table.Column<int>(type: "int", nullable: false),
-                    DataSource = table.Column<int>(type: "int", nullable: false),
-                    TimeStamp = table.Column<long>(type: "bigint", nullable: false),
-                    AccountId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EntityId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AirslipUserType = table.Column<int>(type: "int", nullable: false),
-                    LastCardDigits = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CurrencyCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UsageType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AccountType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SortCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AccountNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BankId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    InstitutionId = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BankAccounts_Id", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_BankAccounts_AuditInformation_AuditInformationId",
-                        column: x => x.AuditInformationId,
-                        principalTable: "AuditInformation",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Banks",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AuditInformationId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Id = table.Column<string>(type: "varchar (50)", nullable: false),
+                    AuditInformationId = table.Column<string>(type: "varchar (50)", nullable: true),
                     EntityStatus = table.Column<int>(type: "int", nullable: false),
-                    TradingName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AccountName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EnvironmentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TradingName = table.Column<string>(type: "varchar (50)", nullable: false),
+                    AccountName = table.Column<string>(type: "varchar (50)", nullable: false),
+                    EnvironmentType = table.Column<int>(type: "int", nullable: false),
                     DataSource = table.Column<int>(type: "int", nullable: false),
                     TimeStamp = table.Column<long>(type: "bigint", nullable: false)
                 },
@@ -221,21 +235,21 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 name: "BankSyncRequests",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AuditInformationId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Id = table.Column<string>(type: "varchar (50)", nullable: false),
+                    AuditInformationId = table.Column<string>(type: "varchar (50)", nullable: true),
                     EntityStatus = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EntityId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "varchar (50)", nullable: true),
+                    EntityId = table.Column<string>(type: "varchar (50)", nullable: true),
                     AirslipUserType = table.Column<int>(type: "int", nullable: false),
-                    AccountId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AccountId = table.Column<string>(type: "varchar (50)", nullable: false),
                     UsageType = table.Column<int>(type: "int", nullable: false),
                     AccountType = table.Column<int>(type: "int", nullable: false),
-                    LastCardDigits = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FromDate = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastCardDigits = table.Column<string>(type: "varchar (20)", nullable: true),
+                    FromDate = table.Column<string>(type: "varchar (50)", nullable: false),
+                    ApplicationUserId = table.Column<string>(type: "varchar (50)", nullable: false),
                     SyncStatus = table.Column<int>(type: "int", nullable: false),
                     RecordCount = table.Column<int>(type: "int", nullable: false),
-                    TracingId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TracingId = table.Column<string>(type: "varchar (50)", nullable: true),
                     DataSource = table.Column<int>(type: "int", nullable: false),
                     TimeStamp = table.Column<long>(type: "bigint", nullable: false)
                 },
@@ -253,30 +267,33 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 name: "BankTransactions",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AuditInformationId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Id = table.Column<string>(type: "varchar (50)", nullable: false),
+                    AuditInformationId = table.Column<string>(type: "varchar (50)", nullable: true),
                     EntityStatus = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EntityId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "varchar (50)", nullable: true),
+                    EntityId = table.Column<string>(type: "varchar (50)", nullable: true),
                     AirslipUserType = table.Column<int>(type: "int", nullable: false),
-                    BankTransactionId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TransactionHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AccountId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BankId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BankTransactionId = table.Column<string>(type: "varchar (50)", nullable: false),
+                    TransactionHash = table.Column<string>(type: "varchar (50)", nullable: true),
+                    AccountId = table.Column<string>(type: "varchar (50)", nullable: false),
+                    BankId = table.Column<string>(type: "varchar (50)", nullable: false),
+                    EmailAddress = table.Column<string>(type: "varchar (100)", nullable: false),
                     AuthorisedDate = table.Column<long>(type: "bigint", nullable: true),
                     CapturedDate = table.Column<long>(type: "bigint", nullable: false),
                     Amount = table.Column<long>(type: "bigint", nullable: false),
-                    CurrencyCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AddressLine = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastCardDigits = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsoFamilyCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProprietaryCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TransactionIdentifier = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Reference = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CurrencyCode = table.Column<string>(type: "varchar (5)", nullable: true),
+                    Description = table.Column<string>(type: "varchar (150)", nullable: false),
+                    AddressLine = table.Column<string>(type: "varchar (50)", nullable: true),
+                    LastCardDigits = table.Column<string>(type: "varchar (20)", nullable: true),
+                    IsoFamilyCode = table.Column<string>(type: "varchar (50)", nullable: true),
+                    ProprietaryCode = table.Column<string>(type: "varchar (50)", nullable: true),
+                    TransactionIdentifier = table.Column<string>(type: "varchar (50)", nullable: true),
+                    Reference = table.Column<string>(type: "varchar (50)", nullable: true),
                     DataSource = table.Column<int>(type: "int", nullable: false),
-                    TimeStamp = table.Column<long>(type: "bigint", nullable: false)
+                    TimeStamp = table.Column<long>(type: "bigint", nullable: false),
+                    Year = table.Column<int>(type: "int", nullable: true),
+                    Month = table.Column<int>(type: "int", nullable: true),
+                    Day = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -289,39 +306,69 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Integrations",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "varchar (50)", nullable: false),
+                    AuditInformationId = table.Column<string>(type: "varchar (50)", nullable: true),
+                    EntityStatus = table.Column<int>(type: "int", nullable: false),
+                    IntegrationProviderId = table.Column<string>(type: "varchar (50)", nullable: false),
+                    IntegrationType = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "varchar (50)", nullable: false),
+                    UserId = table.Column<string>(type: "varchar (50)", nullable: true),
+                    EntityId = table.Column<string>(type: "varchar (50)", nullable: true),
+                    AirslipUserType = table.Column<int>(type: "int", nullable: false),
+                    AuthenticationState = table.Column<int>(type: "int", nullable: false),
+                    DataSource = table.Column<int>(type: "int", nullable: false),
+                    TimeStamp = table.Column<long>(type: "bigint", nullable: false),
+                    AccountDetailId = table.Column<string>(type: "varchar (50)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Integrations_Id", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Integrations_AuditInformation_AuditInformationId",
+                        column: x => x.AuditInformationId,
+                        principalTable: "AuditInformation",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MerchantTransactions",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AuditInformationId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Id = table.Column<string>(type: "varchar (50)", nullable: false),
+                    AuditInformationId = table.Column<string>(type: "varchar (50)", nullable: true),
                     EntityStatus = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EntityId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "varchar (50)", nullable: true),
+                    EntityId = table.Column<string>(type: "varchar (50)", nullable: true),
+                    AccountId = table.Column<string>(type: "varchar (50)", nullable: true),
                     AirslipUserType = table.Column<int>(type: "int", nullable: false),
                     DataSource = table.Column<int>(type: "int", nullable: false),
                     TimeStamp = table.Column<long>(type: "bigint", nullable: false),
-                    TrackingId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    InternalId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Source = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TransactionNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RefundCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TrackingId = table.Column<string>(type: "varchar (50)", nullable: false),
+                    InternalId = table.Column<string>(type: "varchar (50)", nullable: true),
+                    Source = table.Column<string>(type: "varchar (50)", nullable: true),
+                    TransactionNumber = table.Column<string>(type: "varchar (50)", nullable: true),
+                    RefundCode = table.Column<string>(type: "varchar (50)", nullable: true),
                     Datetime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    BankStatementDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BankStatementTransactionIdentifier = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StoreLocationId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StoreAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BankStatementDescription = table.Column<string>(type: "varchar (150)", nullable: true),
+                    BankStatementTransactionIdentifier = table.Column<string>(type: "varchar (50)", nullable: true),
+                    StoreLocationId = table.Column<string>(type: "varchar (50)", nullable: true),
+                    StoreAddress = table.Column<string>(type: "varchar (250)", nullable: true),
                     OnlinePurchase = table.Column<bool>(type: "bit", nullable: true),
                     Subtotal = table.Column<long>(type: "bigint", nullable: true),
                     ServiceCharge = table.Column<long>(type: "bigint", nullable: true),
                     Total = table.Column<long>(type: "bigint", nullable: true),
-                    CurrencyCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomerEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OperatorName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CurrencyCode = table.Column<string>(type: "varchar (5)", nullable: true),
+                    CustomerEmail = table.Column<string>(type: "varchar (100)", nullable: true),
+                    OperatorName = table.Column<string>(type: "varchar (100)", nullable: true),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Time = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Till = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Store = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Time = table.Column<string>(type: "varchar (10)", nullable: true),
+                    Till = table.Column<string>(type: "varchar (10)", nullable: true),
+                    Number = table.Column<string>(type: "varchar (50)", nullable: true),
+                    Store = table.Column<string>(type: "varchar (50)", nullable: true),
+                    Description = table.Column<string>(type: "varchar (150)", nullable: true),
                     Year = table.Column<int>(type: "int", nullable: true),
                     Month = table.Column<int>(type: "int", nullable: true),
                     Day = table.Column<int>(type: "int", nullable: true)
@@ -340,15 +387,15 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 name: "BankAccountBalanceDetails",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AccountBalanceId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Id = table.Column<string>(type: "varchar (50)", nullable: false),
+                    AccountBalanceId = table.Column<string>(type: "varchar (50)", nullable: false),
                     BalanceType = table.Column<int>(type: "int", nullable: false),
                     CreditLineIncluded = table.Column<bool>(type: "bit", nullable: false),
-                    DateTime = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateTime = table.Column<string>(type: "varchar (50)", nullable: true),
                     BalanceStatus = table.Column<int>(type: "int", nullable: false),
                     Balance = table.Column<long>(type: "bigint", nullable: false),
-                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BankAccountBalanceId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    Currency = table.Column<string>(type: "varchar (5)", nullable: true),
+                    BankAccountBalanceId = table.Column<string>(type: "varchar (50)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -365,11 +412,11 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    BankId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    BankId = table.Column<string>(type: "varchar (50)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BankCountryCode", x => x.Id);
+                    table.PrimaryKey("PK_BankCountryCode", x => new { x.Id, x.BankId });
                     table.ForeignKey(
                         name: "FK_BankCountryCode_Banks_BankId",
                         column: x => x.BankId,
@@ -379,10 +426,36 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MerchantProducts",
+                name: "IntegrationAccountDetails",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AccountStatus = table.Column<int>(type: "int", nullable: false),
+                    AccountId = table.Column<string>(type: "varchar (50)", nullable: false),
+                    LastCardDigits = table.Column<string>(type: "varchar (20)", nullable: true),
+                    CurrencyCode = table.Column<string>(type: "varchar (5)", nullable: false),
+                    UsageType = table.Column<string>(type: "varchar (50)", nullable: false),
+                    AccountType = table.Column<string>(type: "varchar (50)", nullable: false),
+                    SortCode = table.Column<string>(type: "varchar (10)", nullable: true),
+                    AccountNumber = table.Column<string>(type: "varchar (10)", nullable: true),
+                    IntegrationId = table.Column<string>(type: "varchar (50)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IntegrationAccountDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_IntegrationAccountDetails_Integrations_IntegrationId",
+                        column: x => x.IntegrationId,
+                        principalTable: "Integrations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MerchantProducts",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "varchar (50)", nullable: false),
                     TransactionProductId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ParentTransactionProductId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProductId = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -411,7 +484,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     ManualUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Dimensions = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProductStatus = table.Column<int>(type: "int", nullable: false),
-                    MerchantTransactionId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    MerchantTransactionId = table.Column<string>(type: "varchar (50)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -427,14 +500,14 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 name: "MerchantRefunds",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<string>(type: "varchar (50)", nullable: false),
                     Shipping = table.Column<long>(type: "bigint", nullable: true),
                     Fee = table.Column<long>(type: "bigint", nullable: true),
                     Tax = table.Column<long>(type: "bigint", nullable: true),
                     Total = table.Column<long>(type: "bigint", nullable: true),
                     ModifiedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MerchantTransactionId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    Comment = table.Column<string>(type: "varchar (250)", nullable: true),
+                    MerchantTransactionId = table.Column<string>(type: "varchar (50)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -450,13 +523,13 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 name: "BankAccountBalanceCreditLines",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AccountBalanceDetailId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Id = table.Column<string>(type: "varchar (50)", nullable: false),
+                    AccountBalanceDetailId = table.Column<string>(type: "varchar (50)", nullable: false),
                     BalanceStatus = table.Column<int>(type: "int", nullable: false),
                     Balance = table.Column<long>(type: "bigint", nullable: false),
-                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Currency = table.Column<string>(type: "varchar (5)", nullable: true),
                     CreditLineType = table.Column<int>(type: "int", nullable: false),
-                    BankAccountBalanceDetailId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    BankAccountBalanceDetailId = table.Column<string>(type: "varchar (50)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -472,13 +545,13 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 name: "MerchantRefundItems",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    TransactionProductId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProductId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VariantId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Id = table.Column<string>(type: "varchar (50)", nullable: false),
+                    TransactionProductId = table.Column<string>(type: "varchar (50)", nullable: true),
+                    ProductId = table.Column<string>(type: "varchar (50)", nullable: true),
+                    VariantId = table.Column<string>(type: "varchar (50)", nullable: true),
                     Qty = table.Column<double>(type: "float", nullable: true),
                     Refund = table.Column<long>(type: "bigint", nullable: true),
-                    MerchantRefundId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    MerchantRefundId = table.Column<string>(type: "varchar (50)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -506,11 +579,6 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 column: "AuditInformationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BankAccounts_AuditInformationId",
-                table: "BankAccounts",
-                column: "AuditInformationId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_BankCountryCode_BankId",
                 table: "BankCountryCode",
                 column: "BankId");
@@ -528,6 +596,20 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_BankTransactions_AuditInformationId",
                 table: "BankTransactions",
+                column: "AuditInformationId",
+                unique: true,
+                filter: "[AuditInformationId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IntegrationAccountDetails_IntegrationId",
+                table: "IntegrationAccountDetails",
+                column: "IntegrationId",
+                unique: true,
+                filter: "[IntegrationId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Integrations_AuditInformationId",
+                table: "Integrations",
                 column: "AuditInformationId");
 
             migrationBuilder.CreateIndex(
@@ -565,7 +647,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 name: "BankAccountBalanceSummaries");
 
             migrationBuilder.DropTable(
-                name: "BankAccounts");
+                name: "BankAccountMetricSnapshots");
 
             migrationBuilder.DropTable(
                 name: "BankBusinessBalances");
@@ -586,6 +668,12 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 name: "CountryCodes");
 
             migrationBuilder.DropTable(
+                name: "IntegrationAccountDetails");
+
+            migrationBuilder.DropTable(
+                name: "MerchantAccountMetricSnapshots");
+
+            migrationBuilder.DropTable(
                 name: "MerchantMetricSnapshots");
 
             migrationBuilder.DropTable(
@@ -599,6 +687,9 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
             migrationBuilder.DropTable(
                 name: "Banks");
+
+            migrationBuilder.DropTable(
+                name: "Integrations");
 
             migrationBuilder.DropTable(
                 name: "MerchantRefunds");

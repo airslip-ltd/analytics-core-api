@@ -1,3 +1,4 @@
+using Airslip.Analytics.Core.Interfaces;
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Types.Enums;
 using Airslip.Common.Utilities.Extensions;
@@ -7,7 +8,7 @@ using System;
 namespace Airslip.Analytics.Core.Entities;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-public record BankAccountBalanceSnapshot : IEntityWithId
+public record BankAccountBalanceSnapshot : IReportableWithCurrency, IReportableWithAccount
 {
     public string Id { get; set; } = string.Empty;
     public string? EntityId { get; set; }

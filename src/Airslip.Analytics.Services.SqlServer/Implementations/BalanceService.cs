@@ -1,3 +1,4 @@
+using Airslip.Analytics.Core.Enums;
 using Airslip.Analytics.Core.Extensions;
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Core.Models;
@@ -27,19 +28,22 @@ public class BalanceService : IBalanceService
     
     public async Task<IResponse> GetAccountBalances()
     {
-        IQueryable<AccountBalanceSummaryModel> qBalance = from bankAccount in _context.BankAccounts
-            join bankAccountBalanceSummary in _context.BankAccountBalanceSummary on bankAccount.Id 
-                equals bankAccountBalanceSummary.AccountId 
-            where bankAccount.EntityId.Equals(_userToken.EntityId)
-            where bankAccount.AirslipUserType == _userToken.AirslipUserType
+        IQueryable<AccountBalanceSummaryModel> qBalance = from integration in _context.Integrations
+            join bankAccountBalanceSummary in _context.BankAccountBalanceSummary on integration.Id 
+                equals bankAccountBalanceSummary.AccountId
+                from accountDetail in _context.IntegrationAccountDetails
+                    .Where(o => o.IntegrationId.Equals(integration.Id))
+            where integration.EntityId.Equals(_userToken.EntityId)
+            where integration.AirslipUserType == _userToken.AirslipUserType
+            where integration.IntegrationType == IntegrationType.Banking
             select new AccountBalanceSummaryModel
             (
-                bankAccount.AccountId,
-                bankAccount.InstitutionId,
-                bankAccount.AccountStatus,
-                bankAccount.SortCode,
-                bankAccount.AccountNumber,
-                bankAccount.CurrencyCode,
+                accountDetail.AccountId,
+                integration.IntegrationProviderId,
+                accountDetail.AccountStatus,
+                accountDetail.SortCode,
+                accountDetail.AccountNumber,
+                accountDetail.CurrencyCode,
                 bankAccountBalanceSummary.Balance.ToCurrency(),
                 bankAccountBalanceSummary.UpdatedOn
             );
