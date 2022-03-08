@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Airslip.Analytics.Processor.Functions.CustomerPortal
 {
-    public static class CustomerPortalAccounts
+    public static class PartnerRelationships
     {
-        [Function(nameof(CustomerPortalAccounts))]
+        [Function(nameof(PartnerRelationships))]
         public static async Task Run([EventHubTrigger(Constants.EVENT_QUEUE_PARTNER_RELATIONSHIPS, 
             Connection = "PortalEventHubConnectionString",
             ConsumerGroup = "%ConsumerGroup%",

@@ -27,6 +27,7 @@ public static class ServiceRegistration
         handoff.Register<IRegisterDataService<Integration, IntegrationModel, RawApi2CartAccountModel>>(Constants.EVENT_QUEUE_API_2_CART_ACCOUNTS, DataSources.Api2Cart);
         
         handoff.Register<IRelationshipService>(Constants.EVENT_QUEUE_PARTNER_RELATIONSHIPS, DataSources.CustomerPortal);
+        handoff.Register<IBusinessService>(Constants.EVENT_QUEUE_BUSINESS, DataSources.CustomerPortal);
     }
 
     public static void RegisterMappings(IMapperConfigurationExpression cfg)
