@@ -1,4 +1,4 @@
-using Airslip.Analytics.Core.Interfaces;
+using Airslip.Common.Repository.Types.Interfaces;
 using System;
 using System.Collections.Generic;
 

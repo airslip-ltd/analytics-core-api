@@ -2,7 +2,6 @@ using Airslip.Analytics.Core.Constants;
 using Airslip.Analytics.Core.Entities;
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Core.Models;
-using Airslip.Analytics.Core.Models.Raw;
 using Airslip.Analytics.Core.Models.Raw.Api2Cart;
 using Airslip.Analytics.Core.Models.Raw.Yapily;
 using Airslip.Analytics.Processor.Mappers;
@@ -27,7 +26,7 @@ public static class ServiceRegistration
         handoff.Register<IRegisterDataService<MerchantTransaction, MerchantTransactionModel, TransactionEnvelope>>(Constants.EVENT_QUEUE_MERCHANT_TRANSACTIONS, DataSources.Api2Cart);
         handoff.Register<IRegisterDataService<Integration, IntegrationModel, RawApi2CartAccountModel>>(Constants.EVENT_QUEUE_API_2_CART_ACCOUNTS, DataSources.Api2Cart);
         
-        // handoff.Register<IRegisterDataService<MerchantAccount, MerchantAccountModel, RawApi2CartAccountModel>>(Constants.EVENT_QUEUE_PARTNER_RELATIONSHIPS, DataSources.CustomerPortal);
+        handoff.Register<IRelationshipService>(Constants.EVENT_QUEUE_PARTNER_RELATIONSHIPS, DataSources.CustomerPortal);
     }
 
     public static void RegisterMappings(IMapperConfigurationExpression cfg)

@@ -2,6 +2,7 @@ using Airslip.Analytics.Core.Entities.Unmapped;
 using Airslip.Analytics.Core.Extensions;
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Core.Models;
+using Airslip.Analytics.Services.SqlServer;
 using Airslip.Common.Auth.Interfaces;
 using Airslip.Common.Auth.Models;
 using Airslip.Common.Repository.Types.Interfaces;
@@ -9,12 +10,8 @@ using Airslip.Common.Types.Failures;
 using Airslip.Common.Types.Interfaces;
 using Airslip.Common.Utilities.Extensions;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Airslip.Analytics.Services.SqlServer.Implementations;
+namespace Airslip.Analytics.Logic.Implementations;
 
 public class DashboardSnapshotService : IDashboardSnapshotService
 {

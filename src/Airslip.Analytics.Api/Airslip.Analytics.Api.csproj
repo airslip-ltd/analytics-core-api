@@ -27,14 +27,15 @@
 		<PackageReference Include="Airslip.Common.Auth.AspNetCore" Version="6.0.1" />
 		<PackageReference Include="Airslip.Common.Types" Version="6.0.11" />
 		<PackageReference Include="Airslip.Common.Monitoring" Version="6.0.0" />
-		<PackageReference Include="Airslip.Common.Repository" Version="6.1.2" />
-		<PackageReference Include="Airslip.Common.Repository.Types" Version="6.1.3" />
+		<PackageReference Include="Airslip.Common.Repository" Version="6.1.4" />
+		<PackageReference Include="Airslip.Common.Repository.Types" Version="6.1.4" />
 		<PackageReference Include="Airslip.Common.Services.AutoMapper" Version="6.0.0" />
 		<PackageReference Include="Airslip.Common.Services.SqlServer" Version="6.1.1" />
 		<PackageReference Include="Airslip.Common.Middleware" Version="6.0.0" />
 	</ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Airslip.Analytics.Logic\Airslip.Analytics.Logic.csproj" />
       <ProjectReference Include="..\Airslip.Analytics.Reports\Airslip.Analytics.Reports.csproj" />
       <ProjectReference Include="..\Airslip.Analytics.Services.SqlServer\Airslip.Analytics.Services.SqlServer.csproj" />
     </ItemGroup>

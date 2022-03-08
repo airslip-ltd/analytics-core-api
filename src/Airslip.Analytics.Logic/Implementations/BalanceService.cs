@@ -2,16 +2,14 @@ using Airslip.Analytics.Core.Enums;
 using Airslip.Analytics.Core.Extensions;
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Core.Models;
+using Airslip.Analytics.Services.SqlServer;
 using Airslip.Common.Auth.Interfaces;
 using Airslip.Common.Auth.Models;
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Types.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Airslip.Analytics.Services.SqlServer.Implementations;
+namespace Airslip.Analytics.Logic.Implementations;
 
 public class BalanceService : IBalanceService
 {

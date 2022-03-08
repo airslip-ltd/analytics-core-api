@@ -1,31 +1,20 @@
-using Airslip.Analytics.Core.Constants;
-using Airslip.Analytics.Core.Entities;
-using Airslip.Analytics.Core.Interfaces;
-using Airslip.Analytics.Core.Models;
-using Airslip.Analytics.Core.Models.Raw;
+using Airslip.Analytics.Logic;
 using Airslip.Analytics.Processor.Extensions;
-using Airslip.Analytics.Processor.Mappers;
 using Airslip.Analytics.Services.SqlServer;
-using Airslip.Analytics.Services.SqlServer.Extensions;
-using Airslip.Analytics.Services.SqlServer.Implementations;
 using Airslip.Common.Auth.Functions.Extensions;
 using Airslip.Common.Functions.Extensions;
 using Airslip.Common.Repository.Enums;
 using Airslip.Common.Repository.Extensions;
-using Airslip.Common.Repository.Implementations;
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Services.AutoMapper;
 using Airslip.Common.Services.AutoMapper.Extensions;
 using Airslip.Common.Services.FluentValidation;
 using Airslip.Common.Services.Handoff;
-using Airslip.Common.Services.Handoff.Extensions;
 using Airslip.Common.Services.SqlServer;
 using Airslip.Common.Types.Configuration;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using System;
 
 namespace Airslip.Analytics.Processor;
 
@@ -73,7 +62,7 @@ internal class Program
                 services
                     .AddAirslipSqlServer<SqlServerContext>(context.Configuration)
                     .AddAnalyticsProcesses()
-                    .AddScoped(typeof(IRegisterDataService<,,>), typeof(RegisterDataService<,,>));
+                    .AddLogicServices();
 
                 services.UseMessageHandoff(ServiceRegistration.RegisterHandoff);
                 
