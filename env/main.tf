@@ -55,6 +55,11 @@ data "azurerm_eventhub_namespace" "api2cart" {
   resource_group_name = "airslip-${local.short_environment}-adapter-api2cart-resources"
 }
 
+data "azurerm_eventhub_namespace" "customer_portal" {
+  name = "airslip-${local.short_environment}-customer-portal-api-events-namespace"
+  resource_group_name = "airslip-${local.short_environment}-customer-portal-api-resources"
+}
+
 module "ingredient_bowl" {
   source              = "./tf_modules/Airslip.Terraform.Modules/modules/core/resource_group"
 
@@ -185,6 +190,7 @@ module "func_app_host" {
         "YapilyEventHubConnectionString": data.azurerm_eventhub_namespace.yapily_event_hub.default_primary_connection_string,
         "Api2CartEventHubConnectionString": data.azurerm_eventhub_namespace.api2cart.default_primary_connection_string,
         "TransactionEventHubConnectionString": data.azurerm_eventhub_namespace.integration_hub.default_primary_connection_string,
+        "PortalEventHubConnectionString": data.azurerm_eventhub_namespace.customer_portal.default_primary_connection_string,
         "ConsumerGroup": local.consumer_group
       }
     }
