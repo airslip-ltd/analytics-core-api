@@ -2,10 +2,8 @@ using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Core.Models;
 using Airslip.Common.Repository.Types.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Threading.Tasks;
 
-namespace Airslip.Analytics.Services.SqlServer.Implementations;
+namespace Airslip.Analytics.Logic.Implementations;
 
 public class GenerateAccountBalanceSummary : IAnalyticsProcess<BankAccountBalanceModel>
 {

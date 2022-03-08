@@ -1,6 +1,5 @@
 using Airslip.Analytics.Core.Entities;
 using Airslip.Analytics.Core.Enums;
-using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Core.Models;
 using Airslip.Analytics.Core.Models.Raw.Api2Cart;
 using Airslip.Analytics.Core.Models.Raw.Yapily;
@@ -15,6 +14,7 @@ using AutoMapper.EquivalencyExpression;
 using JetBrains.Annotations;
 using System;
 using System.Linq;
+using IModelWithId = Airslip.Common.Repository.Types.Interfaces.IModelWithId;
 
 namespace Airslip.Analytics.Processor.Mappers;
 
@@ -296,13 +296,20 @@ public static class MapperExtensions
         cfg.CreateMap<BankTransactionModel, BankTransaction>().ReverseMap();
         cfg.CreateMap<BankCountryCodeModel, BankCountryCode>().ReverseMap();
         cfg.CreateMap<BankSyncRequestModel, BankSyncRequest>().ReverseMap();
-
+        cfg.CreateMap<IntegrationAccountDetail, IntegrationAccountDetailModel>()
+            .ForPath(d => d.Id, c => c
+                .MapFrom(s => s.Id))
+            .ReverseMap();
         cfg.CreateMap<MerchantTransactionModel, MerchantTransaction>().ReverseMap();
         cfg.CreateMap<MerchantProductModel, MerchantProduct>().MatchOnId().ReverseMap();
         cfg.CreateMap<MerchantRefundModel, MerchantRefund>().MatchOnId().ReverseMap();
         cfg.CreateMap<MerchantRefundItemModel, MerchantRefundItem>()
             .ForMember(o => o.Id, exp => exp.MapFrom(s => s.TransactionProductId))
-            .MatchOnId().ReverseMap();
+            .MatchOnId()
+            .ReverseMap();
+        
+        cfg.CreateMap<RelationshipHeaderModel, RelationshipHeader>().ReverseMap();
+        cfg.CreateMap<RelationshipDetailModel, RelationshipDetail>().ReverseMap();
         
         return cfg;
     }

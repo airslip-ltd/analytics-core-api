@@ -1,20 +1,16 @@
 using Airslip.Analytics.Core.Interfaces;
+using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Repository.Types.Models;
 using Airslip.Common.Types.Enums;
 using Airslip.Common.Types.Interfaces;
 using Airslip.Common.Utilities;
-using Airslip.Common.Utilities.Extensions;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Polly;
 using Polly.Retry;
 using Serilog;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace Airslip.Analytics.Services.SqlServer.Implementations
+namespace Airslip.Analytics.Logic.Implementations
 {
     public class RegisterDataService<TEntity, TModel, TRawModel> : IRegisterDataService<TEntity, TModel, TRawModel>
         where TModel : class, IModel, IFromDataSource
@@ -63,7 +59,10 @@ namespace Airslip.Analytics.Services.SqlServer.Implementations
                     string? userId = model is IModelWithOwnership ownedModel ? ownedModel.UserId : null;
 
                     RepositoryActionResultModel<TModel> result = await _repository.Upsert(id, model, userId);
-
+                    
+                    if (model.EntityStatus == EntityStatus.Deleted)
+                        await _repository.Delete(id, userId);
+                    
                     if (result is SuccessfulActionResultModel<TModel> {CurrentVersion: { }} success)
                     {
                         foreach (IAnalyticsProcess<TModel> analyticsProcess in _postProcessors)

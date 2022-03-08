@@ -1,12 +1,26 @@
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Core.Models;
-using Airslip.Analytics.Services.SqlServer.Implementations;
+using Airslip.Analytics.Logic.Implementations;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Airslip.Analytics.Services.SqlServer.Extensions;
+namespace Airslip.Analytics.Logic;
 
 public static class Services
 {
+    public static IServiceCollection AddLogicServices(this IServiceCollection services)
+    {
+        services
+            .AddScoped<IRelationshipService, RelationshipService>()
+            .AddScoped<IBalanceService, BalanceService>()
+            .AddScoped<ITransactionService, TransactionService>()
+            .AddScoped<IDashboardSnapshotService, DashboardSnapshotService>()
+            .AddScoped<IRevenueAndRefundsService, RevenueAndRefundsService>()
+            .AddScoped<IDebitsAndCreditsService, DebitsAndCreditsService>()
+            .AddScoped(typeof(IRegisterDataService<,,>), typeof(RegisterDataService<,,>));
+
+        return services;
+    }
+    
     public static IServiceCollection AddAnalyticsProcesses(this IServiceCollection services)
     {
         services

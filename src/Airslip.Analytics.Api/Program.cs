@@ -1,20 +1,16 @@
-using Airslip.Analytics.Core.Interfaces;
+using Airslip.Analytics.Logic;
 using Airslip.Analytics.Reports;
 using Airslip.Analytics.Services.SqlServer;
-using Airslip.Analytics.Services.SqlServer.Implementations;
 using Airslip.Common.Auth.AspNetCore.Extensions;
 using Airslip.Common.Auth.AspNetCore.Middleware;
 using Airslip.Common.Middleware;
 using Airslip.Common.Monitoring;
 using Airslip.Common.Repository.Extensions;
-using Airslip.Common.Repository.Implementations;
-using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Security.Configuration;
 using Airslip.Common.Services.AutoMapper.Extensions;
 using Airslip.Common.Services.SqlServer;
 using Airslip.Common.Types;
 using Airslip.Common.Types.Configuration;
-using Airslip.Common.Utilities.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -110,11 +106,7 @@ builder.Services
 
 builder
     .Services
-    .AddScoped<IBalanceService, BalanceService>()
-    .AddScoped<ITransactionService, TransactionService>()
-    .AddScoped<IDashboardSnapshotService, DashboardSnapshotService>()
-    .AddScoped<IRevenueAndRefundsService, RevenueAndRefundsService>()
-    .AddScoped<IDebitsAndCreditsService, DebitsAndCreditsService>();
+    .AddLogicServices();
 
 builder.Services
     .UseHealthChecks();

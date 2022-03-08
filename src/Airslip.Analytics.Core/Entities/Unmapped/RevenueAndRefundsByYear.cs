@@ -1,5 +1,3 @@
-using System;
-
 namespace Airslip.Analytics.Core.Entities.Unmapped;
 
 public class RevenueAndRefundsByYear

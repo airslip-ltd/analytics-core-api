@@ -2,7 +2,6 @@
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Types.Enums;
 using Airslip.Common.Types.Interfaces;
-using Airslip.Common.Types.Transaction;
 using System;
 using System.Collections.Generic;
 

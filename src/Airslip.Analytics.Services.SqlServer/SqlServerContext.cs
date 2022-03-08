@@ -59,17 +59,16 @@ public class SqlServerContext : AirslipSqlServerContextBase
         modelBuilder.AddTableWithDefaults<CountryCode>();
 
         modelBuilder.AddTableWithDefaults<BasicAuditInformation>("AuditInformation");
-        
-        
         modelBuilder.AddTableWithDefaults<MerchantRefund>();
         modelBuilder.AddTableWithDefaults<MerchantRefundItem>();
         modelBuilder.AddTableWithDefaults<MerchantProduct>();
-        
-        
         modelBuilder.AddTableWithDefaults<MerchantTransaction>();
         modelBuilder.AddTableWithDefaults<MerchantMetricSnapshot>();
         modelBuilder.AddTableWithDefaults<BankAccountMetricSnapshot>();
         modelBuilder.AddTableWithDefaults<MerchantAccountMetricSnapshot>();
+        
+        modelBuilder.AddTableWithDefaults<RelationshipHeader>();
+        modelBuilder.AddTableWithDefaults<RelationshipDetail>();
         
         // Defaults
         modelBuilder.AddDatabaseGeneratedId<BankAccountBalanceSummary>();
@@ -172,6 +171,10 @@ public class SqlServerContext : AirslipSqlServerContextBase
         
         modelBuilder.Entity<MerchantRefundItem>().Property(o => o.VariantId).HasColumnType("varchar (50)");
         
+        modelBuilder.Entity<RelationshipDetail>().Property(o => o.PermissionType).HasColumnType("varchar (50)");
+        modelBuilder.Entity<RelationshipDetail>().Property(o => o.OwnerEntityId).HasColumnType("varchar (50)");
+        modelBuilder.Entity<RelationshipDetail>().Property(o => o.ViewerEntityId).HasColumnType("varchar (50)");
+        
         // Custom keys
         modelBuilder.Entity<BankCountryCode>().HasKey(e => new
         {
@@ -179,6 +182,13 @@ public class SqlServerContext : AirslipSqlServerContextBase
         });
         
         // Relationships
+        modelBuilder.Entity<RelationshipHeader>()
+            .HasMany(t => t.Details)
+            .WithOne(t => t.RelationshipHeader)
+            .HasForeignKey(x => x.RelationshipHeaderId)
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+        
         modelBuilder.Entity<Bank>()
             .HasMany(t => t.CountryCodes)
             .WithOne(t => t.Bank)

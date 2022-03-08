@@ -6,22 +6,17 @@ using Airslip.Common.Auth.Interfaces;
 using Airslip.Common.Auth.Models;
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Types.Interfaces;
-using Airslip.Common.Utilities.Extensions;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Airslip.Analytics.Services.SqlServer.Implementations;
+namespace Airslip.Analytics.Logic.Implementations;
 
-public class DebitsAndCreditsService : IDebitsAndCreditsService
+public class RevenueAndRefundsService : IRevenueAndRefundsService
 {
     private readonly DbContext _context;
     private readonly UserToken _userToken;
 
-    public DebitsAndCreditsService(IContext context, ITokenDecodeService<UserToken> userToken)
+    public RevenueAndRefundsService(IContext context, ITokenDecodeService<UserToken> userToken)
     {
         if (context is not DbContext dbContext) 
             throw new ArgumentException("Invalid context", nameof(context));
@@ -29,33 +24,31 @@ public class DebitsAndCreditsService : IDebitsAndCreditsService
         _context = dbContext;
     }
     
-    public async Task<IResponse> GetDebitsAndCredits(int year, string? accountId)
+    public async Task<IResponse> GetRevenueAndRefunds(int year, string? accountId)
     {
-        accountId = string.IsNullOrWhiteSpace(accountId) ? null : accountId;
-        
-        IQueryable<DebitsAndCreditsByYear> q = _context
-            .Set<DebitsAndCreditsByYear>()
-            .FromSqlRaw("dbo.GetCreditsAndDebitsByYear @Year = {0}, @EntityId = {1}, @AirslipUserType = {2}, @AccountId = {3}",
+        IQueryable<RevenueAndRefundsByYear> q = _context
+            .Set<RevenueAndRefundsByYear>()
+            .FromSqlRaw("dbo.GetRevenueAndRefundsByYear @Year = {0}, @EntityId = {1}, @AirslipUserType = {2}, @AccountId = {3}",
                 year, 
                 _userToken.EntityId,
                 _userToken.AirslipUserType,
                 accountId == null ? DBNull.Value : accountId);
 
-        List<DebitsAndCreditsByYear> metrics = await q.ToListAsync();
+        List<RevenueAndRefundsByYear> metrics = await q.ToListAsync();
         DateTimeFormatInfo formatter = CultureInfo.CurrentCulture.DateTimeFormat;
         DashboardGraphSeriesModel result = new(year,
             new []
             {
-                new Series("Receivables", 
+                new Series("Revenue", 
                     metrics.Select(o => new TimelyMetric(o.Month, formatter.GetAbbreviatedMonthName(o.Month),
-                    o.TotalCredit, PeriodType.Month)),
-                    metrics.Select( o=> o.TotalCredit.ToPositiveCurrency())
+                    o.TotalSales, PeriodType.Month)),
+                    metrics.Select( o=> o.TotalSales.ToPositiveCurrency())
                     
                     ),
-             new Series("Payables", metrics.Select(o => new TimelyMetric(o.Month, 
+             new Series("Refunds", metrics.Select(o => new TimelyMetric(o.Month, 
                  formatter.GetAbbreviatedMonthName(o.Month),
-                 o.TotalDebit, PeriodType.Month)),
-                 metrics.Select( o=> o.TotalDebit.ToPositiveCurrency()))   
+                 o.TotalRefunds, PeriodType.Month)),
+                 metrics.Select( o=> o.TotalRefunds.ToPositiveCurrency()))   
             }
         );
         

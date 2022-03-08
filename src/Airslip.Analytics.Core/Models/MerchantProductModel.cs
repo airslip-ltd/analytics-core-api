@@ -1,4 +1,4 @@
-using Airslip.Analytics.Core.Interfaces;
+using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Types.Enums;
 
 namespace Airslip.Analytics.Core.Models;

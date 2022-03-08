@@ -1,7 +1,5 @@
 using Airslip.Analytics.Core.Interfaces;
-using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Types.Enums;
-using Airslip.Common.Utilities.Extensions;
 using JetBrains.Annotations;
 using System;
 
