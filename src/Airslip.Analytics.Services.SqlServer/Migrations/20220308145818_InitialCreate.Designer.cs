@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Airslip.Analytics.Services.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    [Migration("20220308132415_PartnerRelationships")]
-    partial class PartnerRelationships
+    [Migration("20220308145818_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,14 +27,14 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.Bank", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("AccountName")
                         .IsRequired()
                         .HasColumnType("varchar (50)");
 
                     b.Property<string>("AuditInformationId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("DataSource")
                         .HasColumnType("int");
@@ -63,17 +63,17 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankAccountBalance", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("AccountId")
                         .IsRequired()
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("AirslipUserType")
                         .HasColumnType("int");
 
                     b.Property<string>("AuditInformationId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<long>("Balance")
                         .HasColumnType("bigint");
@@ -88,7 +88,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("EntityId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("EntityStatus")
                         .HasColumnType("int");
@@ -97,7 +97,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id")
                         .HasName("PK_BankAccountBalances_Id");
@@ -110,11 +110,11 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankAccountBalanceCreditLine", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("AccountBalanceDetailId")
                         .IsRequired()
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<long>("Balance")
                         .HasColumnType("bigint");
@@ -123,7 +123,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("BankAccountBalanceDetailId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("CreditLineType")
                         .HasColumnType("int");
@@ -142,11 +142,11 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankAccountBalanceDetail", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("AccountBalanceId")
                         .IsRequired()
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<long>("Balance")
                         .HasColumnType("bigint");
@@ -158,7 +158,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("BankAccountBalanceId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("CreditLineIncluded")
                         .HasColumnType("bit");
@@ -180,11 +180,11 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankAccountBalanceSnapshot", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("AccountId")
                         .IsRequired()
-                        .HasColumnType("varchar (5)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("AirslipUserType")
                         .HasColumnType("int");
@@ -196,7 +196,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("varchar (5)");
 
                     b.Property<string>("EntityId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<long>("TimeStamp")
                         .HasColumnType("bigint");
@@ -214,11 +214,11 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varchar (50)")
+                        .HasColumnType("nvarchar(100)")
                         .HasDefaultValueSql("dbo.getId()");
 
                     b.Property<string>("AccountId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("AirslipUserType")
                         .HasColumnType("int");
@@ -230,7 +230,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("varchar (5)");
 
                     b.Property<string>("EntityId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<double>("Movement")
                         .HasColumnType("float");
@@ -251,12 +251,12 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varchar (50)")
+                        .HasColumnType("nvarchar(100)")
                         .HasDefaultValueSql("dbo.getId()");
 
                     b.Property<string>("AccountId")
                         .IsRequired()
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("AirslipUserType")
                         .HasColumnType("int");
@@ -271,7 +271,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("EntityId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime?>("MetricDate")
                         .HasColumnType("date");
@@ -304,7 +304,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varchar (50)")
+                        .HasColumnType("nvarchar(100)")
                         .HasDefaultValueSql("dbo.getId()");
 
                     b.Property<int>("AirslipUserType")
@@ -317,7 +317,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("varchar (5)");
 
                     b.Property<string>("EntityId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<double>("Movement")
                         .HasColumnType("float");
@@ -337,7 +337,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankBusinessBalanceSnapshot", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("AirslipUserType")
                         .HasColumnType("int");
@@ -349,7 +349,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("varchar (5)");
 
                     b.Property<string>("EntityId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<long>("TimeStamp")
                         .HasColumnType("bigint");
@@ -369,7 +369,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BankId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id", "BankId");
 
@@ -381,11 +381,11 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankSyncRequest", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("AccountId")
                         .IsRequired()
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("AccountType")
                         .HasColumnType("int");
@@ -395,16 +395,16 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
                     b.Property<string>("ApplicationUserId")
                         .IsRequired()
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("AuditInformationId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("DataSource")
                         .HasColumnType("int");
 
                     b.Property<string>("EntityId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("EntityStatus")
                         .HasColumnType("int");
@@ -426,13 +426,13 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("TracingId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("UsageType")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id")
                         .HasName("PK_BankSyncRequests_Id");
@@ -445,11 +445,11 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.BankTransaction", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("AccountId")
                         .IsRequired()
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("AddressLine")
                         .HasColumnType("varchar (50)");
@@ -461,18 +461,18 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("AuditInformationId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<long?>("AuthorisedDate")
                         .HasColumnType("bigint");
 
                     b.Property<string>("BankId")
                         .IsRequired()
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("BankTransactionId")
                         .IsRequired()
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<long>("CapturedDate")
                         .HasColumnType("bigint");
@@ -495,7 +495,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("varchar (100)");
 
                     b.Property<string>("EntityId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("EntityStatus")
                         .HasColumnType("int");
@@ -519,13 +519,13 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("TransactionHash")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("TransactionIdentifier")
                         .HasColumnType("varchar (50)");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int?>("Year")
                         .HasColumnType("int");
@@ -543,7 +543,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.CountryCode", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id")
                         .HasName("PK_CountryCodes_Id");
@@ -554,16 +554,16 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.Integration", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("AccountDetailId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("AirslipUserType")
                         .HasColumnType("int");
 
                     b.Property<string>("AuditInformationId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("AuthenticationState")
                         .HasColumnType("int");
@@ -572,14 +572,14 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("EntityId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("EntityStatus")
                         .HasColumnType("int");
 
                     b.Property<string>("IntegrationProviderId")
                         .IsRequired()
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("IntegrationType")
                         .HasColumnType("int");
@@ -592,7 +592,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id")
                         .HasName("PK_Integrations_Id");
@@ -609,7 +609,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
                     b.Property<string>("AccountId")
                         .IsRequired()
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("AccountNumber")
                         .HasColumnType("varchar (10)");
@@ -626,7 +626,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("varchar (5)");
 
                     b.Property<string>("IntegrationId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("LastCardDigits")
                         .HasColumnType("varchar (20)");
@@ -651,12 +651,12 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varchar (50)")
+                        .HasColumnType("nvarchar(100)")
                         .HasDefaultValueSql("dbo.getId()");
 
                     b.Property<string>("AccountId")
                         .IsRequired()
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("AirslipUserType")
                         .HasColumnType("int");
@@ -665,7 +665,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("EntityId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime?>("MetricDate")
                         .HasColumnType("date");
@@ -701,7 +701,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varchar (50)")
+                        .HasColumnType("nvarchar(100)")
                         .HasDefaultValueSql("dbo.getId()");
 
                     b.Property<int>("AirslipUserType")
@@ -711,7 +711,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("EntityId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime?>("MetricDate")
                         .HasColumnType("date");
@@ -746,7 +746,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantProduct", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -770,7 +770,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MerchantTransactionId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("ModelNumber")
                         .HasColumnType("nvarchar(max)");
@@ -846,7 +846,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantRefund", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Comment")
                         .HasColumnType("varchar (250)");
@@ -855,7 +855,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("MerchantTransactionId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("ModifiedTime")
                         .HasColumnType("datetime2");
@@ -880,13 +880,13 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantRefundItem", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("MerchantRefundId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("ProductId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<double?>("Qty")
                         .HasColumnType("float");
@@ -895,10 +895,10 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("TransactionProductId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("VariantId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id")
                         .HasName("PK_MerchantRefundItems_Id");
@@ -911,16 +911,16 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.MerchantTransaction", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("AccountId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("AirslipUserType")
                         .HasColumnType("int");
 
                     b.Property<string>("AuditInformationId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("BankStatementDescription")
                         .HasColumnType("varchar (150)");
@@ -950,13 +950,13 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("varchar (150)");
 
                     b.Property<string>("EntityId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("EntityStatus")
                         .HasColumnType("int");
 
                     b.Property<string>("InternalId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int?>("Month")
                         .HasColumnType("int");
@@ -1005,13 +1005,13 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
                     b.Property<string>("TrackingId")
                         .IsRequired()
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("TransactionNumber")
                         .HasColumnType("varchar (50)");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int?>("Year")
                         .HasColumnType("int");
@@ -1027,7 +1027,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.RelationshipDetail", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("Allowed")
                         .HasColumnType("bit");
@@ -1037,7 +1037,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
                     b.Property<string>("OwnerEntityId")
                         .IsRequired()
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("PermissionType")
                         .IsRequired()
@@ -1045,14 +1045,14 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
                     b.Property<string>("RelationshipHeaderId")
                         .IsRequired()
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("ViewerAirslipUserType")
                         .HasColumnType("int");
 
                     b.Property<string>("ViewerEntityId")
                         .IsRequired()
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id")
                         .HasName("PK_RelationshipDetails_Id");
@@ -1065,19 +1065,19 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.RelationshipHeader", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("AirslipUserType")
                         .HasColumnType("int");
 
                     b.Property<string>("AuditInformationId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("DataSource")
                         .HasColumnType("int");
 
                     b.Property<string>("EntityId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("EntityStatus")
                         .HasColumnType("int");
@@ -1086,7 +1086,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id")
                         .HasName("PK_RelationshipHeaders_Id");
@@ -1147,10 +1147,10 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
             modelBuilder.Entity("Airslip.Common.Repository.Types.Entities.BasicAuditInformation", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("CreatedByUserId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -1162,10 +1162,10 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedByUserId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UpdatedByUserId")
-                        .HasColumnType("varchar (50)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id")
                         .HasName("PK_AuditInformation_Id");

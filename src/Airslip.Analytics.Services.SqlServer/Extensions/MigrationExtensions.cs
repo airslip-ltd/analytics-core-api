@@ -1,4 +1,5 @@
 using Airslip.Analytics.Core.Interfaces;
+using Airslip.Analytics.Services.SqlServer.Data;
 using Airslip.Common.Repository.Types.Interfaces;
 using Humanizer;
 using Microsoft.EntityFrameworkCore;
@@ -38,17 +39,17 @@ public static class MigrationExtensions
             .HasKey(b => b.Id)
             .HasName($"PK_{tableName}_Id");
 
-        modelBuilder.Entity<TEntity>().Property(o => o.Id).HasColumnType("varchar (50)");
+        modelBuilder.Entity<TEntity>().Property(o => o.Id).HasColumnType(Constants.ID_DATA_TYPE);
         if (typeof(IEntity).IsAssignableFrom(typeof(TEntity)))
-            modelBuilder.Entity<TEntity>().Property("AuditInformationId").HasColumnType("varchar (50)");
+            modelBuilder.Entity<TEntity>().Property("AuditInformationId").HasColumnType(Constants.ID_DATA_TYPE);
         if (typeof(IEntityWithOwnership).IsAssignableFrom(typeof(TEntity)))
         {
-            modelBuilder.Entity<TEntity>().Property("EntityId").HasColumnType("varchar (50)");
-            modelBuilder.Entity<TEntity>().Property("UserId").HasColumnType("varchar (50)");
+            modelBuilder.Entity<TEntity>().Property("EntityId").HasColumnType(Constants.ID_DATA_TYPE);
+            modelBuilder.Entity<TEntity>().Property("UserId").HasColumnType(Constants.ID_DATA_TYPE);
         }
         if (typeof(IReportableWithOwnership).IsAssignableFrom(typeof(TEntity)))
         {
-            modelBuilder.Entity<TEntity>().Property("EntityId").HasColumnType("varchar (50)");
+            modelBuilder.Entity<TEntity>().Property("EntityId").HasColumnType(Constants.ID_DATA_TYPE);
         }
         if (typeof(IReportableWithCurrency).IsAssignableFrom(typeof(TEntity)))
         {
@@ -56,7 +57,7 @@ public static class MigrationExtensions
         }
         if (typeof(IReportableWithAccount).IsAssignableFrom(typeof(TEntity)))
         {
-            modelBuilder.Entity<TEntity>().Property("AccountId").HasColumnType("varchar (50)");
+            modelBuilder.Entity<TEntity>().Property("AccountId").HasColumnType(Constants.ID_DATA_TYPE);
         }
         return modelBuilder;
     }
