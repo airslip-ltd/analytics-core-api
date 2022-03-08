@@ -40,7 +40,6 @@
 	
 	<ItemGroup>
 	  <Folder Include="Database\Core" />
-	  <Folder Include="Migrations" />
 	</ItemGroup>
 
 </Project>

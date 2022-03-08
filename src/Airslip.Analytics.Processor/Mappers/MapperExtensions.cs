@@ -99,6 +99,9 @@ public static class MapperExtensions
                     model.Provider.ToLower()))
             .ForPath(o => o.IntegrationType, 
                 exp => exp.MapFrom(model => IntegrationType.Commerce))
+            .ForPath(o => o.Name, 
+                exp => 
+                    exp.MapFrom(model => string.IsNullOrEmpty(model.Name) ? model.Provider : model.Name))
             .ForPath(o => o.AccountDetail, 
                 exp => exp.Ignore());
 

@@ -1,5 +1,6 @@
 using Airslip.Analytics.Core.Entities;
 using Airslip.Analytics.Core.Entities.Unmapped;
+using Airslip.Analytics.Services.SqlServer.Data;
 using Airslip.Analytics.Services.SqlServer.Extensions;
 using Airslip.Common.Repository.Types.Entities;
 using Airslip.Common.Services.SqlServer.Implementations;
@@ -96,27 +97,26 @@ public class SqlServerContext : AirslipSqlServerContextBase
             .HasColumnType("date");
         
         // Data types
-        modelBuilder.Entity<Integration>().Property(o => o.IntegrationProviderId).HasColumnType("varchar (50)");
-        modelBuilder.Entity<BasicAuditInformation>().Property(o => o.Id).HasColumnType("varchar (50)");
-        modelBuilder.Entity<BasicAuditInformation>().Property(o => o.CreatedByUserId).HasColumnType("varchar (50)");
-        modelBuilder.Entity<BasicAuditInformation>().Property(o => o.DeletedByUserId).HasColumnType("varchar (50)");
-        modelBuilder.Entity<BasicAuditInformation>().Property(o => o.UpdatedByUserId).HasColumnType("varchar (50)");
+        modelBuilder.Entity<Integration>().Property(o => o.IntegrationProviderId).HasColumnType(Constants.ID_DATA_TYPE);
+        modelBuilder.Entity<BasicAuditInformation>().Property(o => o.Id).HasColumnType(Constants.ID_DATA_TYPE);
+        modelBuilder.Entity<BasicAuditInformation>().Property(o => o.CreatedByUserId).HasColumnType(Constants.ID_DATA_TYPE);
+        modelBuilder.Entity<BasicAuditInformation>().Property(o => o.DeletedByUserId).HasColumnType(Constants.ID_DATA_TYPE);
+        modelBuilder.Entity<BasicAuditInformation>().Property(o => o.UpdatedByUserId).HasColumnType(Constants.ID_DATA_TYPE);
 
-        modelBuilder.Entity<BankAccountBalanceSnapshot>().Property(o => o.EntityId).HasColumnType("varchar (50)");
-        modelBuilder.Entity<BankAccountBalanceSnapshot>().Property(o => o.AccountId).HasColumnType("varchar (50)");
-        modelBuilder.Entity<BankAccountBalanceSnapshot>().Property(o => o.AccountId).HasColumnType("varchar (5)");
+        modelBuilder.Entity<BankAccountBalanceSnapshot>().Property(o => o.EntityId).HasColumnType(Constants.ID_DATA_TYPE);
+        modelBuilder.Entity<BankAccountBalanceSnapshot>().Property(o => o.AccountId).HasColumnType(Constants.ID_DATA_TYPE);
         
         modelBuilder.Entity<Bank>().Property(o => o.TradingName).HasColumnType("varchar (50)");
         modelBuilder.Entity<Bank>().Property(o => o.AccountName).HasColumnType("varchar (50)");
-        
+
         modelBuilder.Entity<BankSyncRequest>().Property(o => o.FromDate).HasColumnType("varchar (50)");
-        modelBuilder.Entity<BankSyncRequest>().Property(o => o.ApplicationUserId).HasColumnType("varchar (50)");
+        modelBuilder.Entity<BankSyncRequest>().Property(o => o.ApplicationUserId).HasColumnType(Constants.ID_DATA_TYPE);
         modelBuilder.Entity<BankSyncRequest>().Property(o => o.LastCardDigits).HasColumnType("varchar (20)");
-        modelBuilder.Entity<BankSyncRequest>().Property(o => o.TracingId).HasColumnType("varchar (50)");
+        modelBuilder.Entity<BankSyncRequest>().Property(o => o.TracingId).HasColumnType(Constants.ID_DATA_TYPE);
         
-        modelBuilder.Entity<BankTransaction>().Property(o => o.BankTransactionId).HasColumnType("varchar (50)");
-        modelBuilder.Entity<BankTransaction>().Property(o => o.TransactionHash).HasColumnType("varchar (50)");
-        modelBuilder.Entity<BankTransaction>().Property(o => o.BankId).HasColumnType("varchar (50)");
+        modelBuilder.Entity<BankTransaction>().Property(o => o.BankTransactionId).HasColumnType(Constants.ID_DATA_TYPE);
+        modelBuilder.Entity<BankTransaction>().Property(o => o.TransactionHash).HasColumnType(Constants.ID_DATA_TYPE);
+        modelBuilder.Entity<BankTransaction>().Property(o => o.BankId).HasColumnType(Constants.ID_DATA_TYPE);
         modelBuilder.Entity<BankTransaction>().Property(o => o.EmailAddress).HasColumnType("varchar (100)");
         modelBuilder.Entity<BankTransaction>().Property(o => o.CurrencyCode).HasColumnType("varchar (5)");
         modelBuilder.Entity<BankTransaction>().Property(o => o.Description).HasColumnType("varchar (150)");
@@ -128,10 +128,10 @@ public class SqlServerContext : AirslipSqlServerContextBase
         modelBuilder.Entity<BankTransaction>().Property(o => o.Reference).HasColumnType("varchar (50)");
         
         modelBuilder.Entity<Integration>().Property(o => o.Name).HasColumnType("varchar (50)");
-        modelBuilder.Entity<Integration>().Property(o => o.AccountDetailId).HasColumnType("varchar (50)");
+        modelBuilder.Entity<Integration>().Property(o => o.AccountDetailId).HasColumnType(Constants.ID_DATA_TYPE);
 
-        modelBuilder.Entity<MerchantTransaction>().Property(o => o.TrackingId).HasColumnType("varchar (50)");
-        modelBuilder.Entity<MerchantTransaction>().Property(o => o.InternalId).HasColumnType("varchar (50)");
+        modelBuilder.Entity<MerchantTransaction>().Property(o => o.TrackingId).HasColumnType(Constants.ID_DATA_TYPE);
+        modelBuilder.Entity<MerchantTransaction>().Property(o => o.InternalId).HasColumnType(Constants.ID_DATA_TYPE);
         modelBuilder.Entity<MerchantTransaction>().Property(o => o.Source).HasColumnType("varchar (50)");
         modelBuilder.Entity<MerchantTransaction>().Property(o => o.TransactionNumber).HasColumnType("varchar (50)");
         modelBuilder.Entity<MerchantTransaction>().Property(o => o.RefundCode).HasColumnType("varchar (50)");
@@ -148,7 +148,7 @@ public class SqlServerContext : AirslipSqlServerContextBase
         modelBuilder.Entity<MerchantTransaction>().Property(o => o.Store).HasColumnType("varchar (50)");
         modelBuilder.Entity<MerchantTransaction>().Property(o => o.Description).HasColumnType("varchar (150)");
         
-        modelBuilder.Entity<BankAccountBalanceDetail>().Property(o => o.AccountBalanceId).HasColumnType("varchar (50)");
+        modelBuilder.Entity<BankAccountBalanceDetail>().Property(o => o.AccountBalanceId).HasColumnType(Constants.ID_DATA_TYPE);
         modelBuilder.Entity<BankAccountBalanceDetail>().Property(o => o.DateTime).HasColumnType("varchar (50)");
         modelBuilder.Entity<BankAccountBalanceDetail>().Property(o => o.Currency).HasColumnType("varchar (5)");
         
@@ -158,22 +158,22 @@ public class SqlServerContext : AirslipSqlServerContextBase
         modelBuilder.Entity<IntegrationAccountDetail>().Property(o => o.AccountType).HasColumnType("varchar (50)");
         modelBuilder.Entity<IntegrationAccountDetail>().Property(o => o.SortCode).HasColumnType("varchar (10)");
         modelBuilder.Entity<IntegrationAccountDetail>().Property(o => o.AccountNumber).HasColumnType("varchar (10)");
-        modelBuilder.Entity<IntegrationAccountDetail>().Property(o => o.AccountId).HasColumnType("varchar (50)");
+        modelBuilder.Entity<IntegrationAccountDetail>().Property(o => o.AccountId).HasColumnType(Constants.ID_DATA_TYPE);
 
         modelBuilder.Entity<MerchantRefund>().Property(o => o.Comment).HasColumnType("varchar (250)");
         
         modelBuilder.Entity<BankAccountBalanceCreditLine>().Property(o => o.Currency).HasColumnType("varchar (5)");
-        modelBuilder.Entity<BankAccountBalanceCreditLine>().Property(o => o.AccountBalanceDetailId).HasColumnType("varchar (50)");
+        modelBuilder.Entity<BankAccountBalanceCreditLine>().Property(o => o.AccountBalanceDetailId).HasColumnType(Constants.ID_DATA_TYPE);
         
-        modelBuilder.Entity<MerchantRefundItem>().Property(o => o.ProductId).HasColumnType("varchar (50)");
-        modelBuilder.Entity<MerchantRefundItem>().Property(o => o.VariantId).HasColumnType("varchar (50)");
-        modelBuilder.Entity<MerchantRefundItem>().Property(o => o.TransactionProductId).HasColumnType("varchar (50)");
+        modelBuilder.Entity<MerchantRefundItem>().Property(o => o.ProductId).HasColumnType(Constants.ID_DATA_TYPE);
+        modelBuilder.Entity<MerchantRefundItem>().Property(o => o.VariantId).HasColumnType(Constants.ID_DATA_TYPE);
+        modelBuilder.Entity<MerchantRefundItem>().Property(o => o.TransactionProductId).HasColumnType(Constants.ID_DATA_TYPE);
         
-        modelBuilder.Entity<MerchantRefundItem>().Property(o => o.VariantId).HasColumnType("varchar (50)");
+        modelBuilder.Entity<MerchantRefundItem>().Property(o => o.VariantId).HasColumnType(Constants.ID_DATA_TYPE);
         
         modelBuilder.Entity<RelationshipDetail>().Property(o => o.PermissionType).HasColumnType("varchar (50)");
-        modelBuilder.Entity<RelationshipDetail>().Property(o => o.OwnerEntityId).HasColumnType("varchar (50)");
-        modelBuilder.Entity<RelationshipDetail>().Property(o => o.ViewerEntityId).HasColumnType("varchar (50)");
+        modelBuilder.Entity<RelationshipDetail>().Property(o => o.OwnerEntityId).HasColumnType(Constants.ID_DATA_TYPE);
+        modelBuilder.Entity<RelationshipDetail>().Property(o => o.ViewerEntityId).HasColumnType(Constants.ID_DATA_TYPE);
         
         // Custom keys
         modelBuilder.Entity<BankCountryCode>().HasKey(e => new
