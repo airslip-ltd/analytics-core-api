@@ -1,3 +1,5 @@
+using Airslip.Analytics.Core.Enums;
+using Airslip.Analytics.Core.Models;
 using Airslip.Analytics.Reports.Data;
 using Airslip.Analytics.Reports.Interfaces;
 using Airslip.Analytics.Reports.Models;
@@ -24,9 +26,12 @@ namespace Airslip.Analytics.Reports.Implementations
             _userToken = tokenDecodeService.GetCurrentToken();
         }
         
-        public async Task<IResponse> Execute(EntitySearchQueryModel query)
+        public async Task<IResponse> Execute(OwnedDataSearchModel query)
         {
-            IQueryable<CommerceTransactionReportQuery> q = from item in _context.MerchantTransactions
+            IQueryable<CommerceTransactionReportQuery> q = 
+                from rd in _context.RelationshipDetails
+                from item in _context.MerchantTransactions
+                    .Where(o => o.EntityId.Equals(rd.OwnerEntityId) && o.AirslipUserType == rd.OwnerAirslipUserType)
                 select new CommerceTransactionReportQuery
                 {
                     Id = item.Id,
@@ -37,11 +42,9 @@ namespace Airslip.Analytics.Reports.Implementations
                     AccountId = item.AccountId,
                     CurrencyCode = item.CurrencyCode,
                     DataSource = item.DataSource,
-                    EntityId = item.EntityId,
                     EntityStatus = item.EntityStatus,
                     TimeStamp = item.TimeStamp,
                     UserId = item.UserId,
-                    AirslipUserType = item.AirslipUserType,
                     Date = item.Date,
                     Datetime = item.Datetime,
                     Number = item.Number,
@@ -60,15 +63,26 @@ namespace Airslip.Analytics.Reports.Implementations
                     StoreAddress = item.StoreAddress,
                     TrackingId = item.TrackingId,
                     TransactionNumber = item.TransactionNumber,
-                    StoreLocationId = item.StoreLocationId
+                    StoreLocationId = item.StoreLocationId ,
+                    
+                    EntityId = rd.OwnerEntityId,
+                    AirslipUserType = rd.OwnerAirslipUserType,
+                    ViewerEntityId = rd.ViewerEntityId,
+                    ViewerAirslipUserType = rd.ViewerAirslipUserType,
+                    PermissionType = rd.PermissionType,
+                    Allowed = rd.Allowed
                 };
             
             EntitySearchResponse<CommerceTransactionReportResponse> searchResults = await _entitySearch
                 .GetSearchResults(q, query, 
                     new List<SearchFilterModel>
                     {
-                        new(nameof(CommerceTransactionReportQuery.EntityId), _userToken.EntityId),
-                        new(nameof(CommerceTransactionReportQuery.AirslipUserType), _userToken.AirslipUserType.ToString())
+                        new(nameof(BankTransactionReportQuery.EntityId), query.OwnerEntityId),
+                        new(nameof(BankTransactionReportQuery.AirslipUserType), query.OwnerAirslipUserType.ToString()),
+                        new(nameof(BankTransactionReportQuery.ViewerEntityId), _userToken.EntityId),
+                        new(nameof(BankTransactionReportQuery.ViewerAirslipUserType), _userToken.AirslipUserType.ToString()),
+                        new(nameof(BankTransactionReportQuery.PermissionType), PermissionType.Commerce.ToString()),
+                        new(nameof(BankTransactionReportQuery.Allowed), true)
                     });
             
             return searchResults;
