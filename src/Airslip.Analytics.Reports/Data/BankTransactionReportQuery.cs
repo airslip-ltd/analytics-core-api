@@ -6,7 +6,7 @@ using Airslip.Common.Utilities.Extensions;
 
 namespace Airslip.Analytics.Reports.Data;
 
-public class BankTransactionReportQuery : IEntity
+public class BankTransactionReportQuery : IEntity, IOwnedDataQuery
 {
     public string Id { get; set; } = string.Empty;
     public virtual BasicAuditInformation? AuditInformation { get; set; }
@@ -32,9 +32,20 @@ public class BankTransactionReportQuery : IEntity
     public string? Reference { get; set; }
     public DataSources DataSource { get; set; } = DataSources.Unknown;
     public long TimeStamp { get; set; } = DateTime.UtcNow.ToUnixTimeMilliseconds();
-
     public int? Year { get; set; }
     public int? Month { get; set; }
     public int? Day { get; set; }
     public string TradingName { get; set; } = string.Empty;
+    public string ViewerEntityId { get; init; }
+    public AirslipUserType ViewerAirslipUserType { get; init; }
+    public string PermissionType { get; init; }
+    public bool Allowed { get; init; }
+}
+
+public interface IOwnedDataQuery
+{
+    string ViewerEntityId { get; init; }
+    AirslipUserType ViewerAirslipUserType { get; init; }
+    string PermissionType { get; init; }
+    bool Allowed { get; init; }
 }

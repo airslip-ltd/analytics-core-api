@@ -106,7 +106,7 @@ builder.Services
 
 builder
     .Services
-    .AddLogicServices();
+    .AddApiLogicServices();
 
 builder.Services
     .UseHealthChecks();

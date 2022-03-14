@@ -6,7 +6,7 @@ using Airslip.Common.Utilities.Extensions;
 
 namespace Airslip.Analytics.Reports.Data;
 
-public class CommerceTransactionReportQuery : IEntity
+public class CommerceTransactionReportQuery : IEntity, IOwnedDataQuery
 {
     public string Id { get; set; } = string.Empty;
     public virtual BasicAuditInformation? AuditInformation { get; set; }
@@ -43,4 +43,8 @@ public class CommerceTransactionReportQuery : IEntity
     public int? Year { get; set; }
     public int? Month { get; set; }
     public int? Day { get; set; }
+    public string ViewerEntityId { get; init; }
+    public AirslipUserType ViewerAirslipUserType { get; init; }
+    public string PermissionType { get; init; }
+    public bool Allowed { get; init; }
 }

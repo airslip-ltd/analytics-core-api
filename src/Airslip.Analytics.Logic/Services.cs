@@ -22,6 +22,16 @@ public static class Services
         return services;
     }
     
+    public static IServiceCollection AddApiLogicServices(this IServiceCollection services)
+    {
+        services
+            .AddScoped<IDashboardSnapshotService, DashboardSnapshotService>()
+            .AddScoped<IRevenueAndRefundsService, RevenueAndRefundsService>()
+            .AddScoped<IDebitsAndCreditsService, DebitsAndCreditsService>();
+
+        return services;
+    }
+    
     public static IServiceCollection AddAnalyticsProcesses(this IServiceCollection services)
     {
         services

@@ -15,26 +15,28 @@ public class SqlServerContext : AirslipSqlServerContextBase
     {
         
     }
-    
-    public DbSet<MerchantAccountMetricSnapshot> MerchantAccountMetricSnapshots { get; set; }
-    public DbSet<MerchantRefund> MerchantRefunds { get; set; }
-    public DbSet<MerchantRefundItem> MerchantRefundItems { get; set; }
-    public DbSet<MerchantProduct> MerchantProducts { get; set; }
-    public DbSet<MerchantTransaction> MerchantTransactions { get; set; }
-    public DbSet<MerchantMetricSnapshot> MerchantMetricSnapshots { get; set; }
-    public DbSet<BankAccountBalance> BankAccountBalances { get; set; }
-    public DbSet<BankAccountBalanceSnapshot> BankAccountBalanceSnapshots { get; set; }
-    public DbSet<BankAccountBalanceSummary> BankAccountBalanceSummary { get; set; }
-    public DbSet<Bank> Banks { get; set; }
-    public DbSet<BankBusinessBalance> BankBusinessBalances { get; set; }
-    public DbSet<BankBusinessBalanceSnapshot> BankBusinessBalanceSnapshots { get; set; }
-    public DbSet<BankSyncRequest> BankSyncRequests { get; set; }
-    public DbSet<BankTransaction> BankTransactions { get; set; }
-    public DbSet<CountryCode> CountryCodes { get; set; }
-    public DbSet<BankAccountMetricSnapshot> BankAccountMetricSnapshots { get; set; }
+
+    public DbSet<MerchantAccountMetricSnapshot> MerchantAccountMetricSnapshots { get; set; } = null!;
+    public DbSet<MerchantRefund> MerchantRefunds { get; set; } = null!;
+    public DbSet<MerchantRefundItem> MerchantRefundItems { get; set; } = null!;
+    public DbSet<MerchantProduct> MerchantProducts { get; set; } = null!;
+    public DbSet<MerchantTransaction> MerchantTransactions { get; set; } = null!;
+    public DbSet<MerchantMetricSnapshot> MerchantMetricSnapshots { get; set; } = null!;
+    public DbSet<BankAccountBalance> BankAccountBalances { get; set; } = null!;
+    public DbSet<BankAccountBalanceSnapshot> BankAccountBalanceSnapshots { get; set; } = null!;
+    public DbSet<BankAccountBalanceSummary> BankAccountBalanceSummary { get; set; } = null!;
+    public DbSet<Bank> Banks { get; set; } = null!;
+    public DbSet<BankBusinessBalance> BankBusinessBalances { get; set; } = null!;
+    public DbSet<BankBusinessBalanceSnapshot> BankBusinessBalanceSnapshots { get; set; } = null!;
+    public DbSet<BankSyncRequest> BankSyncRequests { get; set; } = null!;
+    public DbSet<BankTransaction> BankTransactions { get; set; } = null!;
+    public DbSet<CountryCode> CountryCodes { get; set; } = null!;
+    public DbSet<BankAccountMetricSnapshot> BankAccountMetricSnapshots { get; set; } = null!;
     public DbSet<BasicAuditInformation> AuditInformation { get; set; } = null!;
     public DbSet<Integration> Integrations { get; set; } = null!;
     public DbSet<IntegrationAccountDetail> IntegrationAccountDetails { get; set; } = null!;
+    public DbSet<RelationshipDetail> RelationshipDetails { get; set; } = null!;
+    public DbSet<RelationshipHeader> RelationshipHeaders { get; set; } = null!;
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

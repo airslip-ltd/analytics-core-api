@@ -1,3 +1,4 @@
+using Airslip.Analytics.Core.Models;
 using Airslip.Analytics.Reports.Interfaces;
 using Airslip.Analytics.Reports.Models;
 using Airslip.Common.Auth.AspNetCore.Implementations;
@@ -41,7 +42,7 @@ public class ReportController : ApiControllerBase
     [ProducesResponseType( typeof(EntitySearchResponse<BankTransactionReportResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
     [Route("bank-transactions")]
-    public async Task<IActionResult> BankTransactions([FromBody] EntitySearchQueryModel query)
+    public async Task<IActionResult> BankTransactions([FromBody] OwnedDataSearchModel query)
     {
         IResponse response = await _bankTransactionReport.Execute(query);
 
@@ -52,7 +53,7 @@ public class ReportController : ApiControllerBase
     [ProducesResponseType( typeof(EntitySearchResponse<CommerceTransactionReportResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
     [Route("commerce-transactions")]
-    public async Task<IActionResult> CommerceTransactions([FromBody] EntitySearchQueryModel query)
+    public async Task<IActionResult> CommerceTransactions([FromBody] OwnedDataSearchModel query)
     {
         IResponse response = await _commerceTransactionReport.Execute(query);
 
