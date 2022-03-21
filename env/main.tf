@@ -149,7 +149,8 @@ module "api_management" {
 
   app_settings = {
     "ConnectionStrings:SqlServer": module.sql_server.connection_string,
-    "EnvironmentSettings:EnvironmentName": var.environment
+    "EnvironmentSettings:EnvironmentName": var.environment,
+    "Serilog:MinimumLevel:Default": local.log_level
   }
 }
 
@@ -188,12 +189,12 @@ module "func_app_host" {
       app_settings = {
         "ConnectionStrings:SqlServer": module.sql_server.connection_string,
         "EnvironmentSettings:EnvironmentName": var.environment,
+        "Serilog:MinimumLevel:Default": local.log_level,
         "YapilyEventHubConnectionString": data.azurerm_eventhub_namespace.yapily_event_hub.default_primary_connection_string,
         "Api2CartEventHubConnectionString": data.azurerm_eventhub_namespace.api2cart.default_primary_connection_string,
         "TransactionEventHubConnectionString": data.azurerm_eventhub_namespace.integration_hub.default_primary_connection_string,
         "PortalEventHubConnectionString": data.azurerm_eventhub_namespace.customer_portal.default_primary_connection_string,
-        "ConsumerGroup": local.consumer_group,
-        "Serilog:MinimumLevel:Default": local.log_level
+        "ConsumerGroup": local.consumer_group
       }
     }
   ]
