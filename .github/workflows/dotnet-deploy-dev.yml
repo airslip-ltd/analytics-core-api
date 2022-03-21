@@ -83,7 +83,7 @@ jobs:
       env:
         SQL_ADMIN_PASSWORD: ${{ secrets.SQL_ADMIN_PASSWORD }}
         SQL_ADMIN_LOGIN: ${{ secrets.SQL_ADMIN_LOGIN }}
-        LOGZ_IO_LOG_LEVEL: Debug
+        LOGZ_IO_LOG_LEVEL: Information
 
     - name: Terraform Update
       id: "terraform_update"
