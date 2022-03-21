@@ -81,6 +81,7 @@ jobs:
       env:
         SQL_ADMIN_PASSWORD: ${{ secrets.SQL_ADMIN_PASSWORD }}
         SQL_ADMIN_LOGIN: ${{ secrets.SQL_ADMIN_LOGIN }}
+        LOGZ_IO_LOG_LEVEL: Debug
 
     - name: Terraform Update
       id: "terraform_update"
@@ -130,7 +131,6 @@ jobs:
         files: '["${{ env.PUBLISH_PATH }}/**/*.json"]'
       env:
         LOGZ_IO_AUTH_TOKEN: ${{ secrets.LOGZ_IO_AUTH_TOKEN }}
-        LOGZ_IO_LOG_LEVEL: Debug
         LOGZ_IO_ENVIRONMENT: ${{ env.ENVIRONMENT_NAME }}
         LOGZ_IO_SERVICE_NAME: ${{ env.APPSERVICE_NAME }}
         LOGZ_IO_HOSTING_NAME: Azure
@@ -198,7 +198,6 @@ jobs:
         files: '["${{ env.PUBLISH_PATH }}/**/*.json"]'
       env:
         LOGZ_IO_AUTH_TOKEN: ${{ secrets.LOGZ_IO_AUTH_TOKEN }}
-        LOGZ_IO_LOG_LEVEL: Debug
         LOGZ_IO_ENVIRONMENT: ${{ env.ENVIRONMENT_NAME }}
         LOGZ_IO_SERVICE_NAME: ${{ env.APPSERVICE_NAME }}
         LOGZ_IO_HOSTING_NAME: Azure
@@ -353,7 +352,6 @@ jobs:
         files: '["${{ env.PUBLISH_PATH }}/**/*.json"]'
       env:
         LOGZ_IO_AUTH_TOKEN: ${{ secrets.LOGZ_IO_AUTH_TOKEN }}
-        LOGZ_IO_LOG_LEVEL: Debug
         LOGZ_IO_ENVIRONMENT: ${{ env.ENVIRONMENT_NAME }}
         LOGZ_IO_SERVICE_NAME: ${{ env.APPSERVICE_NAME }}
         LOGZ_IO_HOSTING_NAME: Azure
@@ -421,7 +419,6 @@ jobs:
         files: '["${{ env.PUBLISH_PATH }}/**/*.json"]'
       env:
         LOGZ_IO_AUTH_TOKEN: ${{ secrets.LOGZ_IO_AUTH_TOKEN }}
-        LOGZ_IO_LOG_LEVEL: Debug
         LOGZ_IO_ENVIRONMENT: ${{ env.ENVIRONMENT_NAME }}
         LOGZ_IO_SERVICE_NAME: ${{ env.APPSERVICE_NAME }}
         LOGZ_IO_HOSTING_NAME: Azure

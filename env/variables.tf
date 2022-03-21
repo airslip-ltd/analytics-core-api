@@ -19,6 +19,9 @@ variable "administrator_login" {}
 variable "additional_ip_addresses" {
   default = []
 }
+variable "log_level" {
+  default = "Warning"
+}
 
 variable "apim_hostname" {}
 variable "web_tier" {

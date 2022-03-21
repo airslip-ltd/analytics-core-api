@@ -38,6 +38,7 @@ locals {
   app_size = var.web_size
   portal_url = var.portal_url
   additional_hosts = var.additional_hosts
+  log_level = var.log_level
 }
 
 data "azurerm_eventhub_namespace" "yapily_event_hub" {
@@ -191,7 +192,8 @@ module "func_app_host" {
         "Api2CartEventHubConnectionString": data.azurerm_eventhub_namespace.api2cart.default_primary_connection_string,
         "TransactionEventHubConnectionString": data.azurerm_eventhub_namespace.integration_hub.default_primary_connection_string,
         "PortalEventHubConnectionString": data.azurerm_eventhub_namespace.customer_portal.default_primary_connection_string,
-        "ConsumerGroup": local.consumer_group
+        "ConsumerGroup": local.consumer_group,
+        "Serilog:MinimumLevel:Default": local.log_level
       }
     }
   ]
