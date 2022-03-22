@@ -38,3 +38,6 @@ variable "portal_url" {}
 variable "additional_hosts" {
   default = []
 }
+variable "include_metrics"{
+  default = false
+}

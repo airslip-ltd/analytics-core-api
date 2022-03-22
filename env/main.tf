@@ -41,6 +41,7 @@ locals {
   log_level = var.log_level
   min_capacity = var.min_capacity 
   auto_pause_delay_in_minutes = var.auto_pause_delay_in_minutes
+  include_metrics = var.include_metrics
 }
 
 data "azurerm_eventhub_namespace" "yapily_event_hub" {
@@ -154,7 +155,8 @@ module "api_management" {
   app_settings = {
     "ConnectionStrings:SqlServer": module.sql_server.connection_string,
     "EnvironmentSettings:EnvironmentName": var.environment,
-    "Serilog:MinimumLevel:Default": local.log_level
+    "Serilog:MinimumLevel:Default": local.log_level,
+    "RepositorySettings:IncludeMetrics": local.include_metrics
   }
 }
 
@@ -198,7 +200,8 @@ module "func_app_host" {
         "Api2CartEventHubConnectionString": data.azurerm_eventhub_namespace.api2cart.default_primary_connection_string,
         "TransactionEventHubConnectionString": data.azurerm_eventhub_namespace.integration_hub.default_primary_connection_string,
         "PortalEventHubConnectionString": data.azurerm_eventhub_namespace.customer_portal.default_primary_connection_string,
-        "ConsumerGroup": local.consumer_group
+        "ConsumerGroup": local.consumer_group,
+        "RepositorySettings:IncludeMetrics": local.include_metrics
       }
     }
   ]
