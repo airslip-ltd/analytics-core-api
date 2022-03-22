@@ -3,6 +3,7 @@ using Airslip.Analytics.Core.Enums;
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Core.Models;
 using Airslip.Analytics.Core.Models.Raw.CustomerPortal;
+using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Repository.Types.Models;
 using Airslip.Common.Types.Enums;
@@ -41,7 +42,7 @@ public class RelationshipService : IRelationshipService
             Id = relationshipModel.Id,
             EntityId = relationshipModel.EntityId,
             DataSource = dataSource,
-            EntityStatus = relationshipModel.EntityStatus,
+            EntityStatus = EntityStatus.Active,
             TimeStamp = relationshipModel.TimeStamp,
             UserId = relationshipModel.UserId,
             AirslipUserType = relationshipModel.AirslipUserType
@@ -80,5 +81,8 @@ public class RelationshipService : IRelationshipService
         }
 
         await _repository.Upsert(model.Id!, model, model.UserId);
+        
+        if (relationshipModel.EntityStatus == EntityStatus.Deleted)
+            await _repository.Delete(model.Id!, model.UserId);
     }
 }
