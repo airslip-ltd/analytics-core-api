@@ -6,6 +6,7 @@ using Airslip.Analytics.Reports.Models;
 using Airslip.Analytics.Services.SqlServer;
 using Airslip.Common.Auth.Interfaces;
 using Airslip.Common.Auth.Models;
+using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Repository.Types.Models;
 using Airslip.Common.Types.Interfaces;
@@ -30,6 +31,8 @@ namespace Airslip.Analytics.Reports.Implementations
         {
             IQueryable<CommerceTransactionReportQuery> q = 
                 from rd in _context.RelationshipDetails
+                from rh in _context.RelationshipHeaders
+                    .Where(o => o.Id.Equals(rd.RelationshipHeaderId) && o.EntityStatus == EntityStatus.Active)
                 from item in _context.MerchantTransactions
                     .Where(o => o.EntityId.Equals(rd.OwnerEntityId) && o.AirslipUserType == rd.OwnerAirslipUserType)
                 select new CommerceTransactionReportQuery
