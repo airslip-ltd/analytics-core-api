@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DOTNET_CORE_VERSION: 6.0.x
-      TERRAFORM_MODULE_VERSION: 6.0.3
+      TERRAFORM_MODULE_VERSION: 6.2.0
       SOLUTION_PATH: ./src/Airslip.Analytics.Core.sln
       FUNCTION_APP_PATH: ./src/Airslip.Analytics.Processor
       WEB_APP_PATH: ./src/Airslip.Analytics.Api
