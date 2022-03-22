@@ -209,5 +209,31 @@ public class SqlServerContext : AirslipSqlServerContextBase
             .HasForeignKey<IntegrationAccountDetail>(t => t.IntegrationId)
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired(false);
+        
+        // Indexes
+        modelBuilder.Entity<BankTransaction>()
+            .HasIndex(b => new
+            {
+                b.AirslipUserType, b.EntityId, b.Day, b.Month, b.Year
+            }).IncludeProperties( p => new
+            {
+                p.AccountId, p.Amount, p.BankId
+            });
+        
+        modelBuilder.Entity<BankTransaction>()
+            .HasIndex(b => new
+            {
+                b.EntityId, b.AirslipUserType
+            }).IncludeProperties( p => new
+            {
+                p.BankId
+            });
+        
+        modelBuilder.Entity<RelationshipDetail>()
+            .HasIndex(b => new
+            {
+                b.OwnerEntityId, b.OwnerAirslipUserType, b.ViewerEntityId, b.ViewerAirslipUserType, b.PermissionType,
+                b.Allowed
+            });
     }
 }
