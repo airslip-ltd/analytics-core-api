@@ -12,8 +12,8 @@ jobs:
       DOTNET_CORE_VERSION: 6.0.x
       BUILD_PATH: ./src/Airslip.Analytics.Core.sln
       CONTEXT_PATH: ./src/Airslip.Analytics.Services.SqlServer
-      TARGET_MIGRATION: BankCountryCodes
-      PREVIOUS_MIGRATION: AddMerchantAccount
+      TARGET_MIGRATION: InitialCreate
+      PREVIOUS_MIGRATION: InitialMigration
       
     steps:
     - uses: actions/checkout@v2
