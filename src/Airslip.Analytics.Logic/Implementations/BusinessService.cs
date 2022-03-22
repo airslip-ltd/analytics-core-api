@@ -23,12 +23,12 @@ public class BusinessService : IBusinessService
     public async Task Execute(string message, DataSources dataSource)
     {
         // Turn to object
-        RawBusinessModel relationshipModel = Json.Deserialize<RawBusinessModel>(message);
+        RawBusinessModel businessModel = Json.Deserialize<RawBusinessModel>(message);
 
-        if (relationshipModel.Id == null) return;
+        if (businessModel.Id == null) return;
 
         // Look in the repo for an existing model
-        RepositoryActionResultModel<RelationshipHeaderModel> getResult = await _repository.Get(relationshipModel.Id);
+        RepositoryActionResultModel<RelationshipHeaderModel> getResult = await _repository.Get(businessModel.Id);
 
         RelationshipHeaderModel? model = null;
         
@@ -39,12 +39,12 @@ public class BusinessService : IBusinessService
 
         model ??= new RelationshipHeaderModel
         {
-            Id = relationshipModel.Id,
-            EntityId = relationshipModel.Id,
+            Id = businessModel.Id,
+            EntityId = businessModel.Id,
             DataSource = dataSource,
-            EntityStatus = relationshipModel.EntityStatus,
-            TimeStamp = relationshipModel.TimeStamp,
-            UserId = relationshipModel.PrimaryUserId,
+            EntityStatus = EntityStatus.Active,
+            TimeStamp = businessModel.TimeStamp,
+            UserId = businessModel.PrimaryUserId,
             AirslipUserType = AirslipUserType.Merchant
         };
 
@@ -66,9 +66,9 @@ public class BusinessService : IBusinessService
             {
                 Id = CommonFunctions.GetId(),
                 PermissionType = permissionType,
-                OwnerEntityId = relationshipModel.Id,
+                OwnerEntityId = businessModel.Id,
                 OwnerAirslipUserType = AirslipUserType.Merchant,
-                ViewerEntityId = relationshipModel.Id,
+                ViewerEntityId = businessModel.Id,
                 ViewerAirslipUserType = AirslipUserType.Merchant
             });
         }
@@ -76,9 +76,12 @@ public class BusinessService : IBusinessService
         // Update access rights
         foreach (RelationshipDetail item in model.Details)
         {
-            item.Allowed = relationshipModel.EntityStatus == EntityStatus.Active;
+            item.Allowed = businessModel.EntityStatus == EntityStatus.Active;
         }
 
         await _repository.Upsert(model.Id!, model, model.UserId);
+        
+        if (businessModel.EntityStatus == EntityStatus.Deleted)
+            await _repository.Delete(model.Id!, model.UserId);
     }
 }
