@@ -42,7 +42,7 @@ namespace Airslip.Analytics.Reports.Implementations
                     Description = item.Description,
                     Month = item.Month,
                     Year = item.Year,
-                    AccountId = item.AccountId,
+                    IntegrationId = item.IntegrationId,
                     CurrencyCode = item.CurrencyCode,
                     DataSource = item.DataSource,
                     EntityStatus = item.EntityStatus,

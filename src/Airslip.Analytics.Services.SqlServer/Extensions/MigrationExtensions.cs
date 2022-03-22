@@ -55,9 +55,9 @@ public static class MigrationExtensions
         {
             modelBuilder.Entity<TEntity>().Property("Currency").HasColumnType("varchar (5)");
         }
-        if (typeof(IReportableWithAccount).IsAssignableFrom(typeof(TEntity)))
+        if (typeof(IReportableWithIntegration).IsAssignableFrom(typeof(TEntity)))
         {
-            modelBuilder.Entity<TEntity>().Property("AccountId").HasColumnType(Constants.ID_DATA_TYPE);
+            modelBuilder.Entity<TEntity>().Property("IntegrationId").HasColumnType(Constants.ID_DATA_TYPE);
         }
         return modelBuilder;
     }

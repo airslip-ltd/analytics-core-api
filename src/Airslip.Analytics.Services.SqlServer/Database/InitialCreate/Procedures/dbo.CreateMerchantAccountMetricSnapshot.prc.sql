@@ -4,16 +4,16 @@ CREATE or alter proc dbo.CreateMerchantAccountMetricSnapshot(
     @Id as varchar(33)
 )
 AS
-Declare @Year as int, @Month as int, @Day as int, @AccountId as varchar(33)
+Declare @Year as int, @Month as int, @Day as int, @IntegrationId as varchar(33)
 
-select @Year = Year, @Month = Month, @Day = Day, @AccountId = AccountId
+select @Year = Year, @Month = Month, @Day = Day, @IntegrationId = IntegrationId
 from MerchantTransactions
 where Id = @Id
 
     merge into MerchantAccountMetricSnapshots as mms
     using
         (
-            select mt.AccountId,
+            select mt.IntegrationId,
                    mt.EntityId,
                    mt.AirslipUserType,
                    mt.Year,
@@ -40,14 +40,14 @@ where Id = @Id
                          left outer join MerchantRefundItems as mri on mri.MerchantRefundId = mr.Id
                 group by mr.MerchantTransactionId
             ) as mr on mr.MerchantTransactionId = mt.Id
-            where mt.AccountId = @AccountId
+            where mt.IntegrationId = @IntegrationId
               and mt.Day = @Day
               and mt.Month = @Month
               and mt.Year = @Year
               and mt.EntityId = @EntityId
               and mt.AirslipUserType = @AirslipUserType
-            group by mt.AccountId, mt.EntityId, mt.AirslipUserType, mt.Year, mt.Month, mt.Day) y
-    on mms.AccountId = y.AccountId
+            group by mt.IntegrationId, mt.EntityId, mt.AirslipUserType, mt.Year, mt.Month, mt.Day) y
+    on mms.IntegrationId = y.IntegrationId
         and mms.EntityId = y.EntityId
         and mms.AirslipUserType = y.AirslipUserType
         and mms.Day = y.Day
@@ -61,7 +61,7 @@ where Id = @Id
             mms.SaleCount    = y.SaleCount,
             mms.RefundCount  = y.RefundCount
     when not matched then
-        insert (AccountId, EntityId, AirslipUserType, MetricDate, Year, Month, Day, TotalSales, SaleCount, TotalRefunds,
+        insert (IntegrationId, EntityId, AirslipUserType, MetricDate, Year, Month, Day, TotalSales, SaleCount, TotalRefunds,
                 RefundCount, OrderCount)
-        VALUES (y.AccountId, y.EntityId, y.AirslipUserType, datefromparts(y.Year, y.Month, y.Day), y.Year, y.Month,
+        VALUES (y.IntegrationId, y.EntityId, y.AirslipUserType, datefromparts(y.Year, y.Month, y.Day), y.Year, y.Month,
                 y.Day, y.TotalSales, y.SaleCount, y.TotalRefunds, y.RefundCount, y.OrderCount);

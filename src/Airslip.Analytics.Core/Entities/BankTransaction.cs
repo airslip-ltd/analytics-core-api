@@ -11,7 +11,7 @@ using System;
 namespace Airslip.Analytics.Core.Entities;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-public class BankTransaction : IEntityWithOwnership, IFromDataSource, IReportableWithAccount
+public class BankTransaction : IEntityWithOwnership, IFromDataSource, IReportableWithIntegration
 {
     public string Id { get; set; } = string.Empty;
     public virtual BasicAuditInformation? AuditInformation { get; set; }
@@ -20,9 +20,9 @@ public class BankTransaction : IEntityWithOwnership, IFromDataSource, IReportabl
     public string? UserId { get; set; }
     public string? EntityId { get; set; }
     public AirslipUserType AirslipUserType { get; set; }
+    public string IntegrationId { get; set; } = string.Empty;
     public string BankTransactionId { get; set; } = string.Empty;
     public string? TransactionHash { get; set; }
-    public string AccountId { get; set; } = string.Empty;
     public string BankId { get; set; } = string.Empty;
     public string EmailAddress { get; set; } = string.Empty;
     public long? AuthorisedDate { get; set; }

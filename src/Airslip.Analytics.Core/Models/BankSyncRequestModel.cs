@@ -15,7 +15,7 @@ public class BankSyncRequestModel : IModelWithOwnership, IFromDataSource
     public string? UserId { get; set; }
     public string? EntityId { get; set; }
     public AirslipUserType AirslipUserType { get; set; }
-    public string AccountId { get; set; } = string.Empty;
+    public string IntegrationId { get; set; } = string.Empty;
     public UsageTypes UsageType { get; set; }
     public AccountTypes AccountType { get; set; }
     public string? LastCardDigits { get; set; }

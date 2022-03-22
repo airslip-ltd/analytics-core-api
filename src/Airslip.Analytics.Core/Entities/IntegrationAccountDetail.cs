@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 namespace Airslip.Analytics.Core.Entities
 {
     [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-    public class IntegrationAccountDetail : IEntityWithId, IReportableWithAccount
+    public class IntegrationAccountDetail : IEntityWithId, IReportableWithIntegration
     {
         public string Id { get; set; } = string.Empty;
         public AccountStatus AccountStatus { get; set; }

@@ -46,7 +46,7 @@ namespace Airslip.Analytics.Reports.Implementations
                     Month = item.Month,
                     Reference = item.Reference,
                     Year = item.Year,
-                    AccountId = item.AccountId,
+                    IntegrationId = item.IntegrationId,
                     AddressLine = item.AddressLine,
                     AuthorisedDate = item.AuthorisedDate,
                     BankId = item.BankId,

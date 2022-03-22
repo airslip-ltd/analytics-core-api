@@ -23,20 +23,20 @@ where Id = @Id
                    bt.Year,
                    bt.Month,
                    bt.Day,
-                   bt.AccountId
+                   bt.IntegrationId
             from BankTransactions as bt
             where bt.Day = @Day
               and bt.Month = @Month
               and bt.Year = @Year
               and bt.EntityId = @EntityId
               and bt.AirslipUserType = @AirslipUserType
-            group by bt.EntityId, bt.AirslipUserType, bt.AccountId, bt.Year, bt.Month, bt.Day) as y
+            group by bt.EntityId, bt.AirslipUserType, bt.IntegrationId, bt.Year, bt.Month, bt.Day) as y
     on bams.EntityId = y.EntityId
         and bams.AirslipUserType = y.AirslipUserType
         and bams.Day = y.Day
         and bams.Month = y.Month
         and bams.Year = y.Year
-        and bams.AccountId = y.AccountId
+        and bams.IntegrationId = y.IntegrationId
     when matched then
         update
         set bams.TotalTransaction = y.TotalTransaction,
@@ -46,8 +46,8 @@ where Id = @Id
             bams.TotalDebit       = y.TotalDebit,
             bams.DebitCount       = y.DebitCount
     when not matched then
-        insert (AccountId, EntityId, AirslipUserType, MetricDate, Year, Month, Day, TotalTransaction,
+        insert (IntegrationId, EntityId, AirslipUserType, MetricDate, Year, Month, Day, TotalTransaction,
                 TransactionCount, TotalCredit, CreditCount, TotalDebit, DebitCount)
-        VALUES (y.AccountId, y.EntityId, y.AirslipUserType, datefromparts(@Year, @Month, @Day), y.Year, y.Month, y.Day,
+        VALUES (y.IntegrationId, y.EntityId, y.AirslipUserType, datefromparts(@Year, @Month, @Day), y.Year, y.Month, y.Day,
                 y.TotalTransaction,
                 y.TransactionCount, y.TotalCredit, y.CreditCount, y.TotalDebit, y.DebitCount);

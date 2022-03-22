@@ -6,10 +6,10 @@ using System;
 namespace Airslip.Analytics.Core.Entities;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-public record MerchantAccountMetricSnapshot : IReportableWithOwnership, IReportableWithAccount
+public record MerchantAccountMetricSnapshot : IReportableWithOwnership, IReportableWithIntegration
 {
     public string Id { get; set; } = string.Empty;
-    public string AccountId { get; set; } = string.Empty;
+    public string IntegrationId { get; set; } = string.Empty;
     public string? EntityId { get; set; }
     public AirslipUserType AirslipUserType { get; set; }
     public DateTime? MetricDate { get; set; } 

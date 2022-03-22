@@ -1,10 +1,10 @@
 CREATE or alter PROCEDURE dbo.GetTotalSalesSnapshot(
     @DayRange as int,
     @StatRange as int,
-    @EntityId as varchar(33),
+    @EntityId as varchar(50),
     @AirslipUserType as int,
     @StartDate as date = null,
-    @AccountId as nvarchar(max) = null
+    @IntegrationId as nvarchar(50) = null
 )
 AS
 BEGIN
@@ -17,7 +17,7 @@ BEGIN
              left outer join MerchantAccountMetricSnapshots as mms
                              on mms.EntityId = @EntityId AND mms.AirslipUserType = @AirslipUserType
                                  AND mms.MetricDate > dr.StartCalendarDate and mms.MetricDate <= dr.EndCalendarDate
-                                 and (@AccountId is null OR mms.AccountId = @AccountId)
+                                 and (@IntegrationId is null OR mms.IntegrationId = @IntegrationId)
     group by dr.EndCalendarDate, dr.Year, dr.Month, dr.Day
     order by dr.EndCalendarDate DESC
 end

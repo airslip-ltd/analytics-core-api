@@ -24,17 +24,17 @@ public class DebitsAndCreditsService : IDebitsAndCreditsService
         _context = dbContext;
     }
     
-    public async Task<IResponse> GetDebitsAndCredits(int year, string? accountId)
+    public async Task<IResponse> GetDebitsAndCredits(int year, string? integrationId)
     {
-        accountId = string.IsNullOrWhiteSpace(accountId) ? null : accountId;
+        integrationId = string.IsNullOrWhiteSpace(integrationId) ? null : integrationId;
         
         IQueryable<DebitsAndCreditsByYear> q = _context
             .Set<DebitsAndCreditsByYear>()
-            .FromSqlRaw("dbo.GetCreditsAndDebitsByYear @Year = {0}, @EntityId = {1}, @AirslipUserType = {2}, @AccountId = {3}",
+            .FromSqlRaw("dbo.GetCreditsAndDebitsByYear @Year = {0}, @EntityId = {1}, @AirslipUserType = {2}, @IntegrationId = {3}",
                 year, 
                 _userToken.EntityId,
                 _userToken.AirslipUserType,
-                accountId == null ? DBNull.Value : accountId);
+                integrationId == null ? DBNull.Value : integrationId);
 
         List<DebitsAndCreditsByYear> metrics = await q.ToListAsync();
         DateTimeFormatInfo formatter = CultureInfo.CurrentCulture.DateTimeFormat;
