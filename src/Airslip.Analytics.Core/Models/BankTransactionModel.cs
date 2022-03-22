@@ -14,9 +14,9 @@ public class BankTransactionModel : IModelWithOwnership, IFromDataSource
     public string? UserId { get; set; }
     public string? EntityId { get; set; }
     public AirslipUserType AirslipUserType { get; set; }
+    public string IntegrationId { get; set; } = string.Empty;
     public string BankTransactionId { get; set; } = string.Empty;
     public string? TransactionHash { get; set; }
-    public string AccountId { get; set; } = string.Empty;
     public string BankId { get; set; } = string.Empty;
     public string EmailAddress { get; set; } = string.Empty;
     public long? AuthorisedDate { get; set; }

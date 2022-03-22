@@ -51,11 +51,11 @@ namespace Airslip.Analytics.Api.Controllers
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetBankingRecent(
             [FromQuery]int limit = 10,
-            [FromQuery]string? accountId = null
+            [FromQuery]string? integrationId = null
             )
         {
             IResponse response = await _transactionService
-                .GetBankingTransactions(limit, accountId);
+                .GetBankingTransactions(limit, integrationId);
             
             return HandleResponse<SimpleListResponse<TransactionSummaryModel>>(response);
         }
@@ -66,11 +66,11 @@ namespace Airslip.Analytics.Api.Controllers
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetMerchantRecent(
             [FromQuery]int limit = 10,
-            [FromQuery]string? accountId = null
+            [FromQuery]string? integrationId = null
         )
         {
             IResponse response = await _transactionService
-                .GetCommerceTransactions(limit, accountId);
+                .GetCommerceTransactions(limit, integrationId);
             
             return HandleResponse<SimpleListResponse<TransactionSummaryModel>>(response);
         }

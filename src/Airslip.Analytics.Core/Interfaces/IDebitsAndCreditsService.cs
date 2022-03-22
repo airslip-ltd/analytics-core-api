@@ -5,5 +5,5 @@ namespace Airslip.Analytics.Core.Interfaces;
 
 public interface IDebitsAndCreditsService
 {
-    Task<IResponse> GetDebitsAndCredits(int year, string? accountId);
+    Task<IResponse> GetDebitsAndCredits(int year, string? integrationId);
 }

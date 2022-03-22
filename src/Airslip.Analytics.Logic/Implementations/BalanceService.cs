@@ -28,7 +28,7 @@ public class BalanceService : IBalanceService
     {
         IQueryable<AccountBalanceSummaryModel> qBalance = from integration in _context.Integrations
             join bankAccountBalanceSummary in _context.BankAccountBalanceSummary on integration.Id 
-                equals bankAccountBalanceSummary.AccountId
+                equals bankAccountBalanceSummary.IntegrationId
                 from accountDetail in _context.IntegrationAccountDetails
                     .Where(o => o.IntegrationId.Equals(integration.Id))
             where integration.EntityId.Equals(_userToken.EntityId)
@@ -36,7 +36,7 @@ public class BalanceService : IBalanceService
             where integration.IntegrationType == IntegrationType.Banking
             select new AccountBalanceSummaryModel
             (
-                accountDetail.AccountId,
+                integration.Id,
                 integration.IntegrationProviderId,
                 accountDetail.AccountStatus,
                 accountDetail.SortCode,

@@ -48,10 +48,10 @@ namespace Airslip.Analytics.Api.Controllers
         public async Task<IActionResult> GetSnapshot([FromRoute]DashboardSnapshotType snapshotType,
             [FromQuery]int dayRange = 7,
             [FromQuery]int statRange = 10,
-            [FromQuery]string? accountId = null)
+            [FromQuery]string? integrationId = null)
         {
             IResponse response = await _dashboardSnapshotService
-                .GetSnapshotFor(snapshotType, dayRange, statRange, accountId);
+                .GetSnapshotFor(snapshotType, dayRange, statRange, integrationId);
             
             return HandleResponse<DashboardSnapshotModel>(response);
         }
@@ -62,10 +62,10 @@ namespace Airslip.Analytics.Api.Controllers
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetRevenue(
             [FromQuery]int year = 2022,
-            [FromQuery]string? accountId = null)
+            [FromQuery]string? integrationId = null)
         {
             IResponse response = await _revenueAndRefundsService
-                .GetRevenueAndRefunds(year, accountId);
+                .GetRevenueAndRefunds(year, integrationId);
             
             return HandleResponse<DashboardGraphSeriesModel>(response);
         }
@@ -76,10 +76,10 @@ namespace Airslip.Analytics.Api.Controllers
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetCashflow(
             [FromQuery]int year = 2022,
-            [FromQuery]string? accountId = null)
+            [FromQuery]string? integrationId = null)
         {
             IResponse response = await _debitsAndCreditsService
-                .GetDebitsAndCredits(year, accountId);
+                .GetDebitsAndCredits(year, integrationId);
             
             return HandleResponse<DashboardGraphSeriesModel>(response);
         }

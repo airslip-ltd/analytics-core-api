@@ -7,12 +7,12 @@ using System;
 namespace Airslip.Analytics.Core.Entities;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-public record BankAccountBalanceSnapshot : IReportableWithCurrency, IReportableWithAccount
+public record BankAccountBalanceSnapshot : IReportableWithCurrency, IReportableWithIntegration
 {
     public string Id { get; set; } = string.Empty;
     public string? EntityId { get; set; }
     public AirslipUserType AirslipUserType { get; set; }
-    public string AccountId { get; set; } = string.Empty;
+    public string IntegrationId { get; set; } = string.Empty;
     public DateTime UpdatedOn { get; set; }
     public long Balance { get; init; }
     public long TimeStamp { get; set; } = DateTime.UtcNow.ToUnixTimeMilliseconds();

@@ -25,13 +25,13 @@ public class TransactionService : ITransactionService
         _userToken = tokenDecodeService.GetCurrentToken();
     }
     
-    public async Task<IResponse> GetBankingTransactions(int limit, string? accountId)
+    public async Task<IResponse> GetBankingTransactions(int limit, string? integrationId)
     {
         IQueryable<TransactionSummaryModel> qBalance = from bankTransaction in _context.BankTransactions
-            join bankAccount in _context.Integrations on bankTransaction.AccountId equals bankAccount.Id
+            join bankAccount in _context.Integrations on bankTransaction.IntegrationId equals bankAccount.Id
             where bankTransaction.EntityId.Equals(_userToken.EntityId)
             where bankTransaction.AirslipUserType == _userToken.AirslipUserType
-            where accountId == null || bankTransaction.AccountId.Equals(accountId)
+            where integrationId == null || bankTransaction.IntegrationId.Equals(integrationId)
             orderby bankTransaction.CapturedDate descending 
             select new TransactionSummaryModel
             (
@@ -46,13 +46,13 @@ public class TransactionService : ITransactionService
         return new SimpleListResponse<TransactionSummaryModel>(await qBalance.Take(limit).ToListAsync());
     }
 
-    public async Task<IResponse> GetCommerceTransactions(int limit, string? accountId)
+    public async Task<IResponse> GetCommerceTransactions(int limit, string? integrationId)
     {
         IQueryable<TransactionSummaryModel> qBalance = from merchantTransaction in _context.MerchantTransactions
-            join merchantAccount in _context.Integrations on merchantTransaction.AccountId equals merchantAccount.Id
+            join merchantAccount in _context.Integrations on merchantTransaction.IntegrationId equals merchantAccount.Id
             where merchantTransaction.EntityId.Equals(_userToken.EntityId)
             where merchantTransaction.AirslipUserType == _userToken.AirslipUserType
-            where accountId == null || merchantTransaction.AccountId.Equals(accountId)
+            where integrationId == null || merchantTransaction.IntegrationId.Equals(integrationId)
             orderby merchantTransaction.Datetime descending 
             select new TransactionSummaryModel
             (

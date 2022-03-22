@@ -9,6 +9,7 @@ public class RawYapilyTransactionModel
 {
     public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
+    public string YapilyAccountId { get; set; } = string.Empty;
     public string BankTransactionId { get; set; } = string.Empty;
     public string? TransactionHash { get; set; }
     public string? UserId { get; set; }

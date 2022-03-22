@@ -9,7 +9,7 @@ public interface IReportableWithOwnership : IEntityWithId
     AirslipUserType AirslipUserType { get; set; }
 }
 
-public interface IReportableWithAccount
+public interface IReportableWithIntegration
 {
-    string AccountId { get; set; }
+    string IntegrationId { get; set; }
 }

@@ -38,7 +38,9 @@ public static class MapperExtensions
             .ForPath(o => o.Amount,
                 exp => exp.MapFrom(model => (long) (model.Amount * 100) ))
             .ForMember(o => o.Year,
-                opt => opt.MapFrom<BankTransactionDateTimeResolver>());
+                opt => opt.MapFrom<BankTransactionDateTimeResolver>())
+            .ForMember(o => o.IntegrationId,
+                opt => opt.MapFrom(p=> p.YapilyAccountId));
         
         mapperConfigurationExpression
             .CreateMap<RawYapilyAccountModel, IntegrationModel>()
@@ -75,13 +77,13 @@ public static class MapperExtensions
         mapperConfigurationExpression.CreateMap<RawYapilyBalanceModel, BankAccountBalanceModel>()
             .ForMember(o => o.Id, 
             opt => opt.MapFrom<UniqueIdResolver<RawYapilyBalanceModel, BankAccountBalanceModel>>())
-            .ForMember(o => o.AccountId,
-                opt => opt.MapFrom(p=> p.Id));
+            .ForMember(o => o.IntegrationId,
+                opt => opt.MapFrom(p=> p.YapilyAccountId));
         mapperConfigurationExpression.CreateMap<RawYapilyBalanceDetailModel, BankAccountBalanceDetailModel>();
         mapperConfigurationExpression.CreateMap<RawYapilyCreditLineModel, BankAccountBalanceCreditLineModel>();
 
         mapperConfigurationExpression.CreateMap<RawYapilySyncRequestModel, BankSyncRequestModel>()
-            .ForMember(o => o.AccountId, 
+            .ForMember(o => o.IntegrationId, 
                 exp => exp
                     .MapFrom(p => p.YapilyAccountId));
         return mapperConfigurationExpression;
@@ -168,7 +170,7 @@ public static class MapperExtensions
                 exp.MapFrom(model => model.TrackingId))
             .ForPath(o => o.TransactionNumber, exp =>
                 exp.MapFrom(model => model.Transaction.TransactionNumber))
-            .ForPath(o => o.AccountId, exp =>
+            .ForPath(o => o.IntegrationId, exp =>
                 exp.MapFrom(model => model.AccountId))
             .ForPath(o => o.UserId, exp =>
                 exp.MapFrom(model => model.UserId))

@@ -2,7 +2,7 @@ CREATE OR ALTER PROCEDURE dbo.GetCreditsAndDebitsByYear(
     @Year as int,
     @EntityId as varchar(33),
     @AirslipUserType as int,
-    @AccountId as nvarchar(max) = null
+    @IntegrationId as nvarchar(max) = null
 )
 AS
 BEGIN
@@ -11,6 +11,6 @@ BEGIN
              left outer join BankAccountMetricSnapshots as mms
                              on mms.Month = m.ROWNO and mms.Year = @Year and mms.EntityId = @EntityId
                                  and mms.AirslipUserType = @AirslipUserType
-                                 and (@AccountId is null OR mms.AccountId = @AccountId)
+                                 and (@IntegrationId is null OR mms.IntegrationId = @IntegrationId)
     group by m.ROWNO
 END

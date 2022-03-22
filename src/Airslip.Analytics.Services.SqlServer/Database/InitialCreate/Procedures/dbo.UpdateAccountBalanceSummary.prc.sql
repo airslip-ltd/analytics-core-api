@@ -7,8 +7,8 @@ begin
 merge into BankAccountBalanceSummaries as abs
     using
         (
-            select x.AccountId, x.EntityId, x.AirslipUserType, x.UpdatedOn, x.Balance, x.TimeStamp, x.Currency
-            from (select distinct AccountId
+            select x.IntegrationId, x.EntityId, x.AirslipUserType, x.UpdatedOn, x.Balance, x.TimeStamp, x.Currency
+            from (select distinct IntegrationId
                   from BankAccountBalanceSnapshots
                   where EntityId = @EntityId
                     and AirslipUserType = @AirslipUserType) c
@@ -16,10 +16,10 @@ merge into BankAccountBalanceSummaries as abs
                                   from BankAccountBalanceSnapshots t
                                   where t.EntityId = @EntityId
                                     and t.AirslipUserType = @AirslipUserType
-                                    and t.AccountId = c.AccountId
+                                    and t.IntegrationId = c.IntegrationId
                                   order by TimeStamp desc) x) y
     on
-                abs.AccountId = y.AccountId and abs.EntityId = y.EntityId and abs.AirslipUserType = y.AirslipUserType
+                abs.IntegrationId = y.IntegrationId and abs.EntityId = y.EntityId and abs.AirslipUserType = y.AirslipUserType
     when matched then
         update
             set abs.Movement  = dbo.calcMovement(y.Balance, abs.Balance),
@@ -28,8 +28,8 @@ merge into BankAccountBalanceSummaries as abs
                 abs.TimeStamp = y.TimeStamp
     when not matched then
         insert
-            (AccountId, EntityId, AirslipUserType, UpdatedOn, Balance, TimeStamp, Currency, Movement)
-            values (y.AccountId, y.EntityId, y.AirslipUserType, y.UpdatedOn, y.Balance, y.TimeStamp, y.Currency, 0);
+            (IntegrationId, EntityId, AirslipUserType, UpdatedOn, Balance, TimeStamp, Currency, Movement)
+            values (y.IntegrationId, y.EntityId, y.AirslipUserType, y.UpdatedOn, y.Balance, y.TimeStamp, y.Currency, 0);
 
 merge into BankBusinessBalances as bb
     using
@@ -40,7 +40,7 @@ merge into BankBusinessBalances as bb
                    SUM(x.Balance)   as Balance,
                    MAX(x.TimeStamp) as TimeStamp,
                    x.Currency
-            from (select distinct AccountId
+            from (select distinct IntegrationId
                 from BankAccountBalanceSnapshots
                 where EntityId = @EntityId
                 and AirslipUserType = @AirslipUserType) c
@@ -48,7 +48,7 @@ merge into BankBusinessBalances as bb
                 from BankAccountBalanceSnapshots t
                 where t.EntityId = @EntityId
                 and t.AirslipUserType = @AirslipUserType
-                and t.AccountId = c.AccountId
+                and t.IntegrationId = c.IntegrationId
                 order by TimeStamp desc) x
             group by x.EntityId, x.AirslipUserType, x.Currency) y
     on

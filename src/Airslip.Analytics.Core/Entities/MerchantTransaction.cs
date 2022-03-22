@@ -9,14 +9,14 @@ using System.Collections.Generic;
 
 namespace Airslip.Analytics.Core.Entities;
 
-public record MerchantTransaction : IFromDataSource, IEntityWithOwnership, IReportableWithAccount
+public record MerchantTransaction : IFromDataSource, IEntityWithOwnership, IReportableWithIntegration
 {
     public string Id { get; set; } = string.Empty;
     public virtual BasicAuditInformation? AuditInformation { get; set; }
     public EntityStatus EntityStatus { get; set; }
     public string? UserId { get; set; }
     public string? EntityId { get; set; }
-    public string? AccountId { get; set; }
+    public string IntegrationId { get; set; } = string.Empty;
     public AirslipUserType AirslipUserType { get; set; }
     public DataSources DataSource { get; set; }
     public long TimeStamp { get; set; }
