@@ -3,6 +3,7 @@ using Airslip.Analytics.Core.Entities.Unmapped;
 using Airslip.Analytics.Services.SqlServer.Data;
 using Airslip.Analytics.Services.SqlServer.Extensions;
 using Airslip.Common.Repository.Types.Entities;
+using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Services.SqlServer.Implementations;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,8 +11,8 @@ namespace Airslip.Analytics.Services.SqlServer;
 
 public class SqlServerContext : AirslipSqlServerContextBase
 {
-    public SqlServerContext(DbContextOptions<SqlServerContext> options) 
-        : base(options)
+    public SqlServerContext(DbContextOptions<SqlServerContext> options, IRepositoryMetricService metricService) 
+        : base(options, metricService)
     {
         
     }

@@ -53,7 +53,7 @@ internal class Program
                     .Configure<EventHubSettings>(context.Configuration.GetSection(nameof(EventHubSettings)));
 
                 services
-                    .AddRepositories(RepositoryUserType.Service)
+                    .AddRepositories(context.Configuration, RepositoryUserType.Service)
                     .AddEntitySearch()
                     .AddSingleton(typeof(IModelValidator<>), typeof(NullValidator<>))
                     .AddAutoMapper(ServiceRegistration.RegisterMappings, MapperUsageType.Service)

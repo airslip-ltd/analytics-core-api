@@ -99,7 +99,7 @@ builder.Services
     });
 
 builder.Services
-    .AddRepositories()
+    .AddRepositories(builder.Configuration)
     .AddEntitySearch()
     .AddReportingServices()
     .AddAirslipSqlServer<SqlServerContext>(builder.Configuration);
