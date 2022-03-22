@@ -39,6 +39,8 @@ locals {
   portal_url = var.portal_url
   additional_hosts = var.additional_hosts
   log_level = var.log_level
+  min_capacity = var.min_capacity 
+  auto_pause_delay_in_minutes = var.auto_pause_delay_in_minutes
 }
 
 data "azurerm_eventhub_namespace" "yapily_event_hub" {
@@ -108,7 +110,9 @@ module "sql_server" {
     admin_group_id = local.admin_group_id,
     sku_name = local.sku_name,
     zone_redundant = false,
-    read_scale = false
+    read_scale = false,
+    min_capacity = local.min_capacity, 
+    auto_pause_delay_in_minutes = local.auto_pause_delay_in_minutes
   }
 
   resource_group = {
