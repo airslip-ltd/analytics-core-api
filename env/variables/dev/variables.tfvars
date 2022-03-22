@@ -6,7 +6,7 @@ deployment_agent_group_id = "78963579-14c3-4ccc-b445-49f805ddaff2"
 max_size_gb = 4
 sku_name = "GP_S_Gen5_2"
 min_capacity = 1
-auto_pause_delay_in_minutes = 10
+auto_pause_delay_in_minutes = 60
 additional_ip_addresses = [
     {
         start_ip_address = "88.202.245.245",
