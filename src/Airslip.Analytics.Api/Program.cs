@@ -134,6 +134,7 @@ app
     .UseMiddleware<JwtTokenMiddleware>()
     .UseCors(policy  => policy
         .WithOrigins(builder.Configuration["AllowedHosts"].Split(";"))
+        .WithExposedHeaders("Content-Disposition")
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials())

@@ -24,8 +24,8 @@
 	<ItemGroup Label="Airslip References">
 		<PackageReference Include="Airslip.Common.Security" Version="6.0.0" />
 		<PackageReference Include="Airslip.Common.Auth" Version="6.0.0" />
-		<PackageReference Include="Airslip.Common.Auth.AspNetCore" Version="6.0.4" />
-		<PackageReference Include="Airslip.Common.Types" Version="6.1.1" />
+		<PackageReference Include="Airslip.Common.Auth.AspNetCore" Version="6.0.5" />
+		<PackageReference Include="Airslip.Common.Types" Version="6.1.2" />
 		<PackageReference Include="Airslip.Common.Monitoring" Version="6.0.0" />
 		<PackageReference Include="Airslip.Common.Repository" Version="6.1.7" />
 		<PackageReference Include="Airslip.Common.Repository.Types" Version="6.1.6" />
