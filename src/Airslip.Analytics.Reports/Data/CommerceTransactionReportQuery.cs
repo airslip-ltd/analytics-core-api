@@ -47,4 +47,6 @@ public class CommerceTransactionReportQuery : IEntity, IOwnedDataQuery
     public AirslipUserType ViewerAirslipUserType { get; init; }
     public string PermissionType { get; init; }
     public bool Allowed { get; init; }
+    public string OrderStatus { get; init; }
+    public string PaymentStatus { get; init; }
 }

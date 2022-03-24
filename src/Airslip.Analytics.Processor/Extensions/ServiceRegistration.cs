@@ -8,7 +8,7 @@ using Airslip.Analytics.Processor.Mappers;
 using Airslip.Common.Services.Handoff.Data;
 using Airslip.Common.Services.Handoff.Extensions;
 using Airslip.Common.Types.Enums;
-using Airslip.Common.Types.Transaction;
+using Airslip.MerchantIntegrations.Types.Models;
 using AutoMapper;
 
 namespace Airslip.Analytics.Processor.Extensions;
