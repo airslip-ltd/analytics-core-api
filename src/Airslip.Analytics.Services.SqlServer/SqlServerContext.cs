@@ -5,14 +5,16 @@ using Airslip.Analytics.Services.SqlServer.Extensions;
 using Airslip.Common.Repository.Types.Entities;
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Services.SqlServer.Implementations;
+using Airslip.Common.Services.SqlServer.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Airslip.Analytics.Services.SqlServer;
 
 public class SqlServerContext : AirslipSqlServerContextBase
 {
-    public SqlServerContext(DbContextOptions<SqlServerContext> options, IRepositoryMetricService metricService) 
-        : base(options, metricService)
+    public SqlServerContext(DbContextOptions<SqlServerContext> options, 
+        IRepositoryMetricService metricService, IQueryBuilder queryBuilder) 
+        : base(options, metricService, queryBuilder)
     {
         
     }

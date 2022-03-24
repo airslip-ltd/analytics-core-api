@@ -1,5 +1,6 @@
 using Airslip.Common.Repository.Configuration;
 using Airslip.Common.Repository.Implementations;
+using Airslip.Common.Services.SqlServer.Implementations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Options;
@@ -15,6 +16,7 @@ public class SqlServerContextFactory : IDesignTimeDbContextFactory<SqlServerCont
         optionsBuilder.UseSqlServer("Server=(localdb);Integrated Security=true;");
 
         return new SqlServerContext(optionsBuilder.Options, 
-            new RepositoryMetricService(Logger.None, new OptionsWrapper<RepositorySettings>(new RepositorySettings())));
+            new RepositoryMetricService(Logger.None, 
+                new OptionsWrapper<RepositorySettings>(new RepositorySettings())), new QueryBuilder());
     }
 }
