@@ -59,7 +59,7 @@ public class ReportController : ApiControllerBase
     [Route("bank-transactions/download")]
     public async Task<IActionResult> BankTransactionsDownload([FromBody] OwnedDataSearchModel query)
     {
-        IResponse response = await _downloadService.Download(_bankTransactionReport, query, 
+        IResponse response = await _downloadService.Download<BankTransactionReportResponse>(_bankTransactionReport, query, 
             "bank-transactions");
 
         return HandleResponse<DownloadResponse>(response);
@@ -82,7 +82,7 @@ public class ReportController : ApiControllerBase
     [Route("commerce-transactions/download")]
     public async Task<IActionResult> CommerceTransactionsDownload([FromBody] OwnedDataSearchModel query)
     {
-        IResponse response = await _downloadService.Download(_commerceTransactionReport, query, 
+        IResponse response = await _downloadService.Download<CommerceTransactionReportResponse>(_commerceTransactionReport, query, 
             "commerce-transactions");
 
         return HandleResponse<DownloadResponse>(response);
