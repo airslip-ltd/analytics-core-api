@@ -229,6 +229,12 @@ public class SqlServerContext : AirslipSqlServerContextBase
                 p.IntegrationId, p.Amount, p.BankId
             });
         
+        modelBuilder.Entity<BankAccountMetricSnapshot>()
+            .HasIndex(b => new
+            {
+                b.EntityId, b.AirslipUserType, b.Day, b.Month, b.Year, b.IntegrationId
+            });
+        
         modelBuilder.Entity<BankTransaction>()
             .HasIndex(b => new
             {
