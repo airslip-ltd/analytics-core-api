@@ -67,6 +67,8 @@ namespace Airslip.Analytics.Reports.Implementations
                     TrackingId = item.TrackingId,
                     TransactionNumber = item.TransactionNumber,
                     StoreLocationId = item.StoreLocationId ,
+                    OrderStatus = item.OrderStatus,
+                    PaymentStatus = item.PaymentStatus,
                     
                     EntityId = rd.OwnerEntityId,
                     AirslipUserType = rd.OwnerAirslipUserType,

@@ -45,4 +45,6 @@ public record MerchantTransactionModel : IFromDataSource, IModelWithOwnership
     public int? Day { get; set; }
     public List<MerchantProductModel> Products { get; init; } = new();
     public List<MerchantRefundModel> Refunds { get; init; } = new();
+    public string OrderStatus { get; init; } = string.Empty;
+    public string PaymentStatus { get; init; } = string.Empty;
 }

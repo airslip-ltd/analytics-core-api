@@ -44,6 +44,8 @@ public record MerchantTransaction : IFromDataSource, IEntityWithOwnership, IRepo
     public string? Store { get; init; }
 
     public string? Description { get; init; }
+    public string OrderStatus { get; init; } = string.Empty;
+    public string PaymentStatus { get; init; } = string.Empty;
     
     public int? Year { get; set; }
     public int? Month { get; set; }

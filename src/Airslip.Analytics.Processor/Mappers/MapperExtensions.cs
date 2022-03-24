@@ -3,15 +3,14 @@ using Airslip.Analytics.Core.Enums;
 using Airslip.Analytics.Core.Models;
 using Airslip.Analytics.Core.Models.Raw.Api2Cart;
 using Airslip.Analytics.Core.Models.Raw.Yapily;
+using Airslip.Analytics.Processor.Mappers.Resolvers;
 using Airslip.Common.CustomerPortal.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Types.Enums;
-using Airslip.Common.Types.Transaction;
-using Airslip.Common.Utilities;
 using Airslip.Common.Utilities.Extensions;
+using Airslip.MerchantIntegrations.Types.Models;
 using AutoMapper;
 using AutoMapper.EquivalencyExpression;
-using JetBrains.Annotations;
 using System;
 using System.Linq;
 using IModelWithId = Airslip.Common.Repository.Types.Interfaces.IModelWithId;
@@ -184,7 +183,11 @@ public static class MapperExtensions
             .ForPath(o => o.Products, exp =>
                 exp.MapFrom(model => model.Transaction.Products))
             .ForPath(o => o.Refunds, exp =>
-                exp.MapFrom(model => model.Transaction.Refunds));
+                exp.MapFrom(model => model.Transaction.Refunds))
+            .ForMember(o => o.OrderStatus, exp =>
+                exp.MapFrom<TransactionStatusResolver>())
+            .ForMember(o => o.PaymentStatus, exp =>
+                exp.MapFrom<TransactionPaymentStatusResolver>());
 
         mapperConfigurationExpression
             .CreateMap<TransactionRefundDetail, MerchantRefundModel>()
@@ -204,90 +207,6 @@ public static class MapperExtensions
                 exp.MapFrom<TransactionProductResolver>());
         
         return mapperConfigurationExpression;
-    }
-
-    [UsedImplicitly]
-    private class UniqueIdResolver<TSource, TDest> : IValueResolver<TSource, TDest, string?>
-    {
-        public string Resolve(TSource source, TDest destination, string? member, 
-            ResolutionContext context)
-        {
-            return CommonFunctions.GetId();
-        }
-    }
-    
-    [UsedImplicitly]
-    private class TransactionProductResolver : IValueResolver<TransactionProduct, MerchantProductModel, string>
-    {
-        public string Resolve(TransactionProduct source, MerchantProductModel destination, string destMember,
-            ResolutionContext context)
-        {
-            return source.TransactionProductId ?? CommonFunctions.GetId();
-        }
-    }
-    
-    [UsedImplicitly]
-    private class TransactionRefundResolver : IValueResolver<TransactionRefundItem, MerchantRefundItemModel, string>
-    {
-        public string Resolve(TransactionRefundItem source, MerchantRefundItemModel destination, string destMember,
-            ResolutionContext context)
-        {
-            return source.TransactionProductId ?? CommonFunctions.GetId();
-        }
-    }
-    
-    [UsedImplicitly]
-    private class DateTimeResolver : IValueResolver<TransactionRefundDetail, MerchantRefundModel, DateTime>
-    {
-        public DateTime Resolve(TransactionRefundDetail source, MerchantRefundModel destination, DateTime destMember,
-            ResolutionContext context)
-        {
-            if (source.ModifiedTime?.Value != null && source.ModifiedTime.Format != null)
-                return DateTime.ParseExact(source.ModifiedTime.Value, source.ModifiedTime.Format, null);
-            return DateTime.UtcNow;
-        }
-    }
-    
-    [UsedImplicitly]
-    private class TransactionDateTimeResolver : IValueResolver<TransactionEnvelope, MerchantTransactionModel, DateTime?>
-    {
-        public DateTime? Resolve(TransactionEnvelope source, MerchantTransactionModel destination, DateTime? destMember,
-            ResolutionContext context)
-        {
-            if (source.Transaction.Datetime == null) return null;
-            
-            DateTime theDate = DateTime.Parse(source.Transaction.Datetime, null,
-                System.Globalization.DateTimeStyles.RoundtripKind);
-            destination.Year = theDate.Year;
-            destination.Month = theDate.Month;
-            destination.Day = theDate.Day;
-            return theDate;
-        }
-    }
-    
-    public class TransactionDescriptionResolver : IValueResolver<TransactionEnvelope, MerchantTransactionModel, string?>
-    {
-        public string? Resolve(TransactionEnvelope source, MerchantTransactionModel destination, string? destMember,
-            ResolutionContext context)
-        {
-            if (source.Transaction.Products == null || source.Transaction.Products.Count == 0) return source.Transaction.TransactionNumber;
-
-            return source.Transaction.Products.First().Name;
-        }
-    }
-    
-    [UsedImplicitly]
-    private class BankTransactionDateTimeResolver : IValueResolver<RawYapilyTransactionModel, BankTransactionModel, int?>
-    {
-        public int? Resolve(RawYapilyTransactionModel source, BankTransactionModel destination, int? destMember,
-            ResolutionContext context)
-        {
-            DateTime theDate = source.CapturedDate.ToUtcDate();
-            destination.Year = theDate.Year;
-            destination.Month = theDate.Month;
-            destination.Day = theDate.Day;
-            return theDate.Year;
-        }
     }
     
     public static IMapperConfigurationExpression AddEntityModelMappings(this IMapperConfigurationExpression cfg)

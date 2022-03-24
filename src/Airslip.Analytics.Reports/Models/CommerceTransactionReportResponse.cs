@@ -34,4 +34,6 @@ public class CommerceTransactionReportResponse : IModel
     public int? Year { get; set; }
     public int? Month { get; set; }
     public int? Day { get; set; }
+    public string OrderStatus { get; init; } = string.Empty;
+    public string PaymentStatus { get; init; } = string.Empty;
 }
