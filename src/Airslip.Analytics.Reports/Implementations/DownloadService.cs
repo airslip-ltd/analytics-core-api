@@ -13,7 +13,7 @@ namespace Airslip.Analytics.Reports.Implementations;
 
 public class DownloadService : IDownloadService
 {
-    public async Task<IResponse> Download(IReport report, OwnedDataSearchModel query, string fileName)
+    public async Task<IResponse> Download<TResponseType>(IReport report, OwnedDataSearchModel query, string fileName)
     {
         query = query with
         {
@@ -22,7 +22,7 @@ public class DownloadService : IDownloadService
         
         IResponse response = await report.Execute(query);
 
-        if (response is EntitySearchResponse<BankTransactionReportResponse> search)
+        if (response is EntitySearchResponse<TResponseType> search)
         {
             fileName = $"{fileName}-{DateTime.Now:yyyy-MM-dd-HH-mm-ss}.json";
             string responseContent = Json.Serialize(search.Results);

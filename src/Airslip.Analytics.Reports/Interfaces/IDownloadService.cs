@@ -6,5 +6,5 @@ namespace Airslip.Analytics.Reports.Interfaces;
 
 public interface IDownloadService
 {
-    Task<IResponse> Download(IReport report, OwnedDataSearchModel query, string fileName);
+    Task<IResponse> Download<TResponseType>(IReport report, OwnedDataSearchModel query, string fileName);
 }
