@@ -8,6 +8,7 @@ using Airslip.Common.Repository.Types.Models;
 using Airslip.Common.Types.Configuration;
 using Airslip.Common.Types.Failures;
 using Airslip.Common.Types.Interfaces;
+using Airslip.Common.Types.Responses;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -27,15 +28,18 @@ public class ReportController : ApiControllerBase
 {
     private readonly IBankTransactionReport _bankTransactionReport;
     private readonly ICommerceTransactionReport _commerceTransactionReport;
+    private readonly IDownloadService _downloadService;
 
     public ReportController(ITokenDecodeService<UserToken> tokenDecodeService, 
         IBankTransactionReport bankTransactionReport,
         ICommerceTransactionReport commerceTransactionReport,
+        IDownloadService downloadService,
         IOptions<PublicApiSettings> publicApiOptions, ILogger logger) : base(tokenDecodeService, 
         publicApiOptions, logger)
     {
         _bankTransactionReport = bankTransactionReport;
         _commerceTransactionReport = commerceTransactionReport;
+        _downloadService = downloadService;
     }
     
     [HttpPost]
@@ -50,6 +54,18 @@ public class ReportController : ApiControllerBase
     }
     
     [HttpPost]
+    [ProducesResponseType( typeof(EntitySearchResponse<BankTransactionReportResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
+    [Route("bank-transactions/download")]
+    public async Task<IActionResult> BankTransactionsDownload([FromBody] OwnedDataSearchModel query)
+    {
+        IResponse response = await _downloadService.Download(_bankTransactionReport, query, 
+            "bank-transactions");
+
+        return HandleResponse<DownloadResponse>(response);
+    }
+    
+    [HttpPost]
     [ProducesResponseType( typeof(EntitySearchResponse<CommerceTransactionReportResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
     [Route("commerce-transactions")]
@@ -58,5 +74,17 @@ public class ReportController : ApiControllerBase
         IResponse response = await _commerceTransactionReport.Execute(query);
 
         return HandleResponse<EntitySearchResponse<CommerceTransactionReportResponse>>(response);
+    }
+    
+    [HttpPost]
+    [ProducesResponseType( typeof(EntitySearchResponse<BankTransactionReportResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
+    [Route("commerce-transactions/download")]
+    public async Task<IActionResult> CommerceTransactionsDownload([FromBody] OwnedDataSearchModel query)
+    {
+        IResponse response = await _downloadService.Download(_commerceTransactionReport, query, 
+            "commerce-transactions");
+
+        return HandleResponse<DownloadResponse>(response);
     }
 }
