@@ -23,6 +23,16 @@
 	  <EmbeddedResource Include="Database\Core\Functions\dbo.getMetricDateRange.udf.sql" />
 	  <EmbeddedResource Include="Database\Core\Functions\dbo.round5min.udf.sql" />
 	  <EmbeddedResource Include="Database\Core\Views\dbo.getNewID.viw.sql" />
+	  <EmbeddedResource Include="Database\BankAccountMetricSnapshotIndex\Procedures\dbo.CreateAccountBalanceSnapshot.prc.sql" />
+	  <EmbeddedResource Include="Database\BankAccountMetricSnapshotIndex\Procedures\dbo.CreateBankAccountMetricSnapshots.prc.sql" />
+	  <EmbeddedResource Include="Database\BankAccountMetricSnapshotIndex\Procedures\dbo.CreateBusinessBalanceSnapshot.prc.sql" />
+	  <EmbeddedResource Include="Database\BankAccountMetricSnapshotIndex\Procedures\dbo.CreateMerchantAccountMetricSnapshot.prc.sql" />
+	  <EmbeddedResource Include="Database\BankAccountMetricSnapshotIndex\Procedures\dbo.CreateMerchantMetricSnapshot.prc.sql" />
+	  <EmbeddedResource Include="Database\BankAccountMetricSnapshotIndex\Procedures\dbo.GetCreditsAndDebitsByYear.prc.sql" />
+	  <EmbeddedResource Include="Database\BankAccountMetricSnapshotIndex\Procedures\dbo.GetRevenueAndRefundsByYear.prc.sql" />
+	  <EmbeddedResource Include="Database\BankAccountMetricSnapshotIndex\Procedures\dbo.GetTotalRefundsSnapshot.prc.sql" />
+	  <EmbeddedResource Include="Database\BankAccountMetricSnapshotIndex\Procedures\dbo.GetTotalSalesSnapshot.prc.sql" />
+	  <EmbeddedResource Include="Database\BankAccountMetricSnapshotIndex\Procedures\dbo.UpdateAccountBalanceSummary.prc.sql" />
 	  <EmbeddedResource Include="Database\InitialCreate\Functions\dbo.calcMovement.udf.sql" />
 	  <EmbeddedResource Include="Database\InitialCreate\Functions\dbo.getYearMonths.udf.sql" />
 	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.CreateBankAccountMetricSnapshots.prc.sql" />
