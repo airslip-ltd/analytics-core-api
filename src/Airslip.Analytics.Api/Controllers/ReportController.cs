@@ -82,7 +82,7 @@ public class ReportController : ApiControllerBase
     [Route("commerce-transactions/download")]
     public async Task<IActionResult> CommerceTransactionsDownload([FromBody] OwnedDataSearchModel query)
     {
-        IResponse response = await _downloadService.Download<CommerceTransactionReportResponse>(_commerceTransactionReport, query, 
+        IResponse response = await _downloadService.Download<MerchantTransactionModel>(_commerceTransactionReport, query, 
             "commerce-transactions");
 
         return HandleResponse<DownloadResponse>(response);

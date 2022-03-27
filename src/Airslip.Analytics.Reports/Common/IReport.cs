@@ -6,4 +6,5 @@ namespace Airslip.Analytics.Reports.Common;
 public interface IReport
 {
     Task<IResponse> Execute(OwnedDataSearchModel query);
+    Task<IResponse> Download(OwnedDataSearchModel query);
 }
