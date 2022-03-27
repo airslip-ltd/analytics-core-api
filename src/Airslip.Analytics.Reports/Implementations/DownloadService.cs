@@ -1,7 +1,6 @@
 using Airslip.Analytics.Core.Models;
 using Airslip.Analytics.Reports.Common;
 using Airslip.Analytics.Reports.Interfaces;
-using Airslip.Analytics.Reports.Models;
 using Airslip.Common.Repository.Types.Models;
 using Airslip.Common.Types.Interfaces;
 using Airslip.Common.Types.Responses;
@@ -20,7 +19,7 @@ public class DownloadService : IDownloadService
             Page = 0, RecordsPerPage = 0
         };
         
-        IResponse response = await report.Execute(query);
+        IResponse response = await report.Download(query);
 
         if (response is EntitySearchResponse<TResponseType> search)
         {

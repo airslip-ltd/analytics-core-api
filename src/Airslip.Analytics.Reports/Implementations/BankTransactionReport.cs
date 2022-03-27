@@ -90,4 +90,9 @@ public class BankTransactionReport : IBankTransactionReport
         
         return searchResults;
     }
+
+    public Task<IResponse> Download(OwnedDataSearchModel query)
+    {
+        return Execute(query);
+    }
 }
