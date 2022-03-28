@@ -49,4 +49,5 @@ public class CommerceTransactionReportQuery : IEntity, IOwnedDataQuery
     public bool Allowed { get; init; }
     public string OrderStatus { get; init; }
     public string PaymentStatus { get; init; }
+    public long? TotalRefund { get; set; }
 }
