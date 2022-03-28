@@ -1,5 +1,6 @@
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Types.Enums;
+using Airslip.MerchantIntegrations.Types.Enums;
 
 namespace Airslip.Analytics.Core.Entities;
 
@@ -17,8 +18,10 @@ public class MerchantProduct : IEntityWithId
     public long? Price { get; init; }
     public long? PriceIncTax { get; init; }
     public double? Quantity { get; init; }
+    public double? QuantityRefunded { get; set; }
     public long? DiscountAmount { get; init; }
     public long? TotalPrice { get; init; }
+    public long? TotalRefund { get; set; }
     public double? TaxPercent { get; init; }
     public long? TaxValue { get; init; }
     public long? TaxValueAfterDiscount { get; init; }

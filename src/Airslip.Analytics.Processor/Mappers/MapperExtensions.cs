@@ -187,7 +187,9 @@ public static class MapperExtensions
             .ForMember(o => o.OrderStatus, exp =>
                 exp.MapFrom<TransactionStatusResolver>())
             .ForMember(o => o.PaymentStatus, exp =>
-                exp.MapFrom<TransactionPaymentStatusResolver>());
+                exp.MapFrom<TransactionPaymentStatusResolver>())
+            .ForMember(o => o.TotalRefund, exp =>
+                exp.MapFrom(model => model.Transaction.TotalSummary!.Refunded));
 
         mapperConfigurationExpression
             .CreateMap<TransactionRefundDetail, MerchantRefundModel>()
@@ -204,7 +206,11 @@ public static class MapperExtensions
         mapperConfigurationExpression
             .CreateMap<TransactionProduct, MerchantProductModel>()
             .ForMember(o => o.Id, exp =>
-                exp.MapFrom<TransactionProductResolver>());
+                exp.MapFrom<TransactionProductResolver>())
+            .ForMember(o => o.QuantityRefunded, exp =>
+                exp.MapFrom(s => s.Refund!.Qty))
+            .ForMember(o => o.TotalRefund, exp =>
+                exp.MapFrom(s => s.Refund!.Refund));
         
         return mapperConfigurationExpression;
     }
