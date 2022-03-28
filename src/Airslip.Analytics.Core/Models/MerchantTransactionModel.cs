@@ -31,6 +31,7 @@ public record MerchantTransactionModel : IFromDataSource, IModelWithOwnership
     public long? Subtotal { get; init; }
     public long? ServiceCharge { get; init; }
     public long? Total { get; init; }
+    public long? TotalRefund { get; init; }
     public string? CurrencyCode { get; init; }
     public string? CustomerEmail { get; init; }
     public string? OperatorName { get; init; }

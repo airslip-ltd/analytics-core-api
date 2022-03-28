@@ -2,7 +2,7 @@
 	<Import Project="..\host.common.props" />
 
     <ItemGroup>
-        <PackageReference Include="Airslip.MerchantIntegrations.Types" Version="6.0.0" />
+        <PackageReference Include="Airslip.MerchantIntegrations.Types" Version="6.0.1" />
         <PackageReference Include="AutoMapper.Collection" Version="7.0.1" />
         <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.EventHubs" Version="4.3.0" />
         <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="1.3.0" OutputItemType="Analyzer" />
@@ -29,7 +29,7 @@
         <PackageReference Include="Airslip.Common.Functions" Version="6.0.1" />
         <PackageReference Include="Airslip.Common.Auth" Version="6.0.0" />
         <PackageReference Include="Airslip.Common.Auth.Functions" Version="6.0.3" />
-        <PackageReference Include="Airslip.Common.Types" Version="6.2.0" />
+        <PackageReference Include="Airslip.Common.Types" Version="6.2.3" />
     </ItemGroup>
 
     <ItemGroup>
