@@ -74,6 +74,7 @@ namespace Airslip.Analytics.Reports.Implementations
                     StoreLocationId = item.StoreLocationId ,
                     OrderStatus = item.OrderStatus,
                     PaymentStatus = item.PaymentStatus,
+                    TotalRefund = item.TotalRefund,
                     
                     EntityId = rd.OwnerEntityId,
                     AirslipUserType = rd.OwnerAirslipUserType,
@@ -140,6 +141,7 @@ namespace Airslip.Analytics.Reports.Implementations
                     StoreLocationId = item.StoreLocationId ,
                     OrderStatus = item.OrderStatus,
                     PaymentStatus = item.PaymentStatus,
+                    TotalRefund = item.TotalRefund,
                     
                     EntityId = rd.OwnerEntityId,
                     AirslipUserType = rd.OwnerAirslipUserType,
