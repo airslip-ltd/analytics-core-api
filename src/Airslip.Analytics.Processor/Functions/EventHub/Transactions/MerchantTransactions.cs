@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
-namespace Airslip.Analytics.Processor.Functions.Transactions;
+namespace Airslip.Analytics.Processor.Functions.EventHub.Transactions;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
 public static class MerchantTransactions
