@@ -19,13 +19,13 @@ namespace Airslip.Analytics.Logic.Implementations
         private readonly ILogger _logger;
         private readonly IRepository<TEntity, TModel> _repository;
         private readonly IModelMapper<TModel> _modelMapper;
-        private readonly IEnumerable<IAnalyticsProcess<TModel>> _postProcessors;
+        private readonly IEnumerable<IAnalysisMessagingService<TModel>> _postProcessors;
 
         public RegisterDataService(
             ILogger logger,
             IRepository<TEntity, TModel> repository,
             IModelMapper<TModel> modelMapper,
-            IEnumerable<IAnalyticsProcess<TModel>> postProcessors)
+            IEnumerable<IAnalysisMessagingService<TModel>> postProcessors)
         {
             _logger = logger;
             _repository = repository;
@@ -63,21 +63,20 @@ namespace Airslip.Analytics.Logic.Implementations
                     if (model.EntityStatus == EntityStatus.Deleted)
                         await _repository.Delete(id, userId);
                     
-                    if (result is SuccessfulActionResultModel<TModel> {CurrentVersion: { }} success)
+                    switch (result)
                     {
-                        foreach (IAnalyticsProcess<TModel> analyticsProcess in _postProcessors)
+                        case SuccessfulActionResultModel<TModel> {CurrentVersion: { }} success:
                         {
-                            int affectedRows = await 
-                                analyticsProcess.Execute(success.CurrentVersion);
-                            _logger.Information("Executed analytics task, {AffectedRows}", 
-                                affectedRows);
+                            foreach (IAnalysisMessagingService<TModel> analyticsProcess in _postProcessors)
+                            {
+                                await analyticsProcess.RequestAnalysis(success.CurrentVersion);
+                            }
+                            break;
                         }
-                    }
-
-                    if (result is FailedActionResultModel<TModel> failed)
-                    {
-                        _logger.Error("Repository action failed with code {ErrorCode} for model {@ValidationResult}", 
-                            failed.ErrorCode, failed.ValidationResult);
+                        case FailedActionResultModel<TModel> failed:
+                            _logger.Error("Repository action failed with code {ErrorCode} for model {@ValidationResult}", 
+                                failed.ErrorCode, failed.ValidationResult);
+                            break;
                     }
                 });
             }

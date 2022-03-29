@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Airslip.Analytics.Core\Airslip.Analytics.Core.csproj" />
+      <ProjectReference Include="..\Airslip.Analytics.Services.ServiceBus\Airslip.Analytics.Services.ServiceBus.csproj" />
       <ProjectReference Include="..\Airslip.Analytics.Services.SqlServer\Airslip.Analytics.Services.SqlServer.csproj" />
     </ItemGroup>
 

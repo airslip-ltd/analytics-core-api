@@ -3,9 +3,7 @@ using System.Threading.Tasks;
 
 namespace Airslip.Analytics.Core.Interfaces;
 
-public interface IAnalysisMessagingService
+public interface IAnalysisMessagingService<TModel>
 {
-    Task BankAccountBalanceAnalysis(BankAccountBalanceModel model);
-    Task MerchantTransactionAnalysis(MerchantTransactionModel model);
-    Task BankTransactionAnalysis(BankTransactionModel model);
+    Task RequestAnalysis(TModel model);
 }
