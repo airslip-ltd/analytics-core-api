@@ -130,6 +130,36 @@ module "sql_server" {
   ]
 }
 
+module "servicebus_with_queues" {
+  source = "./tf_modules/Airslip.Terraform.Modules/recipes/servicebus_with_queues"
+
+  servicebus_configuration = {
+    app_id = "${local.app_id}",
+    short_environment = local.short_environment,
+    location = local.location,
+    tags = local.tags,
+    sku = "Basic"
+  }
+
+  resource_group = {
+    use_existing = true,
+    resource_group_name = module.ingredient_bowl.name,
+    resource_group_location = module.ingredient_bowl.location
+  }
+  
+  queues = [
+    {
+      queue_name = "bank-account-balance"
+    },
+    {
+      queue_name = "merchant-transactions"
+    },
+    {
+      queue_name = "bank-transaction"
+    }
+  ]
+}
+
 module "api_management" {
   source = "./tf_modules/Airslip.Terraform.Modules/recipes/api_only"
 
@@ -201,7 +231,9 @@ module "func_app_host" {
         "TransactionEventHubConnectionString": data.azurerm_eventhub_namespace.integration_hub.default_primary_connection_string,
         "PortalEventHubConnectionString": data.azurerm_eventhub_namespace.customer_portal.default_primary_connection_string,
         "ConsumerGroup": local.consumer_group,
-        "RepositorySettings:IncludeMetrics": local.include_metrics
+        "RepositorySettings:IncludeMetrics": local.include_metrics,
+        "ServiceBusConnectionString": module.servicebus_with_queues.connection_string,
+        "ConnectionStrings:ServiceBus": module.servicebus_with_queues.connection_string
       }
     }
   ]
