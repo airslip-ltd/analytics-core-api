@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airslip.Analytics.Reports",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airslip.Analytics.Logic", "Airslip.Analytics.Logic\Airslip.Analytics.Logic.csproj", "{C022EE0D-5951-44E5-873F-72BA51A43354}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airslip.Analytics.Services.ServiceBus", "Airslip.Analytics.Services.ServiceBus\Airslip.Analytics.Services.ServiceBus.csproj", "{D7DC703B-746A-4022-9FE6-48A55B3CDF33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,5 +58,9 @@ Global
 		{C022EE0D-5951-44E5-873F-72BA51A43354}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C022EE0D-5951-44E5-873F-72BA51A43354}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C022EE0D-5951-44E5-873F-72BA51A43354}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7DC703B-746A-4022-9FE6-48A55B3CDF33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7DC703B-746A-4022-9FE6-48A55B3CDF33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7DC703B-746A-4022-9FE6-48A55B3CDF33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7DC703B-746A-4022-9FE6-48A55B3CDF33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

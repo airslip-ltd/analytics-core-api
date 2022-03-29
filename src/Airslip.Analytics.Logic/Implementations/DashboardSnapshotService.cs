@@ -1,10 +1,12 @@
 using Airslip.Analytics.Core.Entities.Unmapped;
+using Airslip.Analytics.Core.Enums;
 using Airslip.Analytics.Core.Extensions;
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Core.Models;
 using Airslip.Analytics.Services.SqlServer;
 using Airslip.Common.Auth.Interfaces;
 using Airslip.Common.Auth.Models;
+using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Types.Failures;
 using Airslip.Common.Types.Interfaces;
@@ -33,25 +35,26 @@ public class DashboardSnapshotService : IDashboardSnapshotService
         _userToken = userToken.GetCurrentToken();
     }
     
-    public async Task<IResponse> GetSnapshotFor(DashboardSnapshotType dashboardSnapshotType, int dayRange, 
-        int statRange, string? integrationId)
+    public async Task<IResponse> GetSnapshotFor(OwnedSnapshotSearchModel query, 
+        DashboardSnapshotType dashboardSnapshotType, int dayRange, int statRange, string? integrationId)
     {
         IResponse result;
         
         switch (dashboardSnapshotType)
         {
             case DashboardSnapshotType.CurrentBalance:
-                result = await _getCurrentBalance();
+                result = await _getCurrentBalance(query);
                 break;
             default:
-                result = await _getGenericSnapshot(dashboardSnapshotType, dayRange, statRange, integrationId);
+                result = await _getGenericSnapshot(query, dashboardSnapshotType, dayRange, statRange, integrationId);
                 break;
         }
 
         return result;
     }
 
-    private async Task<IResponse> _getGenericSnapshot(DashboardSnapshotType dashboardSnapshotType, int dayRange,
+    private async Task<IResponse> _getGenericSnapshot(OwnedSnapshotSearchModel query,
+        DashboardSnapshotType dashboardSnapshotType, int dayRange,
         int statRange, string? integrationId)
     {
         string procName = procedureNames[dashboardSnapshotType];
@@ -90,11 +93,19 @@ public class DashboardSnapshotService : IDashboardSnapshotService
         };
     }
     
-    private async Task<IResponse> _getCurrentBalance()
+    private async Task<IResponse> _getCurrentBalance(OwnedSnapshotSearchModel query)
     {
-        IQueryable<DashboardSnapshotModel> qBalance = from businessBalance in _context.BankBusinessBalances
-            where businessBalance.EntityId.Equals(_userToken.EntityId)
-            where businessBalance.AirslipUserType == _userToken.AirslipUserType
+        IQueryable<DashboardSnapshotModel> qBalance = from rd in _context.RelationshipDetails
+            from rh in _context.RelationshipHeaders
+                .Where(o => o.Id.Equals(rd.RelationshipHeaderId) && o.EntityStatus == EntityStatus.Active)
+            from businessBalance in _context.BankBusinessBalances
+                .Where(o => o.EntityId == rd.OwnerEntityId && o.AirslipUserType == rd.OwnerAirslipUserType)
+            where rd.ViewerEntityId.Equals(_userToken.EntityId) 
+                  && rd.ViewerAirslipUserType == _userToken.AirslipUserType 
+                  && rd.Allowed
+                  && rd.PermissionType == PermissionType.Banking.ToString()
+                  && rd.OwnerEntityId == query.OwnerEntityId
+                  && rd.OwnerAirslipUserType == query.OwnerAirslipUserType 
             select new DashboardSnapshotModel
             {
                 Balance = businessBalance.Balance.ToPositiveCurrency(),
@@ -102,15 +113,25 @@ public class DashboardSnapshotService : IDashboardSnapshotService
                 Movement = businessBalance.Movement
             };
         
-        IQueryable<SnapshotMetric> qSnapshot = from accountBalanceSnapshot in _context.BankBusinessBalanceSnapshots
-            where accountBalanceSnapshot.EntityId.Equals(_userToken.EntityId)
-            where accountBalanceSnapshot.AirslipUserType == _userToken.AirslipUserType
+        IQueryable<SnapshotMetric> qSnapshot = from rd in _context.RelationshipDetails
+            from rh in _context.RelationshipHeaders
+                .Where(o => o.Id.Equals(rd.RelationshipHeaderId) && 
+                            o.EntityStatus == EntityStatus.Active)
+            from accountBalanceSnapshot in _context.BankBusinessBalanceSnapshots
+                .Where(o => o.EntityId == rd.OwnerEntityId && 
+                            o.AirslipUserType == rd.OwnerAirslipUserType)
+            where rd.ViewerEntityId.Equals(_userToken.EntityId) 
+                  && rd.ViewerAirslipUserType == _userToken.AirslipUserType 
+                  && rd.Allowed
+                  && rd.PermissionType == PermissionType.Banking.ToString()
+                  && rd.OwnerEntityId == query.OwnerEntityId
+                  && rd.OwnerAirslipUserType == query.OwnerAirslipUserType 
             orderby accountBalanceSnapshot.TimeStamp
             select new SnapshotMetric(accountBalanceSnapshot.TimeStamp, accountBalanceSnapshot.Balance.ToPositiveCurrency());
 
         DashboardSnapshotModel? response = await qBalance.FirstOrDefaultAsync();
 
-        if (response == null) return new NotFoundResponse("BusinessBalance", _userToken.EntityId);
+        if (response == null) return new NotFoundResponse("BusinessBalance", query.OwnerEntityId);
 
         response.Metrics = await qSnapshot
             .Take(10)

@@ -5,13 +5,13 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
-namespace Airslip.Analytics.Processor.Functions.Yapily;
+namespace Airslip.Analytics.Processor.Functions.EventHub.Api2Cart;
 
-public static class YapilyTransactions
+public static class Api2CartAccounts
 {
-    [Function(nameof(YapilyTransactions))]
-    public static async Task Run([EventHubTrigger(Constants.EVENT_QUEUE_YAPILY_TRANSACTIONS, 
-        Connection = "YapilyEventHubConnectionString",
+    [Function(nameof(Api2CartAccounts))]
+    public static async Task Run([EventHubTrigger(Constants.EVENT_QUEUE_API_2_CART_ACCOUNTS, 
+        Connection = "Api2CartEventHubConnectionString",
         ConsumerGroup = "%ConsumerGroup%",
         IsBatched = false)] string myEventHubMessage, FunctionContext context)
     {
@@ -19,6 +19,6 @@ public static class YapilyTransactions
             .InstanceServices
             .GetService<IMessageHandoffService>() ?? throw new NotImplementedException();
 
-        await messageService.ProcessMessage(Constants.EVENT_QUEUE_YAPILY_TRANSACTIONS, myEventHubMessage);
+        await messageService.ProcessMessage(Constants.EVENT_QUEUE_API_2_CART_ACCOUNTS, myEventHubMessage);
     }
 }

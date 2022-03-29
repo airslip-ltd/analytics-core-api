@@ -12,6 +12,8 @@ using Airslip.Common.Services.FluentValidation;
 using Airslip.Common.Services.Handoff;
 using Airslip.Common.Services.SqlServer;
 using Airslip.Common.Types.Configuration;
+using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -45,6 +47,12 @@ internal class Program
                 // Add HttpClient
                 services.AddHttpClient();
 
+                // Azure clients
+                services.AddAzureClients(builder =>
+                {
+                    builder.AddServiceBusClient(context.Configuration.GetConnectionString("ServiceBus"));
+                });
+                
                 // Add Options
                 services
                     .AddOptions()

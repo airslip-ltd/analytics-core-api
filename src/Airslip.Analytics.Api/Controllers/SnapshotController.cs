@@ -41,17 +41,18 @@ namespace Airslip.Analytics.Api.Controllers
             _debitsAndCreditsService = debitsAndCreditsService;
         }
         
-        [HttpGet]
+        [HttpPost]
         [Route("{snapshotType}")]
         [ProducesResponseType(typeof(DashboardSnapshotModel), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetSnapshot([FromRoute]DashboardSnapshotType snapshotType,
+            [FromBody] OwnedSnapshotSearchModel query,
             [FromQuery]int dayRange = 7,
             [FromQuery]int statRange = 10,
             [FromQuery]string? integrationId = null)
         {
             IResponse response = await _dashboardSnapshotService
-                .GetSnapshotFor(snapshotType, dayRange, statRange, integrationId);
+                .GetSnapshotFor(query, snapshotType, dayRange, statRange, integrationId);
             
             return HandleResponse<DashboardSnapshotModel>(response);
         }

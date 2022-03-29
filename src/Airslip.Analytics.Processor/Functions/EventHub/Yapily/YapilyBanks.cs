@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
-namespace Airslip.Analytics.Processor.Functions.Yapily;
+namespace Airslip.Analytics.Processor.Functions.EventHub.Yapily;
 
 public static class YapilyBanks
 {
