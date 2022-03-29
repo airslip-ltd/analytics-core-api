@@ -138,7 +138,7 @@ module "servicebus_with_queues" {
     short_environment = local.short_environment,
     location = local.location,
     tags = local.tags,
-    sku = "Basic"
+    sku = "Standard"
   }
 
   resource_group = {
@@ -149,13 +149,16 @@ module "servicebus_with_queues" {
   
   queues = [
     {
-      queue_name = "bank-account-balance"
+      queue_name = "bank-account-balance",
+      duplicate_detection = true
     },
     {
-      queue_name = "merchant-transactions"
+      queue_name = "merchant-transactions",
+      duplicate_detection = true
     },
     {
-      queue_name = "bank-transaction"
+      queue_name = "bank-transaction",
+      duplicate_detection = true
     }
   ]
 }
