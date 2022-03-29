@@ -1,6 +1,7 @@
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Core.Models;
 using Airslip.Analytics.Logic.Implementations;
+using Airslip.Analytics.Services.ServiceBus.Implementations;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Airslip.Analytics.Logic;
@@ -35,6 +36,12 @@ public static class Services
     public static IServiceCollection AddAnalyticsProcesses(this IServiceCollection services)
     {
         services
+            .AddScoped<IAnalysisMessagingService<BankAccountBalanceModel>, BalanceMessagingService>()
+            .AddScoped<IAnalysisMessagingService<MerchantTransactionModel>, CommerceMessagingService>()
+            .AddScoped<IAnalysisMessagingService<BankTransactionModel>, TransactionsMessagingService>()
+            .AddScoped<IAnalysisHandlingService<BankAccountBalanceModel>, AnalysisHandlingService<BankAccountBalanceModel>>()
+            .AddScoped<IAnalysisHandlingService<MerchantTransactionModel>, AnalysisHandlingService<MerchantTransactionModel>>()
+            .AddScoped<IAnalysisHandlingService<BankTransactionModel>, AnalysisHandlingService<BankTransactionModel>>()
             .AddScoped<IAnalyticsProcess<BankAccountBalanceModel>, GenerateAccountBalanceSnapshot>()
             .AddScoped<IAnalyticsProcess<BankAccountBalanceModel>, GenerateAccountBalanceSummary>()
             .AddScoped<IAnalyticsProcess<BankAccountBalanceModel>, GenerateBusinessBalanceSnapshot>()

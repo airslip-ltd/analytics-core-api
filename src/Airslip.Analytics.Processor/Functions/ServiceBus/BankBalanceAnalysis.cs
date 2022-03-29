@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Airslip.Analytics.Processor.Functions.ServiceBus
 {
-    public static class BankTransactionAnalysis
+    public static class BankBalanceAnalysis
     {
-        [Function("BankTransactionAnalysis")]
-        public static async Task Run([ServiceBusTrigger(Constants.MESSAGE_QUEUE_BANK_TRANSACTION, 
+        [Function("BankBalanceAnalysis")]
+        public static async Task Run([ServiceBusTrigger(Constants.MESSAGE_QUEUE_BANK_ACCOUNT_BALANCE, 
                 Connection = "ServiceBusConnectionString")] 
             string message, FunctionContext context)
         {
@@ -18,7 +18,7 @@ namespace Airslip.Analytics.Processor.Functions.ServiceBus
                 .InstanceServices
                 .GetService<IMessageHandoffService>() ?? throw new NotImplementedException();
 
-            await messageService.ProcessMessage(Constants.MESSAGE_QUEUE_BANK_TRANSACTION, message);
+            await messageService.ProcessMessage(Constants.MESSAGE_QUEUE_BANK_ACCOUNT_BALANCE, message);
         }
     }
 }
