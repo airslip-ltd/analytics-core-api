@@ -31,9 +31,12 @@ public class RelationshipService : IRelationshipService
         RepositoryActionResultModel<RelationshipHeaderModel> getResult = await _repository.Get(relationshipModel.Id);
 
         RelationshipHeaderModel? model = null;
+        RelationshipStatus? previousStatus = null;
+        RelationshipStatus newStatus = relationshipModel.RelationshipStatus;
         
         if (getResult is SuccessfulActionResultModel<RelationshipHeaderModel> success)
         {
+            previousStatus = success.CurrentVersion?.RelationshipStatus ?? RelationshipStatus.Invited;
             model = success.CurrentVersion;
         }
 
@@ -45,7 +48,8 @@ public class RelationshipService : IRelationshipService
             EntityStatus = EntityStatus.Active,
             TimeStamp = relationshipModel.TimeStamp,
             UserId = relationshipModel.UserId,
-            AirslipUserType = relationshipModel.AirslipUserType
+            AirslipUserType = relationshipModel.AirslipUserType,
+            RelationshipStatus = relationshipModel.RelationshipStatus
         };
 
         List<string> approvedAccess = relationshipModel
@@ -84,5 +88,11 @@ public class RelationshipService : IRelationshipService
         
         if (relationshipModel.EntityStatus == EntityStatus.Deleted)
             await _repository.Delete(model.Id!, model.UserId);
+        
+        // Update statistics
+        if (previousStatus == null || newStatus != previousStatus)
+        {
+            
+        }
     }
 }

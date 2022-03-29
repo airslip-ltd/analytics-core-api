@@ -1,4 +1,5 @@
 using Airslip.Analytics.Core.Entities;
+using Airslip.Analytics.Core.Enums;
 using Airslip.Common.Repository.Types.Entities;
 using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
@@ -16,6 +17,7 @@ public class RelationshipHeaderModel : IModelWithOwnership, IModelWithTimeStamp,
     public string? EntityId { get; set; }
     public AirslipUserType AirslipUserType { get; set; }
     public DataSources DataSource { get; set; }
+    public RelationshipStatus RelationshipStatus { get; set; }
     public long TimeStamp { get; set; }
     public List<RelationshipDetail> Details { get; set; } = new();
 }

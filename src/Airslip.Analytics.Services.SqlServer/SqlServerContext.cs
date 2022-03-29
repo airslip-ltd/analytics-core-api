@@ -40,6 +40,7 @@ public class SqlServerContext : AirslipSqlServerContextBase
     public DbSet<IntegrationAccountDetail> IntegrationAccountDetails { get; set; } = null!;
     public DbSet<RelationshipDetail> RelationshipDetails { get; set; } = null!;
     public DbSet<RelationshipHeader> RelationshipHeaders { get; set; } = null!;
+    public DbSet<RelationshipSnapshot> RelationshipSnapshots { get; set; } = null!;
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -75,6 +76,7 @@ public class SqlServerContext : AirslipSqlServerContextBase
         
         modelBuilder.AddTableWithDefaults<RelationshipHeader>();
         modelBuilder.AddTableWithDefaults<RelationshipDetail>();
+        modelBuilder.AddTableWithDefaults<RelationshipSnapshot>();
         
         // Defaults
         modelBuilder.AddDatabaseGeneratedId<BankAccountBalanceSummary>();
