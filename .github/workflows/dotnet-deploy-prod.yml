@@ -280,7 +280,7 @@ jobs:
       working-directory: ${{ env.CONTEXT_PATH }}
 
   prod-build-environment:
-    needs: build
+    needs: [qa-deploy-web-app, qa-deploy-processor-app, qa-update-database]
     runs-on: ubuntu-latest
     environment: Production
     env:
