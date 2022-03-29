@@ -44,6 +44,8 @@
 	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.GetTotalRefundsSnapshot.prc.sql" />
 	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.GetTotalSalesSnapshot.prc.sql" />
 	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.UpdateAccountBalanceSummary.prc.sql" />
+	  <EmbeddedResource Include="Database\SnapshotProcs\Procedures\dbo.GetTotalRefundsSnapshot.prc.sql" />
+	  <EmbeddedResource Include="Database\SnapshotProcs\Procedures\dbo.GetTotalSalesSnapshot.prc.sql" />
 	  <None Remove="Database\InitialCreate\Procedures\dbo.SomeAnaltyic.sql" />
 	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.CreateAccountBalanceSnapshot.prc.sql" />
 	</ItemGroup>

@@ -61,11 +61,13 @@ public class DashboardSnapshotService : IDashboardSnapshotService
         
         IQueryable<DashboardMetricSnapshot> q = _context
             .Set<DashboardMetricSnapshot>()
-            .FromSqlRaw($"{procName} @DayRange = {{0}}, @StatRange = {{1}}, @EntityId = {{2}}, @AirslipUserType = {{3}}, @IntegrationId = {{4}}",
+            .FromSqlRaw($"{procName} @DayRange = {{0}}, @StatRange = {{1}}, @ViewerEntityId = {{2}}, @ViewerAirslipUserType = {{3}}, @OwnerEntityId = {{4}}, @OwnerAirslipUserType = {{5}}, @IntegrationId = {{6}}",
                 dayRange, 
                 statRange,
                 _userToken.EntityId,
                 _userToken.AirslipUserType,
+                query.OwnerEntityId,
+                query.OwnerAirslipUserType,
                 integrationId == null ? DBNull.Value : integrationId);
 
         List<DashboardMetricSnapshot> metrics = await q.ToListAsync();
