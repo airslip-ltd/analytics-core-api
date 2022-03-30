@@ -13,7 +13,6 @@ public static class Services
         services
             .AddScoped<IRelationshipService, RelationshipService>()
             .AddScoped<IBusinessService, BusinessService>()
-            .AddScoped<IBalanceService, BalanceService>()
             .AddScoped<ITransactionService, TransactionService>()
             .AddScoped<IDashboardSnapshotService, DashboardSnapshotService>()
             .AddScoped<IRevenueAndRefundsService, RevenueAndRefundsService>()

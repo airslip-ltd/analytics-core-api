@@ -24,14 +24,16 @@ public class RevenueAndRefundsService : IRevenueAndRefundsService
         _context = dbContext;
     }
     
-    public async Task<IResponse> GetRevenueAndRefunds(int year, string? integrationId)
+    public async Task<IResponse> GetRevenueAndRefunds(OwnedSnapshotSearchModel query, int year, string? integrationId)
     {
         IQueryable<RevenueAndRefundsByYear> q = _context
             .Set<RevenueAndRefundsByYear>()
-            .FromSqlRaw("dbo.GetRevenueAndRefundsByYear @Year = {0}, @EntityId = {1}, @AirslipUserType = {2}, @IntegrationId = {3}",
+            .FromSqlRaw("dbo.GetRevenueAndRefundsByYear @Year = {0}, @ViewerEntityId = {1}, @ViewerAirslipUserType = {2}, @OwnerEntityId = {3}, @OwnerAirslipUserType = {4}, @IntegrationId = {5}",
                 year, 
                 _userToken.EntityId,
                 _userToken.AirslipUserType,
+                query.OwnerEntityId,
+                query.OwnerAirslipUserType,
                 integrationId == null ? DBNull.Value : integrationId);
 
         List<RevenueAndRefundsByYear> metrics = await q.ToListAsync();

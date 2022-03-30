@@ -57,30 +57,32 @@ namespace Airslip.Analytics.Api.Controllers
             return HandleResponse<DashboardSnapshotModel>(response);
         }
         
-        [HttpGet]
+        [HttpPost]
         [Route("revenue")]
         [ProducesResponseType(typeof(DashboardGraphSeriesModel), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetRevenue(
+            [FromBody] OwnedSnapshotSearchModel query,
             [FromQuery]int year = 2022,
             [FromQuery]string? integrationId = null)
         {
             IResponse response = await _revenueAndRefundsService
-                .GetRevenueAndRefunds(year, integrationId);
+                .GetRevenueAndRefunds(query, year, integrationId);
             
             return HandleResponse<DashboardGraphSeriesModel>(response);
         }
         
-        [HttpGet]
+        [HttpPost]
         [Route("cashflow")]
         [ProducesResponseType(typeof(DashboardGraphSeriesModel), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetCashflow(
+            [FromBody] OwnedSnapshotSearchModel query,
             [FromQuery]int year = 2022,
             [FromQuery]string? integrationId = null)
         {
             IResponse response = await _debitsAndCreditsService
-                .GetDebitsAndCredits(year, integrationId);
+                .GetDebitsAndCredits(query, year, integrationId);
             
             return HandleResponse<DashboardGraphSeriesModel>(response);
         }

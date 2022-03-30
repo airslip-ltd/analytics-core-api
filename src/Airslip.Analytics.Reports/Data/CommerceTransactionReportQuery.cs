@@ -1,3 +1,4 @@
+using Airslip.Analytics.Reports.Interfaces;
 using Airslip.Common.Repository.Types.Entities;
 using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
@@ -12,9 +13,7 @@ public class CommerceTransactionReportQuery : IEntity, IOwnedDataQuery
     public virtual BasicAuditInformation? AuditInformation { get; set; }
     public EntityStatus EntityStatus { get; set; }
     public string? UserId { get; set; }
-    public string? EntityId { get; set; }
     public string? IntegrationId { get; set; }
-    public AirslipUserType AirslipUserType { get; set; }
     public DataSources DataSource { get; set; }
     public long TimeStamp { get; set; }
     public string TrackingId { get; set; } = string.Empty;
@@ -43,6 +42,9 @@ public class CommerceTransactionReportQuery : IEntity, IOwnedDataQuery
     public int? Year { get; set; }
     public int? Month { get; set; }
     public int? Day { get; set; }
+    
+    public string OwnerEntityId { get; init; }
+    public AirslipUserType OwnerAirslipUserType { get; init; }
     public string ViewerEntityId { get; init; }
     public AirslipUserType ViewerAirslipUserType { get; init; }
     public string PermissionType { get; init; }
