@@ -24,16 +24,18 @@ public class DebitsAndCreditsService : IDebitsAndCreditsService
         _context = dbContext;
     }
     
-    public async Task<IResponse> GetDebitsAndCredits(int year, string? integrationId)
+    public async Task<IResponse> GetDebitsAndCredits(OwnedSnapshotSearchModel query, int year, string? integrationId)
     {
         integrationId = string.IsNullOrWhiteSpace(integrationId) ? null : integrationId;
         
         IQueryable<DebitsAndCreditsByYear> q = _context
             .Set<DebitsAndCreditsByYear>()
-            .FromSqlRaw("dbo.GetCreditsAndDebitsByYear @Year = {0}, @EntityId = {1}, @AirslipUserType = {2}, @IntegrationId = {3}",
+            .FromSqlRaw("dbo.GetCreditsAndDebitsByYear @Year = {0}, @ViewerEntityId = {1}, @ViewerAirslipUserType = {2}, @OwnerEntityId = {3}, @OwnerAirslipUserType = {4}, @IntegrationId = {5}",
                 year, 
                 _userToken.EntityId,
                 _userToken.AirslipUserType,
+                query.OwnerEntityId,
+                query.OwnerAirslipUserType,
                 integrationId == null ? DBNull.Value : integrationId);
 
         List<DebitsAndCreditsByYear> metrics = await q.ToListAsync();

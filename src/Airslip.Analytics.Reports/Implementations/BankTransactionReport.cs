@@ -20,11 +20,11 @@ namespace Airslip.Analytics.Reports.Implementations;
 
 public class BankTransactionReport : IBankTransactionReport
 {
-    private readonly IEntitySearch<BankTransactionReportResponse> _entitySearch;
+    private readonly IEntitySearch<BankTransactionReportModel> _entitySearch;
     private readonly UserToken _userToken;
     private readonly SqlServerContext _context;
 
-    public BankTransactionReport(IEntitySearch<BankTransactionReportResponse> entitySearch, IContext context,
+    public BankTransactionReport(IEntitySearch<BankTransactionReportModel> entitySearch, IContext context,
         ITokenDecodeService<UserToken> tokenDecodeService)
     {
         _context = context as SqlServerContext ?? throw new NotImplementedException();
@@ -68,20 +68,20 @@ public class BankTransactionReport : IBankTransactionReport
                 IsoFamilyCode = item.IsoFamilyCode,
                 LastCardDigits = item.LastCardDigits,
                     
-                EntityId = rd.OwnerEntityId,
-                AirslipUserType = rd.OwnerAirslipUserType,
+                OwnerEntityId = rd.OwnerEntityId,
+                OwnerAirslipUserType = rd.OwnerAirslipUserType,
                 ViewerEntityId = rd.ViewerEntityId,
                 ViewerAirslipUserType = rd.ViewerAirslipUserType,
                 PermissionType = rd.PermissionType,
                 Allowed = rd.Allowed
             };
             
-        EntitySearchResponse<BankTransactionReportResponse> searchResults = await _entitySearch
+        EntitySearchResponse<BankTransactionReportModel> searchResults = await _entitySearch
             .GetSearchResults(q, query, 
                 new List<SearchFilterModel>
                 {
-                    new(nameof(BankTransactionReportQuery.EntityId), query.OwnerEntityId),
-                    new(nameof(BankTransactionReportQuery.AirslipUserType), query.OwnerAirslipUserType.ToString()),
+                    new(nameof(BankTransactionReportQuery.OwnerEntityId), query.OwnerEntityId),
+                    new(nameof(BankTransactionReportQuery.OwnerAirslipUserType), query.OwnerAirslipUserType.ToString()),
                     new(nameof(BankTransactionReportQuery.ViewerEntityId), _userToken.EntityId),
                     new(nameof(BankTransactionReportQuery.ViewerAirslipUserType), _userToken.AirslipUserType.ToString()),
                     new(nameof(BankTransactionReportQuery.PermissionType), PermissionType.Banking.ToString()),

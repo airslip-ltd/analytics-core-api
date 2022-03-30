@@ -1,5 +1,4 @@
 using Airslip.Analytics.Core.Models;
-using Airslip.Analytics.Reports.Common;
 using Airslip.Analytics.Reports.Interfaces;
 using Airslip.Common.Repository.Types.Models;
 using Airslip.Common.Types.Interfaces;

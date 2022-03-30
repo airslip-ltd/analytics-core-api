@@ -1,3 +1,4 @@
+using Airslip.Analytics.Reports.Interfaces;
 using Airslip.Common.Repository.Types.Entities;
 using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
@@ -12,8 +13,6 @@ public class BankTransactionReportQuery : IEntity, IOwnedDataQuery
     public virtual BasicAuditInformation? AuditInformation { get; set; }
     public EntityStatus EntityStatus { get; set; }
     public string? UserId { get; set; }
-    public string? EntityId { get; set; }
-    public AirslipUserType AirslipUserType { get; set; }
     public string BankTransactionId { get; set; } = string.Empty;
     public string? TransactionHash { get; set; }
     public string IntegrationId { get; set; } = string.Empty;
@@ -36,16 +35,11 @@ public class BankTransactionReportQuery : IEntity, IOwnedDataQuery
     public int? Month { get; set; }
     public int? Day { get; set; }
     public string TradingName { get; set; } = string.Empty;
+    
+    public string OwnerEntityId { get; init; }
+    public AirslipUserType OwnerAirslipUserType { get; init; }
     public string ViewerEntityId { get; init; }
     public AirslipUserType ViewerAirslipUserType { get; init; }
     public string PermissionType { get; init; }
     public bool Allowed { get; init; }
-}
-
-public interface IOwnedDataQuery
-{
-    string ViewerEntityId { get; init; }
-    AirslipUserType ViewerAirslipUserType { get; init; }
-    string PermissionType { get; init; }
-    bool Allowed { get; init; }
 }

@@ -15,13 +15,13 @@ namespace Airslip.Analytics.Reports.Implementations
 {
     public class CommerceTransactionReport : ICommerceTransactionReport
     {
-        private readonly IEntitySearch<CommerceTransactionReportResponse> _entitySearch;
+        private readonly IEntitySearch<CommerceTransactionReportModel> _entitySearch;
         private readonly IEntitySearch<MerchantTransactionModel> _entityDownload;
         private readonly UserToken _userToken;
         private readonly SqlServerContext _context;
 
         public CommerceTransactionReport(
-            IEntitySearch<CommerceTransactionReportResponse> entitySearch, 
+            IEntitySearch<CommerceTransactionReportModel> entitySearch, 
             IEntitySearch<MerchantTransactionModel> entityDownload, 
             IContext context,
             ITokenDecodeService<UserToken> tokenDecodeService)
@@ -76,20 +76,20 @@ namespace Airslip.Analytics.Reports.Implementations
                     PaymentStatus = item.PaymentStatus,
                     TotalRefund = item.TotalRefund,
                     
-                    EntityId = rd.OwnerEntityId,
-                    AirslipUserType = rd.OwnerAirslipUserType,
+                    OwnerEntityId = rd.OwnerEntityId,
+                    OwnerAirslipUserType = rd.OwnerAirslipUserType,
                     ViewerEntityId = rd.ViewerEntityId,
                     ViewerAirslipUserType = rd.ViewerAirslipUserType,
                     PermissionType = rd.PermissionType,
                     Allowed = rd.Allowed
                 };
             
-            EntitySearchResponse<CommerceTransactionReportResponse> searchResults = await _entitySearch
+            EntitySearchResponse<CommerceTransactionReportModel> searchResults = await _entitySearch
                 .GetSearchResults(q, query, 
                     new List<SearchFilterModel>
                     {
-                        new(nameof(BankTransactionReportQuery.EntityId), query.OwnerEntityId),
-                        new(nameof(BankTransactionReportQuery.AirslipUserType), query.OwnerAirslipUserType.ToString()),
+                        new(nameof(BankTransactionReportQuery.OwnerEntityId), query.OwnerEntityId),
+                        new(nameof(BankTransactionReportQuery.OwnerAirslipUserType), query.OwnerAirslipUserType.ToString()),
                         new(nameof(BankTransactionReportQuery.ViewerEntityId), _userToken.EntityId),
                         new(nameof(BankTransactionReportQuery.ViewerAirslipUserType), _userToken.AirslipUserType.ToString()),
                         new(nameof(BankTransactionReportQuery.PermissionType), PermissionType.Commerce.ToString()),
@@ -143,8 +143,8 @@ namespace Airslip.Analytics.Reports.Implementations
                     PaymentStatus = item.PaymentStatus,
                     TotalRefund = item.TotalRefund,
                     
-                    EntityId = rd.OwnerEntityId,
-                    AirslipUserType = rd.OwnerAirslipUserType,
+                    OwnerEntityId = rd.OwnerEntityId,
+                    OwnerAirslipUserType = rd.OwnerAirslipUserType,
                     ViewerEntityId = rd.ViewerEntityId,
                     ViewerAirslipUserType = rd.ViewerAirslipUserType,
                     PermissionType = rd.PermissionType,
@@ -157,8 +157,8 @@ namespace Airslip.Analytics.Reports.Implementations
                 .GetSearchResults(q, query, 
                     new List<SearchFilterModel>
                     {
-                        new(nameof(BankTransactionReportQuery.EntityId), query.OwnerEntityId),
-                        new(nameof(BankTransactionReportQuery.AirslipUserType), query.OwnerAirslipUserType.ToString()),
+                        new(nameof(BankTransactionReportQuery.OwnerEntityId), query.OwnerEntityId),
+                        new(nameof(BankTransactionReportQuery.OwnerAirslipUserType), query.OwnerAirslipUserType.ToString()),
                         new(nameof(BankTransactionReportQuery.ViewerEntityId), _userToken.EntityId),
                         new(nameof(BankTransactionReportQuery.ViewerAirslipUserType), _userToken.AirslipUserType.ToString()),
                         new(nameof(BankTransactionReportQuery.PermissionType), PermissionType.Commerce.ToString()),

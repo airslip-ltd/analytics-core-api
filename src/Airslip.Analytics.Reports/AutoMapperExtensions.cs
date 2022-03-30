@@ -10,8 +10,10 @@ namespace Airslip.Analytics.Reports
     {
         public static IMapperConfigurationExpression AddReportingMappings(this IMapperConfigurationExpression cfg)
         {
-            cfg.CreateMap<BankTransactionReportQuery, BankTransactionReportResponse>();
-            cfg.CreateMap<CommerceTransactionReportQuery, CommerceTransactionReportResponse>();
+            cfg.CreateMap<CommerceProviderReportQuery, CommerceProviderModel>();
+            cfg.CreateMap<AccountBalanceReportQuery, AccountBalanceReportModel>();
+            cfg.CreateMap<BankTransactionReportQuery, BankTransactionReportModel>();
+            cfg.CreateMap<CommerceTransactionReportQuery, CommerceTransactionReportModel>();
             cfg.CreateMap<CommerceTransactionDownloadQuery, MerchantTransactionModel>();
             cfg.CreateMap<MerchantProduct, MerchantProductModel>();
             cfg.CreateMap<MerchantRefund, MerchantRefundModel>();

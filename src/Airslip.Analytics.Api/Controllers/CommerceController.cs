@@ -24,33 +24,33 @@ namespace Airslip.Analytics.Api.Controllers
     [ApiController]    
     [ApiVersion("1.0")]
     [Produces(Json.MediaType)]
-    [Route("v{version:apiVersion}/balance")]
+    [Route("v{version:apiVersion}/commerce")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class AccountsController : ApiControllerBase
+    public class CommerceController : ApiControllerBase
     {
-        private readonly IAccountBalanceReport _accountBalanceReport;
+        private readonly ICommerceProviderReport _commerceProviderReport;
         private readonly IDownloadService _downloadService;
 
-        public AccountsController(IAccountBalanceReport accountBalanceReport,
-            IDownloadService downloadService, 
+        public CommerceController(ICommerceProviderReport commerceProviderReport,
+            IDownloadService downloadService,
             ITokenDecodeService<UserToken> tokenDecodeService, 
             IOptions<PublicApiSettings> publicApiOptions, ILogger logger) 
             : base(tokenDecodeService, publicApiOptions, logger)
         {
-            _accountBalanceReport = accountBalanceReport;
+            _commerceProviderReport = commerceProviderReport;
             _downloadService = downloadService;
         }
         
         [HttpPost]
         [Route("search")]
-        [ProducesResponseType(typeof(EntitySearchResponse<AccountBalanceReportModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(EntitySearchResponse<CommerceProviderModel>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetAccounts([FromBody] OwnedDataSearchModel query)
+        public async Task<IActionResult> GetProviders([FromBody] OwnedDataSearchModel query)
         {
-            IResponse response = await _accountBalanceReport
+            IResponse response = await _commerceProviderReport
                 .Execute(query);
             
-            return HandleResponse<EntitySearchResponse<AccountBalanceReportModel>>(response);
+            return HandleResponse<EntitySearchResponse<CommerceProviderModel>>(response);
         }
         
         [HttpPost]
@@ -59,8 +59,8 @@ namespace Airslip.Analytics.Api.Controllers
         [Route("download")]
         public async Task<IActionResult> BankTransactionsDownload([FromBody] OwnedDataSearchModel query)
         {
-            IResponse response = await _downloadService.Download<BankTransactionReportModel>(_accountBalanceReport, query, 
-                "account-balances");
+            IResponse response = await _downloadService.Download<BankTransactionReportModel>(_commerceProviderReport, query, 
+                "commerce-providers");
 
             return HandleResponse<DownloadResponse>(response);
         }

@@ -4,7 +4,7 @@ using Airslip.Common.Types.Enums;
 
 namespace Airslip.Analytics.Reports.Models;
 
-public class BankTransactionReportResponse : IModel
+public class BankTransactionReportModel : IModel
 {
     public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }

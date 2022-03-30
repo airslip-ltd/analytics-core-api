@@ -43,41 +43,41 @@ public class ReportController : ApiControllerBase
     }
     
     [HttpPost]
-    [ProducesResponseType( typeof(EntitySearchResponse<BankTransactionReportResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType( typeof(EntitySearchResponse<BankTransactionReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
     [Route("bank-transactions")]
     public async Task<IActionResult> BankTransactions([FromBody] OwnedDataSearchModel query)
     {
         IResponse response = await _bankTransactionReport.Execute(query);
 
-        return HandleResponse<EntitySearchResponse<BankTransactionReportResponse>>(response);
+        return HandleResponse<EntitySearchResponse<BankTransactionReportModel>>(response);
     }
     
     [HttpPost]
-    [ProducesResponseType( typeof(EntitySearchResponse<BankTransactionReportResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType( typeof(EntitySearchResponse<BankTransactionReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
     [Route("bank-transactions/download")]
     public async Task<IActionResult> BankTransactionsDownload([FromBody] OwnedDataSearchModel query)
     {
-        IResponse response = await _downloadService.Download<BankTransactionReportResponse>(_bankTransactionReport, query, 
+        IResponse response = await _downloadService.Download<BankTransactionReportModel>(_bankTransactionReport, query, 
             "bank-transactions");
 
         return HandleResponse<DownloadResponse>(response);
     }
     
     [HttpPost]
-    [ProducesResponseType( typeof(EntitySearchResponse<CommerceTransactionReportResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType( typeof(EntitySearchResponse<CommerceTransactionReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
     [Route("commerce-transactions")]
     public async Task<IActionResult> CommerceTransactions([FromBody] OwnedDataSearchModel query)
     {
         IResponse response = await _commerceTransactionReport.Execute(query);
 
-        return HandleResponse<EntitySearchResponse<CommerceTransactionReportResponse>>(response);
+        return HandleResponse<EntitySearchResponse<CommerceTransactionReportModel>>(response);
     }
     
     [HttpPost]
-    [ProducesResponseType( typeof(EntitySearchResponse<BankTransactionReportResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType( typeof(EntitySearchResponse<BankTransactionReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
     [Route("commerce-transactions/download")]
     public async Task<IActionResult> CommerceTransactionsDownload([FromBody] OwnedDataSearchModel query)
