@@ -7,5 +7,12 @@
                 "excludedTypes": "Request"
             }
         }
+    },
+    "extensions": {
+        "serviceBus": {
+            "messageHandlerOptions": {
+                "maxConcurrentCalls": 1
+            }
+        }
     }
 }
