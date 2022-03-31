@@ -76,7 +76,8 @@ public class RelationshipService : IRelationshipService
         // Update access rights
         foreach (RelationshipDetail item in model.Details)
         {
-            item.Allowed = relationshipModel.RelationshipStatus == RelationshipStatus.Approved && 
+            item.Allowed = relationshipModel.EntityStatus == EntityStatus.Active &&
+                           relationshipModel.RelationshipStatus == RelationshipStatus.Approved && 
                            approvedAccess.Contains(item.PermissionType);
         }
 
