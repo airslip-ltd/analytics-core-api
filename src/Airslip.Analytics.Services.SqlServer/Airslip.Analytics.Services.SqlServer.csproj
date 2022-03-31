@@ -40,6 +40,7 @@
 	  <EmbeddedResource Include="Database\DateEnhancements\Procedures\dbo.GetRevenueAndRefundsByYear.prc.sql" />
 	  <EmbeddedResource Include="Database\DetailProcs\Procedures\dbo.GetCreditsAndDebitsByYear.prc.sql" />
 	  <EmbeddedResource Include="Database\DetailProcs\Procedures\dbo.GetRevenueAndRefundsByYear.prc.sql" />
+	  <EmbeddedResource Include="Database\FixBrokenProcedures\Procedures\dbo.UpdateAccountBalanceSummary.prc.sql" />
 	  <EmbeddedResource Include="Database\InitialCreate\Functions\dbo.calcMovement.udf.sql" />
 	  <EmbeddedResource Include="Database\InitialCreate\Functions\dbo.getYearMonths.udf.sql" />
 	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.CreateBankAccountMetricSnapshots.prc.sql" />

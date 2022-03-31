@@ -21,9 +21,17 @@ public class AnalysisHandlingService<TModel> : IAnalysisHandlingService<TModel>
     {
         foreach (IAnalyticsProcess<TModel> analyticsProcess in _postProcessors)
         {
-            int affectedRows = await analyticsProcess.Execute(model);
-            _logger.Information("Executed analytics task, {AffectedRows}", 
-                affectedRows);
+            try
+            {
+                int affectedRows = await analyticsProcess.Execute(model);
+                _logger.Information("Executed analytics task, {AffectedRows}",
+                    affectedRows);
+            }
+            catch (Exception eee)
+            {
+                _logger.Error(eee, "Error executing analytics process {ClassName}", 
+                    analyticsProcess.GetType().FullName);
+            }
         }
     }
 
