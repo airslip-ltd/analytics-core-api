@@ -24,21 +24,28 @@ public class RevenueAndRefundsService : IRevenueAndRefundsService
         _context = dbContext;
     }
     
-    public async Task<IResponse> GetRevenueAndRefunds(OwnedSnapshotSearchModel query, int year, string? integrationId)
+    public async Task<IResponse> Execute(OwnedSeriesSearchModel query)
     {
         IQueryable<RevenueAndRefundsByYear> q = _context
             .Set<RevenueAndRefundsByYear>()
-            .FromSqlRaw("dbo.GetRevenueAndRefundsByYear @Year = {0}, @ViewerEntityId = {1}, @ViewerAirslipUserType = {2}, @OwnerEntityId = {3}, @OwnerAirslipUserType = {4}, @IntegrationId = {5}",
-                year, 
+            .FromSqlRaw(@"dbo.GetRevenueAndRefundsByRange @Start = {0},
+@End = {1}, 
+@ViewerEntityId = {2}, 
+@ViewerAirslipUserType = {3}, 
+@OwnerEntityId = {4}, 
+@OwnerAirslipUserType = {5}, 
+@IntegrationId = {6}",
+                query.StartDate,
+                query.EndDate,
                 _userToken.EntityId,
                 _userToken.AirslipUserType,
                 query.OwnerEntityId,
                 query.OwnerAirslipUserType,
-                integrationId == null ? DBNull.Value : integrationId);
+                query.IntegrationId == null ? DBNull.Value : query.IntegrationId);
 
         List<RevenueAndRefundsByYear> metrics = await q.ToListAsync();
         DateTimeFormatInfo formatter = CultureInfo.CurrentCulture.DateTimeFormat;
-        DashboardGraphSeriesModel result = new(year,
+        DashboardGraphSeriesModel result = new(query.StartDate, query.EndDate,
             new []
             {
                 new Series("Revenue", 

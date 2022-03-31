@@ -33,6 +33,11 @@
 	  <EmbeddedResource Include="Database\BankAccountMetricSnapshotIndex\Procedures\dbo.GetTotalRefundsSnapshot.prc.sql" />
 	  <EmbeddedResource Include="Database\BankAccountMetricSnapshotIndex\Procedures\dbo.GetTotalSalesSnapshot.prc.sql" />
 	  <EmbeddedResource Include="Database\BankAccountMetricSnapshotIndex\Procedures\dbo.UpdateAccountBalanceSummary.prc.sql" />
+	  <EmbeddedResource Include="Database\DateEnhancements\Functions\dbo.getReportMonthsAndYears.udf.sql" />
+	  <EmbeddedResource Include="Database\DateEnhancements\Procedures\dbo.GetCreditsAndDebitsByRange.prc.sql" />
+	  <EmbeddedResource Include="Database\DateEnhancements\Procedures\dbo.GetCreditsAndDebitsByYear.prc.sql" />
+	  <EmbeddedResource Include="Database\DateEnhancements\Procedures\dbo.GetRevenueAndRefundsByRange.prc.sql" />
+	  <EmbeddedResource Include="Database\DateEnhancements\Procedures\dbo.GetRevenueAndRefundsByYear.prc.sql" />
 	  <EmbeddedResource Include="Database\DetailProcs\Procedures\dbo.GetCreditsAndDebitsByYear.prc.sql" />
 	  <EmbeddedResource Include="Database\DetailProcs\Procedures\dbo.GetRevenueAndRefundsByYear.prc.sql" />
 	  <EmbeddedResource Include="Database\InitialCreate\Functions\dbo.calcMovement.udf.sql" />
