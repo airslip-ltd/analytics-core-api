@@ -48,7 +48,7 @@ public class RevenueAndRefundsService : IRevenueAndRefundsService
         DashboardGraphSeriesModel result = new(query.StartDate, query.EndDate,
             new []
             {
-                new Series("Revenue", 
+                new Series("Sales", 
                     metrics.Select(o => new TimelyMetric(o.Month, formatter.GetAbbreviatedMonthName(o.Month),
                     o.TotalSales, PeriodType.Month)),
                     metrics.Select( o=> o.TotalSales.ToPositiveCurrency())

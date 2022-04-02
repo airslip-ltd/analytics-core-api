@@ -48,13 +48,13 @@ public class DebitsAndCreditsService : IDebitsAndCreditsService
         DashboardGraphSeriesModel result = new(query.StartDate, query.EndDate,
             new []
             {
-                new Series("Receivables", 
+                new Series("Money In", 
                     metrics.Select(o => new TimelyMetric(o.Month, formatter.GetAbbreviatedMonthName(o.Month),
                     o.TotalCredit, PeriodType.Month)),
                     metrics.Select( o=> o.TotalCredit.ToPositiveCurrency())
                     
                     ),
-             new Series("Payables", metrics.Select(o => new TimelyMetric(o.Month, 
+             new Series("Money Out", metrics.Select(o => new TimelyMetric(o.Month, 
                  formatter.GetAbbreviatedMonthName(o.Month),
                  o.TotalDebit, PeriodType.Month)),
                  metrics.Select( o=> o.TotalDebit.ToPositiveCurrency()))   
