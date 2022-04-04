@@ -82,11 +82,11 @@ namespace Airslip.Analytics.Logic.Implementations
             }
             catch (DbUpdateException se)
             {
-                _logger.Fatal(se, "DbUpdateException exception for the data source {DataSource} with data packet {Model}", dataSource, rawModel);
+                _logger.Error(se, "DbUpdateException exception for the data source {DataSource} with data packet {Model}", dataSource, rawModel);
             }
             catch (Exception e)
             {
-                _logger.Fatal(e, "Unhandled exception for the data source {DataSource} with data packet {Model}", dataSource, rawModel);
+                _logger.Error(e, "Unhandled exception for the data source {DataSource} with data packet {Model}", dataSource, rawModel);
             }
         }
 

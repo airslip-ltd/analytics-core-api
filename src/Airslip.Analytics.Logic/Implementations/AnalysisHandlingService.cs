@@ -2,11 +2,15 @@ using Airslip.Analytics.Core.Interfaces;
 using Airslip.Common.Services.Handoff.Interfaces;
 using Airslip.Common.Types.Enums;
 using Airslip.Common.Utilities;
+using Microsoft.EntityFrameworkCore;
+using Polly;
+using Polly.Retry;
 using Serilog;
 
 namespace Airslip.Analytics.Logic.Implementations;
 
-public class AnalysisHandlingService<TModel> : IAnalysisHandlingService<TModel>
+public class AnalysisHandlingService<TModel> : IAnalysisHandlingService<TModel> 
+    where TModel : class, ITraceable
 {
     private readonly IEnumerable<IAnalyticsProcess<TModel>> _postProcessors;
     private readonly ILogger _logger;
@@ -19,13 +23,27 @@ public class AnalysisHandlingService<TModel> : IAnalysisHandlingService<TModel>
     
     public async Task Execute(TModel model)
     {
+        int maxRetryAttempts = 3;
+    
+        AsyncRetryPolicy? retryPolicy = Policy
+            .Handle<DbUpdateException>()
+            .WaitAndRetryAsync(maxRetryAttempts,  retryAttempt => 
+                TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+        
         foreach (IAnalyticsProcess<TModel> analyticsProcess in _postProcessors)
         {
             try
             {
-                int affectedRows = await analyticsProcess.Execute(model);
-                _logger.Information("Executed analytics task, {AffectedRows}",
-                    affectedRows);
+                await retryPolicy.ExecuteAsync(async () => {
+                    int affectedRows = await analyticsProcess.Execute(model);
+                    _logger.Information("Executed analytics task, {AffectedRows}",
+                        affectedRows);
+                });
+            }
+            catch (DbUpdateException se)
+            {
+                _logger.Error(se, "Error executing analytics process {ClassName}, trace info {TraceInfo}", 
+                    analyticsProcess.GetType().FullName, model.TraceInfo);
             }
             catch (Exception eee)
             {

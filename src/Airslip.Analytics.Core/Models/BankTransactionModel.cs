@@ -1,3 +1,4 @@
+using Airslip.Analytics.Core.Interfaces;
 using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Types.Enums;
@@ -7,7 +8,7 @@ using JetBrains.Annotations;
 namespace Airslip.Analytics.Core.Models;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-public class BankTransactionModel : IModelWithOwnership, IFromDataSource
+public class BankTransactionModel : IModelWithOwnership, IFromDataSource, ITraceable
 {
     public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
@@ -35,4 +36,5 @@ public class BankTransactionModel : IModelWithOwnership, IFromDataSource
     public int? Year { get; set; }
     public int? Month { get; set; }
     public int? Day { get; set; }
+    public string TraceInfo => $"Id: {Id}, EntityId: {EntityId}, AirslipUserType: {AirslipUserType}, IntegrationId: {IntegrationId}";
 }

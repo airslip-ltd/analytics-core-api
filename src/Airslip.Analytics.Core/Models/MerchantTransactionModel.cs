@@ -1,4 +1,5 @@
-﻿using Airslip.Common.Repository.Types.Enums;
+﻿using Airslip.Analytics.Core.Interfaces;
+using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Types.Enums;
 using Airslip.Common.Types.Interfaces;
@@ -7,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Airslip.Analytics.Core.Models;
 
-public record MerchantTransactionModel : IFromDataSource, IModelWithOwnership
+public record MerchantTransactionModel : IFromDataSource, IModelWithOwnership, ITraceable
 {
     public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
@@ -48,4 +49,5 @@ public record MerchantTransactionModel : IFromDataSource, IModelWithOwnership
     public List<MerchantRefundModel> Refunds { get; init; } = new();
     public string OrderStatus { get; init; } = string.Empty;
     public string PaymentStatus { get; init; } = string.Empty;
+    public string TraceInfo => $"Id: {Id}, EntityId: {EntityId}, AirslipUserType: {AirslipUserType}, IntegrationId: {IntegrationId}";
 }
