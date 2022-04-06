@@ -2,12 +2,13 @@ using Airslip.Analytics.Core.Entities;
 using Airslip.Analytics.Core.Enums;
 using Airslip.Analytics.Core.Models;
 using Airslip.Analytics.Core.Models.Raw.Api2Cart;
-using Airslip.Analytics.Core.Models.Raw.Yapily;
 using Airslip.Analytics.Processor.Mappers.Resolvers;
 using Airslip.Common.CustomerPortal.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Types.Enums;
 using Airslip.Common.Utilities.Extensions;
+using Airslip.Integrations.Banking.Types.Enums;
+using Airslip.Integrations.Banking.Types.Models;
 using Airslip.MerchantIntegrations.Types.Models;
 using AutoMapper;
 using AutoMapper.EquivalencyExpression;
@@ -19,13 +20,10 @@ namespace Airslip.Analytics.Processor.Mappers;
 
 public static class MapperExtensions
 {
-    public static IMapperConfigurationExpression AddRawYapilyData(this IMapperConfigurationExpression mapperConfigurationExpression)
+    public static IMapperConfigurationExpression AddBankingData(this IMapperConfigurationExpression mapperConfigurationExpression)
     {
         mapperConfigurationExpression
-            .CreateMap<RawYapilyBankModel, BankModel>()
-            .ForPath(o => o.EnvironmentType, 
-                exp => exp.MapFrom(model => 
-                    model.EnvironmentType == "LIVE" ? EnvironmentType.Live : EnvironmentType.Sandbox))
+            .CreateMap<BankingBankModel, BankModel>()
             .ForPath(o => o.CountryCodes, 
                 exp => exp.MapFrom(model => model
                     .CountryCodes.Select(p => new BankCountryCodeModel()
@@ -33,28 +31,25 @@ public static class MapperExtensions
                         Id = p
                     })));
         mapperConfigurationExpression
-            .CreateMap<RawYapilyTransactionModel, BankTransactionModel>()
-            .ForPath(o => o.Amount,
-                exp => exp.MapFrom(model => (long) (model.Amount * 100) ))
+            .CreateMap<BankingTransactionModel, BankTransactionModel>()
             .ForMember(o => o.Year,
                 opt => opt.MapFrom<BankTransactionDateTimeResolver>())
             .ForMember(o => o.IntegrationId,
-                opt => opt.MapFrom(p=> p.YapilyAccountId));
+                opt => opt.MapFrom(p=> p.BankingAccountId));
         
         mapperConfigurationExpression
-            .CreateMap<RawYapilyAccountModel, IntegrationModel>()
+            .CreateMap<BankingAccountModel, IntegrationModel>()
             .ForPath(o => o.Name, 
                 exp => exp.MapFrom(
                     p => $"{p.AccountNumber ?? p.LastCardDigits}"))
             .ForPath(o => o.IntegrationProviderId, 
                 exp => exp.MapFrom(
-                    p => p.InstitutionId))
+                    p => p.BankingBankId))
             .ForPath(o => o.AuthenticationState, 
                 exp => exp.MapFrom(
-                    p => p.AccountStatus == AccountStatus.Active ? AuthenticationState.Authenticated : AuthenticationState.NotAuthenticated))
-            .ForPath(o => o.DataSource, 
-                exp => exp.MapFrom(
-                    p => DataSources.Yapily))
+                    p => p.AccountStatus == BankingAccountStatus.Active 
+                        ? AuthenticationState.Authenticated 
+                        : AuthenticationState.NotAuthenticated))
             .ForPath(o => o.IntegrationType, 
                 exp => exp.MapFrom(
                     p => IntegrationType.Banking))
@@ -73,18 +68,16 @@ public static class MapperExtensions
                 }));
         
         // Ignore the incoming Id so we can create a new entry every time we receive an update
-        mapperConfigurationExpression.CreateMap<RawYapilyBalanceModel, BankAccountBalanceModel>()
+        mapperConfigurationExpression.CreateMap<BankingBalanceModel, BankAccountBalanceModel>()
             .ForMember(o => o.Id, 
-            opt => opt.MapFrom<UniqueIdResolver<RawYapilyBalanceModel, BankAccountBalanceModel>>())
+            opt => opt.MapFrom<UniqueIdResolver<BankingBalanceModel, BankAccountBalanceModel>>())
             .ForMember(o => o.IntegrationId,
-                opt => opt.MapFrom(p=> p.YapilyAccountId));
-        mapperConfigurationExpression.CreateMap<RawYapilyBalanceDetailModel, BankAccountBalanceDetailModel>();
-        mapperConfigurationExpression.CreateMap<RawYapilyCreditLineModel, BankAccountBalanceCreditLineModel>();
+                opt => opt.MapFrom(p=> p.BankingAccountId));
 
-        mapperConfigurationExpression.CreateMap<RawYapilySyncRequestModel, BankSyncRequestModel>()
+        mapperConfigurationExpression.CreateMap<BankingSyncRequestModel, BankSyncRequestModel>()
             .ForMember(o => o.IntegrationId, 
                 exp => exp
-                    .MapFrom(p => p.YapilyAccountId));
+                    .MapFrom(p => p.BankingAccountId));
         return mapperConfigurationExpression;
     }
     
@@ -219,8 +212,6 @@ public static class MapperExtensions
     {
         cfg.AddCollectionMappers();
         cfg.CreateMap<BankAccountBalanceModel, BankAccountBalance>().ReverseMap();
-        cfg.CreateMap<BankAccountBalanceDetailModel, BankAccountBalanceDetail>().ReverseMap();
-        cfg.CreateMap<BankAccountBalanceCreditLineModel, BankAccountBalanceCreditLine>().ReverseMap();
         cfg.CreateMap<IntegrationModel, Integration>().ReverseMap();
         cfg.CreateMap<BankModel, Bank>().ReverseMap();
         cfg.CreateMap<BankTransactionModel, BankTransaction>().ReverseMap();

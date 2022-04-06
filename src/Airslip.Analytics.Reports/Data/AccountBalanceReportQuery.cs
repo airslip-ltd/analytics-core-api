@@ -4,6 +4,7 @@ using Airslip.Common.Repository.Types.Entities;
 using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Types.Enums;
+using Airslip.Integrations.Banking.Types.Enums;
 
 namespace Airslip.Analytics.Reports.Data;
 
@@ -13,7 +14,7 @@ public class AccountBalanceReportQuery : IEntity, IOwnedDataQuery
     public virtual BasicAuditInformation? AuditInformation { get; set; }
     public EntityStatus EntityStatus { get; set; }
     public string IntegrationProviderId { get; set; } = string.Empty;
-    public AccountStatus AccountStatus { get; set; }
+    public BankingAccountStatus AccountStatus { get; set; }
     public string? SortCode { get; set; }
     public string? AccountNumber { get; set; }
     public string CurrencyCode { get; set; } = string.Empty;

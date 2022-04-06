@@ -1,4 +1,4 @@
-using Airslip.Analytics.Core.Constants;
+using Airslip.Analytics.Core.Data;
 using Airslip.Common.Services.Handoff.Interfaces;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,7 +11,7 @@ namespace Airslip.Analytics.Processor.Functions.EventHub.CustomerPortal
     {
         [Function(nameof(PartnerRelationships))]
         public static async Task Run([EventHubTrigger(Constants.EVENT_QUEUE_PARTNER_RELATIONSHIPS, 
-            Connection = "PortalEventHubConnectionString",
+            Connection = "CoreEventHubConnectionString",
             ConsumerGroup = "%ConsumerGroup%",
             IsBatched = false)] string myEventHubMessage, FunctionContext context)
         {

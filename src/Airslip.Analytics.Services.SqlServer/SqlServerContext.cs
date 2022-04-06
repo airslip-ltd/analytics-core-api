@@ -53,8 +53,6 @@ public class SqlServerContext : AirslipSqlServerContextBase
         modelBuilder.AddTableWithDefaults<BankAccountBalanceSnapshot>();
         modelBuilder.AddTableWithDefaults<BankAccountBalanceSummary>();
         modelBuilder.AddTableWithDefaults<BankAccountBalance>();
-        modelBuilder.AddTableWithDefaults<BankAccountBalanceDetail>();
-        modelBuilder.AddTableWithDefaults<BankAccountBalanceCreditLine>();
         
         modelBuilder.AddTableWithDefaults<Bank>();
         modelBuilder.AddTableWithDefaults<BankBusinessBalance>();
@@ -164,10 +162,6 @@ public class SqlServerContext : AirslipSqlServerContextBase
         modelBuilder.Entity<MerchantTransaction>().Property(o => o.OrderStatus).HasColumnType("nvarchar (20)").HasDefaultValue("Unknown");
         modelBuilder.Entity<MerchantTransaction>().Property(o => o.PaymentStatus).HasColumnType("nvarchar (20)").HasDefaultValue("Unknown");
         
-        modelBuilder.Entity<BankAccountBalanceDetail>().Property(o => o.AccountBalanceId).HasColumnType(Constants.ID_DATA_TYPE);
-        modelBuilder.Entity<BankAccountBalanceDetail>().Property(o => o.DateTime).HasColumnType("nvarchar (50)");
-        modelBuilder.Entity<BankAccountBalanceDetail>().Property(o => o.Currency).HasColumnType("nvarchar (5)");
-        
         modelBuilder.Entity<IntegrationAccountDetail>().Property(o => o.LastCardDigits).HasColumnType("nvarchar (20)");
         modelBuilder.Entity<IntegrationAccountDetail>().Property(o => o.CurrencyCode).HasColumnType("nvarchar (5)");
         modelBuilder.Entity<IntegrationAccountDetail>().Property(o => o.UsageType).HasColumnType("nvarchar (50)");
@@ -177,9 +171,6 @@ public class SqlServerContext : AirslipSqlServerContextBase
         modelBuilder.Entity<IntegrationAccountDetail>().Property(o => o.AccountId).HasColumnType("nvarchar(100)");
 
         modelBuilder.Entity<MerchantRefund>().Property(o => o.Comment).HasColumnType("nvarchar (250)");
-        
-        modelBuilder.Entity<BankAccountBalanceCreditLine>().Property(o => o.Currency).HasColumnType("nvarchar (5)");
-        modelBuilder.Entity<BankAccountBalanceCreditLine>().Property(o => o.AccountBalanceDetailId).HasColumnType(Constants.ID_DATA_TYPE);
         
         modelBuilder.Entity<MerchantRefundItem>().Property(o => o.ProductId).HasColumnType(Constants.ID_DATA_TYPE);
         modelBuilder.Entity<MerchantRefundItem>().Property(o => o.VariantId).HasColumnType(Constants.ID_DATA_TYPE);

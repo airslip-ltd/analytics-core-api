@@ -1,4 +1,4 @@
-using Airslip.Analytics.Core.Constants;
+using Airslip.Analytics.Core.Data;
 using Airslip.Common.Services.Handoff.Interfaces;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.DependencyInjection;

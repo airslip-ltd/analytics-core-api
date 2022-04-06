@@ -1,6 +1,6 @@
 using Airslip.Analytics.Core.Models;
-using Airslip.Analytics.Core.Models.Raw.Yapily;
 using Airslip.Common.Utilities.Extensions;
+using Airslip.Integrations.Banking.Types.Models;
 using AutoMapper;
 using JetBrains.Annotations;
 using System;
@@ -8,9 +8,9 @@ using System;
 namespace Airslip.Analytics.Processor.Mappers.Resolvers;
 
 [UsedImplicitly]
-public class BankTransactionDateTimeResolver : IValueResolver<RawYapilyTransactionModel, BankTransactionModel, int?>
+public class BankTransactionDateTimeResolver : IValueResolver<BankingTransactionModel, BankTransactionModel, int?>
 {
-    public int? Resolve(RawYapilyTransactionModel source, BankTransactionModel destination, int? destMember,
+    public int? Resolve(BankingTransactionModel source, BankTransactionModel destination, int? destMember,
         ResolutionContext context)
     {
         DateTime theDate = source.CapturedDate.ToUtcDate();

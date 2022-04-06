@@ -21,7 +21,6 @@ public record BankAccountBalanceModel : IModelWithOwnership, IFromDataSource, IT
     public BalanceStatus BalanceStatus { get; init; }
     public long Balance { get; init; }
     public string? Currency { get; init; }
-    public List<BankAccountBalanceDetailModel> Details { get; init; } = new();
     public DataSources DataSource { get; set; } = DataSources.Unknown;
     public long TimeStamp { get; set; }
     public string TraceInfo => $"Id: {Id}, EntityId: {EntityId}, AirslipUserType: {AirslipUserType}, IntegrationId: {IntegrationId}";
