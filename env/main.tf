@@ -44,9 +44,9 @@ locals {
   include_metrics = var.include_metrics
 }
 
-data "azurerm_eventhub_namespace" "yapily_event_hub" {
-  name = "airslip-${local.short_environment}-matching-yapily-events-namespace"
-  resource_group_name = "airslip-${local.short_environment}-matching-yapily-resources"
+data "azurerm_eventhub_namespace" "core_infrastructure" {
+  name = "airslip-${local.short_environment}-core-infrastructure-events-namespace"
+  resource_group_name = "airslip-${local.short_environment}-core-infrastructure-resources"
 }
 
 data "azurerm_eventhub_namespace" "integration_hub" {
@@ -57,11 +57,6 @@ data "azurerm_eventhub_namespace" "integration_hub" {
 data "azurerm_eventhub_namespace" "api2cart" {
   name = "airslip-${local.short_environment}-adapter-api2cart-events-namespace"
   resource_group_name = "airslip-${local.short_environment}-adapter-api2cart-resources"
-}
-
-data "azurerm_eventhub_namespace" "customer_portal" {
-  name = "airslip-${local.short_environment}-customer-portal-api-events-namespace"
-  resource_group_name = "airslip-${local.short_environment}-customer-portal-api-resources"
 }
 
 module "ingredient_bowl" {
@@ -229,10 +224,9 @@ module "func_app_host" {
         "ConnectionStrings:SqlServer": module.sql_server.connection_string,
         "EnvironmentSettings:EnvironmentName": var.environment,
         "Serilog:MinimumLevel:Default": local.log_level,
-        "YapilyEventHubConnectionString": data.azurerm_eventhub_namespace.yapily_event_hub.default_primary_connection_string,
+        "CoreEventHubConnectionString": data.azurerm_eventhub_namespace.core_infrastructure.default_primary_connection_string,
         "Api2CartEventHubConnectionString": data.azurerm_eventhub_namespace.api2cart.default_primary_connection_string,
         "TransactionEventHubConnectionString": data.azurerm_eventhub_namespace.integration_hub.default_primary_connection_string,
-        "PortalEventHubConnectionString": data.azurerm_eventhub_namespace.customer_portal.default_primary_connection_string,
         "ConsumerGroup": local.consumer_group,
         "RepositorySettings:IncludeMetrics": local.include_metrics,
         "ServiceBusConnectionString": module.servicebus_with_queues.connection_string,
