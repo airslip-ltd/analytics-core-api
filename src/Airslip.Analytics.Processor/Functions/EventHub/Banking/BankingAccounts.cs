@@ -5,21 +5,20 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
-namespace Airslip.Analytics.Processor.Functions.EventHub.Banking
-{
-    public static class BankingAccounts
-    {
-        [Function(nameof(BankingAccounts))]
-        public static async Task Run([EventHubTrigger(Constants.EVENT_HUB_BANKING_ACCOUNTS, 
-            Connection = "CoreEventHubConnectionString",
-            ConsumerGroup = "%ConsumerGroup%",
-            IsBatched = false)] string myEventHubMessage, FunctionContext context)
-        {
-            IMessageHandoffService messageService = context
-                .InstanceServices
-                .GetService<IMessageHandoffService>() ?? throw new NotImplementedException();
+namespace Airslip.Analytics.Processor.Functions.EventHub.Banking;
 
-            await messageService.ProcessMessage(Constants.EVENT_HUB_BANKING_ACCOUNTS, myEventHubMessage);
-        }
+public static class BankingAccounts
+{
+    [Function(nameof(BankingAccounts))]
+    public static async Task Run([EventHubTrigger(Constants.EVENT_HUB_BANKING_ACCOUNTS, 
+        Connection = "CoreEventHubConnectionString",
+        ConsumerGroup = "%ConsumerGroup%",
+        IsBatched = false)] string myEventHubMessage, FunctionContext context)
+    {
+        IMessageHandoffService messageService = context
+            .InstanceServices
+            .GetService<IMessageHandoffService>() ?? throw new NotImplementedException();
+
+        await messageService.ProcessMessage(Constants.EVENT_HUB_BANKING_ACCOUNTS, myEventHubMessage);
     }
 }

@@ -35,9 +35,9 @@ public static class Services
     public static IServiceCollection AddAnalyticsProcesses(this IServiceCollection services)
     {
         services
-            .AddScoped<IAnalysisMessagingService<BankAccountBalanceModel>, BalanceMessagingService>()
-            .AddScoped<IAnalysisMessagingService<MerchantTransactionModel>, CommerceMessagingService>()
-            .AddScoped<IAnalysisMessagingService<BankTransactionModel>, TransactionsMessagingService>()
+            .AddSingleton<IAnalysisMessagingService<BankAccountBalanceModel>, BalanceMessagingService>()
+            .AddSingleton<IAnalysisMessagingService<MerchantTransactionModel>, CommerceMessagingService>()
+            .AddSingleton<IAnalysisMessagingService<BankTransactionModel>, TransactionsMessagingService>()
             .AddScoped<IAnalysisHandlingService<BankAccountBalanceModel>, AnalysisHandlingService<BankAccountBalanceModel>>()
             .AddScoped<IAnalysisHandlingService<MerchantTransactionModel>, AnalysisHandlingService<MerchantTransactionModel>>()
             .AddScoped<IAnalysisHandlingService<BankTransactionModel>, AnalysisHandlingService<BankTransactionModel>>()
