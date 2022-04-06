@@ -34,6 +34,8 @@ public static class MapperExtensions
             .CreateMap<BankingTransactionModel, BankTransactionModel>()
             .ForMember(o => o.Year,
                 opt => opt.MapFrom<BankTransactionDateTimeResolver>())
+            .ForMember(o => o.BankId,
+                opt => opt.MapFrom(p=> p.BankingBankId))
             .ForMember(o => o.IntegrationId,
                 opt => opt.MapFrom(p=> p.BankingAccountId));
         
