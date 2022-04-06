@@ -5,24 +5,23 @@ using Airslip.Common.Utilities;
 using Azure.Messaging.ServiceBus;
 using System.Threading.Tasks;
 
-namespace Airslip.Analytics.Services.ServiceBus.Implementations
+namespace Airslip.Analytics.Services.ServiceBus.Implementations;
+
+public class CommerceMessagingService : IAnalysisMessagingService<MerchantTransactionModel>
 {
-    public class CommerceMessagingService : IAnalysisMessagingService<MerchantTransactionModel>
+    private readonly ServiceBusSender _merchantTransactionQueue;
+
+    public CommerceMessagingService(ServiceBusClient serviceBusClient)
     {
-        private readonly ServiceBusSender _merchantTransactionQueue;
+        _merchantTransactionQueue = serviceBusClient.CreateSender(Constants.MESSAGE_QUEUE_MERCHANT_TRANSACTION);
+    }
 
-        public CommerceMessagingService(ServiceBusClient serviceBusClient)
+    public async Task RequestAnalysis(MerchantTransactionModel model)
+    {
+        ServiceBusMessage message = new(Json.Serialize(model))
         {
-            _merchantTransactionQueue = serviceBusClient.CreateSender(Constants.MESSAGE_QUEUE_MERCHANT_TRANSACTION);
-        }
-
-        public async Task RequestAnalysis(MerchantTransactionModel model)
-        {
-            ServiceBusMessage message = new(Json.Serialize(model))
-            {
-                MessageId = model.Id
-            };
-            await _merchantTransactionQueue.SendMessageAsync(message);
-        }
+            MessageId = model.Id
+        };
+        await _merchantTransactionQueue.SendMessageAsync(message);
     }
 }

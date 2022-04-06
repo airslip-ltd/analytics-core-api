@@ -15,64 +15,63 @@ using Microsoft.Extensions.Options;
 using Serilog;
 using System.Threading.Tasks;
 
-namespace Airslip.Analytics.Api.Controllers
-{
-    [ApiController]    
-    [ApiVersion("1.0")]
-    [Produces(Json.MediaType)]
-    [Route("v{version:apiVersion}/transactions")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class TransactionController : ApiControllerBase
-    {
-        private readonly ITransactionService _transactionService;
+namespace Airslip.Analytics.Api.Controllers;
 
-        public TransactionController(ITransactionService transactionService, ITokenDecodeService<UserToken> tokenDecodeService, 
-            IOptions<PublicApiSettings> publicApiOptions, ILogger logger) 
-            : base(tokenDecodeService, publicApiOptions, logger)
-        {
-            _transactionService = transactionService;
-        }
+[ApiController]    
+[ApiVersion("1.0")]
+[Produces(Json.MediaType)]
+[Route("v{version:apiVersion}/transactions")]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+public class TransactionController : ApiControllerBase
+{
+    private readonly ITransactionService _transactionService;
+
+    public TransactionController(ITransactionService transactionService, ITokenDecodeService<UserToken> tokenDecodeService, 
+        IOptions<PublicApiSettings> publicApiOptions, ILogger logger) 
+        : base(tokenDecodeService, publicApiOptions, logger)
+    {
+        _transactionService = transactionService;
+    }
         
-        [HttpGet]
-        [Route("commerce/accounts")]
-        [ProducesResponseType(typeof(SimpleListResponse<IntegrationSummaryModel>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetCommerceAccounts()
-        {
-            IResponse response = await _transactionService
-                .GetMerchantAccounts();
+    [HttpGet]
+    [Route("commerce/accounts")]
+    [ProducesResponseType(typeof(SimpleListResponse<IntegrationSummaryModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetCommerceAccounts()
+    {
+        IResponse response = await _transactionService
+            .GetMerchantAccounts();
             
-            return HandleResponse<SimpleListResponse<IntegrationSummaryModel>>(response);
-        }
+        return HandleResponse<SimpleListResponse<IntegrationSummaryModel>>(response);
+    }
         
-        [HttpGet]
-        [Route("banking/recent")]
-        [ProducesResponseType(typeof(SimpleListResponse<TransactionSummaryModel>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetBankingRecent(
-            [FromQuery]int limit = 10,
-            [FromQuery]string? integrationId = null
-            )
-        {
-            IResponse response = await _transactionService
-                .GetBankingTransactions(limit, integrationId);
+    [HttpGet]
+    [Route("banking/recent")]
+    [ProducesResponseType(typeof(SimpleListResponse<TransactionSummaryModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetBankingRecent(
+        [FromQuery]int limit = 10,
+        [FromQuery]string? integrationId = null
+    )
+    {
+        IResponse response = await _transactionService
+            .GetBankingTransactions(limit, integrationId);
             
-            return HandleResponse<SimpleListResponse<TransactionSummaryModel>>(response);
-        }
+        return HandleResponse<SimpleListResponse<TransactionSummaryModel>>(response);
+    }
         
-        [HttpGet]
-        [Route("commerce/recent")]
-        [ProducesResponseType(typeof(SimpleListResponse<TransactionSummaryModel>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetMerchantRecent(
-            [FromQuery]int limit = 10,
-            [FromQuery]string? integrationId = null
-        )
-        {
-            IResponse response = await _transactionService
-                .GetCommerceTransactions(limit, integrationId);
+    [HttpGet]
+    [Route("commerce/recent")]
+    [ProducesResponseType(typeof(SimpleListResponse<TransactionSummaryModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetMerchantRecent(
+        [FromQuery]int limit = 10,
+        [FromQuery]string? integrationId = null
+    )
+    {
+        IResponse response = await _transactionService
+            .GetCommerceTransactions(limit, integrationId);
             
-            return HandleResponse<SimpleListResponse<TransactionSummaryModel>>(response);
-        }
+        return HandleResponse<SimpleListResponse<TransactionSummaryModel>>(response);
     }
 }

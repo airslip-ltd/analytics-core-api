@@ -1,9 +1,8 @@
-namespace Airslip.Analytics.Core.Enums
+namespace Airslip.Analytics.Core.Enums;
+
+public enum RelationshipStatus
 {
-    public enum RelationshipStatus
-    {
-        Invited,
-        Rejected,
-        Approved
-    }
+    Invited,
+    Rejected,
+    Approved
 }

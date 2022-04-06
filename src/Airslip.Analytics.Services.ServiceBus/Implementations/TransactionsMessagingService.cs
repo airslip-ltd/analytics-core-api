@@ -5,24 +5,23 @@ using Airslip.Common.Utilities;
 using Azure.Messaging.ServiceBus;
 using System.Threading.Tasks;
 
-namespace Airslip.Analytics.Services.ServiceBus.Implementations
+namespace Airslip.Analytics.Services.ServiceBus.Implementations;
+
+public class TransactionsMessagingService : IAnalysisMessagingService<BankTransactionModel>
 {
-    public class TransactionsMessagingService : IAnalysisMessagingService<BankTransactionModel>
+    private readonly ServiceBusSender _bankTransactionQueue;
+
+    public TransactionsMessagingService(ServiceBusClient serviceBusClient)
     {
-        private readonly ServiceBusSender _bankTransactionQueue;
+        _bankTransactionQueue = serviceBusClient.CreateSender(Constants.MESSAGE_QUEUE_BANK_TRANSACTION);
+    }
 
-        public TransactionsMessagingService(ServiceBusClient serviceBusClient)
+    public async Task RequestAnalysis(BankTransactionModel model)
+    {
+        ServiceBusMessage message = new(Json.Serialize(model))
         {
-            _bankTransactionQueue = serviceBusClient.CreateSender(Constants.MESSAGE_QUEUE_BANK_TRANSACTION);
-        }
-
-        public async Task RequestAnalysis(BankTransactionModel model)
-        {
-            ServiceBusMessage message = new(Json.Serialize(model))
-            {
-                MessageId = model.Id
-            };
-            await _bankTransactionQueue.SendMessageAsync(message);
-        }
+            MessageId = model.Id
+        };
+        await _bankTransactionQueue.SendMessageAsync(message);
     }
 }
