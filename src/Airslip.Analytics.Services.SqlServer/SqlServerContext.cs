@@ -164,8 +164,6 @@ public class SqlServerContext : AirslipSqlServerContextBase
         
         modelBuilder.Entity<IntegrationAccountDetail>().Property(o => o.LastCardDigits).HasColumnType("nvarchar (20)");
         modelBuilder.Entity<IntegrationAccountDetail>().Property(o => o.CurrencyCode).HasColumnType("nvarchar (5)");
-        modelBuilder.Entity<IntegrationAccountDetail>().Property(o => o.UsageType).HasColumnType("nvarchar (50)");
-        modelBuilder.Entity<IntegrationAccountDetail>().Property(o => o.AccountType).HasColumnType("nvarchar (50)");
         modelBuilder.Entity<IntegrationAccountDetail>().Property(o => o.SortCode).HasColumnType("nvarchar (10)");
         modelBuilder.Entity<IntegrationAccountDetail>().Property(o => o.AccountNumber).HasColumnType("nvarchar (10)");
         modelBuilder.Entity<IntegrationAccountDetail>().Property(o => o.AccountId).HasColumnType("nvarchar(100)");

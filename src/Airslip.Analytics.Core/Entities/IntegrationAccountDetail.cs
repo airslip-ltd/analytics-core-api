@@ -14,8 +14,8 @@ namespace Airslip.Analytics.Core.Entities
         public string AccountId { get; set; } = string.Empty;
         public string? LastCardDigits { get; set; }
         public string CurrencyCode { get; set; } = string.Empty;
-        public string UsageType { get; set; } = string.Empty;
-        public string AccountType { get; set; } = string.Empty;
+        public BankingUsageTypes UsageType { get; set; }
+        public BankingAccountTypes AccountType { get; set; }
         public string? SortCode { get; set; }
         public string? AccountNumber { get; set; }
         public string IntegrationId { get; set; } = string.Empty;
