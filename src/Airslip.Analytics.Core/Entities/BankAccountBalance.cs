@@ -25,7 +25,6 @@ public record BankAccountBalance : IEntityWithOwnership, IFromDataSource, IRepor
     public BalanceStatus BalanceStatus { get; init; }
     public long Balance { get; init; }
     public string? Currency { get; init; }
-    public virtual ICollection<BankAccountBalanceDetail> Details { get; init; } = new List<BankAccountBalanceDetail>();
     public DataSources DataSource { get; set; } = DataSources.Unknown;
     public long TimeStamp { get; set; } = DateTime.UtcNow.ToUnixTimeMilliseconds();
 }

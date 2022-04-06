@@ -5,6 +5,7 @@ using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Types.Enums;
 using Airslip.Common.Types.Interfaces;
 using Airslip.Common.Utilities.Extensions;
+using Airslip.Integrations.Banking.Types.Enums;
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;

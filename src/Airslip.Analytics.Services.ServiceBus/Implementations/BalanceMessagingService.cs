@@ -1,4 +1,4 @@
-﻿using Airslip.Analytics.Core.Constants;
+﻿using Airslip.Analytics.Core.Data;
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Core.Models;
 using Airslip.Common.Utilities;

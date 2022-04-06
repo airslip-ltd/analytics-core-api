@@ -1,6 +1,7 @@
 using Airslip.Analytics.Core.Enums;
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Common.Repository.Types.Interfaces;
+using Airslip.Integrations.Banking.Types.Enums;
 using JetBrains.Annotations;
 
 namespace Airslip.Analytics.Core.Entities
@@ -9,7 +10,7 @@ namespace Airslip.Analytics.Core.Entities
     public class IntegrationAccountDetail : IEntityWithId, IReportableWithIntegration
     {
         public string Id { get; set; } = string.Empty;
-        public AccountStatus AccountStatus { get; set; }
+        public BankingAccountStatus AccountStatus { get; set; }
         public string AccountId { get; set; } = string.Empty;
         public string? LastCardDigits { get; set; }
         public string CurrencyCode { get; set; } = string.Empty;
