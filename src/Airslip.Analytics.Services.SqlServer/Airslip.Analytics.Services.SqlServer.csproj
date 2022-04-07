@@ -19,8 +19,8 @@
 	</ItemGroup>
 	
 	<ItemGroup>
+	  <EmbeddedResource Include="Core\Functions\dbo.getId.udf.sql" />
 	  <EmbeddedResource Include="Database\Functions\dbo.calcMovement.udf.sql" />
-	  <EmbeddedResource Include="Database\Functions\dbo.getId.udf.sql" />
 	  <EmbeddedResource Include="Database\Functions\dbo.getMetricDateRange.udf.sql" />
 	  <EmbeddedResource Include="Database\Functions\dbo.getReportMonthsAndYears.udf.sql" />
 	  <EmbeddedResource Include="Database\Functions\dbo.getYearMonths.udf.sql" />
