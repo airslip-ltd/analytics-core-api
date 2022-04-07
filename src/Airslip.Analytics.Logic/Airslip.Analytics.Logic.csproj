@@ -12,4 +12,8 @@
       <ProjectReference Include="..\Airslip.Analytics.Services.SqlServer\Airslip.Analytics.Services.SqlServer.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Airslip.Common.Metrics" Version="6.0.1" />
+    </ItemGroup>
+
 </Project>

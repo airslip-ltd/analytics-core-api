@@ -145,15 +145,23 @@ module "servicebus_with_queues" {
   queues = [
     {
       queue_name = "bank-account-balance",
-      duplicate_detection = true
+      duplicate_detection = true,
+      duplicate_time_window = "PT10M"
     },
     {
       queue_name = "merchant-transactions",
-      duplicate_detection = true
+      duplicate_detection = true,
+      duplicate_time_window = "PT10M"
     },
     {
       queue_name = "bank-transaction",
-      duplicate_detection = true
+      duplicate_detection = true,
+      duplicate_time_window = "PT10M"
+    },
+    {
+      queue_name = "bank-account-balance-entity",
+      duplicate_detection = true,
+      duplicate_time_window = "PT30S"
     }
   ]
 }
@@ -229,6 +237,7 @@ module "func_app_host" {
         "TransactionEventHubConnectionString": data.azurerm_eventhub_namespace.integration_hub.default_primary_connection_string,
         "ConsumerGroup": local.consumer_group,
         "RepositorySettings:IncludeMetrics": local.include_metrics,
+        "MetricSettings:IncludeMetrics": local.include_metrics,
         "ServiceBusConnectionString": module.servicebus_with_queues.connection_string,
         "ConnectionStrings:ServiceBus": module.servicebus_with_queues.connection_string
       }

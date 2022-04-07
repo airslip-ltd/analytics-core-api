@@ -3,6 +3,7 @@ using Airslip.Analytics.Reports;
 using Airslip.Analytics.Services.SqlServer;
 using Airslip.Common.Auth.AspNetCore.Extensions;
 using Airslip.Common.Auth.AspNetCore.Middleware;
+using Airslip.Common.Metrics;
 using Airslip.Common.Middleware;
 using Airslip.Common.Monitoring;
 using Airslip.Common.Repository.Extensions;
@@ -99,6 +100,7 @@ builder.Services
     });
 
 builder.Services
+    .AddMetrics(builder.Configuration)
     .AddRepositories(builder.Configuration)
     .AddEntitySearch()
     .AddReportingServices()

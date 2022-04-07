@@ -4,6 +4,7 @@
 
 	<ItemGroup>
 	  <PackageReference Include="Airslip.Common.CustomerPortal" Version="6.0.0" />
+	  <PackageReference Include="Airslip.Common.Metrics" Version="6.0.1" />
 	  <PackageReference Include="Airslip.Common.Repository" Version="6.1.8" />
 	  <PackageReference Include="Airslip.Common.Repository.Types" Version="6.1.6" />
 	  <PackageReference Include="Airslip.Common.Services.Handoff" Version="6.0.4" />

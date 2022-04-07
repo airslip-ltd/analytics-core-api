@@ -3,6 +3,7 @@ using Airslip.Analytics.Processor.Extensions;
 using Airslip.Analytics.Services.SqlServer;
 using Airslip.Common.Auth.Functions.Extensions;
 using Airslip.Common.Functions.Extensions;
+using Airslip.Common.Metrics;
 using Airslip.Common.Repository.Enums;
 using Airslip.Common.Repository.Extensions;
 using Airslip.Common.Repository.Types.Interfaces;
@@ -68,6 +69,7 @@ internal class Program
                     .AddAirslipFunctionAuth(context.Configuration);
 
                 services
+                    .AddMetrics(context.Configuration)
                     .AddAirslipSqlServer<SqlServerContext>(context.Configuration)
                     .AddAnalyticsProcesses()
                     .AddLogicServices();
