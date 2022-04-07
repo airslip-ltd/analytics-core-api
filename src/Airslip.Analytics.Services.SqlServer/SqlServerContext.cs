@@ -243,5 +243,21 @@ public class SqlServerContext : AirslipSqlServerContextBase
                 b.OwnerEntityId, b.OwnerAirslipUserType, b.ViewerEntityId, b.ViewerAirslipUserType, b.PermissionType,
                 b.Allowed
             });
+        
+        modelBuilder.Entity<BankAccountBalanceSnapshot>()
+            .HasIndex(b => new
+            {
+                b.EntityId, b.AirslipUserType, b.IntegrationId, b.UpdatedOn, b.TimeStamp
+            }).IncludeProperties(p => new
+            {
+                p.Balance, 
+                p.Currency
+            });
+        
+        modelBuilder.Entity<BankAccountBalanceSnapshot>()
+            .HasIndex(b => new
+            {
+                b.EntityId, b.AirslipUserType
+            });
     }
 }

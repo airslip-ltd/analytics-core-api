@@ -10,8 +10,6 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddSqlFiles("Core");
-            
             migrationBuilder.CreateTable(
                 name: "AuditInformation",
                 columns: table => new
@@ -706,7 +704,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 table: "RelationshipHeaders",
                 column: "AuditInformationId");
             
-            migrationBuilder.AddSqlFiles(nameof(InitialCreate));
+            migrationBuilder.AddSqlFiles();
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

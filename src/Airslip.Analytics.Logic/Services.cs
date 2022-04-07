@@ -38,15 +38,19 @@ public static class Services
             .AddSingleton<IAnalysisMessagingService<BankAccountBalanceModel>, BalanceMessagingService>()
             .AddSingleton<IAnalysisMessagingService<MerchantTransactionModel>, CommerceMessagingService>()
             .AddSingleton<IAnalysisMessagingService<BankTransactionModel>, TransactionsMessagingService>()
+            
             .AddScoped<IAnalysisHandlingService<BankAccountBalanceModel>, AnalysisHandlingService<BankAccountBalanceModel>>()
             .AddScoped<IAnalysisHandlingService<MerchantTransactionModel>, AnalysisHandlingService<MerchantTransactionModel>>()
             .AddScoped<IAnalysisHandlingService<BankTransactionModel>, AnalysisHandlingService<BankTransactionModel>>()
-            .AddScoped<IAnalyticsProcess<BankAccountBalanceModel>, GenerateAccountBalanceSnapshot>()
-            .AddScoped<IAnalyticsProcess<BankAccountBalanceModel>, GenerateAccountBalanceSummary>()
-            .AddScoped<IAnalyticsProcess<BankAccountBalanceModel>, GenerateBusinessBalanceSnapshot>()
-            .AddScoped<IAnalyticsProcess<MerchantTransactionModel>, CreateMerchantMetricSnapshot>()
-            .AddScoped<IAnalyticsProcess<MerchantTransactionModel>, CreateMerchantAccountMetricSnapshot>()
-            .AddScoped<IAnalyticsProcess<BankTransactionModel>, CreateBankAccountMetricSnapshot>();
+            
+            .AddScoped<IAnalyticsProcess<BankAccountBalanceModel>, GenerateAccountBalanceSummary>() // Per entity
+            
+            .AddScoped<IAnalyticsProcess<BankAccountBalanceModel>, GenerateAccountBalanceSnapshot>() // Per record
+            .AddScoped<IAnalyticsProcess<BankAccountBalanceModel>, GenerateBusinessBalanceSnapshot>() // Per record
+            
+            .AddScoped<IAnalyticsProcess<MerchantTransactionModel>, CreateMerchantMetricSnapshot>() // Per record
+            .AddScoped<IAnalyticsProcess<MerchantTransactionModel>, CreateMerchantAccountMetricSnapshot>() // Per record
+            .AddScoped<IAnalyticsProcess<BankTransactionModel>, CreateBankAccountMetricSnapshot>(); // Per record
 
         return services;
     }

@@ -15,8 +15,9 @@ public class SqlServerContextFactory : IDesignTimeDbContextFactory<SqlServerCont
         DbContextOptionsBuilder<SqlServerContext> optionsBuilder = new();
         optionsBuilder.UseSqlServer("Server=(localdb);Integrated Security=true;");
 
-        return new SqlServerContext(optionsBuilder.Options, 
-            new RepositoryMetricService(Logger.None, 
-                new OptionsWrapper<RepositorySettings>(new RepositorySettings())), new QueryBuilder());
+        SqlServerContext context = new(optionsBuilder.Options,
+            new RepositoryMetricService(Logger.None, new OptionsWrapper<RepositorySettings>(new RepositorySettings())), new QueryBuilder());
+        
+        return context;
     }
 }

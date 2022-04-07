@@ -14,7 +14,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 table: "BankAccountMetricSnapshots",
                 columns: new[] { "EntityId", "AirslipUserType", "Day", "Month", "Year", "IntegrationId" });
             
-            migrationBuilder.AddSqlFiles(nameof(BankAccountMetricSnapshotIndex));
+            migrationBuilder.AddSqlFiles();
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
