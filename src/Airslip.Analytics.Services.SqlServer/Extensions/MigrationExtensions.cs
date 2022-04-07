@@ -13,11 +13,11 @@ namespace Airslip.Analytics.Services.SqlServer.Extensions;
 
 public static class MigrationExtensions
 {
-    public static void AddSqlFiles(this MigrationBuilder migrationBuilder, string migrationName)
+    public static void AddSqlFiles(this MigrationBuilder migrationBuilder)
     {
         Assembly assembly = Assembly.GetExecutingAssembly();
         IEnumerable<string> sqlFiles = assembly.GetManifestResourceNames().
-            Where(file => file.Contains(migrationName) && file.EndsWith(".sql"));
+            Where(file => file.Contains("Database") && file.EndsWith(".sql"));
         foreach (string sqlFile in sqlFiles)
         {
             using Stream stream = assembly.GetManifestResourceStream(sqlFile);

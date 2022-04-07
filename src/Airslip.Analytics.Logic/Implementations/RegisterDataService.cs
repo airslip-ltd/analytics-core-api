@@ -74,7 +74,8 @@ public class RegisterDataService<TEntity, TModel, TRawModel> : IRegisterDataServ
                         break;
                     }
                     case FailedActionResultModel<TModel> failed:
-                        _logger.Error("Repository action failed with code {ErrorCode} for model {@ValidationResult}", 
+                        _logger.Error(
+                            "Repository action failed with code {ErrorCode} for model {@ValidationResult}", 
                             failed.ErrorCode, failed.ValidationResult);
                         break;
                 }

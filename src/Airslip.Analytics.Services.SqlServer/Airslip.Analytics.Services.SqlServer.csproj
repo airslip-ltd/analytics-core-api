@@ -18,51 +18,29 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-	  <EmbeddedResource Include="Database\Core\Functions\dbo.calcMovement.udf.sql" />
-	  <EmbeddedResource Include="Database\Core\Functions\dbo.getId.udf.sql" />
-	  <EmbeddedResource Include="Database\Core\Functions\dbo.getMetricDateRange.udf.sql" />
-	  <EmbeddedResource Include="Database\Core\Functions\dbo.round5min.udf.sql" />
-	  <EmbeddedResource Include="Database\Core\Views\dbo.getNewID.viw.sql" />
-	  <EmbeddedResource Include="Database\BankAccountMetricSnapshotIndex\Procedures\dbo.CreateAccountBalanceSnapshot.prc.sql" />
-	  <EmbeddedResource Include="Database\BankAccountMetricSnapshotIndex\Procedures\dbo.CreateBankAccountMetricSnapshots.prc.sql" />
-	  <EmbeddedResource Include="Database\BankAccountMetricSnapshotIndex\Procedures\dbo.CreateBusinessBalanceSnapshot.prc.sql" />
-	  <EmbeddedResource Include="Database\BankAccountMetricSnapshotIndex\Procedures\dbo.CreateMerchantAccountMetricSnapshot.prc.sql" />
-	  <EmbeddedResource Include="Database\BankAccountMetricSnapshotIndex\Procedures\dbo.CreateMerchantMetricSnapshot.prc.sql" />
-	  <EmbeddedResource Include="Database\BankAccountMetricSnapshotIndex\Procedures\dbo.GetCreditsAndDebitsByYear.prc.sql" />
-	  <EmbeddedResource Include="Database\BankAccountMetricSnapshotIndex\Procedures\dbo.GetRevenueAndRefundsByYear.prc.sql" />
-	  <EmbeddedResource Include="Database\BankAccountMetricSnapshotIndex\Procedures\dbo.GetTotalRefundsSnapshot.prc.sql" />
-	  <EmbeddedResource Include="Database\BankAccountMetricSnapshotIndex\Procedures\dbo.GetTotalSalesSnapshot.prc.sql" />
-	  <EmbeddedResource Include="Database\BankAccountMetricSnapshotIndex\Procedures\dbo.UpdateAccountBalanceSummary.prc.sql" />
-	  <EmbeddedResource Include="Database\DateEnhancements\Functions\dbo.getReportMonthsAndYears.udf.sql" />
-	  <EmbeddedResource Include="Database\DateEnhancements\Procedures\dbo.GetCreditsAndDebitsByRange.prc.sql" />
-	  <EmbeddedResource Include="Database\DateEnhancements\Procedures\dbo.GetCreditsAndDebitsByYear.prc.sql" />
-	  <EmbeddedResource Include="Database\DateEnhancements\Procedures\dbo.GetRevenueAndRefundsByRange.prc.sql" />
-	  <EmbeddedResource Include="Database\DateEnhancements\Procedures\dbo.GetRevenueAndRefundsByYear.prc.sql" />
-	  <EmbeddedResource Include="Database\DetailProcs\Procedures\dbo.GetCreditsAndDebitsByYear.prc.sql" />
-	  <EmbeddedResource Include="Database\DetailProcs\Procedures\dbo.GetRevenueAndRefundsByYear.prc.sql" />
-	  <EmbeddedResource Include="Database\FixBrokenProcedures\Procedures\dbo.UpdateAccountBalanceSummary.prc.sql" />
-	  <EmbeddedResource Include="Database\IncreaseLockIsolationLevel\Procedures\dbo.UpdateAccountBalanceSummary.prc.sql" />
-	  <EmbeddedResource Include="Database\InitialCreate\Functions\dbo.calcMovement.udf.sql" />
-	  <EmbeddedResource Include="Database\InitialCreate\Functions\dbo.getYearMonths.udf.sql" />
-	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.CreateBankAccountMetricSnapshots.prc.sql" />
-	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.CreateBusinessBalanceSnapshot.prc.sql" />
-	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.CreateMerchantAccountMetricSnapshot.prc.sql" />
-	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.CreateMerchantMetricSnapshot.prc.sql" />
-	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.GetCreditsAndDebitsByYear.prc.sql" />
-	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.GetRevenueAndRefundsByYear.prc.sql" />
-	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.GetTotalRefundsSnapshot.prc.sql" />
-	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.GetTotalSalesSnapshot.prc.sql" />
-	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.UpdateAccountBalanceSummary.prc.sql" />
-	  <EmbeddedResource Include="Database\ProcedureFixes\Procedures\dbo.CreateBankAccountMetricSnapshots.prc.sql" />
-	  <EmbeddedResource Include="Database\ProcedureFixes\Procedures\dbo.UpdateAccountBalanceSummary.prc.sql" />
-	  <EmbeddedResource Include="Database\SnapshotProcs\Procedures\dbo.GetTotalRefundsSnapshot.prc.sql" />
-	  <EmbeddedResource Include="Database\SnapshotProcs\Procedures\dbo.GetTotalSalesSnapshot.prc.sql" />
+	  <EmbeddedResource Include="Database\Functions\dbo.calcMovement.udf.sql" />
+	  <EmbeddedResource Include="Database\Functions\dbo.getId.udf.sql" />
+	  <EmbeddedResource Include="Database\Functions\dbo.getMetricDateRange.udf.sql" />
+	  <EmbeddedResource Include="Database\Functions\dbo.getReportMonthsAndYears.udf.sql" />
+	  <EmbeddedResource Include="Database\Functions\dbo.getYearMonths.udf.sql" />
+	  <EmbeddedResource Include="Database\Functions\dbo.round5min.udf.sql" />
+	  <EmbeddedResource Include="Database\Procedures\dbo.CreateAccountBalanceSnapshot.prc.sql" />
+	  <EmbeddedResource Include="Database\Procedures\dbo.CreateBankAccountMetricSnapshots.prc.sql" />
+	  <EmbeddedResource Include="Database\Procedures\dbo.CreateBusinessBalanceSnapshot.prc.sql" />
+	  <EmbeddedResource Include="Database\Procedures\dbo.CreateMerchantAccountMetricSnapshot.prc.sql" />
+	  <EmbeddedResource Include="Database\Procedures\dbo.CreateMerchantMetricSnapshot.prc.sql" />
+	  <EmbeddedResource Include="Database\Procedures\dbo.GetCreditsAndDebitsByRange.prc.sql" />
+	  <EmbeddedResource Include="Database\Procedures\dbo.GetCreditsAndDebitsByYear.prc.sql" />
+	  <EmbeddedResource Include="Database\Procedures\dbo.GetRevenueAndRefundsByRange.prc.sql" />
+	  <EmbeddedResource Include="Database\Procedures\dbo.GetRevenueAndRefundsByYear.prc.sql" />
+	  <EmbeddedResource Include="Database\Procedures\dbo.GetTotalRefundsSnapshot.prc.sql" />
+	  <EmbeddedResource Include="Database\Procedures\dbo.GetTotalSalesSnapshot.prc.sql" />
+	  <EmbeddedResource Include="Database\Procedures\dbo.UpdateAccountBalanceSummary.prc.sql" />
+	  <EmbeddedResource Include="Database\Views\dbo.getNewID.viw.sql" />
 	  <None Remove="Database\InitialCreate\Procedures\dbo.SomeAnaltyic.sql" />
-	  <EmbeddedResource Include="Database\InitialCreate\Procedures\dbo.CreateAccountBalanceSnapshot.prc.sql" />
 	</ItemGroup>
 	
 	<ItemGroup>
-	  <Folder Include="Database\Core" />
 	  <Folder Include="Migrations" />
 	</ItemGroup>
 
