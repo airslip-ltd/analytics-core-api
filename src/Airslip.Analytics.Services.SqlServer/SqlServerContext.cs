@@ -259,5 +259,23 @@ public class SqlServerContext : AirslipSqlServerContextBase
             {
                 b.EntityId, b.AirslipUserType
             });
+        
+        modelBuilder.Entity<MerchantTransaction>()
+            .HasIndex(b => new
+            {
+                b.Day, b.Month, b.Year, b.EntityId, b.AirslipUserType
+            });
+        
+        modelBuilder.Entity<MerchantTransaction>()
+            .HasIndex(b => new
+            {
+                b.Day, b.Month, b.Year, b.EntityId, b.AirslipUserType, b.IntegrationId
+            });
+        
+        modelBuilder.Entity<MerchantAccountMetricSnapshot>()
+            .HasIndex(b => new
+            {
+                b.Day, b.Month, b.Year, b.EntityId, b.AirslipUserType, b.IntegrationId
+            });
     }
 }
