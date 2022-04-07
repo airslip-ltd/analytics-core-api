@@ -2,6 +2,7 @@
 	<Import Project="..\host.common.props" />
 
     <ItemGroup>
+        <PackageReference Include="Airslip.Common.Metrics" Version="6.0.1" />
         <PackageReference Include="Airslip.MerchantIntegrations.Types" Version="6.0.1" />
         <PackageReference Include="AutoMapper.Collection" Version="7.0.1" />
         <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.EventHubs" Version="4.3.0" />

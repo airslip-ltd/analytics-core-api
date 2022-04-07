@@ -1,4 +1,8 @@
 using Airslip.Analytics.Core.Interfaces;
+using Airslip.Common.Metrics.Enums;
+using Airslip.Common.Metrics.Interfaces;
+using Airslip.Common.Repository.Types.Enums;
+using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Services.Handoff.Interfaces;
 using Airslip.Common.Types.Enums;
 using Airslip.Common.Utilities;
@@ -13,11 +17,15 @@ public class AnalysisHandlingService<TModel> : IAnalysisHandlingService<TModel>
     where TModel : class, ITraceable
 {
     private readonly IEnumerable<IAnalyticsProcess<TModel>> _postProcessors;
+    private readonly IMetricService _metricService;
     private readonly ILogger _logger;
 
-    public AnalysisHandlingService(IEnumerable<IAnalyticsProcess<TModel>> postProcessors, ILogger logger)
+    public AnalysisHandlingService(IEnumerable<IAnalyticsProcess<TModel>> postProcessors,
+        IMetricService metricService,
+        ILogger logger)
     {
         _postProcessors = postProcessors;
+        _metricService = metricService;
         _logger = logger;
     }
     
@@ -32,6 +40,8 @@ public class AnalysisHandlingService<TModel> : IAnalysisHandlingService<TModel>
         
         foreach (IAnalyticsProcess<TModel> analyticsProcess in _postProcessors)
         {
+            _metricService.StartActivity(nameof(AnalysisHandlingService<TModel>));
+            _metricService.LogMetric(analyticsProcess.GetType().FullName!, MetricType.Start);
             try
             {
                 await retryPolicy.ExecuteAsync(async () => {
@@ -50,6 +60,9 @@ public class AnalysisHandlingService<TModel> : IAnalysisHandlingService<TModel>
                 _logger.Error(eee, "Error executing analytics process {ClassName}", 
                     analyticsProcess.GetType().FullName);
             }
+            _metricService.LogMetric(analyticsProcess.GetType().FullName!, MetricType.Complete);
+            _metricService.StopActivity();
+
         }
     }
 
