@@ -10,7 +10,7 @@ select @Year = Year, @Month = Month, @Day = Day
 from MerchantTransactions
 where Id = @Id
     
-    merge into MerchantMetricSnapshots as mms
+    merge into MerchantMetricSnapshots with (HOLDLOCK) as mms
     using
         (
             select mt.EntityId,
