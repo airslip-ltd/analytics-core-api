@@ -33,7 +33,9 @@ public static class ServiceRegistration
         
         handoff.Register<IRelationshipService>(Constants.EVENT_QUEUE_PARTNER_RELATIONSHIPS, DataSources.CustomerPortal);
         handoff.Register<IBusinessService>(Constants.EVENT_QUEUE_BUSINESS, DataSources.CustomerPortal);
-        
+
+        handoff.Register<IAnalysisHandlingService<BalanceAnalysisModel>>(Constants.MESSAGE_QUEUE_BANK_TRANSACTION, 
+            DataSources.Analytics);
         handoff.Register<IAnalysisHandlingService<BankTransactionModel>>(Constants.MESSAGE_QUEUE_BANK_TRANSACTION, 
             DataSources.Analytics);
         handoff.Register<IAnalysisHandlingService<MerchantTransactionModel>>(Constants.MESSAGE_QUEUE_MERCHANT_TRANSACTION, 

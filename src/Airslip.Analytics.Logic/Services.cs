@@ -39,11 +39,9 @@ public static class Services
             .AddSingleton<IAnalysisMessagingService<MerchantTransactionModel>, CommerceMessagingService>()
             .AddSingleton<IAnalysisMessagingService<BankTransactionModel>, TransactionsMessagingService>()
             
-            .AddScoped<IAnalysisHandlingService<BankAccountBalanceModel>, AnalysisHandlingService<BankAccountBalanceModel>>()
-            .AddScoped<IAnalysisHandlingService<MerchantTransactionModel>, AnalysisHandlingService<MerchantTransactionModel>>()
-            .AddScoped<IAnalysisHandlingService<BankTransactionModel>, AnalysisHandlingService<BankTransactionModel>>()
+            .AddScoped(typeof(IAnalysisHandlingService<>), typeof(AnalysisHandlingService<>))
             
-            .AddScoped<IAnalyticsProcess<BankAccountBalanceModel>, GenerateAccountBalanceSummary>() // Per entity
+            .AddScoped<IAnalyticsProcess<BalanceAnalysisModel>, UpdateAccountBalanceSummary>() // Per entity
             
             .AddScoped<IAnalyticsProcess<BankAccountBalanceModel>, GenerateAccountBalanceSnapshot>() // Per record
             .AddScoped<IAnalyticsProcess<BankAccountBalanceModel>, GenerateBusinessBalanceSnapshot>() // Per record

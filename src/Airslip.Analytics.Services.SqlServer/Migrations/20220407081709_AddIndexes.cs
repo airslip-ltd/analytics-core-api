@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Airslip.Analytics.Services.SqlServer.Extensions;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -19,6 +20,8 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 table: "BankAccountBalanceSnapshots",
                 columns: new[] { "EntityId", "AirslipUserType", "IntegrationId", "UpdatedOn", "TimeStamp" })
                 .Annotation("SqlServer:Include", new[] { "Balance", "Currency" });
+            
+            migrationBuilder.AddSqlFiles();
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
