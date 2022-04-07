@@ -1,5 +1,6 @@
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Common.Metrics.Enums;
+using Airslip.Common.Metrics.Implementations;
 using Airslip.Common.Metrics.Interfaces;
 using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
@@ -40,8 +41,8 @@ public class AnalysisHandlingService<TModel> : IAnalysisHandlingService<TModel>
         
         foreach (IAnalyticsProcess<TModel> analyticsProcess in _postProcessors)
         {
-            _metricService.StartActivity(nameof(AnalysisHandlingService<TModel>));
-            _metricService.LogMetric(analyticsProcess.GetType().FullName!, MetricType.Start);
+            using MetricLogger processLogger = _metricService.StartActivity(analyticsProcess.GetType().FullName!);
+            
             try
             {
                 await retryPolicy.ExecuteAsync(async () => {
@@ -60,9 +61,8 @@ public class AnalysisHandlingService<TModel> : IAnalysisHandlingService<TModel>
                 _logger.Error(eee, "Error executing analytics process {ClassName}", 
                     analyticsProcess.GetType().FullName);
             }
-            _metricService.LogMetric(analyticsProcess.GetType().FullName!, MetricType.Complete);
-            _metricService.StopActivity();
-
+            
+            processLogger.CompleteMetric();
         }
     }
 
