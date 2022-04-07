@@ -4,12 +4,12 @@
 
 	<ItemGroup>
 	  <PackageReference Include="Airslip.Common.CustomerPortal" Version="6.0.0" />
-	  <PackageReference Include="Airslip.Common.Metrics" Version="6.0.1" />
+	  <PackageReference Include="Airslip.Common.Metrics" Version="6.0.2" />
 	  <PackageReference Include="Airslip.Common.Repository" Version="6.1.8" />
 	  <PackageReference Include="Airslip.Common.Repository.Types" Version="6.1.6" />
 	  <PackageReference Include="Airslip.Common.Services.Handoff" Version="6.0.4" />
 	  <PackageReference Include="Airslip.Common.Types" Version="6.2.6" />
-	  <PackageReference Include="Airslip.Integrations.Banking.Types" Version="6.0.4" />
+	  <PackageReference Include="Airslip.Integrations.Banking.Types" Version="6.0.5" />
 	  <PackageReference Include="Airslip.MerchantIntegrations.Types" Version="6.0.1" />
 	  <PackageReference Include="Polly" Version="7.2.2" />
 	</ItemGroup>

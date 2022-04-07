@@ -3,7 +3,7 @@
 	<Import Project="..\common.props" />
 
 	<ItemGroup>
-		<PackageReference Include="Airslip.Common.Metrics" Version="6.0.1" />
+		<PackageReference Include="Airslip.Common.Metrics" Version="6.0.2" />
 		<PackageReference Include="Azure.Messaging.ServiceBus" Version="7.5.1" />
 		<PackageReference Include="Microsoft.Azure.ServiceBus" Version="5.2.0" />
 	</ItemGroup>
