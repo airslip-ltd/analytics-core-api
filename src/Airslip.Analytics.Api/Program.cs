@@ -111,7 +111,7 @@ builder
     .AddApiLogicServices();
 
 builder.Services
-    .UseHealthChecks();
+    .UseMonitoring();
 
 WebApplication app = builder.Build();
 
