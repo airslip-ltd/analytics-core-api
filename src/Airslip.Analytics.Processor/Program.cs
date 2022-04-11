@@ -4,6 +4,7 @@ using Airslip.Analytics.Services.SqlServer;
 using Airslip.Common.Auth.Functions.Extensions;
 using Airslip.Common.Functions.Extensions;
 using Airslip.Common.Metrics;
+using Airslip.Common.Monitoring;
 using Airslip.Common.Repository.Enums;
 using Airslip.Common.Repository.Extensions;
 using Airslip.Common.Repository.Types.Interfaces;
@@ -74,7 +75,9 @@ internal class Program
                     .AddAnalyticsProcesses()
                     .AddLogicServices();
 
-                services.UseMessageHandoff(ServiceRegistration.RegisterHandoff);
+                services
+                    .UseMonitoring()
+                    .UseMessageHandoff(ServiceRegistration.RegisterHandoff);
                 
             })
             .Build();
