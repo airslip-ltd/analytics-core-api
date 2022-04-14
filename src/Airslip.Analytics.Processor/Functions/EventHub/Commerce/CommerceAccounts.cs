@@ -5,13 +5,13 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
-namespace Airslip.Analytics.Processor.Functions.EventHub.Api2Cart;
+namespace Airslip.Analytics.Processor.Functions.EventHub.Commerce;
 
-public static class Api2CartAccounts
+public static class CommerceAccounts
 {
-    [Function(nameof(Api2CartAccounts))]
-    public static async Task Run([EventHubTrigger(Constants.EVENT_QUEUE_API_2_CART_ACCOUNTS, 
-        Connection = "Api2CartEventHubConnectionString",
+    [Function(nameof(CommerceAccounts))]
+    public static async Task Run([EventHubTrigger(Constants.EVENT_QUEUE_COMMERCE_ACCOUNTS, 
+        Connection = "CoreEventHubConnectionString",
         ConsumerGroup = "%ConsumerGroup%",
         IsBatched = false)] string myEventHubMessage, FunctionContext context)
     {
@@ -19,6 +19,6 @@ public static class Api2CartAccounts
             .InstanceServices
             .GetService<IMessageHandoffService>() ?? throw new NotImplementedException();
 
-        await messageService.ProcessMessage(Constants.EVENT_QUEUE_API_2_CART_ACCOUNTS, myEventHubMessage);
+        await messageService.ProcessMessage(Constants.EVENT_QUEUE_COMMERCE_ACCOUNTS, myEventHubMessage);
     }
 }
