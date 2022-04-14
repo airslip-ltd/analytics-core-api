@@ -234,6 +234,7 @@ jobs:
     environment: QA
     env:
       DOTNET_CORE_VERSION: 6.0.x
+      ENVIRONMENT_NAME_SHORT: qa
       CONTEXT_PATH: ./src/Airslip.Analytics.Services.SqlServer
       SOLUTION_PATH: ./src/Airslip.Analytics.Core.sln
 
@@ -456,6 +457,7 @@ jobs:
     environment: Production - Applications
     env:
       DOTNET_CORE_VERSION: 6.0.x
+      ENVIRONMENT_NAME_SHORT: prod
       CONTEXT_PATH: ./src/Airslip.Analytics.Services.SqlServer
       SOLUTION_PATH: ./src/Airslip.Analytics.Core.sln
 
@@ -678,6 +680,7 @@ jobs:
     environment: Demo - Applications
     env:
       DOTNET_CORE_VERSION: 6.0.x
+      ENVIRONMENT_NAME_SHORT: prod
       CONTEXT_PATH: ./src/Airslip.Analytics.Services.SqlServer
       SOLUTION_PATH: ./src/Airslip.Analytics.Core.sln
 
