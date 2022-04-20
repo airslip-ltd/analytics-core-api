@@ -40,4 +40,8 @@
       <ProjectReference Include="..\Airslip.Analytics.Services.SqlServer\Airslip.Analytics.Services.SqlServer.csproj" />
     </ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="Airslip.Analytics.Api.Tests" />
+	</ItemGroup>
+
 </Project>
