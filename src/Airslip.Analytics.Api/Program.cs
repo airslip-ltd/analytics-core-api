@@ -10,6 +10,7 @@ using Airslip.Common.Repository.Extensions;
 using Airslip.Common.Security.Configuration;
 using Airslip.Common.Services.AutoMapper.Extensions;
 using Airslip.Common.Services.SqlServer;
+using Airslip.Common.Services.SqlServer.Interfaces;
 using Airslip.Common.Types;
 using Airslip.Common.Types.Configuration;
 using Microsoft.AspNetCore.Builder;
@@ -24,6 +25,7 @@ using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -112,6 +114,10 @@ builder
 
 builder.Services
     .UseMonitoring();
+
+var type = builder.Services.FirstOrDefault(o => o.ServiceType == typeof(IQueryBuilder));
+builder.Services.Remove(type);
+builder.Services.AddScoped<IQueryBuilder, QueryBuilderTEMP>();
 
 WebApplication app = builder.Build();
 

@@ -36,10 +36,7 @@ public class CommerceTransactionReport : ICommerceTransactionReport
     {
         IQueryable<CommerceTransactionReportQuery> q = 
             from rd in _context.RelationshipDetails
-            from rh in _context.RelationshipHeaders
-                .Where(o => o.Id.Equals(rd.RelationshipHeaderId) && o.EntityStatus == EntityStatus.Active)
-            from item in _context.MerchantTransactions
-                .Where(o => o.EntityId.Equals(rd.OwnerEntityId) && o.AirslipUserType == rd.OwnerAirslipUserType)
+            from item in _context.MerchantTransactions.Where(o => o.EntityId.Equals(rd.OwnerEntityId) && o.AirslipUserType == rd.OwnerAirslipUserType)
             select new CommerceTransactionReportQuery
             {
                 Id = item.Id,
@@ -88,12 +85,12 @@ public class CommerceTransactionReport : ICommerceTransactionReport
             .GetSearchResults(q, query, 
                 new List<SearchFilterModel>
                 {
-                    new(nameof(BankTransactionReportQuery.OwnerEntityId), query.OwnerEntityId),
-                    new(nameof(BankTransactionReportQuery.OwnerAirslipUserType), query.OwnerAirslipUserType.ToString()),
-                    new(nameof(BankTransactionReportQuery.ViewerEntityId), _userToken.EntityId),
-                    new(nameof(BankTransactionReportQuery.ViewerAirslipUserType), _userToken.AirslipUserType.ToString()),
-                    new(nameof(BankTransactionReportQuery.PermissionType), PermissionType.Commerce.ToString()),
-                    new(nameof(BankTransactionReportQuery.Allowed), true)
+                    new(nameof(CommerceTransactionReportQuery.OwnerEntityId), query.OwnerEntityId),
+                    new(nameof(CommerceTransactionReportQuery.OwnerAirslipUserType), query.OwnerAirslipUserType.ToString()),
+                    new(nameof(CommerceTransactionReportQuery.ViewerEntityId), _userToken.EntityId),
+                    new(nameof(CommerceTransactionReportQuery.ViewerAirslipUserType), _userToken.AirslipUserType.ToString()),
+                    new(nameof(CommerceTransactionReportQuery.PermissionType), PermissionType.Commerce.ToString()),
+                    new(nameof(CommerceTransactionReportQuery.Allowed), true)
                 });
             
         return searchResults;
@@ -103,10 +100,7 @@ public class CommerceTransactionReport : ICommerceTransactionReport
     {
         IQueryable<CommerceTransactionDownloadQuery> q = 
             from rd in _context.RelationshipDetails
-            from rh in _context.RelationshipHeaders
-                .Where(o => o.Id.Equals(rd.RelationshipHeaderId) && o.EntityStatus == EntityStatus.Active)
-            from item in _context.MerchantTransactions
-                .Where(o => o.EntityId.Equals(rd.OwnerEntityId) && o.AirslipUserType == rd.OwnerAirslipUserType)
+            from item in _context.MerchantTransactions.Where(o => o.EntityId.Equals(rd.OwnerEntityId) && o.AirslipUserType == rd.OwnerAirslipUserType)
             select new CommerceTransactionDownloadQuery
             {
                 Id = item.Id,
@@ -157,12 +151,12 @@ public class CommerceTransactionReport : ICommerceTransactionReport
             .GetSearchResults(q, query, 
                 new List<SearchFilterModel>
                 {
-                    new(nameof(BankTransactionReportQuery.OwnerEntityId), query.OwnerEntityId),
-                    new(nameof(BankTransactionReportQuery.OwnerAirslipUserType), query.OwnerAirslipUserType.ToString()),
-                    new(nameof(BankTransactionReportQuery.ViewerEntityId), _userToken.EntityId),
-                    new(nameof(BankTransactionReportQuery.ViewerAirslipUserType), _userToken.AirslipUserType.ToString()),
-                    new(nameof(BankTransactionReportQuery.PermissionType), PermissionType.Commerce.ToString()),
-                    new(nameof(BankTransactionReportQuery.Allowed), true)
+                    new(nameof(CommerceTransactionDownloadQuery.OwnerEntityId), query.OwnerEntityId),
+                    new(nameof(CommerceTransactionDownloadQuery.OwnerAirslipUserType), query.OwnerAirslipUserType.ToString()),
+                    new(nameof(CommerceTransactionDownloadQuery.ViewerEntityId), _userToken.EntityId),
+                    new(nameof(CommerceTransactionDownloadQuery.ViewerAirslipUserType), _userToken.AirslipUserType.ToString()),
+                    new(nameof(CommerceTransactionDownloadQuery.PermissionType), PermissionType.Commerce.ToString()),
+                    new(nameof(CommerceTransactionDownloadQuery.Allowed), true)
                 });
             
         return searchResults;

@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Airslip.Analytics.Logic.Implementations;
 
-public class GenerateBusinessBalanceSnapshot : IAnalyticsProcess<BankAccountBalanceModel>
+public class CreateAccountBalanceSnapshot : IAnalyticsProcess<BankAccountBalanceModel>
 {
     private readonly DbContext _context;
 
-    public GenerateBusinessBalanceSnapshot(IContext context)
+    public CreateAccountBalanceSnapshot(IContext context)
     {
         if (context is not DbContext dbContext) 
             throw new ArgumentException("Invalid context", nameof(context));
@@ -23,7 +23,7 @@ public class GenerateBusinessBalanceSnapshot : IAnalyticsProcess<BankAccountBala
         
         return _context
             .Database
-            .ExecuteSqlRawAsync("EXEC dbo.CreateBusinessBalanceSnapshot @Id = {0}",
+            .ExecuteSqlRawAsync("EXEC dbo.CreateAccountBalanceSnapshot @Id = {0}",
                 model.Id);
     }
 }

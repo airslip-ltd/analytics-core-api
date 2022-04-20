@@ -32,15 +32,12 @@ public class AccountBalanceReport : IAccountBalanceReport
 
     public async Task<IResponse> Execute(OwnedDataSearchModel query)
     {
-        IQueryable<AccountBalanceReportQuery> qBalance = from rd in _context.RelationshipDetails
-            from rh in _context.RelationshipHeaders
-                .Where(o => o.Id.Equals(rd.RelationshipHeaderId) && o.EntityStatus == EntityStatus.Active)
-            from integration in _context.Integrations
-                .Where(o => o.EntityId.Equals(rd.OwnerEntityId) && o.AirslipUserType == rd.OwnerAirslipUserType)
-            join bankAccountBalanceSummary in _context.BankAccountBalanceSummary on integration.Id 
+        IQueryable<AccountBalanceReportQuery> qBalance = 
+            from rd in _context.RelationshipDetails
+            from integration in _context.Integrations.Where(o => o.EntityId.Equals(rd.OwnerEntityId) && o.AirslipUserType == rd.OwnerAirslipUserType)
+            join bankAccountBalanceSummary in _context.BankAccountBalanceSummary on integration.Id
                 equals bankAccountBalanceSummary.IntegrationId
-            from accountDetail in _context.IntegrationAccountDetails
-                .Where(o => o.IntegrationId.Equals(integration.Id))
+            from accountDetail in _context.IntegrationAccountDetails.Where(o => o.IntegrationId.Equals(integration.Id))
             where integration.IntegrationType == IntegrationType.Banking
             select new AccountBalanceReportQuery
             {
@@ -67,12 +64,12 @@ public class AccountBalanceReport : IAccountBalanceReport
             .GetSearchResults(qBalance, query, 
                 new List<SearchFilterModel>
                 {
-                    new(nameof(BankTransactionReportQuery.OwnerEntityId), query.OwnerEntityId),
-                    new(nameof(BankTransactionReportQuery.OwnerAirslipUserType), query.OwnerAirslipUserType.ToString()),
-                    new(nameof(BankTransactionReportQuery.ViewerEntityId), _userToken.EntityId),
-                    new(nameof(BankTransactionReportQuery.ViewerAirslipUserType), _userToken.AirslipUserType.ToString()),
-                    new(nameof(BankTransactionReportQuery.PermissionType), PermissionType.Banking.ToString()),
-                    new(nameof(BankTransactionReportQuery.Allowed), true)
+                    new(nameof(AccountBalanceReportQuery.OwnerEntityId), query.OwnerEntityId),
+                    new(nameof(AccountBalanceReportQuery.OwnerAirslipUserType), query.OwnerAirslipUserType.ToString()),
+                    new(nameof(AccountBalanceReportQuery.ViewerEntityId), _userToken.EntityId),
+                    new(nameof(AccountBalanceReportQuery.ViewerAirslipUserType), _userToken.AirslipUserType.ToString()),
+                    new(nameof(AccountBalanceReportQuery.PermissionType), PermissionType.Banking.ToString()),
+                    new(nameof(AccountBalanceReportQuery.Allowed), true)
                 });
         
         return searchResults;

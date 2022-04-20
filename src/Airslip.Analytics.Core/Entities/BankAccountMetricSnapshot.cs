@@ -1,5 +1,6 @@
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Common.Types.Enums;
+using Airslip.Integrations.Banking.Types.Enums;
 using JetBrains.Annotations;
 using System;
 
@@ -10,6 +11,7 @@ public record BankAccountMetricSnapshot : IReportableWithOwnership, IReportableW
 {
     public string Id { get; set; } = string.Empty;
     public string IntegrationId { get; set; } = string.Empty;
+    public BankingAccountTypes AccountType { get; set; }
     public string? EntityId { get; set; }
     public AirslipUserType AirslipUserType { get; set; }
     public DateTime? MetricDate { get; set; } 

@@ -7,10 +7,12 @@
 	</ItemGroup>
 	
 	<ItemGroup>
+	  <PackageReference Include="Airslip.Common.Auth" Version="6.0.2" />
 	  <PackageReference Include="Airslip.Common.Metrics" Version="6.0.2" />
 	  <PackageReference Include="Airslip.Common.Repository.Types" Version="6.1.6" />
-	  <PackageReference Include="Airslip.Common.Services.SqlServer" Version="6.2.3" />
-	  <PackageReference Include="Airslip.Common.Types" Version="6.2.6" />
+	  <PackageReference Include="Airslip.Common.Security" Version="6.1.1" />
+	  <PackageReference Include="Airslip.Common.Services.SqlServer" Version="6.2.4" />
+	  <PackageReference Include="Airslip.Common.Types" Version="6.2.8" />
 		<PackageReference Include="Humanizer.Core" Version="2.14.1" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.1">
 	    <PrivateAssets>all</PrivateAssets>
@@ -37,6 +39,7 @@
 	  <EmbeddedResource Include="Database\Procedures\dbo.GetTotalRefundsSnapshot.prc.sql" />
 	  <EmbeddedResource Include="Database\Procedures\dbo.GetTotalSalesSnapshot.prc.sql" />
 	  <EmbeddedResource Include="Database\Procedures\dbo.UpdateAccountBalanceSummary.prc.sql" />
+	  <None Include="Database\Procedures\dbo.UpdateBusinessBalanceSummary.prc.sql" />
 	  <EmbeddedResource Include="Database\Views\dbo.getNewID.viw.sql" />
 	  <None Remove="Database\InitialCreate\Procedures\dbo.SomeAnaltyic.sql" />
 	</ItemGroup>

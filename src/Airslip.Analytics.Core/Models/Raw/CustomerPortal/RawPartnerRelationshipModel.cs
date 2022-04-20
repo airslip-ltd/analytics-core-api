@@ -1,11 +1,12 @@
 using Airslip.Analytics.Core.Enums;
 using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Types.Enums;
+using Airslip.Common.Types.Interfaces;
 using System.Collections.Generic;
 
 namespace Airslip.Analytics.Core.Models.Raw.CustomerPortal;
 
-public record RawPartnerRelationshipModel
+public record RawPartnerRelationshipModel : IFromDataSource
 {
     public string? Id { get; init; }
     public string? UserId { get; init; }
@@ -16,5 +17,6 @@ public record RawPartnerRelationshipModel
     public RawRelatedEntityModel Related { get; init; } = new();
     public List<RawPartnerDataPermissionModel> Permission { get; init; } = new();
     public RawPartnerInvitationDetailModel InvitationDetails { get; init; } = new();
+    public DataSources DataSource { get; set; }
     public long TimeStamp { get; set; }
 }

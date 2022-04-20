@@ -20,7 +20,7 @@ public class BusinessService : IBusinessService
         _repository = repository;
     }
     
-    public async Task Execute(string message, DataSources dataSource)
+    public async Task Execute(string message)
     {
         // Turn to object
         RawBusinessModel businessModel = Json.Deserialize<RawBusinessModel>(message);
@@ -41,7 +41,7 @@ public class BusinessService : IBusinessService
         {
             Id = businessModel.Id,
             EntityId = businessModel.Id,
-            DataSource = dataSource,
+            DataSource = businessModel.DataSource,
             EntityStatus = EntityStatus.Active,
             TimeStamp = businessModel.TimeStamp,
             UserId = businessModel.PrimaryUserId,

@@ -23,14 +23,14 @@
     </ItemGroup>
 	
 	<ItemGroup Label="Airslip References">
-		<PackageReference Include="Airslip.Common.Security" Version="6.0.0" />
-		<PackageReference Include="Airslip.Common.Auth" Version="6.0.0" />
-		<PackageReference Include="Airslip.Common.Auth.AspNetCore" Version="6.0.6" />
-		<PackageReference Include="Airslip.Common.Types" Version="6.2.6" />
-		<PackageReference Include="Airslip.Common.Monitoring" Version="6.1.0" />
+		<PackageReference Include="Airslip.Common.Security" Version="6.1.1" />
+		<PackageReference Include="Airslip.Common.Auth" Version="6.0.2" />
+		<PackageReference Include="Airslip.Common.Auth.AspNetCore" Version="6.0.7" />
+		<PackageReference Include="Airslip.Common.Types" Version="6.2.8" />
+		<PackageReference Include="Airslip.Common.Monitoring" Version="6.1.1" />
 		<PackageReference Include="Airslip.Common.Repository" Version="6.1.8" />
 		<PackageReference Include="Airslip.Common.Repository.Types" Version="6.1.6" />
-		<PackageReference Include="Airslip.Common.Services.AutoMapper" Version="6.0.0" />
+		<PackageReference Include="Airslip.Common.Services.AutoMapper" Version="6.0.1" />
 		<PackageReference Include="Airslip.Common.Middleware" Version="6.0.1" />
 	</ItemGroup>
 

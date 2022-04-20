@@ -1,6 +1,7 @@
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Common.Types.Enums;
 using Airslip.Common.Utilities.Extensions;
+using Airslip.Integrations.Banking.Types.Enums;
 using JetBrains.Annotations;
 using System;
 
@@ -15,6 +16,7 @@ public record BankBusinessBalance : IReportableWithCurrency
     public DateTime UpdatedOn { get; set; }
     public long Balance { get; init; }
     public double Movement { get; set; }
+    public BankingAccountTypes AccountType { get; set; }
     public long TimeStamp { get; set; } = DateTime.UtcNow.ToUnixTimeMilliseconds();
     public string? Currency { get; init; }
 }

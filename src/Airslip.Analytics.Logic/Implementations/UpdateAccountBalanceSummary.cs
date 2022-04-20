@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Airslip.Analytics.Logic.Implementations;
 
-public class UpdateAccountBalanceSummary : IAnalyticsProcess<BalanceAnalysisModel>
+public class UpdateAccountBalanceSummary : IAnalyticsProcess<BankAccountBalanceModel>
 {
     private readonly DbContext _context;
 
@@ -16,12 +16,11 @@ public class UpdateAccountBalanceSummary : IAnalyticsProcess<BalanceAnalysisMode
         _context = dbContext;
     }
     
-    public Task<int> Execute(BalanceAnalysisModel model)
+    public Task<int> Execute(BankAccountBalanceModel model)
     {
         return _context
             .Database
-            .ExecuteSqlRawAsync("EXEC dbo.UpdateAccountBalanceSummary @EntityId = {0}, @AirslipUserType = {1}", 
-                model.EntityId, 
-                model.AirslipUserType);
+            .ExecuteSqlRawAsync("EXEC dbo.UpdateAccountBalanceSummary @Id = {0}", 
+                model.Id!);
     }
 }

@@ -23,9 +23,7 @@ public class CreateBankAccountMetricSnapshot : IAnalyticsProcess<BankTransaction
         
         return _context
             .Database
-            .ExecuteSqlRawAsync("EXEC dbo.CreateBankAccountMetricSnapshots @EntityId = {0}, @AirslipUserType = {1}, @Id = {2}",
-                model.EntityId, 
-                model.AirslipUserType,
+            .ExecuteSqlRawAsync("EXEC dbo.CreateBankAccountMetricSnapshots @Id = {0}",
                 model.Id);
     }
 }

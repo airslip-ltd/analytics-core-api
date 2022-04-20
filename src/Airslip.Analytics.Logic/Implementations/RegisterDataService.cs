@@ -15,6 +15,7 @@ namespace Airslip.Analytics.Logic.Implementations;
 public class RegisterDataService<TEntity, TModel, TRawModel> : IRegisterDataService<TEntity, TModel, TRawModel>
     where TModel : class, IModel, IFromDataSource
     where TEntity : class, IEntity, IFromDataSource
+    where TRawModel : IFromDataSource
 {
     private readonly ILogger _logger;
     private readonly IRepository<TEntity, TModel> _repository;
@@ -33,7 +34,7 @@ public class RegisterDataService<TEntity, TModel, TRawModel> : IRegisterDataServ
         _postProcessors = postProcessors;
     }
 
-    private async Task RegisterData(TRawModel rawModel, DataSources dataSource)
+    private async Task RegisterData(TRawModel rawModel)
     {
         int maxRetryAttempts = 3;
             
@@ -46,9 +47,7 @@ public class RegisterDataService<TEntity, TModel, TRawModel> : IRegisterDataServ
         {
             TModel model = _modelMapper
                 .Create(rawModel);
-                
-            model.DataSource = dataSource;
-                
+            
             string id = model.Id ?? string.Empty;
             int count = 0;
             await retryPolicy.ExecuteAsync(async () =>
@@ -83,19 +82,19 @@ public class RegisterDataService<TEntity, TModel, TRawModel> : IRegisterDataServ
         }
         catch (DbUpdateException se)
         {
-            _logger.Error(se, "DbUpdateException exception for the data source {DataSource} with data packet {Model}", dataSource, rawModel);
+            _logger.Error(se, "DbUpdateException exception for the data packet {Model}", rawModel);
         }
         catch (Exception e)
         {
-            _logger.Error(e, "Unhandled exception for the data source {DataSource} with data packet {Model}", dataSource, rawModel);
+            _logger.Error(e, "Unhandled exception for the data packet {Model}", rawModel);
         }
     }
 
-    public Task Execute(string message, DataSources dataSource)
+    public Task Execute(string message)
     {
         // Turn to object
         TRawModel bankTransaction = Json.Deserialize<TRawModel>(message);
 
-        return RegisterData( bankTransaction, dataSource);
+        return RegisterData(bankTransaction);
     }
 }
