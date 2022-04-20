@@ -11,6 +11,7 @@ using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Types.Failures;
 using Airslip.Common.Types.Interfaces;
 using Airslip.Common.Utilities.Extensions;
+using Airslip.Integrations.Banking.Types.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace Airslip.Analytics.Logic.Implementations;
@@ -82,7 +83,7 @@ public class DashboardSnapshotService : IDashboardSnapshotService
             _ => (primary.Balance - secondary.Balance) / secondary.Balance * 100
         };
 
-        return new DashboardSnapshotModel()
+        return new DashboardSnapshotModel
         {
             Balance = primary.Balance.ToPositiveCurrency(),
             DayRange = dayRange,
@@ -98,8 +99,6 @@ public class DashboardSnapshotService : IDashboardSnapshotService
     private async Task<IResponse> _getCurrentBalance(OwnedSnapshotSearchModel query)
     {
         IQueryable<DashboardSnapshotModel> qBalance = from rd in _context.RelationshipDetails
-            from rh in _context.RelationshipHeaders
-                .Where(o => o.Id.Equals(rd.RelationshipHeaderId) && o.EntityStatus == EntityStatus.Active)
             from businessBalance in _context.BankBusinessBalances
                 .Where(o => o.EntityId == rd.OwnerEntityId && o.AirslipUserType == rd.OwnerAirslipUserType)
             where rd.ViewerEntityId.Equals(_userToken.EntityId) 
@@ -108,6 +107,7 @@ public class DashboardSnapshotService : IDashboardSnapshotService
                   && rd.PermissionType == PermissionType.Banking.ToString()
                   && rd.OwnerEntityId == query.OwnerEntityId
                   && rd.OwnerAirslipUserType == query.OwnerAirslipUserType 
+                  && businessBalance.AccountType == BankingAccountTypes.CURRENT
             select new DashboardSnapshotModel
             {
                 Balance = businessBalance.Balance.ToPositiveCurrency(),
@@ -116,9 +116,6 @@ public class DashboardSnapshotService : IDashboardSnapshotService
             };
         
         IQueryable<SnapshotMetric> qSnapshot = from rd in _context.RelationshipDetails
-            from rh in _context.RelationshipHeaders
-                .Where(o => o.Id.Equals(rd.RelationshipHeaderId) && 
-                            o.EntityStatus == EntityStatus.Active)
             from accountBalanceSnapshot in _context.BankBusinessBalanceSnapshots
                 .Where(o => o.EntityId == rd.OwnerEntityId && 
                             o.AirslipUserType == rd.OwnerAirslipUserType)
@@ -128,6 +125,7 @@ public class DashboardSnapshotService : IDashboardSnapshotService
                   && rd.PermissionType == PermissionType.Banking.ToString()
                   && rd.OwnerEntityId == query.OwnerEntityId
                   && rd.OwnerAirslipUserType == query.OwnerAirslipUserType 
+                  && accountBalanceSnapshot.AccountType == BankingAccountTypes.CURRENT
             orderby accountBalanceSnapshot.TimeStamp
             select new SnapshotMetric(accountBalanceSnapshot.TimeStamp, accountBalanceSnapshot.Balance.ToPositiveCurrency());
 
