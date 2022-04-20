@@ -703,8 +703,6 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 name: "IX_RelationshipHeaders_AuditInformationId",
                 table: "RelationshipHeaders",
                 column: "AuditInformationId");
-            
-            migrationBuilder.AddSqlFiles();
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

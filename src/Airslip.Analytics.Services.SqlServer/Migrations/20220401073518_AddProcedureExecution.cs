@@ -9,7 +9,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddSqlFiles();
+            
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
