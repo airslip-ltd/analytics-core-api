@@ -247,17 +247,22 @@ public class SqlServerContext : AirslipSqlServerContextBase
         modelBuilder.Entity<BankAccountBalanceSnapshot>()
             .HasIndex(b => new
             {
-                b.EntityId, b.AirslipUserType, b.IntegrationId, b.UpdatedOn, b.TimeStamp
+                b.EntityId, b.AirslipUserType, b.IntegrationId, b.UpdatedOn, b.TimeStamp, b.AccountType, b.Currency
             }).IncludeProperties(p => new
             {
-                p.Balance, 
-                p.Currency
+                p.Balance
             });
         
         modelBuilder.Entity<BankAccountBalanceSnapshot>()
             .HasIndex(b => new
             {
-                b.EntityId, b.AirslipUserType
+                b.EntityId, b.AirslipUserType, b.AccountType
+            });
+        
+        modelBuilder.Entity<BankBusinessBalance>()
+            .HasIndex(b => new
+            {
+                b.EntityId, b.AirslipUserType, b.AccountType, b.Currency
             });
         
         modelBuilder.Entity<MerchantTransaction>()

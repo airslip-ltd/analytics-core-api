@@ -18,30 +18,26 @@ public static class ServiceRegistration
     public static void RegisterHandoff(MessageHandoffOptions handoff)
     {
         handoff.Register<IRegisterDataService<Bank, BankModel, BankingBankModel>>
-            (Integrations.Banking.Types.Data.Constants.EVENT_HUB_BANKING_BANKS, DataSources.Yapily);
+            (Integrations.Banking.Types.Data.Constants.EVENT_HUB_BANKING_BANKS);
         handoff.Register<IRegisterDataService<Integration, IntegrationModel, BankingAccountModel>>
-            (Integrations.Banking.Types.Data.Constants.EVENT_HUB_BANKING_ACCOUNTS, DataSources.Yapily);
+            (Integrations.Banking.Types.Data.Constants.EVENT_HUB_BANKING_ACCOUNTS);
         handoff.Register<IRegisterDataService<BankTransaction, BankTransactionModel, BankingTransactionModel>>
-            (Integrations.Banking.Types.Data.Constants.EVENT_HUB_BANKING_TRANSACTIONS, DataSources.Yapily);
+            (Integrations.Banking.Types.Data.Constants.EVENT_HUB_BANKING_TRANSACTIONS);
         handoff.Register<IRegisterDataService<BankAccountBalance, BankAccountBalanceModel, BankingBalanceModel>>
-            (Integrations.Banking.Types.Data.Constants.EVENT_HUB_BANKING_BALANCES, DataSources.Yapily);
+            (Integrations.Banking.Types.Data.Constants.EVENT_HUB_BANKING_BALANCES);
         handoff.Register<IRegisterDataService<BankSyncRequest, BankSyncRequestModel, BankingSyncRequestModel>>
-            (Integrations.Banking.Types.Data.Constants.EVENT_HUB_BANKING_SYNC_REQUESTS, DataSources.Yapily);
+            (Integrations.Banking.Types.Data.Constants.EVENT_HUB_BANKING_SYNC_REQUESTS);
 
-        handoff.Register<IRegisterDataService<MerchantTransaction, MerchantTransactionModel, TransactionEnvelope>>(Constants.EVENT_QUEUE_MERCHANT_TRANSACTIONS, DataSources.Api2Cart);
-        handoff.Register<IRegisterDataService<Integration, IntegrationModel, RawApi2CartAccountModel>>(Constants.EVENT_QUEUE_COMMERCE_ACCOUNTS, DataSources.Api2Cart);
+        handoff.Register<IRegisterDataService<MerchantTransaction, MerchantTransactionModel, TransactionEnvelope>>(Constants.EVENT_QUEUE_MERCHANT_TRANSACTIONS);
+        handoff.Register<IRegisterDataService<Integration, IntegrationModel, RawApi2CartAccountModel>>(Constants.EVENT_QUEUE_COMMERCE_ACCOUNTS);
         
-        handoff.Register<IRelationshipService>(Constants.EVENT_QUEUE_PARTNER_RELATIONSHIPS, DataSources.CustomerPortal);
-        handoff.Register<IBusinessService>(Constants.EVENT_QUEUE_BUSINESS, DataSources.CustomerPortal);
+        handoff.Register<IRelationshipService>(Constants.EVENT_QUEUE_PARTNER_RELATIONSHIPS);
+        handoff.Register<IBusinessService>(Constants.EVENT_QUEUE_BUSINESS);
 
-        handoff.Register<IAnalysisHandlingService<BalanceAnalysisModel>>(Constants.MESSAGE_QUEUE_BANK_ACCOUNT_BALANCE_ENTITY, 
-            DataSources.Analytics);
-        handoff.Register<IAnalysisHandlingService<BankTransactionModel>>(Constants.MESSAGE_QUEUE_BANK_TRANSACTION, 
-            DataSources.Analytics);
-        handoff.Register<IAnalysisHandlingService<MerchantTransactionModel>>(Constants.MESSAGE_QUEUE_MERCHANT_TRANSACTION, 
-            DataSources.Analytics);
-        handoff.Register<IAnalysisHandlingService<BankAccountBalanceModel>>(Constants.MESSAGE_QUEUE_BANK_ACCOUNT_BALANCE, 
-            DataSources.Analytics);
+        handoff.Register<IAnalysisHandlingService<BalanceAnalysisModel>>(Constants.MESSAGE_QUEUE_BANK_ACCOUNT_BALANCE_ENTITY);
+        handoff.Register<IAnalysisHandlingService<BankTransactionModel>>(Constants.MESSAGE_QUEUE_BANK_TRANSACTION);
+        handoff.Register<IAnalysisHandlingService<MerchantTransactionModel>>(Constants.MESSAGE_QUEUE_MERCHANT_TRANSACTION);
+        handoff.Register<IAnalysisHandlingService<BankAccountBalanceModel>>(Constants.MESSAGE_QUEUE_BANK_ACCOUNT_BALANCE);
     }
 
     public static void RegisterMappings(IMapperConfigurationExpression cfg)

@@ -20,7 +20,7 @@ public class RelationshipService : IRelationshipService
         _repository = repository;
     }
     
-    public async Task Execute(string message, DataSources dataSource)
+    public async Task Execute(string message)
     {
         // Turn to object
         RawPartnerRelationshipModel relationshipModel = Json.Deserialize<RawPartnerRelationshipModel>(message);
@@ -41,7 +41,7 @@ public class RelationshipService : IRelationshipService
         {
             Id = relationshipModel.Id,
             EntityId = relationshipModel.EntityId,
-            DataSource = dataSource,
+            DataSource = relationshipModel.DataSource,
             EntityStatus = EntityStatus.Active,
             TimeStamp = relationshipModel.TimeStamp,
             UserId = relationshipModel.UserId,

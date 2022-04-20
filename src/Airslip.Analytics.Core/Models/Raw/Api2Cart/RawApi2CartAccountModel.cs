@@ -1,9 +1,10 @@
 using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Types.Enums;
+using Airslip.Common.Types.Interfaces;
 
 namespace Airslip.Analytics.Core.Models.Raw.Api2Cart;
 
-public record RawApi2CartAccountModel
+public record RawApi2CartAccountModel : IFromDataSource
 {
     public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
@@ -16,5 +17,6 @@ public record RawApi2CartAccountModel
     public string AirslipApiKey { get; private set; } = string.Empty;
     public string Name { get; init; } = string.Empty;
     public bool SupportsWebhooks { get; set; }
+    public DataSources DataSource { get; set; }
     public long TimeStamp { get; set; }
 }

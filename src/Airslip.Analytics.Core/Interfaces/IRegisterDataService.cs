@@ -7,6 +7,7 @@ namespace Airslip.Analytics.Core.Interfaces;
 public interface IRegisterDataService<TEntity, in TModel, in TRawModel> : IMessageHandoffWorker
     where TModel : class, IModel, IFromDataSource
     where TEntity : class, IEntity, IFromDataSource
+    where TRawModel : IFromDataSource
 {
-        
+    
 }

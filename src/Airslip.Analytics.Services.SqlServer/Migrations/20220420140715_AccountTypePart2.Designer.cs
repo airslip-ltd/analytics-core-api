@@ -4,6 +4,7 @@ using Airslip.Analytics.Services.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Airslip.Analytics.Services.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    partial class SqlServerContextModelSnapshot : ModelSnapshot
+    [Migration("20220420140715_AccountTypePart2")]
+    partial class AccountTypePart2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,9 +112,6 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("AccountType")
-                        .HasColumnType("int");
-
                     b.Property<int>("AirslipUserType")
                         .HasColumnType("int");
 
@@ -138,11 +137,11 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.HasKey("Id")
                         .HasName("PK_BankAccountBalanceSnapshots_Id");
 
-                    b.HasIndex("EntityId", "AirslipUserType", "AccountType");
+                    b.HasIndex("EntityId", "AirslipUserType");
 
-                    b.HasIndex("EntityId", "AirslipUserType", "IntegrationId", "UpdatedOn", "TimeStamp", "AccountType", "Currency");
+                    b.HasIndex("EntityId", "AirslipUserType", "IntegrationId", "UpdatedOn", "TimeStamp");
 
-                    SqlServerIndexBuilderExtensions.IncludeProperties(b.HasIndex("EntityId", "AirslipUserType", "IntegrationId", "UpdatedOn", "TimeStamp", "AccountType", "Currency"), new[] { "Balance" });
+                    SqlServerIndexBuilderExtensions.IncludeProperties(b.HasIndex("EntityId", "AirslipUserType", "IntegrationId", "UpdatedOn", "TimeStamp"), new[] { "Balance", "Currency" });
 
                     b.ToTable("BankAccountBalanceSnapshots", (string)null);
                 });
@@ -194,9 +193,6 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(50)")
                         .HasDefaultValueSql("dbo.getId()");
-
-                    b.Property<int>("AccountType")
-                        .HasColumnType("int");
 
                     b.Property<int>("AirslipUserType")
                         .HasColumnType("int");
@@ -279,8 +275,6 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
                     b.HasKey("Id")
                         .HasName("PK_BankBusinessBalances_Id");
-
-                    b.HasIndex("EntityId", "AirslipUserType", "AccountType", "Currency");
 
                     b.ToTable("BankBusinessBalances", (string)null);
                 });

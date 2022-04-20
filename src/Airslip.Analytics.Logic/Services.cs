@@ -41,10 +41,11 @@ public static class Services
             
             .AddScoped(typeof(IAnalysisHandlingService<>), typeof(AnalysisHandlingService<>))
             
-            .AddScoped<IAnalyticsProcess<BalanceAnalysisModel>, UpdateAccountBalanceSummary>() // Per entity
-            
-            .AddScoped<IAnalyticsProcess<BankAccountBalanceModel>, GenerateAccountBalanceSnapshot>() // Per record
+            // Order here is important
+            .AddScoped<IAnalyticsProcess<BankAccountBalanceModel>, CreateAccountBalanceSnapshot>() // Per record
             .AddScoped<IAnalyticsProcess<BankAccountBalanceModel>, GenerateBusinessBalanceSnapshot>() // Per record
+            .AddScoped<IAnalyticsProcess<BankAccountBalanceModel>, UpdateAccountBalanceSummary>() // Per record
+            .AddScoped<IAnalyticsProcess<BankAccountBalanceModel>, UpdateBusinessBalanceSummary>() // Per record
             
             .AddScoped<IAnalyticsProcess<MerchantTransactionModel>, CreateMerchantMetricSnapshot>() // Per record
             .AddScoped<IAnalyticsProcess<MerchantTransactionModel>, CreateMerchantAccountMetricSnapshot>() // Per record

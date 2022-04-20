@@ -66,7 +66,7 @@ public class AnalysisHandlingService<TModel> : IAnalysisHandlingService<TModel>
         }
     }
 
-    public Task Execute(string message, DataSources dataSource)
+    public Task Execute(string message)
     {
         return Execute(Json.Deserialize<TModel>(message));
     }

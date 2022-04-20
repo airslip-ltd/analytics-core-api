@@ -32,11 +32,9 @@ public class CommerceProviderReport : ICommerceProviderReport
 
     public async Task<IResponse> Execute(OwnedDataSearchModel query)
     {
-        IQueryable<CommerceProviderReportQuery> qBalance = from rd in _context.RelationshipDetails
-            from rh in _context.RelationshipHeaders
-                .Where(o => o.Id.Equals(rd.RelationshipHeaderId) && o.EntityStatus == EntityStatus.Active)
-            from integration in _context.Integrations
-                .Where(o => o.EntityId.Equals(rd.OwnerEntityId) && o.AirslipUserType == rd.OwnerAirslipUserType)
+        IQueryable<CommerceProviderReportQuery> qBalance = 
+            from rd in _context.RelationshipDetails
+            from integration in _context.Integrations.Where(o => o.EntityId.Equals(rd.OwnerEntityId) && o.AirslipUserType == rd.OwnerAirslipUserType)
             where integration.IntegrationType == IntegrationType.Commerce
             select new CommerceProviderReportQuery
             {
@@ -60,12 +58,12 @@ public class CommerceProviderReport : ICommerceProviderReport
             .GetSearchResults(qBalance, query, 
                 new List<SearchFilterModel>
                 {
-                    new(nameof(BankTransactionReportQuery.OwnerEntityId), query.OwnerEntityId),
-                    new(nameof(BankTransactionReportQuery.OwnerAirslipUserType), query.OwnerAirslipUserType.ToString()),
-                    new(nameof(BankTransactionReportQuery.ViewerEntityId), _userToken.EntityId),
-                    new(nameof(BankTransactionReportQuery.ViewerAirslipUserType), _userToken.AirslipUserType.ToString()),
-                    new(nameof(BankTransactionReportQuery.PermissionType), PermissionType.Banking.ToString()),
-                    new(nameof(BankTransactionReportQuery.Allowed), true)
+                    new(nameof(CommerceProviderReportQuery.OwnerEntityId), query.OwnerEntityId),
+                    new(nameof(CommerceProviderReportQuery.OwnerAirslipUserType), query.OwnerAirslipUserType.ToString()),
+                    new(nameof(CommerceProviderReportQuery.ViewerEntityId), _userToken.EntityId),
+                    new(nameof(CommerceProviderReportQuery.ViewerAirslipUserType), _userToken.AirslipUserType.ToString()),
+                    new(nameof(CommerceProviderReportQuery.PermissionType), PermissionType.Banking.ToString()),
+                    new(nameof(CommerceProviderReportQuery.Allowed), true)
                 });
         
         return searchResults;

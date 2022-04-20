@@ -34,11 +34,9 @@ public class BankTransactionReport : IBankTransactionReport
         
     public async Task<IResponse> Execute(OwnedDataSearchModel query)
     {
-        IQueryable<BankTransactionReportQuery> q = from rd in _context.RelationshipDetails
-            from rh in _context.RelationshipHeaders
-                .Where(o => o.Id.Equals(rd.RelationshipHeaderId) && o.EntityStatus == EntityStatus.Active)
-            from item in _context.BankTransactions
-                .Where(o => o.EntityId.Equals(rd.OwnerEntityId) && o.AirslipUserType == rd.OwnerAirslipUserType) 
+        IQueryable<BankTransactionReportQuery> q = 
+            from rd in _context.RelationshipDetails
+            from item in _context.BankTransactions.Where(o => o.EntityId.Equals(rd.OwnerEntityId) && o.AirslipUserType == rd.OwnerAirslipUserType) 
             join bank in _context.Banks on item.BankId equals bank.Id
             select new BankTransactionReportQuery
             {
