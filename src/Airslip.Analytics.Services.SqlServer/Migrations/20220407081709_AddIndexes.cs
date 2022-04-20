@@ -20,8 +20,6 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 table: "BankAccountBalanceSnapshots",
                 columns: new[] { "EntityId", "AirslipUserType", "IntegrationId", "UpdatedOn", "TimeStamp" })
                 .Annotation("SqlServer:Include", new[] { "Balance", "Currency" });
-            
-            migrationBuilder.AddSqlFiles();
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

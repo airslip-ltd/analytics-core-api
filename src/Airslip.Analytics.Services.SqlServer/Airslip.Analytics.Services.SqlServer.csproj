@@ -39,9 +39,8 @@
 	  <EmbeddedResource Include="Database\Procedures\dbo.GetTotalRefundsSnapshot.prc.sql" />
 	  <EmbeddedResource Include="Database\Procedures\dbo.GetTotalSalesSnapshot.prc.sql" />
 	  <EmbeddedResource Include="Database\Procedures\dbo.UpdateAccountBalanceSummary.prc.sql" />
-	  <None Include="Database\Procedures\dbo.UpdateBusinessBalanceSummary.prc.sql" />
+	  <EmbeddedResource Include="Database\Procedures\dbo.UpdateBusinessBalanceSummary.prc.sql" />
 	  <EmbeddedResource Include="Database\Views\dbo.getNewID.viw.sql" />
-	  <None Remove="Database\InitialCreate\Procedures\dbo.SomeAnaltyic.sql" />
 	</ItemGroup>
 	
 	<ItemGroup>
