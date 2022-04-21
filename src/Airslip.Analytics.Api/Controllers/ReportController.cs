@@ -9,6 +9,7 @@ using Airslip.Common.Types.Configuration;
 using Airslip.Common.Types.Failures;
 using Airslip.Common.Types.Interfaces;
 using Airslip.Common.Types.Responses;
+using Airslip.Common.Utilities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -21,7 +22,8 @@ namespace Airslip.Analytics.Api.Controllers;
 
 [ApiController]    
 [ApiVersion("1.0")]
-[Produces(Common.Utilities.Json.MediaType)]
+[Consumes(Json.MediaType)]
+[Produces(Json.MediaType)]
 [Route("v{version:apiVersion}/reports")]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class ReportController : ApiControllerBase
@@ -42,22 +44,28 @@ public class ReportController : ApiControllerBase
         _downloadService = downloadService;
     }
     
+    /// <summary>
+    /// A description about a specific API should go here
+    /// </summary>
     [HttpPost]
     [ProducesResponseType( typeof(EntitySearchResponse<BankTransactionReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
     [Route("bank-transactions")]
-    public async Task<IActionResult> BankTransactions([FromBody] OwnedDataSearchModel query)
+    public async Task<IActionResult> GetBankTransactionsReport([FromBody] OwnedDataSearchModel query)
     {
         IResponse response = await _bankTransactionReport.Execute(query);
 
         return HandleResponse<EntitySearchResponse<BankTransactionReportModel>>(response);
     }
     
+    /// <summary>
+    /// A description about a specific API should go here
+    /// </summary>
     [HttpPost]
     [ProducesResponseType( typeof(EntitySearchResponse<BankTransactionReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
     [Route("bank-transactions/download")]
-    public async Task<IActionResult> BankTransactionsDownload([FromBody] OwnedDataSearchModel query)
+    public async Task<IActionResult> DownloadBankTransactions([FromBody] OwnedDataSearchModel query)
     {
         IResponse response = await _downloadService.Download<BankTransactionReportModel>(_bankTransactionReport, query, 
             "bank-transactions");
@@ -65,6 +73,9 @@ public class ReportController : ApiControllerBase
         return HandleResponse<DownloadResponse>(response);
     }
     
+    /// <summary>
+    /// A description about a specific API should go here
+    /// </summary>
     [HttpPost]
     [ProducesResponseType( typeof(EntitySearchResponse<CommerceTransactionReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
@@ -76,6 +87,9 @@ public class ReportController : ApiControllerBase
         return HandleResponse<EntitySearchResponse<CommerceTransactionReportModel>>(response);
     }
     
+    /// <summary>
+    /// A description about a specific API should go here
+    /// </summary>
     [HttpPost]
     [ProducesResponseType( typeof(EntitySearchResponse<BankTransactionReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]

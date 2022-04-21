@@ -17,8 +17,12 @@ using System.Threading.Tasks;
 
 namespace Airslip.Analytics.Api.Controllers;
 
-[ApiController]    
+/// <summary>
+/// This does not work
+/// </summary>
+[ApiController]
 [ApiVersion("1.0")]
+[Consumes(Json.MediaType)]
 [Produces(Json.MediaType)]
 [Route("v{version:apiVersion}/snapshot")]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -41,6 +45,9 @@ public class SnapshotController : ApiControllerBase
         _debitsAndCreditsService = debitsAndCreditsService;
     }
         
+    /// <summary>
+    /// A description about a specific API should go here
+    /// </summary>
     [HttpPost]
     [Route("{snapshotType}")]
     [ProducesResponseType(typeof(DashboardSnapshotModel), StatusCodes.Status200OK)]
@@ -57,6 +64,9 @@ public class SnapshotController : ApiControllerBase
         return HandleResponse<DashboardSnapshotModel>(response);
     }
         
+    /// <summary>
+    /// A description about a specific API should go here
+    /// </summary>
     [HttpPost]
     [Route("revenue")]
     [ProducesResponseType(typeof(DashboardGraphSeriesModel), StatusCodes.Status200OK)]
@@ -70,6 +80,9 @@ public class SnapshotController : ApiControllerBase
         return HandleResponse<DashboardGraphSeriesModel>(response);
     }
         
+    /// <summary>
+    /// A description about a specific API should go here
+    /// </summary>
     [HttpPost]
     [Route("cashflow")]
     [ProducesResponseType(typeof(DashboardGraphSeriesModel), StatusCodes.Status200OK)]

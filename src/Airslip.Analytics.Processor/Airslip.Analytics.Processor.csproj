@@ -35,7 +35,7 @@
         <PackageReference Include="Airslip.Common.Functions" Version="6.0.4" />
         <PackageReference Include="Airslip.Common.Auth" Version="6.0.2" />
         <PackageReference Include="Airslip.Common.Auth.Functions" Version="6.0.3" />
-        <PackageReference Include="Airslip.Common.Types" Version="6.2.8" />
+        <PackageReference Include="Airslip.Common.Types" Version="6.2.10" />
     </ItemGroup>
 
     <ItemGroup>
