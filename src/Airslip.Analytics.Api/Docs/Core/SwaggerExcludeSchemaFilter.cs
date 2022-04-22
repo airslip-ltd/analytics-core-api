@@ -15,26 +15,26 @@ public class SwaggerExcludeSchemaFilter : ISchemaFilter
         nameof(EntityStatus).ToCamelCase()
     };
 
-    public void Apply(OpenApiSchema model, SchemaFilterContext context)
+    public void Apply(OpenApiSchema schema, SchemaFilterContext context)
     {
-        if (model.Properties == null || context.Type == null)
+        if (schema.Properties == null || context.Type == null)
             return;
 
         IEnumerable<PropertyInfo> excludedProperties =  context.Type.GetProperties()
             .Where(t => 
-                CustomAttributeExtensions.GetCustomAttribute<SwaggerIgnoreAttribute>((MemberInfo) t) 
+                t.GetCustomAttribute<SwaggerIgnoreAttribute>() 
                 != null);
         
         foreach (PropertyInfo excludedProperty in excludedProperties)
         {
-            if (model.Properties.ContainsKey(excludedProperty.Name))
-                model.Properties.Remove(excludedProperty.Name);
+            if (schema.Properties.ContainsKey(excludedProperty.Name))
+                schema.Properties.Remove(excludedProperty.Name);
         }
         
         foreach (string excludedProperty in _defaultExcludedProperties
-                     .Where(excludedProperty => model.Properties.ContainsKey(excludedProperty)))
+                     .Where(excludedProperty => schema.Properties.ContainsKey(excludedProperty)))
         {
-            model.Properties.Remove(excludedProperty);
+            schema.Properties.Remove(excludedProperty);
         }
     }
 }

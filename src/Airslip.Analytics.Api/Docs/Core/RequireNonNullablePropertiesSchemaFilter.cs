@@ -6,15 +6,15 @@ namespace Airslip.Analytics.Api.Docs.Core;
 
 public class RequireNonNullablePropertiesSchemaFilter : ISchemaFilter
 {
-    public void Apply(OpenApiSchema model, SchemaFilterContext context)
+    public void Apply(OpenApiSchema schema, SchemaFilterContext context)
     {
-        if (model.Properties == null) 
+        if (schema.Properties == null) 
             return;
         
-        foreach (KeyValuePair<string, OpenApiSchema> prop in model.Properties)
+        foreach (KeyValuePair<string, OpenApiSchema> prop in schema.Properties)
         {
             if (!prop.Value.Nullable)
-                model.Required.Add(prop.Key);
+                schema.Required.Add(prop.Key);
         }
     }
 }
