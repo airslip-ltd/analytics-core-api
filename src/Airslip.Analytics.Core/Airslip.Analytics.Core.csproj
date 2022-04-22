@@ -1,5 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+		<DocumentationFile>bin\Debug\net6.0\Airslip.Analytics.Core.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+		<DocumentationFile>bin\Release\net6.0\Airslip.Analytics.Core.xml</DocumentationFile>
+	</PropertyGroup>
+	
 	<Import Project="..\common.props" />
 
 	<ItemGroup>
@@ -14,12 +22,7 @@
 	  <PackageReference Include="Airslip.Integrations.Banking.Types" Version="6.0.7" />
 	  <PackageReference Include="Airslip.MerchantIntegrations.Types" Version="6.0.2" />
 	  <PackageReference Include="Polly" Version="7.2.2" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Reference Include="Swashbuckle.AspNetCore.Filters.Abstractions">
-	    <HintPath>..\..\..\..\Users\TomMcDonough\.nuget\packages\swashbuckle.aspnetcore.filters.abstractions\7.0.2\lib\net5.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll</HintPath>
-	  </Reference>
+	  <PackageReference Include="Swashbuckle.AspNetCore.Filters.Abstractions" Version="7.0.2" />
 	</ItemGroup>
 
 </Project>

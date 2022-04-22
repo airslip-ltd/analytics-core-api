@@ -3,7 +3,7 @@ using Swashbuckle.AspNetCore.Filters;
 using System;
 using System.Collections.Generic;
 
-namespace Airslip.Analytics.Core.Examples;
+namespace Airslip.Analytics.Api.Docs.Examples;
 
 public class DashboardSnapshotModelExample : IExamplesProvider<DashboardSnapshotModel>
 {

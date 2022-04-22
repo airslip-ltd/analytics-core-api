@@ -1,5 +1,5 @@
-using Airslip.Analytics.Api;
-using Airslip.Analytics.Core.Examples;
+using Airslip.Analytics.Api.Docs.Core;
+using Airslip.Analytics.Core.Models;
 using Airslip.Analytics.Logic;
 using Airslip.Analytics.Reports;
 using Airslip.Analytics.Services.SqlServer;
@@ -16,7 +16,6 @@ using Airslip.Common.Services.SqlServer.Interfaces;
 using Airslip.Common.Types;
 using Airslip.Common.Types.Configuration;
 using Airslip.Common.Utilities.Extensions;
-using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +26,7 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Serilog;
 using Swashbuckle.AspNetCore.Filters;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -57,28 +57,33 @@ builder.Services
             new StringEnumConverter(new DefaultNamingStrategy())
         };
     });
+builder.Services.AddSwaggerGenNewtonsoftSupport();
 
 builder.Services
     .AddSwaggerGen(options =>
     {
         options.DocumentFilter<BasePathDocumentFilter>();
+        options.SchemaFilter<RequireNonNullablePropertiesSchemaFilter>();
+        options.SchemaFilter<SwaggerExcludeSchemaFilter>();
+
         options.ExampleFilters();
         
         options.SwaggerDoc("v1",
             new OpenApiInfo
             {
                 Title = "Analytics API",
-                Version = "1", // Changed due to reslate version says v1.0.0. It now says v1
-                Description = "Includes all API endpoints for data analytics."
+                Version = "1",
+                Description = "Includes all API endpoints for data analytics." // Need to be more descriptive
             }
         );
         
         options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
-            Description = @"
-Requests to the Airslip API are authenticated using applications `Api_Key`. You can view and manage your credentials in the Airslip Dashboard.
+            Description = @"e.g Bearer Api_Key.
 
-An Api_Key pair provides connectivity to all authenticated Airslip API endpoints, so it is important to keep these credentials secure. Do not share your Api_Key in publicly accessible areas such as GitHub, client-side code, etc.
+Requests to the Airslip API are authenticated using the applications `Api_Key`. You can view and manage your credentials in the Airslip Dashboard.
+
+An Api_Key provides connectivity to all authenticated Airslip API endpoints, so it is important to keep these credentials secure. Do not share your Api_Key in publicly accessible areas such as GitHub, client-side code, or easily accessible configuration settings.
 
 Authentication is performed using Bearer Authentication. Your Api_Key should be sent as the token.
 
@@ -89,7 +94,7 @@ All requests should be made via HTTPS.",
             Scheme = "Bearer"
         });
         
-        options.AddSecurityRequirement(new OpenApiSecurityRequirement()
+        options.AddSecurityRequirement(new OpenApiSecurityRequirement
         {
             {
                 new OpenApiSecurityScheme
@@ -99,7 +104,7 @@ All requests should be made via HTTPS.",
                         Type = ReferenceType.SecurityScheme,
                         Id = "Bearer"
                     },
-                    Scheme = "oauth2",
+                    Scheme = "Bearer",
                     Name = "Bearer",
                     In = ParameterLocation.Header,
 
@@ -107,13 +112,16 @@ All requests should be made via HTTPS.",
                 new List<string>()
             }
         });
-        
-        options.CustomOperationIds(e => e.ActionDescriptor.RouteValues["action"]?.ToSpacedPascalCase());
-        string xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-        string filePath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-        options.IncludeXmlComments(filePath);
-        options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory,
-            $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
+
+        options.CustomOperationIds(e => 
+            e.ActionDescriptor.AttributeRouteInfo?.Name ?? e.ActionDescriptor.RouteValues["action"]?.ToSpacedPascalCase());
+        options.SupportNonNullableReferenceTypes();
+        string apiXmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        string apiFilePath = Path.Combine(AppContext.BaseDirectory, apiXmlFile);
+        options.IncludeXmlComments(apiFilePath, true);
+        string coreXmlFile = $"{Assembly.GetAssembly(typeof(DashboardSnapshotModel))?.GetName().Name}.xml";
+        string coreFilePath = Path.Combine(AppContext.BaseDirectory, coreXmlFile);
+        options.IncludeXmlComments(coreFilePath);
     });
 
 builder.Services
@@ -123,7 +131,7 @@ builder.Services
         options.GroupNameFormat = "'v'VVV";
         options.SubstituteApiVersionInUrl = true;
     })
-    .AddSwaggerExamplesFromAssemblies(Assembly.GetAssembly(typeof(DashboardSnapshotModelExample)));
+    .AddSwaggerExamplesFromAssemblies(Assembly.GetEntryAssembly());
 
 // Add Options
 builder.Services

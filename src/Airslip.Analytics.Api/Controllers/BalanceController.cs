@@ -20,6 +20,9 @@ using System.Threading.Tasks;
 
 namespace Airslip.Analytics.Api.Controllers;
 
+/// <summary>
+/// A description for a group of APIs
+/// </summary>
 [ApiController]    
 [ApiVersion("1.0")]
 [Consumes(Json.MediaType)]
@@ -44,6 +47,7 @@ public class AccountsController : ApiControllerBase
     /// <summary>
     /// A description about a specific API should go here
     /// </summary>
+    /// <param name="query">A parameter description should go here</param>
     [HttpPost]
     [Route("search")]
     [ProducesResponseType(typeof(EntitySearchResponse<AccountBalanceReportModel>), StatusCodes.Status200OK)]
@@ -59,6 +63,7 @@ public class AccountsController : ApiControllerBase
     /// <summary>
     /// A description about a specific API should go here
     /// </summary>
+    /// <param name="query">A parameter description should go here</param>
     [HttpPost]
     [ProducesResponseType( typeof(DownloadResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]

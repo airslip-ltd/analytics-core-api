@@ -20,6 +20,9 @@ using System.Threading.Tasks;
 
 namespace Airslip.Analytics.Api.Controllers;
 
+/// <summary>
+/// A description for a group of APIs
+/// </summary>
 [ApiController]    
 [ApiVersion("1.0")]
 [Consumes(Json.MediaType)]
@@ -47,6 +50,7 @@ public class ReportController : ApiControllerBase
     /// <summary>
     /// A description about a specific API should go here
     /// </summary>
+    /// <param name="query">A parameter description should go here</param>
     [HttpPost]
     [ProducesResponseType( typeof(EntitySearchResponse<BankTransactionReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
@@ -61,6 +65,7 @@ public class ReportController : ApiControllerBase
     /// <summary>
     /// A description about a specific API should go here
     /// </summary>
+    /// <param name="query">A parameter description should go here</param>
     [HttpPost]
     [ProducesResponseType( typeof(EntitySearchResponse<BankTransactionReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
@@ -76,6 +81,7 @@ public class ReportController : ApiControllerBase
     /// <summary>
     /// A description about a specific API should go here
     /// </summary>
+    /// <param name="query">A parameter description should go here</param>
     [HttpPost]
     [ProducesResponseType( typeof(EntitySearchResponse<CommerceTransactionReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
@@ -90,6 +96,7 @@ public class ReportController : ApiControllerBase
     /// <summary>
     /// A description about a specific API should go here
     /// </summary>
+    /// <param name="query">A parameter description should go here</param>
     [HttpPost]
     [ProducesResponseType( typeof(EntitySearchResponse<BankTransactionReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
