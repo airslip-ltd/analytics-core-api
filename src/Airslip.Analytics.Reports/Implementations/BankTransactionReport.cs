@@ -82,6 +82,7 @@ public class BankTransactionReport : IBankTransactionReport
                     new(nameof(BankTransactionReportQuery.OwnerAirslipUserType), query.OwnerAirslipUserType.ToString()),
                     new(nameof(BankTransactionReportQuery.ViewerEntityId), _userToken.EntityId),
                     new(nameof(BankTransactionReportQuery.ViewerAirslipUserType), _userToken.AirslipUserType.ToString()),
+                    new(nameof(BankTransactionReportQuery.CurrencyCode), query.CurrencyCode),
                     new(nameof(BankTransactionReportQuery.PermissionType), PermissionType.Banking.ToString()),
                     new(nameof(BankTransactionReportQuery.Allowed), true)
                 });

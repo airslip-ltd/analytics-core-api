@@ -11,4 +11,7 @@ public abstract record OwnedSearchModel : IOwnedSearch
     
     [Required]
     public AirslipUserType OwnerAirslipUserType { get; init; } = AirslipUserType.Unknown;
+
+    [Required]
+    public string CurrencyCode { get; init; } = "GBP";
 }

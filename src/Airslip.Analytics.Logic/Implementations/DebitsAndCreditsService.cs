@@ -34,14 +34,16 @@ public class DebitsAndCreditsService : IDebitsAndCreditsService
 @ViewerAirslipUserType = {3}, 
 @OwnerEntityId = {4}, 
 @OwnerAirslipUserType = {5}, 
-@IntegrationId = {6}",
+@IntegrationId = {6}, 
+@CurrencyCode = {7}",
                 query.StartDate,
                 query.EndDate,
                 _userToken.EntityId,
                 _userToken.AirslipUserType,
                 query.OwnerEntityId,
                 query.OwnerAirslipUserType,
-                query.IntegrationId == null ? DBNull.Value : query.IntegrationId);
+                query.IntegrationId == null ? DBNull.Value : query.IntegrationId,
+                query.CurrencyCode);
 
         List<DebitsAndCreditsByYear> metrics = await q.ToListAsync();
         DateTimeFormatInfo formatter = CultureInfo.CurrentCulture.DateTimeFormat;

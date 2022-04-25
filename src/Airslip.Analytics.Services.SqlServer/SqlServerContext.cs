@@ -170,6 +170,10 @@ public class SqlServerContext : AirslipSqlServerContextBase
         modelBuilder.Entity<MerchantTransaction>().Property(o => o.OrderStatus).HasColumnType("nvarchar (20)").HasDefaultValue("Unknown");
         modelBuilder.Entity<MerchantTransaction>().Property(o => o.PaymentStatus).HasColumnType("nvarchar (20)").HasDefaultValue("Unknown");
         
+        modelBuilder.Entity<MerchantAccountMetricSnapshot>().Property(o => o.CurrencyCode).HasColumnType("nvarchar (3)").HasDefaultValue("GBP");
+        modelBuilder.Entity<MerchantMetricSnapshot>().Property(o => o.CurrencyCode).HasColumnType("nvarchar (3)").HasDefaultValue("GBP");
+        modelBuilder.Entity<BankAccountMetricSnapshot>().Property(o => o.CurrencyCode).HasColumnType("nvarchar (3)").HasDefaultValue("GBP");
+        
         modelBuilder.Entity<IntegrationAccountDetail>().Property(o => o.LastCardDigits).HasColumnType("nvarchar (20)");
         modelBuilder.Entity<IntegrationAccountDetail>().Property(o => o.CurrencyCode).HasColumnType("nvarchar (5)");
         modelBuilder.Entity<IntegrationAccountDetail>().Property(o => o.SortCode).HasColumnType("nvarchar (10)");
