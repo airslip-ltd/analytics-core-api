@@ -6,7 +6,8 @@ CREATE or alter PROCEDURE dbo.GetTotalRefundsSnapshot(
     @OwnerEntityId as nvarchar(50),
     @OwnerAirslipUserType as int,
     @StartDate as date = null,
-    @IntegrationId as nvarchar(50) = null
+    @IntegrationId as nvarchar(50) = null,
+    @CurrencyCode as nvarchar(3)
     )
     AS
 BEGIN
@@ -29,7 +30,7 @@ BEGIN
                              on mms.EntityId = rd.OwnerEntityId AND mms.AirslipUserType = rd.OwnerAirslipUserType
                                  AND mms.MetricDate > dr.StartCalendarDate and mms.MetricDate <= dr.EndCalendarDate
                                  and (@IntegrationId is null OR mms.IntegrationId = @IntegrationId)
-
+                                 and mms.CurrencyCode = @CurrencyCode
     group by dr.EndCalendarDate, dr.Year, dr.Month, dr.Day
     order by dr.EndCalendarDate DESC
 

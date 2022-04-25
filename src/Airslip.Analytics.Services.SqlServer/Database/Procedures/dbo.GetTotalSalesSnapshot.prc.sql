@@ -6,7 +6,8 @@ CREATE or alter PROCEDURE dbo.GetTotalSalesSnapshot(
     @OwnerEntityId as nvarchar(50),
     @OwnerAirslipUserType as int,
     @StartDate as date = null,
-    @IntegrationId as nvarchar(50) = null
+    @IntegrationId as nvarchar(50) = null,
+    @CurrencyCode as nvarchar(3)
 )
 AS
 BEGIN
@@ -24,12 +25,11 @@ BEGIN
                                 rd.OwnerAirslipUserType = @OwnerAirslipUserType and
                                 rd.PermissionType = 'Commerce'
                                  and rd.Allowed = 1
-             left outer join RelationshipHeaders as rh
-                             on rh.Id = rd.RelationshipHeaderId and rh.EntityStatus = 1
              left outer join MerchantAccountMetricSnapshots as mms
                              on mms.EntityId = rd.OwnerEntityId AND mms.AirslipUserType = rd.OwnerAirslipUserType
                                  AND mms.MetricDate > dr.StartCalendarDate and mms.MetricDate <= dr.EndCalendarDate
                                  and (@IntegrationId is null OR mms.IntegrationId = @IntegrationId)
+                                 and mms.CurrencyCode = @CurrencyCode
 
     group by dr.EndCalendarDate, dr.Year, dr.Month, dr.Day
     order by dr.EndCalendarDate DESC

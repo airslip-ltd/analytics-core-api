@@ -4,7 +4,8 @@ CREATE OR ALTER PROCEDURE dbo.GetCreditsAndDebitsByYear(
     @ViewerAirslipUserType as int,
     @OwnerEntityId as nvarchar(50),
     @OwnerAirslipUserType as int,
-    @IntegrationId as nvarchar(max) = null
+    @IntegrationId as nvarchar(max) = null,
+    @CurrencyCode as nvarchar(3)
 )
 AS
 BEGIN
@@ -26,6 +27,7 @@ BEGIN
                              on mms.Month = m.ROWNO and mms.Year = @Year and mms.EntityId = rd.OwnerEntityId
                                  AND mms.AirslipUserType = rd.OwnerAirslipUserType
                                  and (@IntegrationId is null OR mms.IntegrationId = @IntegrationId)
+                                 and mms.CurrencyCode = @CurrencyCode
     group by m.ROWNO, mms.Year
     ORDER BY mms.year asc, m.ROWNO asc
 END

@@ -89,6 +89,7 @@ public class CommerceTransactionReport : ICommerceTransactionReport
                     new(nameof(CommerceTransactionReportQuery.OwnerAirslipUserType), query.OwnerAirslipUserType.ToString()),
                     new(nameof(CommerceTransactionReportQuery.ViewerEntityId), _userToken.EntityId),
                     new(nameof(CommerceTransactionReportQuery.ViewerAirslipUserType), _userToken.AirslipUserType.ToString()),
+                    new(nameof(CommerceTransactionReportQuery.CurrencyCode), query.CurrencyCode),
                     new(nameof(CommerceTransactionReportQuery.PermissionType), PermissionType.Commerce.ToString()),
                     new(nameof(CommerceTransactionReportQuery.Allowed), true)
                 });
@@ -155,6 +156,7 @@ public class CommerceTransactionReport : ICommerceTransactionReport
                     new(nameof(CommerceTransactionDownloadQuery.OwnerAirslipUserType), query.OwnerAirslipUserType.ToString()),
                     new(nameof(CommerceTransactionDownloadQuery.ViewerEntityId), _userToken.EntityId),
                     new(nameof(CommerceTransactionDownloadQuery.ViewerAirslipUserType), _userToken.AirslipUserType.ToString()),
+                    new(nameof(CommerceTransactionDownloadQuery.CurrencyCode), query.CurrencyCode),
                     new(nameof(CommerceTransactionDownloadQuery.PermissionType), PermissionType.Commerce.ToString()),
                     new(nameof(CommerceTransactionDownloadQuery.Allowed), true)
                 });

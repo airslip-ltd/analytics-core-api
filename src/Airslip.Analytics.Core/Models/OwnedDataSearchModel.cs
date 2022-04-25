@@ -8,10 +8,13 @@ namespace Airslip.Analytics.Core.Models;
 
 public record OwnedDataSearchModel : EntitySearchQueryModel, IOwnedSearch
 {
-    public OwnedDataSearchModel(int Page, int RecordsPerPage, List<EntitySearchSortModel> Sort, EntitySearchModel? Search) 
+    public string CurrencyCode { get; }
+
+    public OwnedDataSearchModel(int Page, int RecordsPerPage, string CurrencyCode, 
+        List<EntitySearchSortModel> Sort, EntitySearchModel? Search) 
         : base(Page, RecordsPerPage, Sort, Search)
     {
-            
+        this.CurrencyCode = CurrencyCode;
     }
     
     [Required]

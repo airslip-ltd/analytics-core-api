@@ -12,7 +12,8 @@ public record MerchantAccountMetricSnapshot : IReportableWithOwnership, IReporta
     public string IntegrationId { get; set; } = string.Empty;
     public string? EntityId { get; set; }
     public AirslipUserType AirslipUserType { get; set; }
-    public DateTime? MetricDate { get; set; } 
+    public DateTime? MetricDate { get; set; }
+    public string? CurrencyCode { get; init; } = "GBP";
     public int? Year { get; set; }
     public int? Month { get; set; }
     public int? Day { get; set; }
