@@ -112,8 +112,12 @@ public class DashboardSnapshotService : IDashboardSnapshotService
             {
                 Balance = businessBalance.Balance.ToPositiveCurrency(),
                 TimeStamp = businessBalance.TimeStamp,
-                Movement = businessBalance.Movement
+                Movement = businessBalance.Movement,
+                CurrencyCode = businessBalance.Currency
             };
+        
+        DashboardSnapshotModel? response = await qBalance.FirstOrDefaultAsync();
+        if (response == null) return new NotFoundResponse("BusinessBalance", query.OwnerEntityId);
         
         IQueryable<SnapshotMetric> qSnapshot = from rd in _context.RelationshipDetails
             from accountBalanceSnapshot in _context.BankBusinessBalanceSnapshots
@@ -126,12 +130,9 @@ public class DashboardSnapshotService : IDashboardSnapshotService
                   && rd.OwnerEntityId == query.OwnerEntityId
                   && rd.OwnerAirslipUserType == query.OwnerAirslipUserType 
                   && accountBalanceSnapshot.AccountType == BankingAccountTypes.CURRENT
+                  && accountBalanceSnapshot.Currency == response.CurrencyCode
             orderby accountBalanceSnapshot.TimeStamp
             select new SnapshotMetric(accountBalanceSnapshot.TimeStamp, accountBalanceSnapshot.Balance.ToPositiveCurrency());
-
-        DashboardSnapshotModel? response = await qBalance.FirstOrDefaultAsync();
-
-        if (response == null) return new NotFoundResponse("BusinessBalance", query.OwnerEntityId);
 
         response.Metrics = await qSnapshot
             .Take(10)

@@ -3,10 +3,15 @@ using Airslip.Analytics.Core.Entities.Unmapped;
 using Airslip.Analytics.Services.SqlServer.Data;
 using Airslip.Analytics.Services.SqlServer.Extensions;
 using Airslip.Common.Repository.Types.Entities;
+using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
+using Airslip.Common.Services.Excel.Implementations;
+using Airslip.Common.Services.Excel.Interfaces;
 using Airslip.Common.Services.SqlServer.Implementations;
 using Airslip.Common.Services.SqlServer.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Airslip.Analytics.Services.SqlServer;
 
@@ -34,6 +39,8 @@ public class SqlServerContext : AirslipSqlServerContextBase
     public DbSet<BankSyncRequest> BankSyncRequests { get; set; } = null!;
     public DbSet<BankTransaction> BankTransactions { get; set; } = null!;
     public DbSet<CountryCode> CountryCodes { get; set; } = null!;
+    public DbSet<CurrencyDetail> CurrencyDetails { get; set; } = null!;
+    
     public DbSet<BankAccountMetricSnapshot> BankAccountMetricSnapshots { get; set; } = null!;
     public DbSet<BasicAuditInformation> AuditInformation { get; set; } = null!;
     public DbSet<Integration> Integrations { get; set; } = null!;
@@ -61,6 +68,7 @@ public class SqlServerContext : AirslipSqlServerContextBase
         
         modelBuilder.AddTableWithDefaults<BankSyncRequest>();
         modelBuilder.AddTableWithDefaults<CountryCode>();
+        modelBuilder.AddTableWithDefaults<CurrencyDetail>();
 
         modelBuilder.AddTableWithDefaults<BasicAuditInformation>("AuditInformation");
         modelBuilder.AddTableWithDefaults<MerchantRefund>();
@@ -282,5 +290,30 @@ public class SqlServerContext : AirslipSqlServerContextBase
             {
                 b.Day, b.Month, b.Year, b.EntityId, b.AirslipUserType, b.IntegrationId
             });
+        
+        // Default data
+        // Init
+        ISpreadsheetReader reader = new ExcelReader();
+        using (Stream? fileStream = GetType().Assembly
+                   .GetManifestResourceStream("Airslip.Analytics.Services.SqlServer.Data.country-codes.xlsx"))
+        {
+            if (fileStream == null) throw new FileNotFoundException("CountryCodes not found");
+
+            // Add the country codes
+            List<CountryCode> countryCodes = reader.ReadDataFromSheet<CountryCode>(fileStream, 1, 1);
+            countryCodes.ForEach(o => o.EntityStatus = EntityStatus.Active);
+            modelBuilder.Entity<CountryCode>().HasData(countryCodes);            
+        }
+
+        using (Stream? fileStream = GetType().Assembly
+                   .GetManifestResourceStream("Airslip.Analytics.Services.SqlServer.Data.country-codes.xlsx"))
+        {
+            if (fileStream == null) throw new FileNotFoundException("CountryCodes not found");
+
+            // Add the country codes
+            List<CurrencyDetail> currencyDetails = reader.ReadDataFromSheet<CurrencyDetail>(fileStream, 2, 1);
+            currencyDetails.ForEach(o => o.EntityStatus = EntityStatus.Active);
+            modelBuilder.Entity<CurrencyDetail>().HasData(currencyDetails);         
+        }
     }
 }
