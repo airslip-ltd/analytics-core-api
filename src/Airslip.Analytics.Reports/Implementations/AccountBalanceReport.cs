@@ -38,6 +38,7 @@ public class AccountBalanceReport : IAccountBalanceReport
             join bankAccountBalanceSummary in _context.BankAccountBalanceSummary on integration.Id
                 equals bankAccountBalanceSummary.IntegrationId
             from accountDetail in _context.IntegrationAccountDetails.Where(o => o.IntegrationId.Equals(integration.Id))
+            from countryCode in _context.CurrencyDetails.Where(o => o.Id.Equals(accountDetail.CurrencyCode))
             where integration.IntegrationType == IntegrationType.Banking
             select new AccountBalanceReportQuery
             {
