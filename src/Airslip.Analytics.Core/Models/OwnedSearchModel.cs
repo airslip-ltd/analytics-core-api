@@ -1,3 +1,4 @@
+using Airslip.Analytics.Core.Data;
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Common.Types.Enums;
 using System.ComponentModel.DataAnnotations;
@@ -13,5 +14,5 @@ public abstract record OwnedSearchModel : IOwnedSearch
     public AirslipUserType OwnerAirslipUserType { get; init; } = AirslipUserType.Unknown;
 
     [Required]
-    public string CurrencyCode { get; init; } = "GBP";
+    public string CurrencyCode { get; init; } = Constants.DEFAULT_CURRENCY;
 }

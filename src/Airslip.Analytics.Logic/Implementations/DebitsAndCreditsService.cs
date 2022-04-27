@@ -47,14 +47,13 @@ public class DebitsAndCreditsService : IDebitsAndCreditsService
 
         List<DebitsAndCreditsByYear> metrics = await q.ToListAsync();
         DateTimeFormatInfo formatter = CultureInfo.CurrentCulture.DateTimeFormat;
-        DashboardGraphSeriesModel result = new(query.StartDate, query.EndDate,
+        DashboardGraphSeriesModel result = new(query.StartDate, query.EndDate, query.CurrencyCode, 
             new []
             {
                 new Series("Money In", 
                     metrics.Select(o => new TimelyMetric(o.Month, formatter.GetAbbreviatedMonthName(o.Month),
                     o.TotalCredit, PeriodType.Month)),
                     metrics.Select( o=> o.TotalCredit.ToPositiveCurrency())
-                    
                     ),
              new Series("Money Out", metrics.Select(o => new TimelyMetric(o.Month, 
                  formatter.GetAbbreviatedMonthName(o.Month),

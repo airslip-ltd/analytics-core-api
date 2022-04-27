@@ -8,13 +8,13 @@ begin
         @IntegrationId as nvarchar(50),
         @EntityId as nvarchar(50),
         @AirslipUserType as int,
-        @Currency as varchar(5)
+        @CurrencyCode as nvarchar(3)
 
     select @AccountType = IAD.AccountType,
            @IntegrationId = bab.IntegrationId,
            @EntityId = bab.EntityId,
            @AirslipUserType = bab.AirslipUserType,
-           @Currency = bab.Currency
+           @CurrencyCode = bab.CurrencyCode
     from BankAccountBalances as bab
              join IntegrationAccountDetails IAD on bab.IntegrationId = IAD.IntegrationId
     where bab.Id = @Id
@@ -24,10 +24,10 @@ begin
                   where IntegrationId = @IntegrationId
                     and EntityId = @EntityId
                     and AirslipUserType = @AirslipUserType
-                    and Currency = @Currency)
+                    and CurrencyCode = @CurrencyCode)
         insert into BankAccountBalanceSummaries
-        (IntegrationId, EntityId, AirslipUserType, UpdatedOn, Balance, TimeStamp, Currency, Movement, AccountType)
-        values (@IntegrationId, @EntityId, @AirslipUserType, datefromparts(2000, 1, 1), 0, 0, @Currency, 0,
+        (IntegrationId, EntityId, AirslipUserType, UpdatedOn, Balance, TimeStamp, CurrencyCode, Movement, AccountType)
+        values (@IntegrationId, @EntityId, @AirslipUserType, datefromparts(2000, 1, 1), 0, 0,@CurrencyCode, 0,
                 @AccountType)
 
     update babs
@@ -42,7 +42,7 @@ begin
                                 t.UpdatedOn,
                                 t.Balance,
                                 t.TimeStamp,
-                                t.Currency
+                                t.CurrencyCode
                    from BankAccountBalanceSnapshots t
                    where t.EntityId = @EntityId
                      and t.AirslipUserType = @AirslipUserType
@@ -50,7 +50,7 @@ begin
                    order by TimeStamp desc) y on babs.IntegrationId = y.IntegrationId
         and babs.EntityId = y.EntityId
         and babs.AirslipUserType = y.AirslipUserType
-        and babs.Currency = y.Currency
+        and babs.CurrencyCode = y.CurrencyCode
         and babs.IntegrationId = y.IntegrationId
 
 end

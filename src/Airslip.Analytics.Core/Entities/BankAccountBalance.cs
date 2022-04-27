@@ -1,4 +1,5 @@
-﻿using Airslip.Analytics.Core.Enums;
+﻿using Airslip.Analytics.Core.Data;
+using Airslip.Analytics.Core.Enums;
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Common.Repository.Types.Entities;
 using Airslip.Common.Repository.Types.Enums;
@@ -8,7 +9,6 @@ using Airslip.Common.Types.Interfaces;
 using Airslip.Common.Utilities.Extensions;
 using JetBrains.Annotations;
 using System;
-using System.Collections.Generic;
 
 namespace Airslip.Analytics.Core.Entities;
 
@@ -24,7 +24,7 @@ public record BankAccountBalance : IEntityWithOwnership, IFromDataSource, IRepor
     public AirslipUserType AirslipUserType { get; set; }
     public BalanceStatus BalanceStatus { get; init; }
     public long Balance { get; init; }
-    public string? Currency { get; init; }
+    public string CurrencyCode { get; init; } = Constants.DEFAULT_CURRENCY;
     public DataSources DataSource { get; set; } = DataSources.Unknown;
     public long TimeStamp { get; set; } = DateTime.UtcNow.ToUnixTimeMilliseconds();
 }

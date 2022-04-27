@@ -111,13 +111,13 @@ public class DashboardSnapshotService : IDashboardSnapshotService
                   && rd.OwnerEntityId == query.OwnerEntityId
                   && rd.OwnerAirslipUserType == query.OwnerAirslipUserType 
                   && businessBalance.AccountType == BankingAccountTypes.CURRENT
-                  && businessBalance.Currency == query.CurrencyCode
+                  && businessBalance.CurrencyCode == query.CurrencyCode
             select new DashboardSnapshotModel
             {
                 Balance = businessBalance.Balance.ToPositiveCurrency(),
                 TimeStamp = businessBalance.TimeStamp,
                 Movement = businessBalance.Movement,
-                CurrencyCode = businessBalance.Currency
+                CurrencyCode = businessBalance.CurrencyCode
             };
         
         DashboardSnapshotModel? response = await qBalance.FirstOrDefaultAsync();
@@ -134,7 +134,7 @@ public class DashboardSnapshotService : IDashboardSnapshotService
                   && rd.OwnerEntityId == query.OwnerEntityId
                   && rd.OwnerAirslipUserType == query.OwnerAirslipUserType 
                   && accountBalanceSnapshot.AccountType == BankingAccountTypes.CURRENT
-                  && accountBalanceSnapshot.Currency == query.CurrencyCode
+                  && accountBalanceSnapshot.CurrencyCode == query.CurrencyCode
             orderby accountBalanceSnapshot.TimeStamp
             select new SnapshotMetric(accountBalanceSnapshot.TimeStamp, accountBalanceSnapshot.Balance.ToPositiveCurrency());
 
