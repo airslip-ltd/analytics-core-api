@@ -12,6 +12,7 @@ public record IntegrationModel : IModelWithOwnership, IFromDataSource
     public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
     public string IntegrationProviderId { get; init; } = string.Empty;
+    public string IntegrationProviderFriendlyName { get; init; } = string.Empty;
     public IntegrationType IntegrationType { get; set; } = IntegrationType.Commerce; 
     public string? UserId { get; set; }
     public string? EntityId { get; set; } = string.Empty;

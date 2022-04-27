@@ -1,5 +1,4 @@
-﻿using Airslip.Common.Types.Enums;
-using Airslip.Common.Utilities;
+﻿using Airslip.Common.Utilities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,7 +6,6 @@ using Moq;
 using Serilog;
 using System;
 using System.Net.Http;
-using System.Net.Http.Headers;
 
 namespace Airslip.Analytics.Api.Tests.IntegrationFacts;
 
@@ -16,8 +14,7 @@ public class IntegrationTestBase
     private static readonly TransactionsApiWebApplicationFactory<Program> TransactionsFactory;
     protected readonly Uri BaseUri = new("http://localhost/v1/");
     protected const string HeartbeatEndpoint = "heartbeat";
-    protected const string TransactionEndpoint = "transactions";
-    internal static readonly Mock<ILogger> _mockLogger = new();
+    private static readonly Mock<ILogger> _mockLogger = new();
 
     static IntegrationTestBase()
     {
@@ -30,16 +27,6 @@ public class IntegrationTestBase
     {
         HttpClient client = TransactionsFactory.CreateClient();
         client.DefaultRequestHeaders.Add("Accept", Json.MediaType);
-        return client;
-    }
-        
-    protected static HttpClient GetAuthorizedHttpClient()
-    {
-        HttpClient client = TransactionsFactory.CreateClient();
-        client.DefaultRequestHeaders.Add("Accept", Json.MediaType);
-        
-        // string bearerTokenFromIdentity = string.Empty;
-        // client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearerTokenFromIdentity);
         return client;
     }
 }

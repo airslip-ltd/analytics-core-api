@@ -1,4 +1,3 @@
-using Airslip.Analytics.Core.Interfaces;
 using Airslip.Analytics.Core.Models;
 using Airslip.Analytics.Reports.Interfaces;
 using Airslip.Analytics.Reports.Models;
@@ -21,8 +20,12 @@ using System.Threading.Tasks;
 
 namespace Airslip.Analytics.Api.Controllers;
 
+/// <summary>
+/// A description for a group of APIs
+/// </summary>
 [ApiController]    
 [ApiVersion("1.0")]
+[Consumes(Json.MediaType)]
 [Produces(Json.MediaType)]
 [Route("v{version:apiVersion}/balance")]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -41,6 +44,10 @@ public class AccountsController : ApiControllerBase
         _downloadService = downloadService;
     }
         
+    /// <summary>
+    /// A description about a specific API should go here
+    /// </summary>
+    /// <param name="query">A parameter description should go here</param>
     [HttpPost]
     [Route("search")]
     [ProducesResponseType(typeof(EntitySearchResponse<AccountBalanceReportModel>), StatusCodes.Status200OK)]
@@ -53,11 +60,15 @@ public class AccountsController : ApiControllerBase
         return HandleResponse<EntitySearchResponse<AccountBalanceReportModel>>(response);
     }
         
+    /// <summary>
+    /// A description about a specific API should go here
+    /// </summary>
+    /// <param name="query">A parameter description should go here</param>
     [HttpPost]
     [ProducesResponseType( typeof(DownloadResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
     [Route("download")]
-    public async Task<IActionResult> BankTransactionsDownload([FromBody] OwnedDataSearchModel query)
+    public async Task<IActionResult> DownloadAccountBalances([FromBody] OwnedDataSearchModel query)
     {
         IResponse response = await _downloadService.Download<BankTransactionReportModel>(_accountBalanceReport, query, 
             "account-balances");

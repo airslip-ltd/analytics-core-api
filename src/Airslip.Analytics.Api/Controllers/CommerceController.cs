@@ -21,8 +21,12 @@ using System.Threading.Tasks;
 
 namespace Airslip.Analytics.Api.Controllers;
 
+/// <summary>
+/// A description for a group of APIs
+/// </summary>
 [ApiController]    
 [ApiVersion("1.0")]
+[Consumes(Json.MediaType)]
 [Produces(Json.MediaType)]
 [Route("v{version:apiVersion}/commerce")]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -41,11 +45,15 @@ public class CommerceController : ApiControllerBase
         _downloadService = downloadService;
     }
         
+    /// <summary>
+    /// A description about a specific API should go here
+    /// </summary>
+    /// <param name="query">A parameter description should go here</param>
     [HttpPost]
     [Route("search")]
     [ProducesResponseType(typeof(EntitySearchResponse<CommerceProviderModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetProviders([FromBody] OwnedDataSearchModel query)
+    public async Task<IActionResult> GetCommerceAccounts([FromBody] OwnedDataSearchModel query)
     {
         IResponse response = await _commerceProviderReport
             .Execute(query);
@@ -53,11 +61,15 @@ public class CommerceController : ApiControllerBase
         return HandleResponse<EntitySearchResponse<CommerceProviderModel>>(response);
     }
         
+    /// <summary>
+    /// A description about a specific API should go here
+    /// </summary>
+    /// <param name="query">A parameter description should go here</param>
     [HttpPost]
     [ProducesResponseType( typeof(DownloadResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
     [Route("download")]
-    public async Task<IActionResult> BankTransactionsDownload([FromBody] OwnedDataSearchModel query)
+    public async Task<IActionResult> DownloadCommerceAccounts([FromBody] OwnedDataSearchModel query)
     {
         IResponse response = await _downloadService.Download<BankTransactionReportModel>(_commerceProviderReport, query, 
             "commerce-providers");

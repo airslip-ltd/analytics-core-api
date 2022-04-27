@@ -6,6 +6,9 @@ namespace Airslip.Analytics.Reports.Models;
 
 public record CommerceProviderModel : IModel
 {
+    /// <summary>
+    /// A description about the property should go here
+    /// </summary>
     public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
     public string IntegrationProviderId { get; init; } = string.Empty;
