@@ -1,5 +1,4 @@
-﻿using Airslip.Analytics.Core.Enums;
-using Airslip.Integrations.Banking.Types.Enums;
+﻿using Airslip.Integrations.Banking.Types.Enums;
 using JetBrains.Annotations;
 
 namespace Airslip.Analytics.Core.Models;

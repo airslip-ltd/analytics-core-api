@@ -1,3 +1,4 @@
+using Airslip.Analytics.Api.Docs.Examples.Poc;
 using Airslip.Analytics.Core.Models;
 using Airslip.Analytics.Reports.Interfaces;
 using Airslip.Analytics.Reports.Models;
@@ -52,14 +53,30 @@ public class ReportController : ApiControllerBase
     /// </summary>
     /// <param name="query">A parameter description should go here</param>
     [HttpPost]
-    [ProducesResponseType( typeof(EntitySearchResponse<BankTransactionReportModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(EntitySearchResponse<BankTransactionReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
     [Route("bank-transactions")]
-    public async Task<IActionResult> GetBankTransactionsReport([FromBody] OwnedDataSearchModel query)
+    public async Task<IActionResult> GetBankTransactions([FromBody] OwnedDataSearchModel query)
     {
         IResponse response = await _bankTransactionReport.Execute(query);
 
         return HandleResponse<EntitySearchResponse<BankTransactionReportModel>>(response);
+    }
+    
+    /// <summary>
+    /// A description about a specific API should go here
+    /// </summary>
+    /// <param name="id"></param>
+    [HttpGet("{id}")]
+    [ProducesResponseType(typeof(BankTransactionReportModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    public IActionResult GetBankTransaction([FromRoute] string id)
+    {
+        BankTransactionReportModelExample example = new();
+        
+        IResponse response = example.GetExamples();
+            
+        return HandleResponse<BankTransactionReportModel>(response);
     }
     
     /// <summary>
