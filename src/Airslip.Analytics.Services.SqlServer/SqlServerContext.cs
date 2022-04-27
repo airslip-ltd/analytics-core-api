@@ -138,7 +138,6 @@ public class SqlServerContext : AirslipSqlServerContextBase
         modelBuilder.Entity<BankTransaction>().Property(o => o.TransactionHash).HasColumnType(Constants.ID_DATA_TYPE);
         modelBuilder.Entity<BankTransaction>().Property(o => o.BankId).HasColumnType(Constants.ID_DATA_TYPE);
         modelBuilder.Entity<BankTransaction>().Property(o => o.EmailAddress).HasColumnType("nvarchar (100)");
-        modelBuilder.Entity<BankTransaction>().Property(o => o.CurrencyCode).HasColumnType("nvarchar (5)");
         modelBuilder.Entity<BankTransaction>().Property(o => o.Description).HasColumnType("nvarchar (150)");
         modelBuilder.Entity<BankTransaction>().Property(o => o.AddressLine).HasColumnType("nvarchar (50)");
         modelBuilder.Entity<BankTransaction>().Property(o => o.LastCardDigits).HasColumnType("nvarchar (20)");
@@ -159,7 +158,6 @@ public class SqlServerContext : AirslipSqlServerContextBase
         modelBuilder.Entity<MerchantTransaction>().Property(o => o.BankStatementTransactionIdentifier).HasColumnType("nvarchar (50)");
         modelBuilder.Entity<MerchantTransaction>().Property(o => o.StoreLocationId).HasColumnType("nvarchar (50)");
         modelBuilder.Entity<MerchantTransaction>().Property(o => o.StoreAddress).HasColumnType("nvarchar (250)");
-        modelBuilder.Entity<MerchantTransaction>().Property(o => o.CurrencyCode).HasColumnType("nvarchar (5)");
         modelBuilder.Entity<MerchantTransaction>().Property(o => o.CustomerEmail).HasColumnType("nvarchar (100)");
         modelBuilder.Entity<MerchantTransaction>().Property(o => o.OperatorName).HasColumnType("nvarchar (100)");
         modelBuilder.Entity<MerchantTransaction>().Property(o => o.Time).HasColumnType("nvarchar (10)");
@@ -170,12 +168,20 @@ public class SqlServerContext : AirslipSqlServerContextBase
         modelBuilder.Entity<MerchantTransaction>().Property(o => o.OrderStatus).HasColumnType("nvarchar (20)").HasDefaultValue("Unknown");
         modelBuilder.Entity<MerchantTransaction>().Property(o => o.PaymentStatus).HasColumnType("nvarchar (20)").HasDefaultValue("Unknown");
         
-        modelBuilder.Entity<MerchantAccountMetricSnapshot>().Property(o => o.CurrencyCode).HasColumnType("nvarchar (3)").HasDefaultValue("GBP");
-        modelBuilder.Entity<MerchantMetricSnapshot>().Property(o => o.CurrencyCode).HasColumnType("nvarchar (3)").HasDefaultValue("GBP");
-        modelBuilder.Entity<BankAccountMetricSnapshot>().Property(o => o.CurrencyCode).HasColumnType("nvarchar (3)").HasDefaultValue("GBP");
+        modelBuilder.AddCurrencyCode<BankAccountBalance>();
+        modelBuilder.AddCurrencyCode<BankAccountBalanceSnapshot>();
+        modelBuilder.AddCurrencyCode<BankAccountBalanceSummary>();
+        modelBuilder.AddCurrencyCode<BankBusinessBalanceSnapshot>();
+        modelBuilder.AddCurrencyCode<BankBusinessBalance>();
+        
+        modelBuilder.AddCurrencyCode<MerchantAccountMetricSnapshot>();
+        modelBuilder.AddCurrencyCode<BankAccountMetricSnapshot>();
+        modelBuilder.AddCurrencyCode<MerchantMetricSnapshot>();
+        modelBuilder.AddCurrencyCode<MerchantTransaction>();
+        modelBuilder.AddCurrencyCode<BankTransaction>();
         
         modelBuilder.Entity<IntegrationAccountDetail>().Property(o => o.LastCardDigits).HasColumnType("nvarchar (20)");
-        modelBuilder.Entity<IntegrationAccountDetail>().Property(o => o.CurrencyCode).HasColumnType("nvarchar (5)");
+        modelBuilder.Entity<IntegrationAccountDetail>().Property(o => o.CurrencyCode).IsCurrencyCode();
         modelBuilder.Entity<IntegrationAccountDetail>().Property(o => o.SortCode).HasColumnType("nvarchar (10)");
         modelBuilder.Entity<IntegrationAccountDetail>().Property(o => o.AccountNumber).HasColumnType("nvarchar (10)");
         modelBuilder.Entity<IntegrationAccountDetail>().Property(o => o.AccountId).HasColumnType("nvarchar(100)");
@@ -259,7 +265,7 @@ public class SqlServerContext : AirslipSqlServerContextBase
         modelBuilder.Entity<BankAccountBalanceSnapshot>()
             .HasIndex(b => new
             {
-                b.EntityId, b.AirslipUserType, b.IntegrationId, b.UpdatedOn, b.TimeStamp, b.AccountType, b.Currency
+                b.EntityId, b.AirslipUserType, b.IntegrationId, b.UpdatedOn, b.TimeStamp, b.AccountType, b.CurrencyCode
             }).IncludeProperties(p => new
             {
                 p.Balance
@@ -274,7 +280,7 @@ public class SqlServerContext : AirslipSqlServerContextBase
         modelBuilder.Entity<BankBusinessBalance>()
             .HasIndex(b => new
             {
-                b.EntityId, b.AirslipUserType, b.AccountType, b.Currency
+                b.EntityId, b.AirslipUserType, b.AccountType, b.CurrencyCode
             });
         
         modelBuilder.Entity<MerchantTransaction>()

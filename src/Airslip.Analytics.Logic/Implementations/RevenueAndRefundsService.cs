@@ -47,14 +47,13 @@ public class RevenueAndRefundsService : IRevenueAndRefundsService
 
         List<RevenueAndRefundsByYear> metrics = await q.ToListAsync();
         DateTimeFormatInfo formatter = CultureInfo.CurrentCulture.DateTimeFormat;
-        DashboardGraphSeriesModel result = new(query.StartDate, query.EndDate,
+        DashboardGraphSeriesModel result = new(query.StartDate, query.EndDate, query.CurrencyCode,
             new []
             {
                 new Series("Sales", 
                     metrics.Select(o => new TimelyMetric(o.Month, formatter.GetAbbreviatedMonthName(o.Month),
                     o.TotalSales, PeriodType.Month)),
                     metrics.Select( o=> o.TotalSales.ToPositiveCurrency())
-                    
                     ),
              new Series("Refunds", metrics.Select(o => new TimelyMetric(o.Month, 
                  formatter.GetAbbreviatedMonthName(o.Month),

@@ -3,6 +3,7 @@ using Airslip.Analytics.Services.SqlServer.Data;
 using Airslip.Common.Repository.Types.Interfaces;
 using Humanizer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Migrations;
 using System.Collections.Generic;
 using System.IO;
@@ -51,16 +52,13 @@ public static class MigrationExtensions
         {
             modelBuilder.Entity<TEntity>().Property("EntityId").HasColumnType(Constants.ID_DATA_TYPE);
         }
-        if (typeof(IReportableWithCurrency).IsAssignableFrom(typeof(TEntity)))
-        {
-            modelBuilder.Entity<TEntity>().Property("Currency").HasColumnType("varchar (5)");
-        }
         if (typeof(IReportableWithIntegration).IsAssignableFrom(typeof(TEntity)))
         {
             modelBuilder.Entity<TEntity>().Property("IntegrationId").HasColumnType(Constants.ID_DATA_TYPE);
         }
         return modelBuilder;
     }
+    
     public static ModelBuilder AddDatabaseGeneratedId<TEntity>(this ModelBuilder modelBuilder)
         where TEntity : class, IEntityWithId
     {
@@ -68,6 +66,25 @@ public static class MigrationExtensions
             .Entity<TEntity>()
             .Property(b => b.Id)
             .HasDefaultValueSql("dbo.getId()");
+
+        return modelBuilder;
+    }
+
+    public static PropertyBuilder<string> IsCurrencyCode(this PropertyBuilder<string> countrCodeProperty)
+    {
+        return countrCodeProperty
+            .HasColumnType("nvarchar (3)")
+            .HasDefaultValue(Core.Data.Constants.DEFAULT_CURRENCY)
+            .IsRequired();
+    }
+    
+    public static ModelBuilder AddCurrencyCode<TEntity>(this ModelBuilder modelBuilder)
+        where TEntity : class, IReportableWithCurrency
+    {
+        modelBuilder
+            .Entity<TEntity>()
+            .Property(b => b.CurrencyCode)
+            .IsCurrencyCode();
 
         return modelBuilder;
     }

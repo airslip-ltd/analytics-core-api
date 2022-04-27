@@ -4,9 +4,9 @@ create or alter proc dbo.CreateAccountBalanceSnapshot
 )
 AS
 insert into BankAccountBalanceSnapshots
-(Id, EntityId, AirslipUserType, IntegrationId, Balance, TimeStamp, Currency, UpdatedOn, AccountType)
+(Id, EntityId, AirslipUserType, IntegrationId, Balance, TimeStamp, CurrencyCode, UpdatedOn, AccountType)
 select dbo.getId(), AB.EntityId, AB.AirslipUserType, AB.IntegrationId,
-       case AB.BalanceStatus when 1 then AB.Balance * -1 else AB.Balance end, AB.TimeStamp, AB.Currency,
+       case AB.BalanceStatus when 1 then AB.Balance * -1 else AB.Balance end, AB.TimeStamp, AB.CurrencyCode,
        dbo.round5min(DATEADD(ss, AB.TimeStamp/1000, '19700101')),
        IAD.AccountType
 from BankAccountBalances AB

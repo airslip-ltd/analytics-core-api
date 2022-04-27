@@ -1,3 +1,4 @@
+using Airslip.Analytics.Core.Data;
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Common.Repository.Types.Entities;
 using Airslip.Common.Repository.Types.Enums;
@@ -11,7 +12,7 @@ using System;
 namespace Airslip.Analytics.Core.Entities;
 
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-public class BankTransaction : IEntityWithOwnership, IFromDataSource, IReportableWithIntegration
+public class BankTransaction : IEntityWithOwnership, IFromDataSource, IReportableWithIntegration, IReportableWithCurrency
 {
     public string Id { get; set; } = string.Empty;
     public virtual BasicAuditInformation? AuditInformation { get; set; }
@@ -28,7 +29,7 @@ public class BankTransaction : IEntityWithOwnership, IFromDataSource, IReportabl
     public long? AuthorisedDate { get; set; }
     public long CapturedDate { get; set; }
     public long Amount { get; set; }
-    public string? CurrencyCode { get; set; }
+    public string CurrencyCode { get; init; } = Constants.DEFAULT_CURRENCY;
     public string Description { get; set; } = string.Empty;
     public string? AddressLine { get; set; }
     public string? LastCardDigits { get; set; }

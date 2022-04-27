@@ -1,4 +1,5 @@
-﻿using Airslip.Analytics.Core.Enums;
+﻿using Airslip.Analytics.Core.Data;
+using Airslip.Analytics.Core.Enums;
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
@@ -20,7 +21,7 @@ public record BankAccountBalanceModel : IModelWithOwnership, IFromDataSource, IT
     public string IntegrationId { get; set; } = string.Empty;
     public BalanceStatus BalanceStatus { get; init; }
     public long Balance { get; init; }
-    public string? Currency { get; init; }
+    public string CurrencyCode { get; init; } = Constants.DEFAULT_CURRENCY;
     public DataSources DataSource { get; set; } = DataSources.Unknown;
     public long TimeStamp { get; set; }
     public string TraceInfo => $"Id: {Id}, EntityId: {EntityId}, AirslipUserType: {AirslipUserType}, IntegrationId: {IntegrationId}";

@@ -67,7 +67,6 @@ public class AccountBalanceReport : IAccountBalanceReport
                 {
                     new(nameof(AccountBalanceReportQuery.OwnerEntityId), query.OwnerEntityId),
                     new(nameof(AccountBalanceReportQuery.OwnerAirslipUserType), query.OwnerAirslipUserType.ToString()),
-                    new(nameof(AccountBalanceReportQuery.CurrencyCode), query.CurrencyCode),
                     new(nameof(AccountBalanceReportQuery.ViewerEntityId), _userToken.EntityId),
                     new(nameof(AccountBalanceReportQuery.ViewerAirslipUserType), _userToken.AirslipUserType.ToString()),
                     new(nameof(AccountBalanceReportQuery.PermissionType), PermissionType.Banking.ToString()),

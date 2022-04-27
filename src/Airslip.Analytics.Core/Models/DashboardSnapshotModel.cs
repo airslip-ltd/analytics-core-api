@@ -1,3 +1,4 @@
+using Airslip.Analytics.Core.Data;
 using Airslip.Common.Types.Interfaces;
 using JetBrains.Annotations;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ public class DashboardSnapshotModel : ISuccess
     public double Balance { get; set; }
     public long TimeStamp { get; set; }
     public double Movement { get; set; }
-    public string CurrencyCode { get; set; } = "GBP";
+    public string CurrencyCode { get; set; } = Constants.DEFAULT_CURRENCY;
     public List<SnapshotMetric> Metrics { get; set; } = new();
     public int DayRange { get; set; }
 }

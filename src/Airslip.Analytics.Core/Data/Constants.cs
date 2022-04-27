@@ -13,4 +13,6 @@ public static class Constants
     public const string MESSAGE_QUEUE_BANK_ACCOUNT_BALANCE_ENTITY = "bank-account-balance-entity";
     public const string MESSAGE_QUEUE_MERCHANT_TRANSACTION = "merchant-transactions";
     public const string MESSAGE_QUEUE_BANK_TRANSACTION = "bank-transaction";
+    
+    public const string DEFAULT_CURRENCY = "GBP";
 }
