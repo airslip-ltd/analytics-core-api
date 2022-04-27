@@ -35,6 +35,7 @@
 	  <EmbeddedResource Include="Database\Procedures\dbo.CreateMerchantMetricSnapshot.prc.sql" />
 	  <EmbeddedResource Include="Database\Procedures\dbo.GetCreditsAndDebitsByRange.prc.sql" />
 	  <EmbeddedResource Include="Database\Procedures\dbo.GetCreditsAndDebitsByYear.prc.sql" />
+	  <EmbeddedResource Include="Database\Procedures\dbo.GetCurrencies.prc.sql" />
 	  <EmbeddedResource Include="Database\Procedures\dbo.GetRevenueAndRefundsByRange.prc.sql" />
 	  <EmbeddedResource Include="Database\Procedures\dbo.GetRevenueAndRefundsByYear.prc.sql" />
 	  <EmbeddedResource Include="Database\Procedures\dbo.GetTotalRefundsSnapshot.prc.sql" />
