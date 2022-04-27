@@ -26,13 +26,14 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Serilog;
 using Swashbuckle.AspNetCore.Filters;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("Airslip.Analytics.Api.Tests")]
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -173,7 +174,8 @@ builder
     .UseMonitoring();
 
 ServiceDescriptor? type = builder.Services.FirstOrDefault(o => o.ServiceType == typeof(IQueryBuilder));
-builder.Services.Remove(type);
+if(type is not null)
+    builder.Services.Remove(type);
 builder.Services.AddScoped<IQueryBuilder, QueryBuilderTEMP>();
 
 WebApplication app = builder.Build();
