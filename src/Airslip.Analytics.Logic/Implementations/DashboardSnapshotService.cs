@@ -88,6 +88,7 @@ public class DashboardSnapshotService : IDashboardSnapshotService
 
         return new DashboardSnapshotModel
         {
+            CurrencyCode = query.CurrencyCode,
             Balance = primary.Balance.ToPositiveCurrency(),
             DayRange = dayRange,
             TimeStamp = primary.MetricDate.ToUnixTimeMilliseconds(),
