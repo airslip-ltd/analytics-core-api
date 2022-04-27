@@ -15,8 +15,6 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 type: "nvarchar (3)",
                 nullable: true,
                 defaultValue: "GBP");
-            
-            migrationBuilder.AddSqlFiles();
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

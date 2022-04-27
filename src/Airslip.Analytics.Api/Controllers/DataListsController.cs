@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Serilog;
+using System;
 using System.Threading.Tasks;
 
 namespace Airslip.Analytics.Api.Controllers;
