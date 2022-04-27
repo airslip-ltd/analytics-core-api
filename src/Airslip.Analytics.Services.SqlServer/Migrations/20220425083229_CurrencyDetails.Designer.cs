@@ -4,6 +4,7 @@ using Airslip.Analytics.Services.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Airslip.Analytics.Services.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    partial class SqlServerContextModelSnapshot : ModelSnapshot
+    [Migration("20220425083229_CurrencyDetails")]
+    partial class CurrencyDetails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,11 +77,8 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Property<int>("BalanceStatus")
                         .HasColumnType("int");
 
-                    b.Property<string>("CurrencyCode")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar (3)")
-                        .HasDefaultValue("GBP");
+                    b.Property<string>("Currency")
+                        .HasColumnType("varchar (5)");
 
                     b.Property<int>("DataSource")
                         .HasColumnType("int");
@@ -122,11 +121,8 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Property<long>("Balance")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("CurrencyCode")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar (3)")
-                        .HasDefaultValue("GBP");
+                    b.Property<string>("Currency")
+                        .HasColumnType("varchar (5)");
 
                     b.Property<string>("EntityId")
                         .HasColumnType("nvarchar(50)");
@@ -146,9 +142,9 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
                     b.HasIndex("EntityId", "AirslipUserType", "AccountType");
 
-                    b.HasIndex("EntityId", "AirslipUserType", "IntegrationId", "UpdatedOn", "TimeStamp", "AccountType", "CurrencyCode");
+                    b.HasIndex("EntityId", "AirslipUserType", "IntegrationId", "UpdatedOn", "TimeStamp", "AccountType", "Currency");
 
-                    SqlServerIndexBuilderExtensions.IncludeProperties(b.HasIndex("EntityId", "AirslipUserType", "IntegrationId", "UpdatedOn", "TimeStamp", "AccountType", "CurrencyCode"), new[] { "Balance" });
+                    SqlServerIndexBuilderExtensions.IncludeProperties(b.HasIndex("EntityId", "AirslipUserType", "IntegrationId", "UpdatedOn", "TimeStamp", "AccountType", "Currency"), new[] { "Balance" });
 
                     b.ToTable("BankAccountBalanceSnapshots", (string)null);
                 });
@@ -169,11 +165,8 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Property<long>("Balance")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("CurrencyCode")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar (3)")
-                        .HasDefaultValue("GBP");
+                    b.Property<string>("Currency")
+                        .HasColumnType("varchar (5)");
 
                     b.Property<string>("EntityId")
                         .HasColumnType("nvarchar(50)");
@@ -212,12 +205,6 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
                     b.Property<int>("CreditCount")
                         .HasColumnType("int");
-
-                    b.Property<string>("CurrencyCode")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar (3)")
-                        .HasDefaultValue("GBP");
 
                     b.Property<int?>("Day")
                         .HasColumnType("int");
@@ -277,11 +264,8 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Property<long>("Balance")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("CurrencyCode")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar (3)")
-                        .HasDefaultValue("GBP");
+                    b.Property<string>("Currency")
+                        .HasColumnType("varchar (5)");
 
                     b.Property<string>("EntityId")
                         .HasColumnType("nvarchar(50)");
@@ -298,7 +282,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.HasKey("Id")
                         .HasName("PK_BankBusinessBalances_Id");
 
-                    b.HasIndex("EntityId", "AirslipUserType", "AccountType", "CurrencyCode");
+                    b.HasIndex("EntityId", "AirslipUserType", "AccountType", "Currency");
 
                     b.ToTable("BankBusinessBalances", (string)null);
                 });
@@ -317,11 +301,8 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Property<long>("Balance")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("CurrencyCode")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar (3)")
-                        .HasDefaultValue("GBP");
+                    b.Property<string>("Currency")
+                        .HasColumnType("varchar (5)");
 
                     b.Property<string>("EntityId")
                         .HasColumnType("nvarchar(50)");
@@ -449,10 +430,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("CurrencyCode")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar (3)")
-                        .HasDefaultValue("GBP");
+                        .HasColumnType("nvarchar (5)");
 
                     b.Property<int>("DataSource")
                         .HasColumnType("int");
@@ -1070,9 +1048,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
                     b.Property<string>("CurrencyCode")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar (3)")
-                        .HasDefaultValue("GBP");
+                        .HasColumnType("nvarchar (5)");
 
                     b.Property<string>("IntegrationId")
                         .HasColumnType("nvarchar(50)");
@@ -1104,12 +1080,6 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
                     b.Property<int>("AirslipUserType")
                         .HasColumnType("int");
-
-                    b.Property<string>("CurrencyCode")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar (3)")
-                        .HasDefaultValue("GBP");
 
                     b.Property<int?>("Day")
                         .HasColumnType("int");
@@ -1162,12 +1132,6 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
                     b.Property<int>("AirslipUserType")
                         .HasColumnType("int");
-
-                    b.Property<string>("CurrencyCode")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar (3)")
-                        .HasDefaultValue("GBP");
 
                     b.Property<int?>("Day")
                         .HasColumnType("int");
@@ -1394,10 +1358,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("nvarchar (50)");
 
                     b.Property<string>("CurrencyCode")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar (3)")
-                        .HasDefaultValue("GBP");
+                        .HasColumnType("nvarchar (5)");
 
                     b.Property<string>("CustomerEmail")
                         .HasColumnType("nvarchar (100)");

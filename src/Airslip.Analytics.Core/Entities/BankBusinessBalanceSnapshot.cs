@@ -1,3 +1,4 @@
+using Airslip.Analytics.Core.Data;
 using Airslip.Analytics.Core.Interfaces;
 using Airslip.Common.Types.Enums;
 using Airslip.Common.Utilities.Extensions;
@@ -17,5 +18,5 @@ public record BankBusinessBalanceSnapshot : IReportableWithCurrency
     public long Balance { get; init; }
     public BankingAccountTypes AccountType { get; set; }
     public long TimeStamp { get; set; } = DateTime.UtcNow.ToUnixTimeMilliseconds();
-    public string? Currency { get; init; }
+    public string CurrencyCode { get; init; } = Constants.DEFAULT_CURRENCY;
 }

@@ -4,6 +4,7 @@ using Airslip.Analytics.Services.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Airslip.Analytics.Services.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    partial class SqlServerContextModelSnapshot : ModelSnapshot
+    [Migration("20220427092554_FixIncorrectColumn")]
+    partial class FixIncorrectColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,6 +77,9 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Property<int>("BalanceStatus")
                         .HasColumnType("int");
 
+                    b.Property<string>("Currency")
+                        .HasColumnType("varchar (5)");
+
                     b.Property<string>("CurrencyCode")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
@@ -122,6 +127,9 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Property<long>("Balance")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("Currency")
+                        .HasColumnType("varchar (5)");
+
                     b.Property<string>("CurrencyCode")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
@@ -168,6 +176,9 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
                     b.Property<long>("Balance")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("Currency")
+                        .HasColumnType("varchar (5)");
 
                     b.Property<string>("CurrencyCode")
                         .IsRequired()
@@ -277,6 +288,9 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Property<long>("Balance")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("Currency")
+                        .HasColumnType("varchar (5)");
+
                     b.Property<string>("CurrencyCode")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
@@ -316,6 +330,9 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
                     b.Property<long>("Balance")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("Currency")
+                        .HasColumnType("varchar (5)");
 
                     b.Property<string>("CurrencyCode")
                         .IsRequired()

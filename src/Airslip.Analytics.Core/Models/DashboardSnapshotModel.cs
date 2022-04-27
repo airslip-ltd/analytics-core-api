@@ -1,3 +1,4 @@
+using Airslip.Analytics.Core.Data;
 using Airslip.Common.Types.Interfaces;
 using JetBrains.Annotations;
 using System.Collections.Generic;
@@ -19,9 +20,16 @@ public class DashboardSnapshotModel : ISuccess
     /// A description about the property should go here
     /// </summary>
     public double Movement { get; set; }
+
     /// <summary>
     /// A description about the property should go here
     /// </summary>
+    public string CurrencyCode { get; set; } = Constants.DEFAULT_CURRENCY;
+    
+    /// <summary>
+    /// A description about the property should go here
+    /// </summary>
+    
     public List<SnapshotMetric> Metrics { get; set; } = new();
     /// <summary>
     /// A description about the property should go here

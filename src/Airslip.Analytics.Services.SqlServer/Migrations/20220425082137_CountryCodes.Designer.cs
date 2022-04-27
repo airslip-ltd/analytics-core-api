@@ -4,6 +4,7 @@ using Airslip.Analytics.Services.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Airslip.Analytics.Services.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    partial class SqlServerContextModelSnapshot : ModelSnapshot
+    [Migration("20220425082137_CountryCodes")]
+    partial class CountryCodes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,11 +77,8 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Property<int>("BalanceStatus")
                         .HasColumnType("int");
 
-                    b.Property<string>("CurrencyCode")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar (3)")
-                        .HasDefaultValue("GBP");
+                    b.Property<string>("Currency")
+                        .HasColumnType("varchar (5)");
 
                     b.Property<int>("DataSource")
                         .HasColumnType("int");
@@ -122,11 +121,8 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Property<long>("Balance")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("CurrencyCode")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar (3)")
-                        .HasDefaultValue("GBP");
+                    b.Property<string>("Currency")
+                        .HasColumnType("varchar (5)");
 
                     b.Property<string>("EntityId")
                         .HasColumnType("nvarchar(50)");
@@ -146,9 +142,9 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
                     b.HasIndex("EntityId", "AirslipUserType", "AccountType");
 
-                    b.HasIndex("EntityId", "AirslipUserType", "IntegrationId", "UpdatedOn", "TimeStamp", "AccountType", "CurrencyCode");
+                    b.HasIndex("EntityId", "AirslipUserType", "IntegrationId", "UpdatedOn", "TimeStamp", "AccountType", "Currency");
 
-                    SqlServerIndexBuilderExtensions.IncludeProperties(b.HasIndex("EntityId", "AirslipUserType", "IntegrationId", "UpdatedOn", "TimeStamp", "AccountType", "CurrencyCode"), new[] { "Balance" });
+                    SqlServerIndexBuilderExtensions.IncludeProperties(b.HasIndex("EntityId", "AirslipUserType", "IntegrationId", "UpdatedOn", "TimeStamp", "AccountType", "Currency"), new[] { "Balance" });
 
                     b.ToTable("BankAccountBalanceSnapshots", (string)null);
                 });
@@ -169,11 +165,8 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Property<long>("Balance")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("CurrencyCode")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar (3)")
-                        .HasDefaultValue("GBP");
+                    b.Property<string>("Currency")
+                        .HasColumnType("varchar (5)");
 
                     b.Property<string>("EntityId")
                         .HasColumnType("nvarchar(50)");
@@ -212,12 +205,6 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
                     b.Property<int>("CreditCount")
                         .HasColumnType("int");
-
-                    b.Property<string>("CurrencyCode")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar (3)")
-                        .HasDefaultValue("GBP");
 
                     b.Property<int?>("Day")
                         .HasColumnType("int");
@@ -277,11 +264,8 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Property<long>("Balance")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("CurrencyCode")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar (3)")
-                        .HasDefaultValue("GBP");
+                    b.Property<string>("Currency")
+                        .HasColumnType("varchar (5)");
 
                     b.Property<string>("EntityId")
                         .HasColumnType("nvarchar(50)");
@@ -298,7 +282,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.HasKey("Id")
                         .HasName("PK_BankBusinessBalances_Id");
 
-                    b.HasIndex("EntityId", "AirslipUserType", "AccountType", "CurrencyCode");
+                    b.HasIndex("EntityId", "AirslipUserType", "AccountType", "Currency");
 
                     b.ToTable("BankBusinessBalances", (string)null);
                 });
@@ -317,11 +301,8 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                     b.Property<long>("Balance")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("CurrencyCode")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar (3)")
-                        .HasDefaultValue("GBP");
+                    b.Property<string>("Currency")
+                        .HasColumnType("varchar (5)");
 
                     b.Property<string>("EntityId")
                         .HasColumnType("nvarchar(50)");
@@ -449,10 +430,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("CurrencyCode")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar (3)")
-                        .HasDefaultValue("GBP");
+                        .HasColumnType("nvarchar (5)");
 
                     b.Property<int>("DataSource")
                         .HasColumnType("int");
@@ -878,127 +856,6 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.CurrencyDetail", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("AuditInformationId")
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("DefaultCulture")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("EntityStatus")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id")
-                        .HasName("PK_CurrencyDetails_Id");
-
-                    b.HasIndex("AuditInformationId");
-
-                    b.ToTable("CurrencyDetails", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "AED",
-                            DefaultCulture = "ar-AE",
-                            EntityStatus = 1
-                        },
-                        new
-                        {
-                            Id = "BGN",
-                            DefaultCulture = "bg-BG",
-                            EntityStatus = 1
-                        },
-                        new
-                        {
-                            Id = "CHF",
-                            DefaultCulture = "de-CH",
-                            EntityStatus = 1
-                        },
-                        new
-                        {
-                            Id = "CZK",
-                            DefaultCulture = "cs-CZ",
-                            EntityStatus = 1
-                        },
-                        new
-                        {
-                            Id = "DKK",
-                            DefaultCulture = "da-DK",
-                            EntityStatus = 1
-                        },
-                        new
-                        {
-                            Id = "EUR",
-                            DefaultCulture = "de-DE",
-                            EntityStatus = 1
-                        },
-                        new
-                        {
-                            Id = "GBP",
-                            DefaultCulture = "en-GB",
-                            EntityStatus = 1
-                        },
-                        new
-                        {
-                            Id = "HRK",
-                            DefaultCulture = "hr-HR",
-                            EntityStatus = 1
-                        },
-                        new
-                        {
-                            Id = "HUF",
-                            DefaultCulture = "hu-HU",
-                            EntityStatus = 1
-                        },
-                        new
-                        {
-                            Id = "ISK",
-                            DefaultCulture = "is-IS",
-                            EntityStatus = 1
-                        },
-                        new
-                        {
-                            Id = "NGN",
-                            DefaultCulture = "en-NG",
-                            EntityStatus = 1
-                        },
-                        new
-                        {
-                            Id = "NOK",
-                            DefaultCulture = "nb-NO",
-                            EntityStatus = 1
-                        },
-                        new
-                        {
-                            Id = "PLN",
-                            DefaultCulture = "pl-PL",
-                            EntityStatus = 1
-                        },
-                        new
-                        {
-                            Id = "RON",
-                            DefaultCulture = "ro-RO",
-                            EntityStatus = 1
-                        },
-                        new
-                        {
-                            Id = "SEK",
-                            DefaultCulture = "sv-SE",
-                            EntityStatus = 1
-                        },
-                        new
-                        {
-                            Id = "USD",
-                            DefaultCulture = "en-US",
-                            EntityStatus = 1
-                        });
-                });
-
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.Integration", b =>
                 {
                     b.Property<string>("Id")
@@ -1070,9 +927,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
                     b.Property<string>("CurrencyCode")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar (3)")
-                        .HasDefaultValue("GBP");
+                        .HasColumnType("nvarchar (5)");
 
                     b.Property<string>("IntegrationId")
                         .HasColumnType("nvarchar(50)");
@@ -1104,12 +959,6 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
                     b.Property<int>("AirslipUserType")
                         .HasColumnType("int");
-
-                    b.Property<string>("CurrencyCode")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar (3)")
-                        .HasDefaultValue("GBP");
 
                     b.Property<int?>("Day")
                         .HasColumnType("int");
@@ -1162,12 +1011,6 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
 
                     b.Property<int>("AirslipUserType")
                         .HasColumnType("int");
-
-                    b.Property<string>("CurrencyCode")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar (3)")
-                        .HasDefaultValue("GBP");
 
                     b.Property<int?>("Day")
                         .HasColumnType("int");
@@ -1394,10 +1237,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                         .HasColumnType("nvarchar (50)");
 
                     b.Property<string>("CurrencyCode")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar (3)")
-                        .HasDefaultValue("GBP");
+                        .HasColumnType("nvarchar (5)");
 
                     b.Property<string>("CustomerEmail")
                         .HasColumnType("nvarchar (100)");
@@ -1714,15 +1554,6 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 });
 
             modelBuilder.Entity("Airslip.Analytics.Core.Entities.CountryCode", b =>
-                {
-                    b.HasOne("Airslip.Common.Repository.Types.Entities.BasicAuditInformation", "AuditInformation")
-                        .WithMany()
-                        .HasForeignKey("AuditInformationId");
-
-                    b.Navigation("AuditInformation");
-                });
-
-            modelBuilder.Entity("Airslip.Analytics.Core.Entities.CurrencyDetail", b =>
                 {
                     b.HasOne("Airslip.Common.Repository.Types.Entities.BasicAuditInformation", "AuditInformation")
                         .WithMany()

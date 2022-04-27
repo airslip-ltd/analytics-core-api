@@ -34,25 +34,26 @@ public class DebitsAndCreditsService : IDebitsAndCreditsService
 @ViewerAirslipUserType = {3}, 
 @OwnerEntityId = {4}, 
 @OwnerAirslipUserType = {5}, 
-@IntegrationId = {6}",
+@IntegrationId = {6}, 
+@CurrencyCode = {7}",
                 query.StartDate,
                 query.EndDate,
                 _userToken.EntityId,
                 _userToken.AirslipUserType,
                 query.OwnerEntityId,
                 query.OwnerAirslipUserType,
-                query.IntegrationId == null ? DBNull.Value : query.IntegrationId);
+                query.IntegrationId == null ? DBNull.Value : query.IntegrationId,
+                query.CurrencyCode);
 
         List<DebitsAndCreditsByYear> metrics = await q.ToListAsync();
         DateTimeFormatInfo formatter = CultureInfo.CurrentCulture.DateTimeFormat;
-        DashboardGraphSeriesModel result = new(query.StartDate, query.EndDate,
+        DashboardGraphSeriesModel result = new(query.StartDate, query.EndDate, query.CurrencyCode, 
             new []
             {
                 new Series("Money In", 
                     metrics.Select(o => new TimelyMetric(o.Month, formatter.GetAbbreviatedMonthName(o.Month),
                     o.TotalCredit, PeriodType.Month)),
                     metrics.Select( o=> o.TotalCredit.ToPositiveCurrency())
-                    
                     ),
              new Series("Money Out", metrics.Select(o => new TimelyMetric(o.Month, 
                  formatter.GetAbbreviatedMonthName(o.Month),

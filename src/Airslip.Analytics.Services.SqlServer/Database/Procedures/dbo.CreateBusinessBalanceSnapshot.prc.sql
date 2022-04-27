@@ -16,7 +16,7 @@ from BankAccountBalances as bab
 where bab.Id = @Id
 
 insert into BankBusinessBalanceSnapshots
-(Id, EntityId, AirslipUserType, UpdatedOn, AccountType, Balance, TimeStamp, Currency)
+(Id, EntityId, AirslipUserType, UpdatedOn, AccountType, Balance, TimeStamp, CurrencyCode)
 select dbo.getId(),
        x.EntityId,
        x.AirslipUserType,
@@ -24,7 +24,7 @@ select dbo.getId(),
        x.AccountType,
        SUM(x.Balance)   as Balance,
        MAX(x.TimeStamp) as TimeStamp,
-       x.Currency
+       x.CurrencyCode
 from (select distinct IntegrationId
       from BankAccountBalanceSnapshots
       where EntityId = @EntityId
@@ -37,4 +37,4 @@ from (select distinct IntegrationId
                         and t.IntegrationId = c.IntegrationId
                         and t.UpdatedOn = @UpdatedOn
                       order by TimeStamp desc) x
-group by x.EntityId, x.AirslipUserType, x.Currency, x.AccountType
+group by x.EntityId, x.AirslipUserType, x.CurrencyCode, x.AccountType

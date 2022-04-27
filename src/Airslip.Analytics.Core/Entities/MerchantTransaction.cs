@@ -1,4 +1,5 @@
-﻿using Airslip.Analytics.Core.Interfaces;
+﻿using Airslip.Analytics.Core.Data;
+using Airslip.Analytics.Core.Interfaces;
 using Airslip.Common.Repository.Types.Entities;
 using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
@@ -9,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Airslip.Analytics.Core.Entities;
 
-public record MerchantTransaction : IFromDataSource, IEntityWithOwnership, IReportableWithIntegration
+public record MerchantTransaction : IFromDataSource, IEntityWithOwnership, IReportableWithIntegration, IReportableWithCurrency
 {
     public string Id { get; set; } = string.Empty;
     public virtual BasicAuditInformation? AuditInformation { get; set; }
@@ -35,7 +36,7 @@ public record MerchantTransaction : IFromDataSource, IEntityWithOwnership, IRepo
     public long? ServiceCharge { get; init; }
     public long? Total { get; init; }
     public long? TotalRefund { get; init; }
-    public string? CurrencyCode { get; init; }
+    public string CurrencyCode { get; init; } = Constants.DEFAULT_CURRENCY;
     public string? CustomerEmail { get; init; }
     public string? OperatorName { get; init; }
     public DateTime? Date { get; init; }

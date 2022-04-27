@@ -62,14 +62,17 @@ public class DashboardSnapshotService : IDashboardSnapshotService
         
         IQueryable<DashboardMetricSnapshot> q = _context
             .Set<DashboardMetricSnapshot>()
-            .FromSqlRaw($"{procName} @DayRange = {{0}}, @StatRange = {{1}}, @ViewerEntityId = {{2}}, @ViewerAirslipUserType = {{3}}, @OwnerEntityId = {{4}}, @OwnerAirslipUserType = {{5}}, @IntegrationId = {{6}}",
+            .FromSqlRaw(@$"{procName} @DayRange = {{0}}, @StatRange = {{1}}, @ViewerEntityId = {{2}}, 
+@ViewerAirslipUserType = {{3}}, @OwnerEntityId = {{4}}, @OwnerAirslipUserType = {{5}}, @IntegrationId = {{6}}
+, @CurrencyCode = {{7}}",
                 dayRange, 
                 statRange,
                 _userToken.EntityId,
                 _userToken.AirslipUserType,
                 query.OwnerEntityId,
                 query.OwnerAirslipUserType,
-                integrationId == null ? DBNull.Value : integrationId);
+                integrationId == null ? DBNull.Value : integrationId,
+                query.CurrencyCode);
 
         List<DashboardMetricSnapshot> metrics = await q.ToListAsync();
 
@@ -85,6 +88,7 @@ public class DashboardSnapshotService : IDashboardSnapshotService
 
         return new DashboardSnapshotModel
         {
+            CurrencyCode = query.CurrencyCode,
             Balance = primary.Balance.ToPositiveCurrency(),
             DayRange = dayRange,
             TimeStamp = primary.MetricDate.ToUnixTimeMilliseconds(),
@@ -108,12 +112,17 @@ public class DashboardSnapshotService : IDashboardSnapshotService
                   && rd.OwnerEntityId == query.OwnerEntityId
                   && rd.OwnerAirslipUserType == query.OwnerAirslipUserType 
                   && businessBalance.AccountType == BankingAccountTypes.CURRENT
+                  && businessBalance.CurrencyCode == query.CurrencyCode
             select new DashboardSnapshotModel
             {
                 Balance = businessBalance.Balance.ToPositiveCurrency(),
                 TimeStamp = businessBalance.TimeStamp,
-                Movement = businessBalance.Movement
+                Movement = businessBalance.Movement,
+                CurrencyCode = businessBalance.CurrencyCode
             };
+        
+        DashboardSnapshotModel? response = await qBalance.FirstOrDefaultAsync();
+        if (response == null) return new NotFoundResponse("BusinessBalance", query.OwnerEntityId);
         
         IQueryable<SnapshotMetric> qSnapshot = from rd in _context.RelationshipDetails
             from accountBalanceSnapshot in _context.BankBusinessBalanceSnapshots
@@ -126,12 +135,9 @@ public class DashboardSnapshotService : IDashboardSnapshotService
                   && rd.OwnerEntityId == query.OwnerEntityId
                   && rd.OwnerAirslipUserType == query.OwnerAirslipUserType 
                   && accountBalanceSnapshot.AccountType == BankingAccountTypes.CURRENT
+                  && accountBalanceSnapshot.CurrencyCode == query.CurrencyCode
             orderby accountBalanceSnapshot.TimeStamp
             select new SnapshotMetric(accountBalanceSnapshot.TimeStamp, accountBalanceSnapshot.Balance.ToPositiveCurrency());
-
-        DashboardSnapshotModel? response = await qBalance.FirstOrDefaultAsync();
-
-        if (response == null) return new NotFoundResponse("BusinessBalance", query.OwnerEntityId);
 
         response.Metrics = await qSnapshot
             .Take(10)

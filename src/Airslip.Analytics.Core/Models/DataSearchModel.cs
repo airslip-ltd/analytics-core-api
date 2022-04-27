@@ -5,14 +5,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Airslip.Analytics.Core.Models;
 
-public abstract record OwnedSearchModel : IOwnedSearch
+public record DataSearchModel : IOwnedSearch
 {
     [Required]
     public string OwnerEntityId { get; init; } = string.Empty;
     
     [Required]
     public AirslipUserType OwnerAirslipUserType { get; init; } = AirslipUserType.Unknown;
-
-    [Required]
-    public string CurrencyCode { get; init; } = Constants.DEFAULT_CURRENCY;
 }

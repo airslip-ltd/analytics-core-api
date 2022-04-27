@@ -4,7 +4,8 @@ CREATE or alter proc dbo.CreateBankAccountMetricSnapshots(
 AS
 Declare
     @Year as     int, @Month as int, @Day as int, @AccountType as int,
-    @EntityId as nvarchar(50), @AirslipUserType as int, @IntegrationId as nvarchar(50)
+    @EntityId as nvarchar(50), @AirslipUserType as int, @IntegrationId as nvarchar(50),
+    @CurrencyCode as nvarchar(3)
 
 select @Year = Year,
        @Month = Month,
@@ -12,11 +13,12 @@ select @Year = Year,
        @EntityId = EntityId,
        @AirslipUserType = AirslipUserType,
        @IntegrationId = bt.IntegrationId,
-       @AccountType = IAD.AccountType
+       @AccountType = IAD.AccountType,
+       @CurrencyCode = bt.CurrencyCode
 from BankTransactions as bt
-join IntegrationAccountDetails IAD on bt.IntegrationId = IAD.IntegrationId
+         join IntegrationAccountDetails IAD on bt.IntegrationId = IAD.IntegrationId
 where bt.Id = @Id
-    
+
     if not exists(select *
                   from BankAccountMetricSnapshots
                   where EntityId = @EntityId
@@ -24,13 +26,14 @@ where bt.Id = @Id
                     and Day = @Day
                     and Month = @Month
                     and Year = @Year
-                    and IntegrationId = @IntegrationId)
+                    and IntegrationId = @IntegrationId
+                    and CurrencyCode = @CurrencyCode)
         insert into BankAccountMetricSnapshots
         (IntegrationId, AccountType, EntityId, AirslipUserType, MetricDate, Year, Month, Day, TotalTransaction,
-         TransactionCount, TotalCredit, CreditCount, TotalDebit, DebitCount)
+         TransactionCount, TotalCredit, CreditCount, TotalDebit, DebitCount, CurrencyCode)
         VALUES (@IntegrationId, @AccountType, @EntityId, @AirslipUserType, datefromparts(@Year, @Month, @Day), @Year,
                 @Month, @Day,
-                0, 0, 0, 0, 0, 0)
+                0, 0, 0, 0, 0, 0, @CurrencyCode)
 
 update bams
 set bams.TotalTransaction = y.TotalTransaction,
@@ -51,7 +54,8 @@ from BankAccountMetricSnapshots as bams
                       bt.Year,
                       bt.Month,
                       bt.Day,
-                      bt.IntegrationId
+                      bt.IntegrationId,
+                      bt.CurrencyCode
                from BankTransactions as bt
                where bt.Day = @Day
                  and bt.Month = @Month
@@ -59,7 +63,8 @@ from BankAccountMetricSnapshots as bams
                  and bt.EntityId = @EntityId
                  and bt.AirslipUserType = @AirslipUserType
                  and bt.IntegrationId = @IntegrationId
-               group by bt.EntityId, bt.AirslipUserType, bt.IntegrationId, bt.Year, bt.Month, bt.Day) as y
+                 and bt.CurrencyCode = @CurrencyCode
+               group by bt.EntityId, bt.AirslipUserType, bt.IntegrationId, bt.Year, bt.Month, bt.Day, bt.CurrencyCode) as y
               on bams.IntegrationId = y.IntegrationId
 where bams.EntityId = y.EntityId
   and bams.AirslipUserType = y.AirslipUserType
@@ -67,5 +72,6 @@ where bams.EntityId = y.EntityId
   and bams.Month = y.Month
   and bams.Year = y.Year
   and bams.IntegrationId = y.IntegrationId
+  and bams.CurrencyCode = y.CurrencyCode
 
 
