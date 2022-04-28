@@ -18,7 +18,7 @@ public class BankTransactionModel : IModelWithOwnership, IFromDataSource, ITrace
     public string IntegrationId { get; set; } = string.Empty;
     public string BankTransactionId { get; set; } = string.Empty;
     public string? TransactionHash { get; set; }
-    public string BankId { get; set; } = string.Empty;
+    public string IntegrationProviderId { get; set; } = string.Empty;
     public string EmailAddress { get; set; } = string.Empty;
     public long? AuthorisedDate { get; set; }
     public long CapturedDate { get; set; }

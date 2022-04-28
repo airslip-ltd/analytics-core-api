@@ -9,6 +9,7 @@ using Airslip.Common.Types.Enums;
 using Airslip.Common.Utilities.Extensions;
 using Airslip.Integrations.Banking.Types.Enums;
 using Airslip.Integrations.Banking.Types.Models;
+using Airslip.Integrations.Commerce.Types.Models;
 using Airslip.MerchantIntegrations.Types.Models;
 using AutoMapper;
 using AutoMapper.EquivalencyExpression;
@@ -20,21 +21,37 @@ namespace Airslip.Analytics.Processor.Mappers;
 
 public static class MapperExtensions
 {
+    public static IMapperConfigurationExpression AddCommerceData(
+        this IMapperConfigurationExpression mapperConfigurationExpression)
+    {
+        mapperConfigurationExpression
+            .CreateMap<CommerceProviderModel, IntegrationProviderModel>()
+            .ForPath(o => o.IntegrationType,
+                exp => exp.MapFrom(model => IntegrationType.Commerce));
+
+        return mapperConfigurationExpression;
+    }
+
     public static IMapperConfigurationExpression AddBankingData(this IMapperConfigurationExpression mapperConfigurationExpression)
     {
         mapperConfigurationExpression
-            .CreateMap<BankingBankModel, BankModel>()
-            .ForPath(o => o.CountryCodes, 
-                exp => exp.MapFrom(model => model
-                    .CountryCodes.Select(p => new BankCountryCodeModel()
-                    {
-                        Id = p
-                    })));
+            .CreateMap<BankingBankModel, IntegrationProviderModel>()
+            .ForPath(o => o.Name, 
+                exp => exp.MapFrom(model => model.AccountName))
+            .ForPath(o => o.FriendlyName, 
+                exp => exp.MapFrom(model => model.TradingName))
+            .ForPath(o => o.Integration, 
+                exp => exp.MapFrom(model => model.Id))
+            .ForPath(o => o.Provider, 
+                exp => exp.MapFrom(model => model.DataSource.ToString().ToLower()))
+            .ForPath(o => o.IntegrationType, 
+                exp => exp.MapFrom(model => IntegrationType.Banking));
+        
         mapperConfigurationExpression
             .CreateMap<BankingTransactionModel, BankTransactionModel>()
             .ForMember(o => o.Year,
                 opt => opt.MapFrom<BankTransactionDateTimeResolver>())
-            .ForMember(o => o.BankId,
+            .ForMember(o => o.IntegrationProviderId,
                 opt => opt.MapFrom(p=> p.BankingBankId))
             .ForMember(o => o.IntegrationId,
                 opt => opt.MapFrom(p=> p.BankingAccountId));
@@ -215,9 +232,8 @@ public static class MapperExtensions
         cfg.AddCollectionMappers();
         cfg.CreateMap<BankAccountBalanceModel, BankAccountBalance>().ReverseMap();
         cfg.CreateMap<IntegrationModel, Integration>().ReverseMap();
-        cfg.CreateMap<BankModel, Bank>().ReverseMap();
+        cfg.CreateMap<IntegrationProviderModel, IntegrationProvider>().ReverseMap();
         cfg.CreateMap<BankTransactionModel, BankTransaction>().ReverseMap();
-        cfg.CreateMap<BankCountryCodeModel, BankCountryCode>().ReverseMap();
         cfg.CreateMap<BankSyncRequestModel, BankSyncRequest>().ReverseMap();
         cfg.CreateMap<IntegrationAccountDetail, IntegrationAccountDetailModel>()
             .ForPath(d => d.Id, c => c

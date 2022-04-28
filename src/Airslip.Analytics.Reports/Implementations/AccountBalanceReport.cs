@@ -10,6 +10,7 @@ using Airslip.Common.Auth.Models;
 using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Repository.Types.Models;
+using Airslip.Common.Types.Enums;
 using Airslip.Common.Types.Interfaces;
 
 namespace Airslip.Analytics.Reports.Implementations;
