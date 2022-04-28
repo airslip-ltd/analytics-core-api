@@ -33,7 +33,6 @@ public class SqlServerContext : AirslipSqlServerContextBase
     public DbSet<BankAccountBalance> BankAccountBalances { get; set; } = null!;
     public DbSet<BankAccountBalanceSnapshot> BankAccountBalanceSnapshots { get; set; } = null!;
     public DbSet<BankAccountBalanceSummary> BankAccountBalanceSummary { get; set; } = null!;
-    public DbSet<Bank> Banks { get; set; } = null!;
     public DbSet<BankBusinessBalance> BankBusinessBalances { get; set; } = null!;
     public DbSet<BankBusinessBalanceSnapshot> BankBusinessBalanceSnapshots { get; set; } = null!;
     public DbSet<BankSyncRequest> BankSyncRequests { get; set; } = null!;
@@ -47,6 +46,7 @@ public class SqlServerContext : AirslipSqlServerContextBase
     public DbSet<IntegrationAccountDetail> IntegrationAccountDetails { get; set; } = null!;
     public DbSet<RelationshipDetail> RelationshipDetails { get; set; } = null!;
     public DbSet<RelationshipHeader> RelationshipHeaders { get; set; } = null!;
+    public DbSet<IntegrationProvider> IntegrationProviders { get; set; } = null!;
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -61,8 +61,8 @@ public class SqlServerContext : AirslipSqlServerContextBase
         modelBuilder.AddTableWithDefaults<BankAccountBalanceSnapshot>();
         modelBuilder.AddTableWithDefaults<BankAccountBalanceSummary>();
         modelBuilder.AddTableWithDefaults<BankAccountBalance>();
+        modelBuilder.AddTableWithDefaults<IntegrationProvider>();
         
-        modelBuilder.AddTableWithDefaults<Bank>();
         modelBuilder.AddTableWithDefaults<BankBusinessBalance>();
         modelBuilder.AddTableWithDefaults<BankBusinessBalanceSnapshot>();
         modelBuilder.AddTableWithDefaults<BankTransaction>();
@@ -126,9 +126,6 @@ public class SqlServerContext : AirslipSqlServerContextBase
         modelBuilder.Entity<BankTransaction>().Property(o => o.IntegrationId).HasColumnType(Constants.ID_DATA_TYPE);
         modelBuilder.Entity<MerchantAccountMetricSnapshot>().Property(o => o.IntegrationId).HasColumnType(Constants.ID_DATA_TYPE);
         modelBuilder.Entity<MerchantTransaction>().Property(o => o.IntegrationId).HasColumnType(Constants.ID_DATA_TYPE);
-        
-        modelBuilder.Entity<Bank>().Property(o => o.TradingName).HasColumnType("nvarchar (50)");
-        modelBuilder.Entity<Bank>().Property(o => o.AccountName).HasColumnType("nvarchar (50)");
 
         modelBuilder.Entity<BankSyncRequest>().Property(o => o.FromDate).HasColumnType("nvarchar (50)");
         modelBuilder.Entity<BankSyncRequest>().Property(o => o.ApplicationUserId).HasColumnType(Constants.ID_DATA_TYPE);
@@ -137,6 +134,7 @@ public class SqlServerContext : AirslipSqlServerContextBase
         
         modelBuilder.Entity<BankTransaction>().Property(o => o.BankTransactionId).HasColumnType(Constants.ID_DATA_TYPE);
         modelBuilder.Entity<BankTransaction>().Property(o => o.TransactionHash).HasColumnType(Constants.ID_DATA_TYPE);
+        modelBuilder.Entity<BankTransaction>().Property(o => o.IntegrationProviderId).HasColumnType(Constants.ID_DATA_TYPE);
         modelBuilder.Entity<BankTransaction>().Property(o => o.BankId).HasColumnType(Constants.ID_DATA_TYPE);
         modelBuilder.Entity<BankTransaction>().Property(o => o.EmailAddress).HasColumnType("nvarchar (100)");
         modelBuilder.Entity<BankTransaction>().Property(o => o.Description).HasColumnType("nvarchar (150)");
@@ -169,6 +167,11 @@ public class SqlServerContext : AirslipSqlServerContextBase
         modelBuilder.Entity<MerchantTransaction>().Property(o => o.OrderStatus).HasColumnType("nvarchar (20)").HasDefaultValue("Unknown");
         modelBuilder.Entity<MerchantTransaction>().Property(o => o.PaymentStatus).HasColumnType("nvarchar (20)").HasDefaultValue("Unknown");
         
+        modelBuilder.Entity<IntegrationProvider>().Property(o => o.FriendlyName).HasColumnType("nvarchar (150)");
+        modelBuilder.Entity<IntegrationProvider>().Property(o => o.Integration).HasColumnType("nvarchar (50)").HasDefaultValue("hub");
+        modelBuilder.Entity<IntegrationProvider>().Property(o => o.Provider).HasColumnType("nvarchar (50)");
+        modelBuilder.Entity<IntegrationProvider>().Property(o => o.Name).HasColumnType("nvarchar (150)");
+        
         modelBuilder.AddCurrencyCode<BankAccountBalance>();
         modelBuilder.AddCurrencyCode<BankAccountBalanceSnapshot>();
         modelBuilder.AddCurrencyCode<BankAccountBalanceSummary>();
@@ -198,25 +201,19 @@ public class SqlServerContext : AirslipSqlServerContextBase
         modelBuilder.Entity<RelationshipDetail>().Property(o => o.PermissionType).HasColumnType("nvarchar (50)");
         modelBuilder.Entity<RelationshipDetail>().Property(o => o.OwnerEntityId).HasColumnType(Constants.ID_DATA_TYPE);
         modelBuilder.Entity<RelationshipDetail>().Property(o => o.ViewerEntityId).HasColumnType(Constants.ID_DATA_TYPE);
-        
-        // Custom keys
-        modelBuilder.Entity<BankCountryCode>().HasKey(e => new
-        {
-            e.Id, e.BankId
-        });
-        
+       
         // Relationships
+        // modelBuilder.Entity<Integration>()
+        //     .HasOne(t => t.Provider)
+        //     .WithMany(t => t.Integrations)
+        //     .HasForeignKey(t => t.IntegrationProviderId)
+        //     .OnDelete(DeleteBehavior.Cascade)
+        //     .IsRequired();
+        
         modelBuilder.Entity<RelationshipHeader>()
             .HasMany(t => t.Details)
             .WithOne(t => t.RelationshipHeader)
             .HasForeignKey(x => x.RelationshipHeaderId)
-            .OnDelete(DeleteBehavior.Cascade)
-            .IsRequired();
-        
-        modelBuilder.Entity<Bank>()
-            .HasMany(t => t.CountryCodes)
-            .WithOne(t => t.Bank)
-            .HasForeignKey(x => x.BankId)
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
         
@@ -238,7 +235,7 @@ public class SqlServerContext : AirslipSqlServerContextBase
                 b.AirslipUserType, b.EntityId, b.Day, b.Month, b.Year
             }).IncludeProperties( p => new
             {
-                p.IntegrationId, p.Amount, p.BankId
+                p.IntegrationId, p.Amount, p.IntegrationProviderId
             });
         
         modelBuilder.Entity<BankAccountMetricSnapshot>()
@@ -253,7 +250,7 @@ public class SqlServerContext : AirslipSqlServerContextBase
                 b.EntityId, b.AirslipUserType
             }).IncludeProperties( p => new
             {
-                p.BankId
+                p.IntegrationProviderId
             });
         
         modelBuilder.Entity<RelationshipDetail>()

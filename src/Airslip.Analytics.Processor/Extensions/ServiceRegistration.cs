@@ -8,6 +8,7 @@ using Airslip.Common.Services.Handoff.Data;
 using Airslip.Common.Services.Handoff.Extensions;
 using Airslip.Common.Types.Enums;
 using Airslip.Integrations.Banking.Types.Models;
+using Airslip.Integrations.Commerce.Types.Models;
 using Airslip.MerchantIntegrations.Types.Models;
 using AutoMapper;
 
@@ -17,7 +18,7 @@ public static class ServiceRegistration
 {
     public static void RegisterHandoff(MessageHandoffOptions handoff)
     {
-        handoff.Register<IRegisterDataService<Bank, BankModel, BankingBankModel>>
+        handoff.Register<IRegisterDataService<IntegrationProvider, IntegrationProviderModel, BankingBankModel>>
             (Integrations.Banking.Types.Data.Constants.EVENT_HUB_BANKING_BANKS);
         handoff.Register<IRegisterDataService<Integration, IntegrationModel, BankingAccountModel>>
             (Integrations.Banking.Types.Data.Constants.EVENT_HUB_BANKING_ACCOUNTS);
@@ -27,6 +28,9 @@ public static class ServiceRegistration
             (Integrations.Banking.Types.Data.Constants.EVENT_HUB_BANKING_BALANCES);
         handoff.Register<IRegisterDataService<BankSyncRequest, BankSyncRequestModel, BankingSyncRequestModel>>
             (Integrations.Banking.Types.Data.Constants.EVENT_HUB_BANKING_SYNC_REQUESTS);
+        
+        handoff.Register<IRegisterDataService<IntegrationProvider, IntegrationProviderModel, CommerceProviderModel>>
+            (Constants.EVENT_QUEUE_COMMERCE_PROVIDERS);
 
         handoff.Register<IRegisterDataService<MerchantTransaction, MerchantTransactionModel, TransactionEnvelope>>(Constants.EVENT_QUEUE_MERCHANT_TRANSACTIONS);
         handoff.Register<IRegisterDataService<Integration, IntegrationModel, RawApi2CartAccountModel>>(Constants.EVENT_QUEUE_COMMERCE_ACCOUNTS);
@@ -43,6 +47,7 @@ public static class ServiceRegistration
     public static void RegisterMappings(IMapperConfigurationExpression cfg)
     {
         cfg
+            .AddCommerceData()
             .AddBankingData()
             .AddRawApi2CartData()
             .AddRawTransaction()

@@ -37,12 +37,12 @@ public class BankTransactionReport : IBankTransactionReport
         IQueryable<BankTransactionReportQuery> q = 
             from rd in _context.RelationshipDetails
             from item in _context.BankTransactions.Where(o => o.EntityId.Equals(rd.OwnerEntityId) && o.AirslipUserType == rd.OwnerAirslipUserType) 
-            join bank in _context.Banks on item.BankId equals bank.Id
+            join provider in _context.IntegrationProviders on item.IntegrationProviderId equals provider.Id
             select new BankTransactionReportQuery
             {
                 Id = item.Id,
                 Amount = item.Amount,
-                TradingName = bank.TradingName,
+                TradingName = provider.FriendlyName,
                 Day = item.Day,
                 Description = item.Description,
                 Month = item.Month,
@@ -51,7 +51,7 @@ public class BankTransactionReport : IBankTransactionReport
                 IntegrationId = item.IntegrationId,
                 AddressLine = item.AddressLine,
                 AuthorisedDate = item.AuthorisedDate,
-                BankId = item.BankId,
+                IntegrationProviderId = item.IntegrationProviderId,
                 CapturedDate = item.CapturedDate,
                 CurrencyCode = item.CurrencyCode,
                 DataSource = item.DataSource,

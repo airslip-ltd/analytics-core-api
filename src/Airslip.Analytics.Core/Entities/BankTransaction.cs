@@ -24,6 +24,8 @@ public class BankTransaction : IEntityWithOwnership, IFromDataSource, IReportabl
     public string IntegrationId { get; set; } = string.Empty;
     public string BankTransactionId { get; set; } = string.Empty;
     public string? TransactionHash { get; set; }
+    public string IntegrationProviderId { get; set; } = string.Empty;
+    [Obsolete]
     public string BankId { get; set; } = string.Empty;
     public string EmailAddress { get; set; } = string.Empty;
     public long? AuthorisedDate { get; set; }

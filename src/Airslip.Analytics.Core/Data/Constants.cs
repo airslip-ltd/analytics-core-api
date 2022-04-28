@@ -5,6 +5,7 @@ public static class Constants
     public const string EVENT_QUEUE_MERCHANT_TRANSACTIONS = "transactions";
     
     public const string EVENT_QUEUE_COMMERCE_ACCOUNTS = "commerce-accounts";
+    public const string EVENT_QUEUE_COMMERCE_PROVIDERS = "commerce-providers";
     
     public const string EVENT_QUEUE_PARTNER_RELATIONSHIPS = "partner-relationships";
     public const string EVENT_QUEUE_BUSINESS = "business";
