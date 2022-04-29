@@ -1,3 +1,4 @@
+using Airslip.Analytics.Core.Entities;
 using Airslip.Analytics.Core.Enums;
 using Airslip.Analytics.Reports.Interfaces;
 using Airslip.Common.CustomerPortal.Enums;
@@ -24,4 +25,5 @@ public class CommerceProviderReportQuery : IEntity, IOwnedDataQuery
     public AirslipUserType ViewerAirslipUserType { get; init; }
     public string PermissionType { get; init; } = string.Empty;
     public bool Allowed { get; init; }
+    public IntegrationProvider Provider { get; set; } = null!;
 }

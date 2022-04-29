@@ -40,6 +40,7 @@ public class AccountBalanceReport : IAccountBalanceReport
                 equals bankAccountBalanceSummary.IntegrationId
             from accountDetail in _context.IntegrationAccountDetails.Where(o => o.IntegrationId.Equals(integration.Id))
             from currencyDetail in _context.CurrencyDetails.Where(o => o.Id.Equals(accountDetail.CurrencyCode))
+            from provider in _context.IntegrationProviders.Where(o => o.Id.Equals(integration.IntegrationProviderId))
             where integration.IntegrationType == IntegrationType.Banking
             select new AccountBalanceReportQuery
             {
@@ -51,6 +52,8 @@ public class AccountBalanceReport : IAccountBalanceReport
                 CurrencyCode = accountDetail.CurrencyCode,
                 Balance = bankAccountBalanceSummary.Balance.ToCurrency(),
                 UpdatedOn = bankAccountBalanceSummary.UpdatedOn,
+                Provider = provider,
+                AccountDetail = integration.AccountDetail,
                 
                 OwnerEntityId = rd.OwnerEntityId,
                 OwnerAirslipUserType = rd.OwnerAirslipUserType,

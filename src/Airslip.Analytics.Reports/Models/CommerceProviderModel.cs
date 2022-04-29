@@ -15,4 +15,5 @@ public record CommerceProviderModel : IModel
     public AuthenticationState AuthenticationState { get; init; } = AuthenticationState.Authenticating;
     public string Name { get; init; } = string.Empty;
     public long TimeStamp { get; set; }
+    public IntegrationProviderReportModel Provider { get; set; } = null!;
 }

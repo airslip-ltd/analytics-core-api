@@ -36,23 +36,23 @@ public class
                     Id = "4873a037963341e0b5f9de6b8260b8b2",
                     BankTransactionId = CommonFunctions.GetId(),
                     TransactionHash = "adad72d7b3069ab9e4a6cb2844e2e3e9.1",
-                    Bank = new IntegrationModel
-                    {
+                    Integration = new IntegrationReportModel() {
                         Id = CommonFunctions.GetId(),
-                        IntegrationProviderId = "amex",
-                        IntegrationProviderFriendlyName = "American Express",
                         Name = "American Express Business Current Account",
-                        AccountDetail = new IntegrationAccountDetailModel
+                        AccountDetail = new IntegrationAccountDetailReportModel()
                         {
-                            Id = CommonFunctions.GetId(),
-                            AccountStatus = BankingAccountStatus.Active,
-                            AccountId = CommonFunctions.GetId(),
                             LastCardDigits = "1234",
                             CurrencyCode = Iso4217CurrencyCodes.GBP.ToString(),
                             UsageType = BankingUsageTypes.BUSINESS,
                             AccountType = BankingAccountTypes.CURRENT,
                             SortCode = "01-23-45",
                             AccountNumber = "12345678"
+                        },
+                        Provider = new IntegrationProviderReportModel()
+                        {
+                            Name = "American Express Business Current Account",
+                            Provider = "amex",
+                            FriendlyName = "American Express"
                         }
                     },
                     AuthorisedDate = timestamp - oneDayMilliseconds,

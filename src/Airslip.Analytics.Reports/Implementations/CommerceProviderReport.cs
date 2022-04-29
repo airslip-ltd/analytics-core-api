@@ -36,6 +36,7 @@ public class CommerceProviderReport : ICommerceProviderReport
         IQueryable<CommerceProviderReportQuery> qBalance = 
             from rd in _context.RelationshipDetails
             from integration in _context.Integrations.Where(o => o.EntityId.Equals(rd.OwnerEntityId) && o.AirslipUserType == rd.OwnerAirslipUserType)
+            from provider in _context.IntegrationProviders.Where(o => o.Id.Equals(integration.IntegrationProviderId))
             where integration.IntegrationType == IntegrationType.Commerce
             select new CommerceProviderReportQuery
             {
@@ -46,6 +47,7 @@ public class CommerceProviderReport : ICommerceProviderReport
                 Name = integration.Name,
                 AuthenticationState = integration.AuthenticationState,
                 TimeStamp = integration.TimeStamp,
+                Provider = provider,
                 
                 OwnerEntityId = rd.OwnerEntityId,
                 OwnerAirslipUserType = rd.OwnerAirslipUserType,
