@@ -51,4 +51,8 @@ public class AccountBalanceReportModel : IModel
     /// A description about the property should go here
     /// </summary>
     public EntityStatus EntityStatus { get; set; }
+
+    public IntegrationProviderReportModel Provider { get; set; } = null!;
+    
+    public IntegrationAccountDetailReportModel AccountDetail { get; set; } = null!;
 }

@@ -1,3 +1,4 @@
+using Airslip.Analytics.Core.Entities;
 using Airslip.Analytics.Core.Enums;
 using Airslip.Analytics.Reports.Interfaces;
 using Airslip.Common.Repository.Types.Entities;
@@ -27,4 +28,6 @@ public class AccountBalanceReportQuery : IEntity, IOwnedDataQuery
     public AirslipUserType ViewerAirslipUserType { get; init; }
     public string PermissionType { get; init; } = string.Empty;
     public bool Allowed { get; init; }
+    public IntegrationProvider Provider { get; set; }
+    public IntegrationAccountDetail? AccountDetail { get; set; }
 }

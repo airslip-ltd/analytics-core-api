@@ -13,6 +13,9 @@ public static class AutoMapperExtensions
         cfg.CreateMap<CommerceProviderReportQuery, CommerceProviderModel>();
         cfg.CreateMap<AccountBalanceReportQuery, AccountBalanceReportModel>();
         cfg.CreateMap<BankTransactionReportQuery, BankTransactionReportModel>();
+        cfg.CreateMap<IntegrationProvider, IntegrationProviderReportModel>();
+        cfg.CreateMap<Integration, IntegrationReportModel>();
+        cfg.CreateMap<IntegrationAccountDetail, IntegrationAccountDetailReportModel>();
         cfg.CreateMap<CommerceTransactionReportQuery, CommerceTransactionReportModel>();
         cfg.CreateMap<CommerceTransactionDownloadQuery, MerchantTransactionModel>();
         cfg.CreateMap<MerchantProduct, MerchantProductModel>();

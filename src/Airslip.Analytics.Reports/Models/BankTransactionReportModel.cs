@@ -12,7 +12,7 @@ public class BankTransactionReportModel : IModel, ISuccess
     public string? Id { get; set; }
     public string BankTransactionId { get; set; } = string.Empty;
     public string? TransactionHash { get; set; }
-    public IntegrationModel Bank { get; set; } = new();
+    public IntegrationReportModel Integration { get; set; } = new();
     public long? AuthorisedDate { get; set; }
     public long CapturedDate { get; set; }
     public long Amount { get; set; }
