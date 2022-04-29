@@ -24,5 +24,5 @@ public record Integration : IEntityWithOwnership, IFromDataSource
     public long TimeStamp { get; set; }
     public string? AccountDetailId { get; set; }
     public virtual IntegrationAccountDetail? AccountDetail { get; set; } = new();
-    // public virtual IntegrationProvider? Provider { get; set; }
+    public virtual IntegrationProvider? Provider { get; set; }
 }

@@ -1,11 +1,9 @@
-using Airslip.Analytics.Core.Enums;
 using Airslip.Common.Repository.Types.Entities;
 using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Types.Enums;
 using Airslip.Common.Types.Interfaces;
 using Airslip.Common.Utilities.Extensions;
-using Airslip.Integrations.Banking.Types.Enums;
 using System;
 using System.Collections.Generic;
 
@@ -24,5 +22,5 @@ public record IntegrationProvider : IEntity, IFromDataSource
     public string Integration { get; set; } = string.Empty;
     public long TimeStamp { get; set; } = DateTime.UtcNow.ToUnixTimeMilliseconds();
     public DataSources DataSource { get; set; } = DataSources.Unknown;
-    // public virtual ICollection<Integration> Integrations { get; set; } = new List<Integration>();
+    public virtual ICollection<Integration> Integrations { get; set; } = new List<Integration>();
 }

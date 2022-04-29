@@ -135,7 +135,6 @@ public class SqlServerContext : AirslipSqlServerContextBase
         modelBuilder.Entity<BankTransaction>().Property(o => o.BankTransactionId).HasColumnType(Constants.ID_DATA_TYPE);
         modelBuilder.Entity<BankTransaction>().Property(o => o.TransactionHash).HasColumnType(Constants.ID_DATA_TYPE);
         modelBuilder.Entity<BankTransaction>().Property(o => o.IntegrationProviderId).HasColumnType(Constants.ID_DATA_TYPE);
-        modelBuilder.Entity<BankTransaction>().Property(o => o.BankId).HasColumnType(Constants.ID_DATA_TYPE);
         modelBuilder.Entity<BankTransaction>().Property(o => o.EmailAddress).HasColumnType("nvarchar (100)");
         modelBuilder.Entity<BankTransaction>().Property(o => o.Description).HasColumnType("nvarchar (150)");
         modelBuilder.Entity<BankTransaction>().Property(o => o.AddressLine).HasColumnType("nvarchar (50)");
@@ -203,12 +202,12 @@ public class SqlServerContext : AirslipSqlServerContextBase
         modelBuilder.Entity<RelationshipDetail>().Property(o => o.ViewerEntityId).HasColumnType(Constants.ID_DATA_TYPE);
        
         // Relationships
-        // modelBuilder.Entity<Integration>()
-        //     .HasOne(t => t.Provider)
-        //     .WithMany(t => t.Integrations)
-        //     .HasForeignKey(t => t.IntegrationProviderId)
-        //     .OnDelete(DeleteBehavior.Cascade)
-        //     .IsRequired();
+        modelBuilder.Entity<Integration>()
+            .HasOne(t => t.Provider)
+            .WithMany(t => t.Integrations)
+            .HasForeignKey(t => t.IntegrationProviderId)
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
         
         modelBuilder.Entity<RelationshipHeader>()
             .HasMany(t => t.Details)
