@@ -52,7 +52,7 @@ public class AccountsController : ApiControllerBase
     [Route("search")]
     [ProducesResponseType(typeof(EntitySearchResponse<AccountBalanceReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAccounts([FromBody] OwnedDataSearchModel query)
+    public async Task<IActionResult> GetAccountBalances([FromBody] OwnedDataSearchModel query)
     {
         IResponse response = await _accountBalanceReport
             .Execute(query);
