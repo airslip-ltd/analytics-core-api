@@ -1,6 +1,6 @@
 ﻿namespace Airslip.Analytics.Core.Poc;
 
-public enum MerchantTransactionTypes
+public enum BusinessTypes
 {
     Anonymous,
     Customer,

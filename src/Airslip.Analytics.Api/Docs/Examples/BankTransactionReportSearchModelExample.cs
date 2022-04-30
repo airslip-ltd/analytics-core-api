@@ -1,7 +1,7 @@
-﻿using Airslip.Analytics.Core.Models;
-using Airslip.Analytics.Core.Poc;
+﻿using Airslip.Analytics.Core.Poc;
 using Airslip.Analytics.Reports.Models;
 using Airslip.Common.Repository.Types.Models;
+using Airslip.Common.Types;
 using Airslip.Common.Types.Enums;
 using Airslip.Common.Utilities;
 using Airslip.Integrations.Banking.Types.Enums;
@@ -12,7 +12,7 @@ using System.Collections.Generic;
 namespace Airslip.Analytics.Api.Docs.Examples;
 
 public class
-    EntitySearchResponseBankTransactionReportModelExample : IExamplesProvider<
+    BankTransactionReportSearchModelExample : IExamplesProvider<
         EntitySearchResponse<BankTransactionReportModel>>
 {
     public EntitySearchResponse<BankTransactionReportModel> GetExamples()
@@ -129,7 +129,7 @@ public class
                             }
                         }
                     },
-                    MerchantTransactionType = MerchantTransactionTypes.Supplier
+                    MerchantTransactionType = BusinessTypes.Supplier
                 }
             }
         };

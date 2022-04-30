@@ -1,6 +1,6 @@
-﻿using Airslip.Analytics.Core.Models;
-using Airslip.Analytics.Core.Poc;
+﻿using Airslip.Analytics.Core.Poc;
 using Airslip.Analytics.Reports.Models;
+using Airslip.Common.Types;
 using Airslip.Common.Types.Enums;
 using Airslip.Common.Utilities;
 using Airslip.Integrations.Banking.Types.Enums;
@@ -114,7 +114,7 @@ public class BankTransactionReportModelExample : IExamplesProvider<BankTransacti
                     }
                 }
             },
-            MerchantTransactionType = MerchantTransactionTypes.Supplier
+            MerchantTransactionType = BusinessTypes.Supplier
         };
     }
 }
