@@ -23,7 +23,6 @@ public class BankTransactionReportModel : IModel, ISuccess
     public string? ProprietaryCode { get; set; }
     public string? Reference { get; set; }
     public MerchantResponse Merchant { get; set; } = new();
-    public MerchantTransactionTypes? MerchantTransactionType { get; set; }
-    [JsonIgnore]
-    public EntityStatus EntityStatus { get; set; }
+    public BusinessTypes? MerchantTransactionType { get; set; }
+    public EntityStatus EntityStatus { get; set; } // This needs to be ignored for API docs
 }
