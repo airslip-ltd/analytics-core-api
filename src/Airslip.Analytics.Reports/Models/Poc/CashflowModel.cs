@@ -8,11 +8,6 @@ namespace Airslip.Analytics.Reports.Models.Poc;
 public class CashflowModel : IModel, ISuccess
 {
     /// <summary>
-    /// Airslip identifier
-    /// </summary>
-    public string? Id { get; set; }
-
-    /// <summary>
     /// Start date of the cashflow report
     /// </summary>
     public long StartDate { get; set; }
@@ -21,17 +16,18 @@ public class CashflowModel : IModel, ISuccess
     /// End date of the cashflow report
     /// </summary>
     public long EndDate { get; set; }
-    
+
     /// <summary>
     /// Cash balance
     /// </summary>
-    public CashBalance CashBalance { get; set; }
+    public CashBalance CashBalance { get; set; } = new();
     
     /// <summary>
     /// Break down of cash and cash equivalents for the period
     /// </summary>
-    public List<CashflowActivity> CashflowActivities { get; set; }
+    public List<CashflowActivity> CashflowActivities { get; set; } = new();
     
+    public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
 }
 
@@ -56,7 +52,7 @@ public class CashflowType
     /// <summary>
     /// Name of the activity
     /// </summary>
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
     /// <summary>
     /// Total value of the activity
     /// </summary>
@@ -64,14 +60,14 @@ public class CashflowType
     /// <summary>
     /// List of the accounts in this activity
     /// </summary>
-    public List<CashflowAccount> Accounts { get; set; }
+    public List<CashflowAccount> Accounts { get; set; } = new();
     
-    public class CashflowAccount
+    public class CashflowAccount : IAccountingAccount
     {
         /// <summary>
         /// Identifier of the account
         /// </summary>
-        public string Id { get; set; }
+        public string Id { get; set; } = string.Empty;
         /// <summary>
         /// The type of account
         /// </summary>
@@ -83,15 +79,15 @@ public class CashflowType
         /// <summary>
         /// Account code
         /// </summary>
-        public string Code { get; set; }
+        public string Code { get; set; }= string.Empty;
         /// <summary>
         /// Account name
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; set; }= string.Empty;
         /// <summary>
         /// Reporting code used for cash flow classification
         /// </summary>
-        public string ReportingCode { get; set; }
+        public string ReportingCode { get; set; }= string.Empty;
         /// <summary>
         /// Total amount for the account
         /// </summary>
@@ -110,7 +106,7 @@ public class CashflowActivity
     /// </summary>
     public long Total { get; set; }
     /// <summary>
-    /// 
+    /// All cash flow types
     /// </summary>
     public List<CashflowType> CashflowTypes { get; set; }
 }

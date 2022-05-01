@@ -19,12 +19,12 @@ public class BalanceSheetModelExample : IExamplesProvider<BalanceSheetModel>
                 new()
                 {
                     BalanceSheetType = BalanceSheetTypes.Asset,
-                    AccountTypes = new List<AccountType>
+                    AccountTypes = new List<AccountType<BalanceSheetAccount>>
                     {
                         new()
                         {
                             Type = AccountingAccountTypes.Inventory,
-                            Accounts = new List<AccountType.BalanceSheetAccount>
+                            Accounts = new List<BalanceSheetAccount>()
                             {
                                 new()
                                 {
@@ -43,12 +43,12 @@ public class BalanceSheetModelExample : IExamplesProvider<BalanceSheetModel>
                 new()
                 {
                     BalanceSheetType = BalanceSheetTypes.Liability,
-                    AccountTypes = new List<AccountType>
+                    AccountTypes = new  List<AccountType<BalanceSheetAccount>>
                     {
                         new()
                         {
                             Type = AccountingAccountTypes.CurrentLiability,
-                            Accounts = new List<AccountType.BalanceSheetAccount>
+                            Accounts = new  List<BalanceSheetAccount>
                             {
                                 new()
                                 {
@@ -67,12 +67,12 @@ public class BalanceSheetModelExample : IExamplesProvider<BalanceSheetModel>
                 new()
                 {
                     BalanceSheetType = BalanceSheetTypes.Equity,
-                    AccountTypes = new List<AccountType>
+                    AccountTypes = new  List<AccountType<BalanceSheetAccount>>
                     {
                         new()
                         {
                             Type = AccountingAccountTypes.Equity,
-                            Accounts = new List<AccountType.BalanceSheetAccount>
+                            Accounts = new List<BalanceSheetAccount>
                             {
                                 new()
                                 {

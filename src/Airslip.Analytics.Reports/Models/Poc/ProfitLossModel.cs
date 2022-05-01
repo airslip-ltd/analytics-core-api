@@ -5,33 +5,43 @@ using Airslip.Common.Types.Interfaces;
 
 namespace Airslip.Analytics.Reports.Models.Poc;
 
-public class BalanceSheetModel : IModel, ISuccess
+public class ProfitLossModel : IModel, ISuccess
 {
     /// <summary>
-    /// The date of the balance sheet
+    /// Start date of the profit and loss report
     /// </summary>
-    public long BalanceDate { get; set; }
+    public long StartDate { get; set; }
+    
+    /// <summary>
+    /// End date of the profit and loss report
+    /// </summary>
+    public long EndDate { get; set; }
+    
+    /// <summary>
+    /// Net profit loss value
+    /// </summary>
+    public long NetProfitLoss { get; set; }
 
     /// <summary>
-    /// All balance sheet reports such as assets, liabilities and equity
+    /// Revenue and expense reports
     /// </summary>
-    public List<BalanceSheetReport> Reports { get; set; } = new();
+    public List<ProfitLossReport> Reports { get; set; } = new();
 
     public EntityStatus EntityStatus { get; set; } // Ignore
     public string? Id { get; set; }
 }
 
-public class BalanceSheetReport 
+public class ProfitLossReport 
 {
     /// <summary>
-    /// The type of balance sheet report
+    /// Revenue or expense report
     /// </summary>
-    public BalanceSheetTypes BalanceSheetType { get; set; }
+    public ProfitLossTypes ProfitLossType { get; set; }
 
     /// <summary>
-    /// All account types associated to this balance sheet report
+    /// All account types associated to this profit and loss report
     /// </summary>
-    public List<AccountType<BalanceSheetAccount>> AccountTypes { get; set; } = new();
+    public List<AccountType<ProfitLossAccount>> AccountTypes { get; set; } = new();
     /// <summary>
     /// The total amount of all accounts
     /// </summary>
@@ -41,7 +51,7 @@ public class BalanceSheetReport
 /// <summary>
 /// A list of all accounts of this type
 /// </summary>
-public class BalanceSheetAccount : IAccountingAccount
+public class ProfitLossAccount : IAccountingAccount
 {
     /// <summary>
     /// Accounting code

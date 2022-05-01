@@ -73,4 +73,23 @@ public class FinancialsController : ApiControllerBase
 
         return HandleResponse<CashflowModel>(response);
     }
+    
+    /// <summary>
+    /// The profit and loss statement is a standard financial report providing detailed year to date income and expense detail for an organisation.
+    /// </summary>
+    /// <param name="startDate">Specifies the start date for profit and loss report
+    /// If no parameter is provided, the date of 12 months before the end date will be used.</param>
+    /// <param name="endDate">Specifies the end date for profit and loss report
+    /// If no parameter is provided, the current date will be used.</param>
+    [HttpGet("profit-and-loss")]
+    [ProducesResponseType(typeof(CashflowModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    public IActionResult GetProfitAndLoss([FromQuery] DateTimeOffset? startDate, [FromQuery] DateTimeOffset endDate)
+    {
+        ProfitLossModelExample example = new();
+
+        IResponse response = example.GetExamples();
+
+        return HandleResponse<ProfitLossModel>(response);
+    }
 }
