@@ -8,10 +8,11 @@ public class AccountType<T> where T : class
     /// The type of account
     /// </summary>
     public AccountingAccountTypes Type { get; set; }
+
     /// <summary>
     /// All associated accounts
     /// </summary>
-    public List<T> Accounts { get; set; }
+    public List<T> Accounts { get; set; } = new();
     /// <summary>
     /// Total value of all the accounts in this type
     /// </summary>

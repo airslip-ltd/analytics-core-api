@@ -304,7 +304,7 @@ public class Payment
     /// <summary>
     /// Airslip identifier
     /// </summary>
-    public string Id { get; set; }
+    public string Id { get; set; } = string.Empty;
     
     /// <summary>
     /// Determines whether the payment is a pre or over payment. Default is standard.
