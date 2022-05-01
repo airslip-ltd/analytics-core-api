@@ -40,10 +40,10 @@ public class FinancialsController : ApiControllerBase
     }
 
     /// <summary>
-    ///
+    /// The balance sheet report is a standard financial report which describes the financial position of an organisation at a point in time.
     /// </summary>
-    /// <param name="balanceDate"></param>
-    /// <param name="months"></param>
+    /// <param name="balanceDate">Specifies the date for balance sheet report</param>
+    /// <param name="months">The number of months to run the balance sheet for</param>
     [HttpGet("balance-sheet")]
     [ProducesResponseType(typeof(BalanceSheetModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
@@ -53,6 +53,24 @@ public class FinancialsController : ApiControllerBase
 
         IResponse response = example.GetExamples();
 
-        return HandleResponse<EntitySearchResponse<BalanceSheetModel>>(response);
+        return HandleResponse<BalanceSheetModel>(response);
+    }
+    
+    /// <summary>
+    /// The statement of cash flows - direct method, provides the year to date changes in operating, financing and investing cash
+    /// flow activities for an organisation. Cashflow statement is not available in US region at this stage.
+    /// </summary>
+    /// <param name="startDate">Specifies the start date for cash flow report. If no parameter is provided, the date of 12 months before the end date will be used.</param>
+    /// <param name="endDate">Specifies the end date for cash flow report. If no parameter is provided, the current date will be used.</param>
+    [HttpGet("cashflow")]
+    [ProducesResponseType(typeof(CashflowModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    public IActionResult GetCashflow([FromQuery] DateTimeOffset? startDate, [FromQuery] DateTimeOffset endDate)
+    {
+        CashflowModelExample example = new();
+
+        IResponse response = example.GetExamples();
+
+        return HandleResponse<CashflowModel>(response);
     }
 }
