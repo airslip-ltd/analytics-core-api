@@ -51,7 +51,7 @@ public class AccountType
     /// <summary>
     /// All associated accounts
     /// </summary>
-    public List<Account> Accounts { get; set; }
+    public List<BalanceSheetAccount> Accounts { get; set; }
     /// <summary>
     /// Total value of all the accounts in this type
     /// </summary>
@@ -60,7 +60,7 @@ public class AccountType
     /// <summary>
     /// A list of all accounts of this type
     /// </summary>
-    public class Account
+    public class BalanceSheetAccount
     {
         /// <summary>
         /// Accounting code

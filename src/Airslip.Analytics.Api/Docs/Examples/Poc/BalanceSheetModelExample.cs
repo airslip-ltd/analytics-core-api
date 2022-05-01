@@ -24,7 +24,7 @@ public class BalanceSheetModelExample : IExamplesProvider<BalanceSheetModel>
                         new()
                         {
                             Type = AccountingAccountTypes.Inventory,
-                            Accounts = new List<AccountType.Account>
+                            Accounts = new List<AccountType.BalanceSheetAccount>
                             {
                                 new()
                                 {
@@ -48,7 +48,7 @@ public class BalanceSheetModelExample : IExamplesProvider<BalanceSheetModel>
                         new()
                         {
                             Type = AccountingAccountTypes.CurrentLiability,
-                            Accounts = new List<AccountType.Account>
+                            Accounts = new List<AccountType.BalanceSheetAccount>
                             {
                                 new()
                                 {
@@ -72,7 +72,7 @@ public class BalanceSheetModelExample : IExamplesProvider<BalanceSheetModel>
                         new()
                         {
                             Type = AccountingAccountTypes.Equity,
-                            Accounts = new List<AccountType.Account>
+                            Accounts = new List<AccountType.BalanceSheetAccount>
                             {
                                 new()
                                 {
