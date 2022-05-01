@@ -4,7 +4,6 @@ using Airslip.Analytics.Reports.Models.Poc;
 using Airslip.Common.Auth.AspNetCore.Implementations;
 using Airslip.Common.Auth.Interfaces;
 using Airslip.Common.Auth.Models;
-using Airslip.Common.Repository.Types.Interfaces;
 using Airslip.Common.Repository.Types.Models;
 using Airslip.Common.Types.Configuration;
 using Airslip.Common.Types.Enums;
@@ -62,18 +61,13 @@ public class InvoicesController : ApiControllerBase
     /// <summary>
     ///  Use this method to create or update an invoice
     /// </summary>
-    /// <param name="provider">One of <see cref="AccountingProviders"/> </param>
+    /// <param name="connectedAccountId">The Id of the connected account</param>
     /// <param name="body">The body of the invoice to update or create</param>
-    [HttpPost("{provider}")]
+    [HttpPost("{connectedAccountId}")]
     [ProducesResponseType(typeof(CreatedModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult CreateInvoice([FromQuery] string provider, [FromBody] InvoiceModel body)
+    public IActionResult CreateInvoice([FromQuery] string connectedAccountId, [FromBody] InvoiceModel body)
     {
         return HandleResponse<CreatedModel>(body);
     }
-}
-
-public class CreatedModel : IModelWithId, ISuccess
-{
-    public string? Id { get; set; }
 }
