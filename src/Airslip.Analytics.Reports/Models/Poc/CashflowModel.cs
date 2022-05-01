@@ -100,13 +100,14 @@ public class CashflowActivity
     /// <summary>
     /// Name of the cashflow activity type
     /// </summary>
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
     /// <summary>
     /// Total value of the activity type
     /// </summary>
     public long Total { get; set; }
+
     /// <summary>
     /// All cash flow types
     /// </summary>
-    public List<CashflowType> CashflowTypes { get; set; }
+    public List<CashflowType> CashflowTypes { get; set; } = new();
 }
