@@ -15,6 +15,7 @@ public class InvoiceModel : IModel, ISuccess
     /// Airslip identifier
     /// </summary>
     public string? Id { get; set; }
+    
     /// <summary>
     /// Check whether this an account receivable (invoice) or account payable (bill)
     /// </summary>
