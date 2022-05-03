@@ -289,13 +289,13 @@ public class SqlServerContext : AirslipSqlServerContextBase
         modelBuilder.Entity<MerchantTransaction>()
             .HasIndex(b => new
             {
-                b.Day, b.Month, b.Year, b.EntityId, b.AirslipUserType, b.IntegrationId
+                b.Day, b.Month, b.Year, b.EntityId, b.AirslipUserType, b.IntegrationId, b.CurrencyCode
             });
         
         modelBuilder.Entity<MerchantAccountMetricSnapshot>()
             .HasIndex(b => new
             {
-                b.Day, b.Month, b.Year, b.EntityId, b.AirslipUserType, b.IntegrationId
+                b.Day, b.Month, b.Year, b.EntityId, b.AirslipUserType, b.IntegrationId, b.CurrencyCode
             });
         
         // Default data
