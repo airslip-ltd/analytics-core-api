@@ -27,8 +27,7 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
                 principalTable: "IntegrationProviders",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
-            
-            migrationBuilder.AddSqlFiles();
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -28,8 +28,6 @@ namespace Airslip.Analytics.Services.SqlServer.Migrations
             migrationBuilder.DropColumn(
                 name: "Currency",
                 table: "BankAccountBalances");
-            
-            migrationBuilder.AddSqlFiles();
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
