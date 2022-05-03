@@ -23,9 +23,7 @@ public class CreateMerchantAccountMetricSnapshot : IAnalyticsProcess<MerchantTra
         
         return _context
             .Database
-            .ExecuteSqlRawAsync("EXEC dbo.CreateMerchantAccountMetricSnapshot @EntityId = {0}, @AirslipUserType = {1}, @Id = {2}",
-                model.EntityId, 
-                model.AirslipUserType,
+            .ExecuteSqlRawAsync("EXEC dbo.CreateMerchantAccountMetricSnapshot @Id = {0}",
                 model.Id);
     }
 }
