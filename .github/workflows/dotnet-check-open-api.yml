@@ -13,7 +13,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Validate OpenAPI definition
+
+      - name: Validate Internal document
         uses: char0n/swagger-editor-validate@v1
         with:
           definition-file: ${{ env.SPEC_PATH }}/analytics.api.2021.11.yaml
+
+      - name: Validate External document
+        uses: char0n/swagger-editor-validate@v1
+        with:
+          definition-file: ${{ env.SPEC_PATH }}/analytics.api.2022.5.yaml
