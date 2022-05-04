@@ -12,9 +12,10 @@ jobs:
       SPEC_PATH: ./src/Airslip.Analytics.Api/openapi
 
     steps:
+    - uses: actions/checkout@v2
+
     - name: Get OpenAPI files
       id: getfiles
-      uses: actions/checkout@v2
       run:  |
         # Using step output (space separated file list)
         FILES="$(find lib -type f -iname "*.yaml")"
