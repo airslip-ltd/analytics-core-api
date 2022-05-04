@@ -23,11 +23,11 @@ namespace Airslip.Analytics.Api.Controllers.Poc.Payroll;
 /// A description for a group of APIs
 /// </summary>
 [ApiController]
-[ApiVersion("1.0")]
+[ApiVersion("2022.5")]
 [ApiExplorerSettings(GroupName = "Payroll")]
 [Consumes(Json.MediaType)]
 [Produces(Json.MediaType)]
-[Route("v{version:apiVersion}/payroll/employees")]
+[Route("v{version:apiVersion}/payroll/{businessId}/employees")]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class EmployeesController : ApiControllerBase
 {
@@ -42,11 +42,11 @@ public class EmployeesController : ApiControllerBase
     /// <summary>
     /// Allows you to search for employees
     /// </summary>
-    /// <param name="query">The search model for employees</param>
+    /// <param name="query">The search model for employees. You can use this to sort or search for any column within the model</param>
     [HttpPost("search")]
     [ProducesResponseType(typeof(EntitySearchResponse<EmployeeModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult GetEmployees([FromBody] OwnedDataSearchModel query)
+    public IActionResult GetEmployees([FromBody] QueryModel query)
     {
         EmployeeSearchModelExample example = new();
 

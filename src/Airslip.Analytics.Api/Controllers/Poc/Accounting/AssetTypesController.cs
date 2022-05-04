@@ -22,7 +22,7 @@ namespace Airslip.Analytics.Api.Controllers.Poc.Accounting;
 /// The Assets API exposes fixed asset related functions and can be used for a variety of purposes such as creating assets, retrieving asset valuations and visualising asset depreciation.
 /// </summary>
 [ApiController]
-[ApiVersion("1.0")]
+[ApiVersion("2022.5")]
 [ApiExplorerSettings(GroupName = "Assets")]
 [Consumes(Json.MediaType)]
 [Produces(Json.MediaType)]
@@ -41,11 +41,11 @@ public class AssetTypesController : ApiControllerBase
     /// <summary>
     /// Allows you to retrieve asset types
     /// </summary>
-    /// <param name="query">The search model for asset types</param>
+    /// <param name="query">The search model for asset types. You can use this to sort or search for any column within the model</param>
     [HttpPost("search")]
     [ProducesResponseType(typeof(EntitySearchResponse<AssetTypeModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult GetAssetTypes([FromBody] OwnedDataSearchModel query)
+    public IActionResult GetAssetTypes([FromBody] QueryModel query)
     {
         AssetTypeSearchModelExample example = new();
 

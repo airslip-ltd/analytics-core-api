@@ -51,7 +51,7 @@ public class BalancesController : ApiControllerBase
     /// <summary>
     /// Search for balances for a connected business
     /// </summary>
-    /// <param name="query">The account balance model within the search query</param>
+    /// <param name="query">The account balance model within the search query. You can use this to sort or search for any column within the model</param>
     [MapToApiVersion("2021.11")]
     [HttpPost("balances/search")]
     [ProducesResponseType(typeof(EntitySearchResponse<AccountBalanceReportModel>), StatusCodes.Status200OK)]
@@ -67,7 +67,7 @@ public class BalancesController : ApiControllerBase
     /// <summary>
     /// Download balances for a connected business
     /// </summary>
-    /// <param name="query">The download account balance model within the search query</param>
+    /// <param name="query">The download account balance model within the search query. You can use this to sort or search for any column within the model</param>
     [MapToApiVersion("2021.5")]
     [HttpPost("balances/download")]
     [ProducesResponseType(typeof(DownloadResponse), StatusCodes.Status200OK)]
@@ -85,7 +85,7 @@ public class BalancesController : ApiControllerBase
     /// <summary>
     /// Search for balances for a connected business
     /// </summary>
-    /// <param name="query">The account balance model within the search query</param>
+    /// <param name="query">The account balance model within the search query. You can use this to sort or search for any column within the model</param>
     /// <param name="businessId">The connected business identifier</param>
     [MapToApiVersion("2022.5")]
     [HttpPost("{businessId}/balances/search")]

@@ -21,10 +21,10 @@ namespace Airslip.Analytics.Api.Controllers.Poc;
 /// Most users configure webhooks from the dashboard, which provides a user interface for registering and testing your webhook endpoints.
 /// </summary>
 [ApiController]
-[ApiVersion("1.0")]
+[ApiVersion("2022.5")]
 [Consumes(Json.MediaType)]
 [Produces(Json.MediaType)]
-[Route("v{version:apiVersion}/web-hooks")]
+[Route("v{version:apiVersion}/web-hooks/{businessId}")]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class WebhooksController : ApiControllerBase
 {

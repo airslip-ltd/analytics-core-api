@@ -22,10 +22,10 @@ namespace Airslip.Analytics.Api.Controllers.Poc.Accounting;
 /// You can get access to balance sheets, cash flow statement, profit & loss reports and the cash position of an organisation. 
 /// </summary>
 [ApiController]
-[ApiVersion("1.0")]
+[ApiVersion("2022.5")]
 [Consumes(Json.MediaType)]
 [Produces(Json.MediaType)]
-[Route("v{version:apiVersion}/financials")]
+[Route("v{version:apiVersion}/financials/{businessId}")]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class FinancialsController : ApiControllerBase
 {
@@ -40,12 +40,13 @@ public class FinancialsController : ApiControllerBase
     /// <summary>
     /// The balance sheet report is a standard financial report which describes the financial position of an organisation at a point in time.
     /// </summary>
+    /// <param name="businessId">The connected business identifier</param>
     /// <param name="balanceDate">Specifies the date for balance sheet report</param>
     /// <param name="months">The number of months to run the balance sheet for</param>
     [HttpGet("balance-sheet")]
     [ProducesResponseType(typeof(BalanceSheetModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult GetBalanceSheet([FromQuery] DateTimeOffset? balanceDate, [FromQuery] int months)
+    public IActionResult GetBalanceSheet([FromRoute] string? businessId, [FromQuery] DateTimeOffset? balanceDate, [FromQuery] int months)
     {
         BalanceSheetModelExample example = new();
 
@@ -58,12 +59,16 @@ public class FinancialsController : ApiControllerBase
     /// The statement of cash flows - direct method, provides the year to date changes in operating, financing and investing cash
     /// flow activities for an organisation. Cashflow statement is not available in US region at this stage.
     /// </summary>
+    /// <param name="businessId">The connected business identifier</param>
     /// <param name="startDate">Specifies the start date for cash flow report. If no parameter is provided, the date of 12 months before the end date will be used.</param>
     /// <param name="endDate">Specifies the end date for cash flow report. If no parameter is provided, the current date will be used.</param>
     [HttpGet("cashflow")]
     [ProducesResponseType(typeof(CashflowModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult GetCashflow([FromQuery] DateTimeOffset? startDate, [FromQuery] DateTimeOffset endDate)
+    public IActionResult GetCashflow(
+        [FromRoute] string? businessId, 
+        [FromQuery] DateTimeOffset? startDate, 
+        [FromQuery] DateTimeOffset endDate)
     {
         CashflowModelExample example = new();
 
@@ -75,6 +80,7 @@ public class FinancialsController : ApiControllerBase
     /// <summary>
     /// The profit and loss statement is a standard financial report providing detailed year to date income and expense detail for an organisation.
     /// </summary>
+    /// <param name="businessId">The connected business identifier</param>
     /// <param name="startDate">Specifies the start date for profit and loss report
     /// If no parameter is provided, the date of 12 months before the end date will be used.</param>
     /// <param name="endDate">Specifies the end date for profit and loss report
@@ -82,7 +88,7 @@ public class FinancialsController : ApiControllerBase
     [HttpGet("profit-and-loss")]
     [ProducesResponseType(typeof(ProfitLossModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult GetProfitAndLoss([FromQuery] DateTimeOffset? startDate, [FromQuery] DateTimeOffset endDate)
+    public IActionResult GetProfitAndLoss([FromRoute] string? businessId, [FromQuery] DateTimeOffset? startDate, [FromQuery] DateTimeOffset endDate)
     {
         ProfitLossModelExample example = new();
 
@@ -94,11 +100,12 @@ public class FinancialsController : ApiControllerBase
     /// <summary>
     /// Summarizes the total cash position for each account for an org
     /// </summary>
+    /// <param name="businessId">The connected business identifier</param>
     /// <param name="balanceDate">The `balance date` will return transactions based on the accounting date entered by the user. Transactions before the balanceDate will be included.</param>
     [HttpGet("cash-position")]
     [ProducesResponseType(typeof(CashPositionModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult GetCashPosition([FromQuery] DateTimeOffset? balanceDate)
+    public IActionResult GetCashPosition([FromRoute] string? businessId, [FromQuery] DateTimeOffset? balanceDate)
     {
         CashPositionModelExample example = new();
 

@@ -19,13 +19,13 @@ using Serilog;
 namespace Airslip.Analytics.Api.Controllers.Poc.Accounting;
 
 /// <summary>
-/// Get, create and update invoices for a particular business
+/// Get, search, create and update invoices for a particular business
 /// </summary>
 [ApiController]
-[ApiVersion("1.0")]
+[ApiVersion("2022.5")]
 [Consumes(Json.MediaType)]
 [Produces(Json.MediaType)]
-[Route("v{version:apiVersion}/invoices")]
+[Route("v{version:apiVersion}/invoices/{businessId}")]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class InvoicesController : ApiControllerBase
 {
@@ -44,11 +44,12 @@ public class InvoicesController : ApiControllerBase
     /// When you retrieve invoices by querying by Statuses, pagination is enforced by default.
     /// Individual invoices (e.g. Invoices/97c2dc5-cc47-4afd-8ec8-74990b8761e9) can also be returned as PDF's see our HTTP GET documentation
     /// </summary>
-    /// <param name="query">The invoice model within the search query</param>
+    /// <param name="businessId">The connected business identifier</param>
+    /// <param name="query">The invoice model within the search query. You can use this to sort or search for any column within the model</param>
     [HttpPost("search")]
     [ProducesResponseType(typeof(EntitySearchResponse<InvoiceModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult GetInvoices([FromBody] OwnedDataSearchModel query)
+    public IActionResult GetInvoices([FromRoute] string? businessId, [FromBody] QueryModel query)
     {
         InvoiceSearchModelExample example = new();
 
@@ -58,14 +59,14 @@ public class InvoicesController : ApiControllerBase
     }
 
     /// <summary>
-    ///  Use this method to create or update an invoice
+    /// Use this method to create or update an invoice
     /// </summary>
-    /// <param name="connectedAccountId">The Id of the connected account</param> // Move after discussion with Graham
-    /// <param name="body">The body of the invoice to update or create</param>
-    [HttpPost("{connectedAccountId}")]
+    /// <param name="businessId">The connected business identifier</param>
+    /// <param name="body">The body of the invoice to update or create. You can use this to sort or search for any column within the model</param>
+    [HttpPost]
     [ProducesResponseType(typeof(CreatedModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult CreateInvoice([FromQuery] string connectedAccountId, [FromBody] InvoiceModel body)
+    public IActionResult CreateInvoice([FromRoute] string businessId, [FromBody] InvoiceModel body)
     {
         return HandleResponse<CreatedModel>(body);
     }
