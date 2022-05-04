@@ -2,48 +2,25 @@ openapi: 3.0.1
 info:
   title: Analytics API
   description: Includes all API endpoints for data analytics.
-  version: '1'
+  version: '2022.5'
 servers:
   - url: http://localhost:7101
 paths:
-  /v/balance/search:
+  '/2022.5/banking/{businessId}/balances/search':
     post:
       tags:
-        - Accounts
-      summary: A description about a specific API should go here
-      operationId: Get Account Balances
-      requestBody:
-        description: A parameter description should go here
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/OwnedDataSearchModel'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AccountBalanceReportModelEntitySearchResponse'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  '/v/balance/search/{businessId}':
-    post:
-      tags:
-        - Accounts
-      summary: A description about a specific API should go here
+        - Balances
+      summary: Search for balances for a connected business
       operationId: Get Account Balances
       parameters:
         - name: businessId
           in: path
+          description: The connected business identifier
           required: true
           schema:
             type: string
       requestBody:
+        description: The account balance model within the search query
         content:
           application/json:
             schema:
@@ -61,100 +38,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /v/balance/download:
+  '/2022.5/banking/{businessId}/transactions/search':
     post:
       tags:
-        - Accounts
-      summary: A description about a specific API should go here
-      operationId: Download Account Balances
-      requestBody:
-        description: A parameter description should go here
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/OwnedDataSearchModel'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DownloadResponse'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /v/commerce/download:
-    post:
-      tags:
-        - Commerce
-      summary: A description about a specific API should go here
-      operationId: Download Commerce Accounts
-      requestBody:
-        description: A parameter description should go here
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/OwnedDataSearchModel'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DownloadResponse'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /v/data-lists/currencies:
-    post:
-      tags:
-        - Data
-      operationId: Get Accounts
-      requestBody:
-        content:
-          application/json-patch+json:
-            schema:
-              $ref: '#/components/schemas/DataSearchModel'
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DataSearchModel'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/DataSearchModel'
-          application/*+json:
-            schema:
-              $ref: '#/components/schemas/DataSearchModel'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CurrencySnapshotDataSearchResponse'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /v/reports/bank-transactions:
-    post:
-      tags:
-        - Report
-      summary: A description about a specific API should go here
+        - Banking
+      summary: Search for bank transactions for a connected business
       operationId: Get Bank Transactions
+      parameters:
+        - name: businessId
+          in: path
+          description: The connected business identifier
+          required: true
+          schema:
+            type: string
       requestBody:
-        description: A parameter description should go here
+        description: The bank transaction model within the search query
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OwnedDataSearchModel'
+              $ref: '#/components/schemas/QueryModel'
       responses:
         '200':
           description: Success
@@ -168,16 +70,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  '/v/reports/{id}':
+  '/2022.5/banking/{businessId}/transactions/{id}':
     get:
       tags:
-        - Report
-      summary: A description about a specific API should go here
+        - Banking
+      summary: Get a singular bank transaction by id
       operationId: Get Bank Transaction
       parameters:
+        - name: businessId
+          in: path
+          description: The connected business identifier
+          required: true
+          schema:
+            type: string
         - name: id
           in: path
-          description: ''
+          description: The identifier for the bank transaction
           required: true
           schema:
             type: string
@@ -194,43 +102,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /v/reports/bank-transactions/download:
+  '/2022.5/commerce/{businessId}/transactions':
     post:
       tags:
-        - Report
-      summary: A description about a specific API should go here
-      operationId: Download Bank Transactions
+        - Commerce
+      summary: Get all commerce transactions for a connected business
+      operationId: Get Commerce Transactions
+      parameters:
+        - name: businessId
+          in: path
+          description: The connected business identifier
+          required: true
+          schema:
+            type: string
       requestBody:
-        description: A parameter description should go here
+        description: 'The commerce transaction model within the search query, you can use this to sort or search for any column within the model'
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OwnedDataSearchModel'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BankTransactionReportModelEntitySearchResponse'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /v/reports/commerce-transactions:
-    post:
-      tags:
-        - Report
-      summary: A description about a specific API should go here
-      operationId: Commerce Transactions
-      requestBody:
-        description: A parameter description should go here
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/OwnedDataSearchModel'
+              $ref: '#/components/schemas/QueryModel'
       responses:
         '200':
           description: Success
@@ -244,14 +134,128 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /v/reports/commerce-transactions/download:
+  '/v2022.5/financials/{businessId}/balance-sheet':
+    get:
+      tags:
+        - Financials
+      summary: The balance sheet report is a standard financial report which describes the financial position of an organisation at a point in time.
+      operationId: Get Balance Sheet
+      parameters:
+        - name: businessId
+          in: path
+          description: The connected business identifier
+          required: true
+          schema:
+            type: string
+        - name: balanceDate
+          in: query
+          description: Specifies the date for balance sheet report
+          schema:
+            type: string
+            format: date-time
+        - name: months
+          in: query
+          description: The number of months to run the balance sheet for
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceSheetModel'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  '/v2022.5/financials/{businessId}/cashflow':
+    get:
+      tags:
+        - Financials
+      summary: "The statement of cash flows - direct method, provides the year to date changes in operating, financing and investing cash\r\nflow activities for an organisation. Cashflow statement is not available in US region at this stage."
+      operationId: Get Cashflow
+      parameters:
+        - name: businessId
+          in: path
+          description: The connected business identifier
+          required: true
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          description: 'Specifies the start date for cash flow report. If no parameter is provided, the date of 12 months before the end date will be used.'
+          schema:
+            type: string
+            format: date-time
+        - name: endDate
+          in: query
+          description: 'Specifies the end date for cash flow report. If no parameter is provided, the current date will be used.'
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CashflowModel'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  '/v2022.5/financials/{businessId}/profit-and-loss':
+    get:
+      tags:
+        - Financials
+      summary: The profit and loss statement is a standard financial report providing detailed year to date income and expense detail for an organisation.
+      operationId: Get Profit And Loss
+      parameters:
+        - name: businessId
+          in: path
+          description: The connected business identifier
+          required: true
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          description: "Specifies the start date for profit and loss report\r\n            If no parameter is provided, the date of 12 months before the end date will be used."
+          schema:
+            type: string
+            format: date-time
+        - name: endDate
+          in: query
+          description: "Specifies the end date for profit and loss report\r\n            If no parameter is provided, the current date will be used."
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CashflowModel'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2022.5/invoices:
     post:
       tags:
-        - Report
-      summary: A description about a specific API should go here
-      operationId: Commerce Transactions Download
+        - Invoices
+      summary: "Use this method to retrieve one or many invoices.\r\nWhen you retrieve multiple invoices, only a summary of the contact is returned and no line details are returned - this is to keep the response more compact.\r\nThe line item details will be returned when you retrieve an individual invoice, either by specifying Invoice ID, Invoice Number, querying by Statuses or by using the optional paging parameter (below).\r\nWhen you retrieve invoices by querying by Statuses, pagination is enforced by default.\r\nIndividual invoices (e.g. Invoices/97c2dc5-cc47-4afd-8ec8-74990b8761e9) can also be returned as PDF's see our HTTP GET documentation"
+      operationId: Get Invoices
       requestBody:
-        description: A parameter description should go here
+        description: The invoice model within the search query
         content:
           application/json:
             schema:
@@ -262,108 +266,43 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BankTransactionReportModelEntitySearchResponse'
+                $ref: '#/components/schemas/InvoiceModelEntitySearchResponse'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  '/v/snapshot/{snapshotType}':
+  '/v2022.5/invoices/{connectedAccountId}':
     post:
       tags:
-        - Snapshot
-      summary: A description about a specific API should go here
-      operationId: Get Snapshot
+        - Invoices
+      summary: Use this method to create or update an invoice
+      operationId: Create Invoice
       parameters:
-        - name: snapshotType
+        - name: connectedAccountId
+          in: query
+          description: The Id of the connected account
+          schema:
+            type: string
+        - name: connectedAccountId
           in: path
-          description: A parameter description should go here
           required: true
-          schema:
-            $ref: '#/components/schemas/DashboardSnapshotType'
-        - name: dayRange
-          in: query
-          description: A parameter description should go here
-          schema:
-            type: integer
-            format: int32
-            default: 7
-        - name: statRange
-          in: query
-          description: A parameter description should go here
-          schema:
-            type: integer
-            format: int32
-            default: 10
-        - name: integrationId
-          in: query
-          description: A parameter description should go here
           schema:
             type: string
       requestBody:
-        description: A parameter description should go here
+        description: The body of the invoice to update or create
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OwnedSnapshotSearchModel'
+              $ref: '#/components/schemas/InvoiceModel'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DashboardSnapshotModel'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /v/snapshot/revenue:
-    post:
-      tags:
-        - Snapshot
-      summary: A description about a specific API should go here
-      operationId: Get Revenue
-      requestBody:
-        description: A parameter description should go here
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/OwnedSeriesSearchModel'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DashboardGraphSeriesModel'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /v/snapshot/cashflow:
-    post:
-      tags:
-        - Snapshot
-      summary: A description about a specific API should go here
-      operationId: Get Cashflow
-      requestBody:
-        description: A parameter description should go here
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/OwnedSeriesSearchModel'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DashboardGraphSeriesModel'
+                $ref: '#/components/schemas/CreatedModel'
         '400':
           description: Bad Request
           content:
@@ -423,6 +362,38 @@ components:
         paging:
           $ref: '#/components/schemas/EntitySearchPagingModel'
       additionalProperties: false
+    AccountingAccountClassTypes:
+      enum:
+        - Asset
+        - Equity
+        - Expense
+        - Liability
+        - Revenue
+      type: string
+    AccountingAccountTypes:
+      enum:
+        - Cash
+        - Current
+        - CurrentLiability
+        - Depreciation
+        - DirectCosts
+        - Equity
+        - Expense
+        - Fixed
+        - Inventory
+        - Liability
+        - NonCurrent
+        - OtherIncome
+        - Overheads
+        - PrePayment
+        - Revenue
+        - Sales
+        - TermLiability
+        - PayAsYouGoLiability
+        - SuperannuationExpense
+        - SuperannuationLiability
+        - WagesExpense
+      type: string
     Address:
       required:
         - countryCode
@@ -711,6 +682,85 @@ components:
         - ZM
         - ZW
       type: string
+    BalanceSheetAccount:
+      required:
+        - code
+        - id
+        - name
+        - reportingCode
+        - total
+      type: object
+      properties:
+        code:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        reportingCode:
+          type: string
+        total:
+          type: integer
+          format: int64
+      additionalProperties: false
+    BalanceSheetAccountAccountType:
+      required:
+        - accounts
+        - total
+        - type
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/AccountingAccountTypes'
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/BalanceSheetAccount'
+        total:
+          type: integer
+          format: int64
+      additionalProperties: false
+    BalanceSheetModel:
+      required:
+        - balanceDate
+        - entityStatus
+        - reports
+      type: object
+      properties:
+        balanceDate:
+          type: integer
+          format: int64
+        reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/BalanceSheetReport'
+        id:
+          type: string
+          nullable: true
+      additionalProperties: false
+    BalanceSheetReport:
+      required:
+        - accountTypes
+        - balanceSheetType
+        - total
+      type: object
+      properties:
+        balanceSheetType:
+          $ref: '#/components/schemas/BalanceSheetTypes'
+        accountTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/BalanceSheetAccountAccountType'
+        total:
+          type: integer
+          format: int64
+      additionalProperties: false
+    BalanceSheetTypes:
+      enum:
+        - Asset
+        - Liability
+        - Equity
+      type: string
     BankTransactionReportModel:
       required:
         - amount
@@ -825,6 +875,109 @@ components:
         - Customer
         - Supplier
       type: string
+    CashBalance:
+      required:
+        - closingCashBalance
+        - netCashMovement
+        - openingCashBalance
+      type: object
+      properties:
+        openingCashBalance:
+          type: integer
+          format: int64
+        closingCashBalance:
+          type: integer
+          format: int64
+        netCashMovement:
+          type: integer
+          format: int64
+      additionalProperties: false
+    CashflowAccount:
+      required:
+        - classType
+        - code
+        - id
+        - name
+        - reportingCode
+        - total
+        - type
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          $ref: '#/components/schemas/AccountingAccountTypes'
+        classType:
+          $ref: '#/components/schemas/AccountingAccountClassTypes'
+        code:
+          type: string
+        name:
+          type: string
+        reportingCode:
+          type: string
+        total:
+          type: integer
+          format: int64
+      additionalProperties: false
+    CashflowActivity:
+      required:
+        - cashflowTypes
+        - name
+        - total
+      type: object
+      properties:
+        name:
+          type: string
+        total:
+          type: integer
+          format: int64
+        cashflowTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/CashflowType'
+      additionalProperties: false
+    CashflowModel:
+      required:
+        - cashBalance
+        - cashflowActivities
+        - endDate
+        - entityStatus
+        - startDate
+      type: object
+      properties:
+        startDate:
+          type: integer
+          format: int64
+        endDate:
+          type: integer
+          format: int64
+        cashBalance:
+          $ref: '#/components/schemas/CashBalance'
+        cashflowActivities:
+          type: array
+          items:
+            $ref: '#/components/schemas/CashflowActivity'
+        id:
+          type: string
+          nullable: true
+      additionalProperties: false
+    CashflowType:
+      required:
+        - accounts
+        - name
+        - total
+      type: object
+      properties:
+        name:
+          type: string
+        total:
+          type: integer
+          format: int64
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CashflowAccount'
+      additionalProperties: false
     Categories:
       enum:
         - Advertising
@@ -985,6 +1138,44 @@ components:
         paging:
           $ref: '#/components/schemas/EntitySearchPagingModel'
       additionalProperties: false
+    Contact:
+      required:
+        - contactStatus
+        - id
+        - type
+        - updatedDate
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          $ref: '#/components/schemas/BusinessTypes'
+        contactStatus:
+          $ref: '#/components/schemas/ContactStatus'
+        companyName:
+          type: string
+          nullable: true
+        firstName:
+          type: string
+          nullable: true
+        surname:
+          type: string
+          nullable: true
+        email:
+          type: string
+          nullable: true
+        phoneNumber:
+          type: string
+          nullable: true
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Address'
+          nullable: true
+        updatedDate:
+          type: integer
+          format: int64
+      additionalProperties: false
     ContactDetail:
       type: object
       properties:
@@ -998,94 +1189,21 @@ components:
           type: string
           nullable: true
       additionalProperties: false
-    CurrencySnapshot:
-      required:
-        - currencyCode
-      type: object
-      properties:
-        currencyCode:
-          type: string
-      additionalProperties: false
-    CurrencySnapshotDataSearchResponse:
-      required:
-        - records
-      type: object
-      properties:
-        records:
-          type: array
-          items:
-            $ref: '#/components/schemas/CurrencySnapshot'
-      additionalProperties: false
-    DashboardGraphSeriesModel:
-      required:
-        - currencyCode
-        - endDate
-        - series
-        - startDate
-      type: object
-      properties:
-        startDate:
-          type: string
-        endDate:
-          type: string
-        currencyCode:
-          type: string
-        series:
-          type: array
-          items:
-            $ref: '#/components/schemas/Series'
-      additionalProperties: false
-    DashboardSnapshotModel:
-      required:
-        - balance
-        - currencyCode
-        - dayRange
-        - metrics
-        - movement
-        - timeStamp
-      type: object
-      properties:
-        balance:
-          type: number
-          description: A description about the property should go here
-          format: double
-        timeStamp:
-          type: integer
-          description: A description about the property should go here
-          format: int64
-        movement:
-          type: number
-          description: A description about the property should go here
-          format: double
-        currencyCode:
-          type: string
-          description: A description about the property should go here
-        metrics:
-          type: array
-          items:
-            $ref: '#/components/schemas/SnapshotMetric'
-          description: A description about the property should go here
-        dayRange:
-          type: integer
-          description: A description about the property should go here
-          format: int32
-      additionalProperties: false
-    DashboardSnapshotType:
+    ContactStatus:
       enum:
-        - TotalSales
-        - TotalRefunds
-        - CurrentBalance
+        - Active
+        - Archived
+        - GdprRequest
       type: string
-    DataSearchModel:
-      required:
-        - ownerAirslipUserType
-        - ownerEntityId
+    CreatedModel:
       type: object
       properties:
-        ownerEntityId:
+        id:
           type: string
-        ownerAirslipUserType:
-          $ref: '#/components/schemas/AirslipUserType'
+          nullable: true
+      additionalProperties: false
+    CreditNote:
+      type: object
       additionalProperties: false
     DataSources:
       enum:
@@ -1175,20 +1293,17 @@ components:
         additionalData:
           nullable: true
       additionalProperties: false
-    DownloadResponse:
+    DiscountDetail:
       required:
-        - fileContent
-        - fileName
-        - mediaType
+        - amount
+        - rate
       type: object
       properties:
-        fileName:
+        rate:
           type: string
-        fileContent:
-          type: string
-          format: byte
-        mediaType:
-          type: string
+        amount:
+          type: integer
+          format: int64
       additionalProperties: false
     EntitySearchModel:
       required:
@@ -1345,6 +1460,148 @@ components:
         - Banking
         - Commerce
         - Accounting
+      type: string
+    InvoiceModel:
+      required:
+        - amountCredited
+        - amountDue
+        - amountPaid
+        - contact
+        - createdDate
+        - currencyCode
+        - dueDate
+        - expectedPaymentDate
+        - fullyPaidOnDate
+        - invoiceNumber
+        - invoiceTaxType
+        - issuedDate
+        - lineItems
+        - payments
+        - plannedPaymentDate
+        - status
+        - subTotal
+        - total
+        - totalTax
+        - type
+        - updatedDate
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        type:
+          $ref: '#/components/schemas/InvoiceTypes'
+        contact:
+          $ref: '#/components/schemas/Contact'
+        issuedDate:
+          type: integer
+          format: int64
+        dueDate:
+          type: integer
+          format: int64
+        status:
+          $ref: '#/components/schemas/InvoiceStatus'
+        invoiceTaxType:
+          $ref: '#/components/schemas/InvoiceTaxTypes'
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItem'
+        subTotal:
+          type: integer
+          format: int64
+        totalTax:
+          type: integer
+          format: int64
+        total:
+          type: integer
+          format: int64
+        createdDate:
+          type: integer
+          format: int64
+        updatedDate:
+          type: integer
+          format: int64
+        currencyCode:
+          $ref: '#/components/schemas/Iso4217CurrencyCodes'
+        invoiceNumber:
+          type: string
+        bankTransactionId:
+          type: string
+          nullable: true
+        businessId:
+          type: string
+          nullable: true
+        reference:
+          type: string
+          nullable: true
+        expectedPaymentDate:
+          type: integer
+          format: int64
+        plannedPaymentDate:
+          type: integer
+          format: int64
+        repeatingInvoiceID:
+          type: string
+          nullable: true
+        cisDeduction:
+          type: string
+          nullable: true
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment'
+        creditNotes:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditNote'
+          nullable: true
+        amountDue:
+          type: integer
+          format: int64
+        amountPaid:
+          type: integer
+          format: int64
+        fullyPaidOnDate:
+          type: integer
+          format: int64
+        amountCredited:
+          type: integer
+          format: int64
+      additionalProperties: false
+    InvoiceModelEntitySearchResponse:
+      required:
+        - paging
+        - results
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceModel'
+        paging:
+          $ref: '#/components/schemas/EntitySearchPagingModel'
+      additionalProperties: false
+    InvoiceStatus:
+      enum:
+        - Draft
+        - Submitted
+        - Deleted
+        - Authorised
+        - PartiallyPaid
+        - Paid
+        - Voided
+      type: string
+    InvoiceTaxTypes:
+      enum:
+        - Exclusive
+        - Inclusive
+        - NoTax
+      type: string
+    InvoiceTypes:
+      enum:
+        - AccountReceivable
+        - AccountPayable
       type: string
     Iso4217CurrencyCodes:
       enum:
@@ -1534,6 +1791,50 @@ components:
         - Previous
         - Inactive
       type: string
+    LineItem:
+      required:
+        - accountCode
+        - description
+        - id
+        - itemCode
+        - lineAmount
+        - quantity
+        - taxDetails
+        - trackingCategories
+        - unitAmount
+      type: object
+      properties:
+        id:
+          type: string
+        itemCode:
+          type: string
+        accountCode:
+          type: string
+        description:
+          type: string
+        quantity:
+          type: integer
+          format: int64
+        unitAmount:
+          type: integer
+          format: int64
+        taxDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaxDetail'
+        lineAmount:
+          type: integer
+          format: int64
+        discountDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscountDetail'
+          nullable: true
+        trackingCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrackingCategory'
+      additionalProperties: false
     Link:
       required:
         - href
@@ -1623,51 +1924,30 @@ components:
         search:
           $ref: '#/components/schemas/EntitySearchModel'
       additionalProperties: false
-    OwnedSeriesSearchModel:
+    Payment:
       required:
-        - currencyCode
-        - endDate
-        - ownerAirslipUserType
-        - ownerEntityId
-        - startDate
+        - amount
+        - date
+        - id
+        - paymentType
       type: object
       properties:
-        startDate:
+        id:
           type: string
-        endDate:
-          type: string
-        integrationId:
-          type: string
-          nullable: true
-        ownerEntityId:
-          type: string
-        ownerAirslipUserType:
-          $ref: '#/components/schemas/AirslipUserType'
-        currencyCode:
-          type: string
+        paymentType:
+          $ref: '#/components/schemas/PaymentTypes'
+        date:
+          type: integer
+          format: int64
+        amount:
+          type: integer
+          format: int64
       additionalProperties: false
-    OwnedSnapshotSearchModel:
-      required:
-        - currencyCode
-        - ownerAirslipUserType
-        - ownerEntityId
-      type: object
-      properties:
-        ownerEntityId:
-          type: string
-        ownerAirslipUserType:
-          $ref: '#/components/schemas/AirslipUserType'
-        currencyCode:
-          type: string
-      additionalProperties: false
-    PeriodType:
+    PaymentTypes:
       enum:
-        - Minute
-        - Hour
-        - Day
-        - Week
-        - Month
-        - Year
+        - StandardPayment
+        - PrePayment
+        - OverPayment
       type: string
     QueryModel:
       required:
@@ -1703,61 +1983,36 @@ components:
         operatorValue:
           type: string
       additionalProperties: false
-    Series:
-      required:
-        - data
-        - metrics
-        - name
-      type: object
-      properties:
-        name:
-          type: string
-        metrics:
-          type: array
-          items:
-            $ref: '#/components/schemas/TimelyMetric'
-        data:
-          type: array
-          items:
-            type: number
-            format: double
-      additionalProperties: false
-    SnapshotMetric:
-      required:
-        - balance
-        - timeStamp
-      type: object
-      properties:
-        timeStamp:
-          type: integer
-          format: int64
-        balance:
-          type: number
-          format: double
-      additionalProperties: false
     SortOrder:
       enum:
         - Asc
         - Desc
       type: string
-    TimelyMetric:
+    TaxDetail:
       required:
-        - balance
-        - description
-        - period
-        - periodType
+        - amount
+        - taxRateReference
       type: object
       properties:
-        period:
-          type: integer
-          format: int32
-        description:
+        taxRateReference:
           type: string
-        balance:
-          type: number
-          format: double
-        periodType:
-          $ref: '#/components/schemas/PeriodType'
+        amount:
+          type: integer
+          format: int64
+      additionalProperties: false
+    TrackingCategory:
+      required:
+        - countryCode
+        - id
+        - name
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        countryCode:
+          $ref: '#/components/schemas/Alpha2CountryCodes'
       additionalProperties: false
   securitySchemes:
     Bearer:
@@ -1768,11 +2023,13 @@ components:
 security:
   - Bearer: [ ]
 tags:
-  - name: Accounts
-    description: A description for a group of APIs
+  - name: Balances
+    description: A collection of APIs for bank account balances after a connected business links at least one of their bank accounts
+  - name: Banking
+    description: A collection of banking APIs for a connected business after linking at least one of their bank accounts
   - name: Commerce
+    description: 'A collection of APIs for commerce transactions after a connected business links at least one of its commerce, e-commerce, POS or marketplace accounts'
+  - name: Financials
     description: A description for a group of APIs
-  - name: Report
-    description: A description for a group of APIs
-  - name: Snapshot
+  - name: Invoices
     description: A description for a group of APIs

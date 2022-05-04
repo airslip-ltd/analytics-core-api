@@ -1,3 +1,4 @@
+using Airslip.Analytics.Api.Controllers;
 using Airslip.Analytics.Api.Docs.Core;
 using Airslip.Analytics.Core.Models;
 using Airslip.Analytics.Logic;
@@ -32,6 +33,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Web.Http.Routing;
 
 [assembly: InternalsVisibleTo("Airslip.Analytics.Api.Tests")]
 
@@ -70,20 +72,20 @@ builder.Services
 
         options.ExampleFilters();
         
-        options.SwaggerDoc("v1",
+        options.SwaggerDoc("2021.11",
             new OpenApiInfo
             {
                 Title = "Analytics API",
-                Version = "1",
+                Version = "2021.11",
                 Description = "Includes all API endpoints for data analytics." // Need to be more descriptive
             }
         );
         
-        options.SwaggerDoc("v202205",
+        options.SwaggerDoc("2022.5",
             new OpenApiInfo
             {
                 Title = "Analytics API",
-                Version = "2022-05",
+                Version = "2022.5",
                 Description = "Includes all API endpoints for data analytics." // Need to be more descriptive
             }
         );
@@ -136,10 +138,13 @@ All requests should be made via HTTPS.",
     });
 
 builder.Services
-    .AddApiVersioning(options => { options.ReportApiVersions = true; })
+    .AddApiVersioning(options =>
+    {
+        options.ReportApiVersions = true;
+    })
     .AddVersionedApiExplorer(options =>
     {
-        options.GroupNameFormat = "'v'VVV";
+        options.GroupNameFormat = "VVV";
         options.SubstituteApiVersionInUrl = true;
     })
     .AddSwaggerExamplesFromAssemblies(Assembly.GetEntryAssembly());
@@ -198,8 +203,8 @@ if (app.Environment.IsDevelopment())
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Airslip.Analytics.Api v1");
-    c.SwaggerEndpoint("/swagger/v202205/swagger.json", "Airslip.Analytics.Api v202205");
+    c.SwaggerEndpoint("/swagger/2021.11/swagger.json", "Airslip.Analytics.Api 2021.11");
+    c.SwaggerEndpoint("/swagger/2022.5/swagger.json", "Airslip.Analytics.Api 2022.5");
     c.RoutePrefix = string.Empty;
 });
 

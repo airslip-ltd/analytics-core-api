@@ -10,11 +10,11 @@ namespace Airslip.Analytics.Api.Controllers;
 
 [AllowAnonymous]
 [ApiController]
-[ApiVersion("1.0")]
+[ApiVersion("2021.11")]
 [Consumes(Json.MediaType)]
 [Produces(Json.MediaType)]
 [ApiExplorerSettings(IgnoreApi = true)]
-[Route("v{version:apiVersion}/heartbeat")]
+[Route("{version:apiVersion}/heartbeat")]
 public class HeartbeatController : ControllerBase
 {
     private readonly IHealthCheckService _healthCheckService;

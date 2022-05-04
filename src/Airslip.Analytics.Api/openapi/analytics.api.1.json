@@ -11,7 +11,7 @@
     }
   ],
   "paths": {
-    "/v/balance/search": {
+    "/v1/balance/search": {
       "post": {
         "tags": [
           "Accounts"
@@ -52,7 +52,7 @@
         }
       }
     },
-    "/v/balance/search/{businessId}": {
+    "/v1/balance/search/{businessId}": {
       "post": {
         "tags": [
           "Accounts"
@@ -102,7 +102,7 @@
         }
       }
     },
-    "/v/balance/download": {
+    "/v1/balance/download": {
       "post": {
         "tags": [
           "Accounts"
@@ -143,7 +143,7 @@
         }
       }
     },
-    "/v/commerce/download": {
+    "/1/commerce/download": {
       "post": {
         "tags": [
           "Commerce"
@@ -184,7 +184,7 @@
         }
       }
     },
-    "/v/data-lists/currencies": {
+    "/v1/data-lists/currencies": {
       "post": {
         "tags": [
           "Data"
@@ -238,7 +238,7 @@
         }
       }
     },
-    "/v/reports/bank-transactions": {
+    "/v1/reports/bank-transactions": {
       "post": {
         "tags": [
           "Report"
@@ -279,7 +279,7 @@
         }
       }
     },
-    "/v/reports/{id}": {
+    "/v1/reports/{id}": {
       "get": {
         "tags": [
           "Report"
@@ -321,7 +321,7 @@
         }
       }
     },
-    "/v/reports/bank-transactions/download": {
+    "/v1/reports/bank-transactions/download": {
       "post": {
         "tags": [
           "Report"
@@ -362,7 +362,7 @@
         }
       }
     },
-    "/v/reports/commerce-transactions": {
+    "/v1/reports/commerce-transactions": {
       "post": {
         "tags": [
           "Report"
@@ -403,7 +403,7 @@
         }
       }
     },
-    "/v/reports/commerce-transactions/download": {
+    "/v1/reports/commerce-transactions/download": {
       "post": {
         "tags": [
           "Report"
@@ -444,7 +444,7 @@
         }
       }
     },
-    "/v/snapshot/{snapshotType}": {
+    "/v1/snapshot/{snapshotType}": {
       "post": {
         "tags": [
           "Snapshot"
@@ -524,7 +524,7 @@
         }
       }
     },
-    "/v/snapshot/revenue": {
+    "/v1/snapshot/revenue": {
       "post": {
         "tags": [
           "Snapshot"
@@ -565,7 +565,7 @@
         }
       }
     },
-    "/v/snapshot/cashflow": {
+    "/v1/snapshot/cashflow": {
       "post": {
         "tags": [
           "Snapshot"
