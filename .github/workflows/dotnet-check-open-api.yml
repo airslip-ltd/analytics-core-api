@@ -1,0 +1,27 @@
+name: Validate OpenAPI Documents
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [ main ]
+
+jobs:
+  migration:
+    runs-on: ubuntu-latest
+    env:
+      SPEC_PATH: ./src/Airslip.Analytics.Api/openapi
+
+    steps:
+    - name: Get OpenAPI files
+      id: getfiles
+      uses: actions/checkout@v2
+      run:  |
+        # Using step output (space separated file list)
+        FILES="$(find lib -type f -iname "*.yaml")"
+        echo "::set-output name=file_list::$FILES"
+      working-directory: ${{ env.SPEC_PATH }}
+
+    - name: swagger-validator
+      uses: mbowman100/swagger-validator-action@master
+      with:
+        files: ${{ steps.getfiles.outputs.file_list }} # For if you're using output
