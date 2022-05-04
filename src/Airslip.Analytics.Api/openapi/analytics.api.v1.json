@@ -1,0 +1,2291 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Analytics API",
+    "description": "Includes all API endpoints for data analytics.",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:7101"
+    }
+  ],
+  "paths": {
+    "/v1/balance/search": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "A description about a specific API should go here",
+        "operationId": "Get Account Balances",
+        "requestBody": {
+          "description": "A parameter description should go here",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OwnedDataSearchModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountBalanceReportModelEntitySearchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/balance/download": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "A description about a specific API should go here",
+        "operationId": "Download Account Balances",
+        "requestBody": {
+          "description": "A parameter description should go here",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OwnedDataSearchModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DownloadResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/commerce/download": {
+      "post": {
+        "tags": [
+          "Commerce"
+        ],
+        "summary": "A description about a specific API should go here",
+        "operationId": "Download Commerce Accounts",
+        "requestBody": {
+          "description": "A parameter description should go here",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OwnedDataSearchModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DownloadResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/data-lists/currencies": {
+      "post": {
+        "tags": [
+          "Data"
+        ],
+        "operationId": "Get Accounts",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataSearchModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataSearchModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataSearchModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataSearchModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrencySnapshotDataSearchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/reports/bank-transactions": {
+      "post": {
+        "tags": [
+          "Report"
+        ],
+        "summary": "A description about a specific API should go here",
+        "operationId": "Get Bank Transactions",
+        "requestBody": {
+          "description": "A parameter description should go here",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OwnedDataSearchModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BankTransactionReportModelEntitySearchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/reports/{id}": {
+      "get": {
+        "tags": [
+          "Report"
+        ],
+        "summary": "A description about a specific API should go here",
+        "operationId": "Get Bank Transaction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BankTransactionReportModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/reports/bank-transactions/download": {
+      "post": {
+        "tags": [
+          "Report"
+        ],
+        "summary": "A description about a specific API should go here",
+        "operationId": "Download Bank Transactions",
+        "requestBody": {
+          "description": "A parameter description should go here",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OwnedDataSearchModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BankTransactionReportModelEntitySearchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/reports/commerce-transactions": {
+      "post": {
+        "tags": [
+          "Report"
+        ],
+        "summary": "A description about a specific API should go here",
+        "operationId": "Commerce Transactions",
+        "requestBody": {
+          "description": "A parameter description should go here",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OwnedDataSearchModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommerceTransactionReportModelEntitySearchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/reports/commerce-transactions/download": {
+      "post": {
+        "tags": [
+          "Report"
+        ],
+        "summary": "A description about a specific API should go here",
+        "operationId": "Commerce Transactions Download",
+        "requestBody": {
+          "description": "A parameter description should go here",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OwnedDataSearchModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BankTransactionReportModelEntitySearchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/snapshot/{snapshotType}": {
+      "post": {
+        "tags": [
+          "Snapshot"
+        ],
+        "summary": "A description about a specific API should go here",
+        "operationId": "Get Snapshot",
+        "parameters": [
+          {
+            "name": "snapshotType",
+            "in": "path",
+            "description": "A parameter description should go here",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/DashboardSnapshotType"
+            }
+          },
+          {
+            "name": "dayRange",
+            "in": "query",
+            "description": "A parameter description should go here",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 7
+            }
+          },
+          {
+            "name": "statRange",
+            "in": "query",
+            "description": "A parameter description should go here",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          },
+          {
+            "name": "integrationId",
+            "in": "query",
+            "description": "A parameter description should go here",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "A parameter description should go here",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OwnedSnapshotSearchModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DashboardSnapshotModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/snapshot/revenue": {
+      "post": {
+        "tags": [
+          "Snapshot"
+        ],
+        "summary": "A description about a specific API should go here",
+        "operationId": "Get Revenue",
+        "requestBody": {
+          "description": "A parameter description should go here",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OwnedSeriesSearchModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DashboardGraphSeriesModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/snapshot/cashflow": {
+      "post": {
+        "tags": [
+          "Snapshot"
+        ],
+        "summary": "A description about a specific API should go here",
+        "operationId": "Get Cashflow",
+        "requestBody": {
+          "description": "A parameter description should go here",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OwnedSeriesSearchModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DashboardGraphSeriesModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AccountBalanceReportModel": {
+        "required": [
+          "accountDetail",
+          "accountStatus",
+          "balance",
+          "currencyCode",
+          "entityStatus",
+          "integrationProviderId",
+          "provider",
+          "updatedOn"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "integrationProviderId": {
+            "type": "string"
+          },
+          "accountStatus": {
+            "$ref": "#/components/schemas/BankingAccountStatus"
+          },
+          "sortCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "accountNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "balance": {
+            "type": "number",
+            "format": "double"
+          },
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "provider": {
+            "$ref": "#/components/schemas/IntegrationProviderReportModel"
+          },
+          "accountDetail": {
+            "$ref": "#/components/schemas/IntegrationAccountDetailReportModel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AccountBalanceReportModelEntitySearchResponse": {
+        "required": [
+          "paging",
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountBalanceReportModel"
+            }
+          },
+          "paging": {
+            "$ref": "#/components/schemas/EntitySearchPagingModel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Address": {
+        "required": [
+          "countryCode"
+        ],
+        "type": "object",
+        "properties": {
+          "firstLine": {
+            "type": "string",
+            "nullable": true
+          },
+          "secondLine": {
+            "type": "string",
+            "nullable": true
+          },
+          "locality": {
+            "type": "string",
+            "nullable": true
+          },
+          "administrativeArea": {
+            "type": "string",
+            "nullable": true
+          },
+          "subAdministrativeArea": {
+            "type": "string",
+            "nullable": true
+          },
+          "postalCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "countryCode": {
+            "$ref": "#/components/schemas/Alpha2CountryCodes"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AirslipUserType": {
+        "enum": [
+          "Unknown",
+          "Standard",
+          "Merchant",
+          "Unregistered",
+          "Partner",
+          "Administrator",
+          "InternalApi"
+        ],
+        "type": "string"
+      },
+      "Alpha2CountryCodes": {
+        "enum": [
+          "AF",
+          "AX",
+          "AL",
+          "DZ",
+          "AS",
+          "AD",
+          "AO",
+          "AI",
+          "AQ",
+          "AG",
+          "AR",
+          "AM",
+          "AW",
+          "AU",
+          "AT",
+          "AZ",
+          "BS",
+          "BH",
+          "BD",
+          "BB",
+          "BY",
+          "BE",
+          "BZ",
+          "BJ",
+          "BM",
+          "BT",
+          "BO",
+          "BQ",
+          "BA",
+          "BW",
+          "BV",
+          "BR",
+          "IO",
+          "BN",
+          "BG",
+          "BF",
+          "BI",
+          "KH",
+          "CM",
+          "CA",
+          "CV",
+          "KY",
+          "CF",
+          "TD",
+          "CL",
+          "CN",
+          "CX",
+          "CC",
+          "CO",
+          "KM",
+          "CG",
+          "CD",
+          "CK",
+          "CR",
+          "CI",
+          "HR",
+          "CU",
+          "CW",
+          "CY",
+          "CZ",
+          "DK",
+          "DJ",
+          "DM",
+          "DO",
+          "EC",
+          "EG",
+          "SV",
+          "GQ",
+          "ER",
+          "EE",
+          "ET",
+          "FK",
+          "FO",
+          "FJ",
+          "FI",
+          "FR",
+          "GF",
+          "PF",
+          "TF",
+          "GA",
+          "GM",
+          "GE",
+          "DE",
+          "GH",
+          "GI",
+          "GR",
+          "GL",
+          "GD",
+          "GP",
+          "GU",
+          "GT",
+          "GG",
+          "GN",
+          "GW",
+          "GY",
+          "HT",
+          "HM",
+          "VA",
+          "HN",
+          "HK",
+          "HU",
+          "IS",
+          "IN",
+          "ID",
+          "IR",
+          "IQ",
+          "IE",
+          "IM",
+          "IL",
+          "IT",
+          "JM",
+          "JP",
+          "JE",
+          "JO",
+          "KZ",
+          "KE",
+          "KI",
+          "KP",
+          "KR",
+          "KW",
+          "KG",
+          "LA",
+          "LV",
+          "LB",
+          "LS",
+          "LR",
+          "LY",
+          "LI",
+          "LT",
+          "LU",
+          "MO",
+          "MK",
+          "MG",
+          "MW",
+          "MY",
+          "MV",
+          "ML",
+          "MT",
+          "MH",
+          "MQ",
+          "MR",
+          "MU",
+          "YT",
+          "MX",
+          "FM",
+          "MD",
+          "MC",
+          "MN",
+          "ME",
+          "MS",
+          "MA",
+          "MZ",
+          "MM",
+          "NA",
+          "NR",
+          "NP",
+          "NL",
+          "NC",
+          "NZ",
+          "NI",
+          "NE",
+          "NG",
+          "NU",
+          "NF",
+          "MP",
+          "NO",
+          "OM",
+          "PK",
+          "PW",
+          "PS",
+          "PA",
+          "PG",
+          "PY",
+          "PE",
+          "PH",
+          "PN",
+          "PL",
+          "PT",
+          "PR",
+          "QA",
+          "RE",
+          "RO",
+          "RU",
+          "RW",
+          "BL",
+          "SH",
+          "KN",
+          "LC",
+          "MF",
+          "PM",
+          "VC",
+          "WS",
+          "SM",
+          "ST",
+          "SA",
+          "SN",
+          "RS",
+          "SC",
+          "SL",
+          "SG",
+          "SX",
+          "SK",
+          "SI",
+          "SB",
+          "SO",
+          "ZA",
+          "GS",
+          "SS",
+          "ES",
+          "LK",
+          "SD",
+          "SR",
+          "SJ",
+          "SZ",
+          "SE",
+          "CH",
+          "SY",
+          "TW",
+          "TJ",
+          "TZ",
+          "TH",
+          "TL",
+          "TG",
+          "TK",
+          "TO",
+          "TT",
+          "TN",
+          "TR",
+          "TM",
+          "TC",
+          "TV",
+          "UG",
+          "UA",
+          "AE",
+          "GB",
+          "US",
+          "UM",
+          "UY",
+          "UZ",
+          "VU",
+          "VE",
+          "VN",
+          "VG",
+          "VI",
+          "WF",
+          "EH",
+          "YE",
+          "ZM",
+          "ZW"
+        ],
+        "type": "string"
+      },
+      "BankTransactionReportModel": {
+        "required": [
+          "amount",
+          "bankTransactionId",
+          "capturedDate",
+          "description",
+          "entityStatus",
+          "integration",
+          "merchant",
+          "merchantTransactionType"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "bankTransactionId": {
+            "type": "string"
+          },
+          "transactionHash": {
+            "type": "string",
+            "nullable": true
+          },
+          "integration": {
+            "$ref": "#/components/schemas/IntegrationReportModel"
+          },
+          "authorisedDate": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "capturedDate": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "amount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "currencyCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string"
+          },
+          "lastCardDigits": {
+            "type": "string",
+            "nullable": true
+          },
+          "isoFamilyCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "proprietaryCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "reference": {
+            "type": "string",
+            "nullable": true
+          },
+          "merchant": {
+            "$ref": "#/components/schemas/MerchantResponse"
+          },
+          "merchantTransactionType": {
+            "$ref": "#/components/schemas/BusinessTypes"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BankTransactionReportModelEntitySearchResponse": {
+        "required": [
+          "paging",
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BankTransactionReportModel"
+            }
+          },
+          "paging": {
+            "$ref": "#/components/schemas/EntitySearchPagingModel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BankingAccountStatus": {
+        "enum": [
+          "Active",
+          "Expired"
+        ],
+        "type": "string"
+      },
+      "BankingAccountTypes": {
+        "enum": [
+          "CASH_TRADING",
+          "CASH_INCOME",
+          "CASH_PAYMENT",
+          "CHARGE_CARD",
+          "CHARGES",
+          "COMMISSION",
+          "CREDIT_CARD",
+          "CURRENT",
+          "E_MONEY",
+          "LIMITED_LIQUIDITY_SAVINGS_ACCOUNT",
+          "LOAN",
+          "MARGINAL_LENDING",
+          "MONEY_MARKET",
+          "MORTGAGE",
+          "NON_RESIDENT_EXTERNAL",
+          "OTHER",
+          "OVERDRAFT",
+          "OVERNIGHT_DEPOSIT",
+          "PREPAID_CARD",
+          "SALARY",
+          "SAVINGS",
+          "SETTLEMENT",
+          "TAX",
+          "UNKNOWN"
+        ],
+        "type": "string"
+      },
+      "BankingUsageTypes": {
+        "enum": [
+          "PERSONAL",
+          "BUSINESS",
+          "OTHER",
+          "UNKNOWN",
+          "SANDBOX",
+          "CORPORATE"
+        ],
+        "type": "string"
+      },
+      "BusinessTypes": {
+        "enum": [
+          "Anonymous",
+          "Customer",
+          "Supplier"
+        ],
+        "type": "string"
+      },
+      "Categories": {
+        "enum": [
+          "Advertising",
+          "BankFees",
+          "ComputerHardware",
+          "ComputerSoftware",
+          "ContractLabour",
+          "Design",
+          "EmployeePerks",
+          "Entertainment",
+          "Fuel",
+          "Groceries",
+          "Insurance",
+          "LegalServices",
+          "Mileage",
+          "OfficeFurniture",
+          "OfficeSupplies",
+          "PaymentProcessingFees",
+          "PostageAndShipping",
+          "ProfessionalServices",
+          "Rent",
+          "Salaries",
+          "ServerInfrastructure",
+          "Tax",
+          "Training",
+          "Travel",
+          "Utilities",
+          "Vehicle",
+          "VehicleMaintenance"
+        ],
+        "type": "string"
+      },
+      "Categorisation": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/Categories"
+          },
+          "iso18245MerchantCategoryCode": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CommerceTransactionReportModel": {
+        "required": [
+          "dataSource",
+          "entityStatus",
+          "orderStatus",
+          "paymentStatus",
+          "timeStamp",
+          "trackingId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "dataSource": {
+            "$ref": "#/components/schemas/DataSources"
+          },
+          "timeStamp": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "trackingId": {
+            "type": "string"
+          },
+          "internalId": {
+            "type": "string",
+            "nullable": true
+          },
+          "source": {
+            "type": "string",
+            "nullable": true
+          },
+          "transactionNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "refundCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "datetime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "storeLocationId": {
+            "type": "string",
+            "nullable": true
+          },
+          "storeAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "onlinePurchase": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "subtotal": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "serviceCharge": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "currencyCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "operatorName": {
+            "type": "string",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "time": {
+            "type": "string",
+            "nullable": true
+          },
+          "till": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "string",
+            "nullable": true
+          },
+          "store": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "year": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "month": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "day": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "totalRefund": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "orderStatus": {
+            "type": "string"
+          },
+          "paymentStatus": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CommerceTransactionReportModelEntitySearchResponse": {
+        "required": [
+          "paging",
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CommerceTransactionReportModel"
+            }
+          },
+          "paging": {
+            "$ref": "#/components/schemas/EntitySearchPagingModel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContactDetail": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "contactNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "websiteUrl": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CurrencySnapshot": {
+        "required": [
+          "currencyCode"
+        ],
+        "type": "object",
+        "properties": {
+          "currencyCode": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CurrencySnapshotDataSearchResponse": {
+        "required": [
+          "records"
+        ],
+        "type": "object",
+        "properties": {
+          "records": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CurrencySnapshot"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "DashboardGraphSeriesModel": {
+        "required": [
+          "currencyCode",
+          "endDate",
+          "series",
+          "startDate"
+        ],
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "string"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "series": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Series"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "DashboardSnapshotModel": {
+        "required": [
+          "balance",
+          "currencyCode",
+          "dayRange",
+          "metrics",
+          "movement",
+          "timeStamp"
+        ],
+        "type": "object",
+        "properties": {
+          "balance": {
+            "type": "number",
+            "description": "A description about the property should go here",
+            "format": "double"
+          },
+          "timeStamp": {
+            "type": "integer",
+            "description": "A description about the property should go here",
+            "format": "int64"
+          },
+          "movement": {
+            "type": "number",
+            "description": "A description about the property should go here",
+            "format": "double"
+          },
+          "currencyCode": {
+            "type": "string",
+            "description": "A description about the property should go here"
+          },
+          "metrics": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SnapshotMetric"
+            },
+            "description": "A description about the property should go here"
+          },
+          "dayRange": {
+            "type": "integer",
+            "description": "A description about the property should go here",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DashboardSnapshotType": {
+        "enum": [
+          "TotalSales",
+          "TotalRefunds",
+          "CurrentBalance"
+        ],
+        "type": "string"
+      },
+      "DataSearchModel": {
+        "required": [
+          "ownerAirslipUserType",
+          "ownerEntityId"
+        ],
+        "type": "object",
+        "properties": {
+          "ownerEntityId": {
+            "type": "string"
+          },
+          "ownerAirslipUserType": {
+            "$ref": "#/components/schemas/AirslipUserType"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DataSources": {
+        "enum": [
+          "Yapily",
+          "Api2Cart",
+          "SwanRetail",
+          "CustomerPortal",
+          "Analytics",
+          "QrMatching",
+          "SmartReceipts",
+          "MockData",
+          "Unknown"
+        ],
+        "type": "string"
+      },
+      "DirectorDetail": {
+        "required": [
+          "address",
+          "position"
+        ],
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "surname": {
+            "type": "string",
+            "nullable": true
+          },
+          "nationality": {
+            "type": "string",
+            "nullable": true
+          },
+          "countryOfResidence": {
+            "type": "string",
+            "nullable": true
+          },
+          "hasNegativeInfo": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "signingAuthority": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "position": {
+            "$ref": "#/components/schemas/DirectorPosition"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DirectorPosition": {
+        "required": [
+          "latestTurnoverCurrency",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of Job Title",
+            "nullable": true
+          },
+          "authority": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateAppointedTimestamp": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "companyName": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "latestTurnoverFigure": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "latestTurnoverCurrency": {
+            "$ref": "#/components/schemas/Iso4217CurrencyCodes"
+          },
+          "status": {
+            "$ref": "#/components/schemas/JobStatus"
+          },
+          "commonCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "providerCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "creditScore": {
+            "type": "string",
+            "nullable": true
+          },
+          "latestRatingChangeTimestamp": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "additionalData": {
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DownloadResponse": {
+        "required": [
+          "fileContent",
+          "fileName",
+          "mediaType"
+        ],
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "type": "string"
+          },
+          "fileContent": {
+            "type": "string",
+            "format": "byte"
+          },
+          "mediaType": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "EntitySearchModel": {
+        "required": [
+          "items",
+          "linkOperator"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SearchFilterModel"
+            }
+          },
+          "linkOperator": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "EntitySearchPagingModel": {
+        "required": [
+          "next",
+          "page"
+        ],
+        "type": "object",
+        "properties": {
+          "totalRecords": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "recordsPerPage": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "next": {
+            "$ref": "#/components/schemas/EntitySearchQueryModel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "EntitySearchQueryModel": {
+        "required": [
+          "page",
+          "recordsPerPage",
+          "search",
+          "sort"
+        ],
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "recordsPerPage": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sort": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EntitySearchSortModel"
+            }
+          },
+          "search": {
+            "$ref": "#/components/schemas/EntitySearchModel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "EntitySearchSortModel": {
+        "required": [
+          "field",
+          "sort"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "type": "string"
+          },
+          "sort": {
+            "$ref": "#/components/schemas/SortOrder"
+          }
+        },
+        "additionalProperties": false
+      },
+      "EntityStatus": {
+        "enum": [
+          "Active",
+          "Deleted"
+        ],
+        "type": "string"
+      },
+      "ErrorResponse": {
+        "required": [
+          "errorCode",
+          "links",
+          "metadata"
+        ],
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": { }
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Link"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "IntegrationAccountDetailReportModel": {
+        "required": [
+          "accountType",
+          "currencyCode",
+          "usageType"
+        ],
+        "type": "object",
+        "properties": {
+          "lastCardDigits": {
+            "type": "string",
+            "nullable": true
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "usageType": {
+            "$ref": "#/components/schemas/BankingUsageTypes"
+          },
+          "accountType": {
+            "$ref": "#/components/schemas/BankingAccountTypes"
+          },
+          "sortCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "accountNumber": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IntegrationProviderReportModel": {
+        "required": [
+          "friendlyName",
+          "id",
+          "integrationType",
+          "name",
+          "provider"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string"
+          },
+          "friendlyName": {
+            "type": "string"
+          },
+          "integrationType": {
+            "$ref": "#/components/schemas/IntegrationType"
+          }
+        },
+        "additionalProperties": false
+      },
+      "IntegrationReportModel": {
+        "required": [
+          "accountDetail",
+          "name",
+          "provider"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string"
+          },
+          "accountDetail": {
+            "$ref": "#/components/schemas/IntegrationAccountDetailReportModel"
+          },
+          "provider": {
+            "$ref": "#/components/schemas/IntegrationProviderReportModel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "IntegrationType": {
+        "enum": [
+          "Banking",
+          "Commerce",
+          "Accounting"
+        ],
+        "type": "string"
+      },
+      "Iso4217CurrencyCodes": {
+        "enum": [
+          "AED",
+          "AFN",
+          "ALL",
+          "AMD",
+          "ANG",
+          "AOA",
+          "ARS",
+          "AUD",
+          "AWG",
+          "AZN",
+          "BAM",
+          "BBD",
+          "BDT",
+          "BGN",
+          "BHD",
+          "BIF",
+          "BMD",
+          "BND",
+          "BOB",
+          "BOV",
+          "BRL",
+          "BSD",
+          "BTN",
+          "BWP",
+          "BYN",
+          "BZD",
+          "CAD",
+          "CDF",
+          "CHE",
+          "CHF",
+          "CHW",
+          "CLF",
+          "CLP",
+          "CNY",
+          "COP",
+          "COU",
+          "CRC",
+          "CUC",
+          "CUP",
+          "CVE",
+          "CZK",
+          "DJF",
+          "DKK",
+          "DOP",
+          "DZD",
+          "EGP",
+          "ERN",
+          "ETB",
+          "EUR",
+          "FJD",
+          "FKP",
+          "GBP",
+          "GEL",
+          "GHS",
+          "GIP",
+          "GMD",
+          "GNF",
+          "GTQ",
+          "GYD",
+          "HKD",
+          "HNL",
+          "HRK",
+          "HTG",
+          "HUF",
+          "IDR",
+          "ILS",
+          "INR",
+          "IQD",
+          "IRR",
+          "ISK",
+          "JMD",
+          "JOD",
+          "JPY",
+          "KES",
+          "KGS",
+          "KHR",
+          "KMF",
+          "KPW",
+          "KRW",
+          "KWD",
+          "KYD",
+          "KZT",
+          "LAK",
+          "LBP",
+          "LKR",
+          "LRD",
+          "LSL",
+          "LYD",
+          "MAD",
+          "MDL",
+          "MGA",
+          "MKD",
+          "MMK",
+          "MNT",
+          "MOP",
+          "MRU",
+          "MUR",
+          "MVR",
+          "MWK",
+          "MXN",
+          "MXV",
+          "MYR",
+          "MZN",
+          "NAD",
+          "NGN",
+          "NIO",
+          "NOK",
+          "NPR",
+          "NZD",
+          "OMR",
+          "PAB",
+          "PEN",
+          "PGK",
+          "PHP",
+          "PKR",
+          "PLN",
+          "PYG",
+          "QAR",
+          "RON",
+          "RSD",
+          "RUB",
+          "RWF",
+          "SAR",
+          "SBD",
+          "SCR",
+          "SDG",
+          "SEK",
+          "SGD",
+          "SHP",
+          "SLL",
+          "SOS",
+          "SRD",
+          "SSP",
+          "STN",
+          "SVC",
+          "SYP",
+          "SZL",
+          "THB",
+          "TJS",
+          "TMT",
+          "TND",
+          "TOP",
+          "TRY",
+          "TTD",
+          "TWD",
+          "TZS",
+          "UAH",
+          "UGX",
+          "USD",
+          "USN",
+          "UYI",
+          "UYU",
+          "UYW",
+          "UZS",
+          "VES",
+          "VND",
+          "VUV",
+          "WST",
+          "XAF",
+          "XAG",
+          "XAU",
+          "XBA",
+          "XBB",
+          "XBC",
+          "XBD",
+          "XCD",
+          "XDR",
+          "XOF",
+          "XPD",
+          "XPF",
+          "XPT",
+          "XSU",
+          "XTS",
+          "XUA",
+          "XXX",
+          "YER",
+          "ZAR",
+          "ZMW",
+          "ZWL"
+        ],
+        "type": "string"
+      },
+      "JobStatus": {
+        "enum": [
+          "Current",
+          "Previous",
+          "Inactive"
+        ],
+        "type": "string"
+      },
+      "Link": {
+        "required": [
+          "href",
+          "method",
+          "rel"
+        ],
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string"
+          },
+          "rel": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MerchantResponse": {
+        "required": [
+          "category",
+          "contactDetail",
+          "headquartersAddress"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "legalName": {
+            "type": "string",
+            "nullable": true
+          },
+          "tradingName": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "taxNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "category": {
+            "$ref": "#/components/schemas/Categorisation"
+          },
+          "merchantIdentifierNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "subsidiaries": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "parentCompany": {
+            "type": "string",
+            "nullable": true
+          },
+          "headquartersAddress": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "contactDetail": {
+            "$ref": "#/components/schemas/ContactDetail"
+          },
+          "directors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DirectorDetail"
+            },
+            "nullable": true
+          },
+          "logoUrl": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OwnedDataSearchModel": {
+        "required": [
+          "ownerAirslipUserType",
+          "ownerEntityId",
+          "page",
+          "recordsPerPage",
+          "search",
+          "sort"
+        ],
+        "type": "object",
+        "properties": {
+          "ownerEntityId": {
+            "type": "string"
+          },
+          "ownerAirslipUserType": {
+            "$ref": "#/components/schemas/AirslipUserType"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "recordsPerPage": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sort": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EntitySearchSortModel"
+            }
+          },
+          "search": {
+            "$ref": "#/components/schemas/EntitySearchModel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OwnedSeriesSearchModel": {
+        "required": [
+          "currencyCode",
+          "endDate",
+          "ownerAirslipUserType",
+          "ownerEntityId",
+          "startDate"
+        ],
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "string"
+          },
+          "integrationId": {
+            "type": "string",
+            "nullable": true
+          },
+          "ownerEntityId": {
+            "type": "string"
+          },
+          "ownerAirslipUserType": {
+            "$ref": "#/components/schemas/AirslipUserType"
+          },
+          "currencyCode": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OwnedSnapshotSearchModel": {
+        "required": [
+          "currencyCode",
+          "ownerAirslipUserType",
+          "ownerEntityId"
+        ],
+        "type": "object",
+        "properties": {
+          "ownerEntityId": {
+            "type": "string"
+          },
+          "ownerAirslipUserType": {
+            "$ref": "#/components/schemas/AirslipUserType"
+          },
+          "currencyCode": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PeriodType": {
+        "enum": [
+          "Minute",
+          "Hour",
+          "Day",
+          "Week",
+          "Month",
+          "Year"
+        ],
+        "type": "string"
+      },
+      "SearchFilterModel": {
+        "required": [
+          "columnField",
+          "operatorValue"
+        ],
+        "type": "object",
+        "properties": {
+          "columnField": {
+            "type": "string"
+          },
+          "value": {
+            "nullable": true
+          },
+          "operatorValue": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Series": {
+        "required": [
+          "data",
+          "metrics",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "metrics": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TimelyMetric"
+            }
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "SnapshotMetric": {
+        "required": [
+          "balance",
+          "timeStamp"
+        ],
+        "type": "object",
+        "properties": {
+          "timeStamp": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "balance": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SortOrder": {
+        "enum": [
+          "Asc",
+          "Desc"
+        ],
+        "type": "string"
+      },
+      "TimelyMetric": {
+        "required": [
+          "balance",
+          "description",
+          "period",
+          "periodType"
+        ],
+        "type": "object",
+        "properties": {
+          "period": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "description": {
+            "type": "string"
+          },
+          "balance": {
+            "type": "number",
+            "format": "double"
+          },
+          "periodType": {
+            "$ref": "#/components/schemas/PeriodType"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "e.g Bearer Api_Key.\n\nRequests to the Airslip API are authenticated using the applications `Api_Key`. You can view and manage your credentials in the Airslip Dashboard.\n\nAn Api_Key provides connectivity to all authenticated Airslip API endpoints, so it is important to keep these credentials secure. Do not share your Api_Key in publicly accessible areas such as GitHub, client-side code, or easily accessible configuration settings.\n\nAuthentication is performed using Bearer Authentication. Your Api_Key should be sent as the token.\n\nAll requests should be made via HTTPS.",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ],
+  "tags": [
+    {
+      "name": "Accounts",
+      "description": "A description for a group of APIs"
+    },
+    {
+      "name": "Commerce",
+      "description": "A description for a group of APIs"
+    },
+    {
+      "name": "Report",
+      "description": "A description for a group of APIs"
+    },
+    {
+      "name": "Snapshot",
+      "description": "A description for a group of APIs"
+    }
+  ]
+}

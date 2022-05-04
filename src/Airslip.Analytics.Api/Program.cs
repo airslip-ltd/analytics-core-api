@@ -63,6 +63,7 @@ builder.Services.AddSwaggerGenNewtonsoftSupport();
 builder.Services
     .AddSwaggerGen(options =>
     {
+        
         options.DocumentFilter<BasePathDocumentFilter>();
         options.SchemaFilter<RequireNonNullablePropertiesSchemaFilter>();
         options.SchemaFilter<SwaggerExcludeSchemaFilter>();
@@ -74,6 +75,15 @@ builder.Services
             {
                 Title = "Analytics API",
                 Version = "1",
+                Description = "Includes all API endpoints for data analytics." // Need to be more descriptive
+            }
+        );
+        
+        options.SwaggerDoc("v202205",
+            new OpenApiInfo
+            {
+                Title = "Analytics API",
+                Version = "2022-05",
                 Description = "Includes all API endpoints for data analytics." // Need to be more descriptive
             }
         );
@@ -189,6 +199,7 @@ app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Airslip.Analytics.Api v1");
+    c.SwaggerEndpoint("/swagger/v202205/swagger.json", "Airslip.Analytics.Api v202205");
     c.RoutePrefix = string.Empty;
 });
 

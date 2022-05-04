@@ -25,6 +25,7 @@ namespace Airslip.Analytics.Api.Controllers;
 /// A description for a group of APIs
 /// </summary>
 [ApiController]    
+[ApiVersion("202205.0")]
 [ApiVersion("1.0")]
 [Consumes(Json.MediaType)]
 [Produces(Json.MediaType)]
@@ -50,6 +51,7 @@ public class CommerceController : ApiControllerBase
     /// </summary>
     /// <param name="query">A parameter description should go here</param>
     [HttpPost]
+    [MapToApiVersion("202205.0")]
     [Route("search")]
     [ProducesResponseType(typeof(EntitySearchResponse<CommerceProviderModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
