@@ -11,6 +11,474 @@
     }
   ],
   "paths": {
+    "/2022.5/assets/{businessId}/search": {
+      "post": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "Allows you to retrieve assets",
+        "operationId": "Get Assets",
+        "parameters": [
+          {
+            "name": "businessId",
+            "in": "path",
+            "description": "The connected business identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The search model for assets. You can use this to sort or search for any column within the model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetModelEntitySearchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2022.5/assets/{businessId}/{id}": {
+      "get": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "Use this method to get an asset",
+        "operationId": "Get Asset",
+        "parameters": [
+          {
+            "name": "businessId",
+            "in": "path",
+            "description": "The connected business identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the asset",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "Use this method to update assets.",
+        "operationId": "Update Asset",
+        "parameters": [
+          {
+            "name": "businessId",
+            "in": "path",
+            "description": "The connected business identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the asset to update",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The body of the asset to update",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssetModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2022.5/assets/{businessId}": {
+      "post": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "Use this method to create draft fixed assets.",
+        "operationId": "Create Asset",
+        "parameters": [
+          {
+            "name": "businessId",
+            "in": "path",
+            "description": "The connected business identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The body of the asset to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssetModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatedModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2022.5/assets/{businessId}/types/search": {
+      "post": {
+        "tags": [
+          "AssetTypes"
+        ],
+        "summary": "Allows you to retrieve asset types",
+        "operationId": "Get Asset Types",
+        "parameters": [
+          {
+            "name": "businessId",
+            "in": "path",
+            "description": "The connected business identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The search model for asset types. You can use this to sort or search for any column within the model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetTypeModelEntitySearchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2022.5/assets/{businessId}/types/{id}": {
+      "get": {
+        "tags": [
+          "AssetTypes"
+        ],
+        "summary": "Use this method to get an asset type",
+        "operationId": "Get Asset Type",
+        "parameters": [
+          {
+            "name": "businessId",
+            "in": "path",
+            "description": "The connected business identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the employee",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetTypeModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "AssetTypes"
+        ],
+        "summary": "Use this method to update assets",
+        "operationId": "Update Asset Type",
+        "parameters": [
+          {
+            "name": "businessId",
+            "in": "path",
+            "description": "The connected business identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the asset type to update",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The body of the asset type to update",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssetModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatedModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2022.5/assets/{businessId}/types": {
+      "post": {
+        "tags": [
+          "AssetTypes"
+        ],
+        "summary": "Use this method to create asset types",
+        "operationId": "Create Asset Type",
+        "parameters": [
+          {
+            "name": "businessId",
+            "in": "path",
+            "description": "The connected business identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The body of the asset type to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssetModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatedModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/2022.5/banking/{businessId}/transactions/search": {
       "post": {
         "tags": [
@@ -201,6 +669,236 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/CommerceTransactionReportModelEntitySearchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2022.5/payroll/{businessId}/employees/search": {
+      "post": {
+        "tags": [
+          "Employees"
+        ],
+        "summary": "Allows you to search for employees",
+        "operationId": "Get Employees",
+        "parameters": [
+          {
+            "name": "businessId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The search model for employees. You can use this to sort or search for any column within the model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmployeeModelEntitySearchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2022.5/payroll/{businessId}/employees/{id}": {
+      "get": {
+        "tags": [
+          "Employees"
+        ],
+        "summary": "Use this method to get an employee",
+        "operationId": "Get Employee",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the employee",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "businessId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmployeeModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Employees"
+        ],
+        "summary": "Use this method to update an employee",
+        "operationId": "Update Employee",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the employee to update",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "businessId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The body of the employee to update",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmployeeModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2022.5/payroll/{businessId}/employees": {
+      "post": {
+        "tags": [
+          "Employees"
+        ],
+        "summary": "Use this method to create an employee",
+        "operationId": "Create Employee",
+        "parameters": [
+          {
+            "name": "businessId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The body of the employee to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmployeeModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatedModel"
                 }
               }
             }
@@ -1004,6 +1702,145 @@
         ],
         "type": "string"
       },
+      "AssetModel": {
+        "required": [
+          "accountingBookValue",
+          "assetName",
+          "assetNumber",
+          "assetStatus",
+          "bookDepreciationDetail",
+          "bookDepreciationSetting",
+          "entityStatus",
+          "purchaseDate",
+          "purchasePrice"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "assetName": {
+            "type": "string"
+          },
+          "assetNumber": {
+            "type": "string"
+          },
+          "purchaseDate": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "purchasePrice": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "disposalPrice": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "assetStatus": {
+            "$ref": "#/components/schemas/AssetStatus"
+          },
+          "accountingBookValue": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "bookDepreciationSetting": {
+            "$ref": "#/components/schemas/BookDepreciationSetting"
+          },
+          "bookDepreciationDetail": {
+            "$ref": "#/components/schemas/BookDepreciationDetail"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AssetModelEntitySearchResponse": {
+        "required": [
+          "paging",
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AssetModel"
+            }
+          },
+          "paging": {
+            "$ref": "#/components/schemas/EntitySearchPagingModel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AssetStatus": {
+        "enum": [
+          "Draft",
+          "Registered",
+          "Disposed"
+        ],
+        "type": "string"
+      },
+      "AssetTypeModel": {
+        "required": [
+          "accumulatedDepreciationAccountId",
+          "bookDepreciationSetting",
+          "depreciationExpenseAccountId",
+          "entityStatus",
+          "fixedAssetAccountId",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "fixedAssetAccountId": {
+            "type": "string"
+          },
+          "depreciationExpenseAccountId": {
+            "type": "string"
+          },
+          "accumulatedDepreciationAccountId": {
+            "type": "string"
+          },
+          "bookDepreciationSetting": {
+            "$ref": "#/components/schemas/BookDepreciationSetting"
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AssetTypeModelEntitySearchResponse": {
+        "required": [
+          "paging",
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AssetTypeModel"
+            }
+          },
+          "paging": {
+            "$ref": "#/components/schemas/EntitySearchPagingModel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AveragingMethods": {
+        "enum": [
+          "ActualDays",
+          "FullMonth"
+        ],
+        "type": "string"
+      },
       "BalanceSheetAccount": {
         "required": [
           "code",
@@ -1267,6 +2104,74 @@
           "CORPORATE"
         ],
         "type": "string"
+      },
+      "BookDepreciationDetail": {
+        "required": [
+          "costLimit",
+          "currentAccumulativeDepreciationAmount",
+          "depreciationStartDate",
+          "priorAccumulativeDepreciationAmount",
+          "residualValue"
+        ],
+        "type": "object",
+        "properties": {
+          "currentCapitalGain": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "currentGainLoss": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "depreciationStartDate": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "costLimit": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "residualValue": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "priorAccumulativeDepreciationAmount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "currentAccumulativeDepreciationAmount": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BookDepreciationSetting": {
+        "required": [
+          "averagingMethod",
+          "depreciationCalculationMethod",
+          "depreciationMethod",
+          "depreciationRate"
+        ],
+        "type": "object",
+        "properties": {
+          "depreciationMethod": {
+            "$ref": "#/components/schemas/DepreciationMethods"
+          },
+          "averagingMethod": {
+            "$ref": "#/components/schemas/AveragingMethods"
+          },
+          "depreciationRate": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "depreciationCalculationMethod": {
+            "$ref": "#/components/schemas/DepreciationCalculationMethods"
+          }
+        },
+        "additionalProperties": false
       },
       "BusinessTypes": {
         "enum": [
@@ -1855,6 +2760,25 @@
         ],
         "type": "string"
       },
+      "DepreciationCalculationMethods": {
+        "enum": [
+          "Rate",
+          "Life",
+          "None"
+        ],
+        "type": "string"
+      },
+      "DepreciationMethods": {
+        "enum": [
+          "NoDepreciation",
+          "StraightLine",
+          "DiminishingValue100",
+          "DiminishingValue150",
+          "DiminishingValue200",
+          "FullDepreciation"
+        ],
+        "type": "string"
+      },
       "DirectorDetail": {
         "required": [
           "address",
@@ -1971,6 +2895,114 @@
           "amount": {
             "type": "integer",
             "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "EmployeeModel": {
+        "required": [
+          "address",
+          "createdDate",
+          "dateOfBirthUtc",
+          "email",
+          "employeeNumber",
+          "entityStatus",
+          "firstName",
+          "gender",
+          "isOffPayrollWorker",
+          "lastName",
+          "nationalInsuranceNumber",
+          "niCategories",
+          "payrollCalendarId",
+          "phoneNumber",
+          "startDate",
+          "title",
+          "updatedDate"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "dateOfBirthUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "gender": {
+            "$ref": "#/components/schemas/Genders"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "nationalInsuranceNumber": {
+            "type": "string"
+          },
+          "isOffPayrollWorker": {
+            "type": "boolean"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "payrollCalendarId": {
+            "type": "string"
+          },
+          "updatedDate": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdDate": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "niCategories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NiCategory"
+            }
+          },
+          "employeeNumber": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "EmployeeModelEntitySearchResponse": {
+        "required": [
+          "paging",
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmployeeModel"
+            }
+          },
+          "paging": {
+            "$ref": "#/components/schemas/EntitySearchPagingModel"
           }
         },
         "additionalProperties": false
@@ -2100,6 +3132,14 @@
           }
         },
         "additionalProperties": false
+      },
+      "Genders": {
+        "enum": [
+          "Female",
+          "Male",
+          "Other"
+        ],
+        "type": "string"
       },
       "ImportSourceTypes": {
         "enum": [
@@ -2729,6 +3769,51 @@
         },
         "additionalProperties": false
       },
+      "NiCategory": {
+        "required": [
+          "category",
+          "startDate"
+        ],
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "category": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "NotFoundResponse": {
+        "required": [
+          "errorCode",
+          "links",
+          "metadata"
+        ],
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": { }
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Link"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
       "Payment": {
         "required": [
           "amount",
@@ -3049,6 +4134,10 @@
         },
         "additionalProperties": false
       },
+      "Success": {
+        "type": "object",
+        "additionalProperties": false
+      },
       "TaxDetail": {
         "required": [
           "amount",
@@ -3187,6 +4276,18 @@
     {
       "name": "Webhooks",
       "description": "You can configure webhook endpoints via the API to be notified about events that happen in your for connected businesses.\r\nMost users configure webhooks from the dashboard, which provides a user interface for registering and testing your webhook endpoints."
+    },
+    {
+      "name": "Employees",
+      "description": "A collection of APIs that allows you to retrieve payroll for employees."
+    },
+    {
+      "name": "Assets",
+      "description": "The Assets API exposes fixed asset related functions and can be used for a variety of purposes such as creating assets, retrieving asset valuations and visualising asset depreciation."
+    },
+    {
+      "name": "AssetTypes",
+      "description": "The Assets API exposes fixed asset related functions and can be used for a variety of purposes such as creating assets, retrieving asset valuations and visualising asset depreciation."
     },
     {
       "name": "Invoices",

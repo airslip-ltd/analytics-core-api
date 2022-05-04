@@ -12,7 +12,7 @@ namespace Airslip.Analytics.Api.Tests.IntegrationFacts;
 public class IntegrationTestBase
 {
     private static readonly TransactionsApiWebApplicationFactory<Program> TransactionsFactory;
-    protected readonly Uri BaseUri = new("http://localhost/v1/");
+    protected readonly Uri BaseUri = new("http://localhost/2021.11/");
     protected const string HeartbeatEndpoint = "heartbeat";
     private static readonly Mock<ILogger> _mockLogger = new();
 
