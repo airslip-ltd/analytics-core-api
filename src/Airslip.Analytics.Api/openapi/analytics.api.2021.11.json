@@ -3,7 +3,7 @@
   "info": {
     "title": "Analytics API",
     "description": "Includes all API endpoints for data analytics.",
-    "version": "1"
+    "version": "2021.11"
   },
   "servers": [
     {
@@ -11,15 +11,15 @@
     }
   ],
   "paths": {
-    "/v/balance/search": {
+    "/2021.11/banking/balances/search": {
       "post": {
         "tags": [
-          "Accounts"
+          "Balances"
         ],
-        "summary": "A description about a specific API should go here",
+        "summary": "Search for balances for a connected business",
         "operationId": "Get Account Balances",
         "requestBody": {
-          "description": "A parameter description should go here",
+          "description": "The account balance model within the search query",
           "content": {
             "application/json": {
               "schema": {
@@ -52,28 +52,19 @@
         }
       }
     },
-    "/v/balance/search/{businessId}": {
+    "/2021.11/banking/transactions": {
       "post": {
         "tags": [
-          "Accounts"
+          "Banking"
         ],
-        "summary": "A description about a specific API should go here",
-        "operationId": "Get Account Balances",
-        "parameters": [
-          {
-            "name": "businessId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "summary": "Get bank transactions enriched with merchant and director details for a connected business",
+        "operationId": "Get Bank Transactions",
         "requestBody": {
+          "description": "The bank transaction model within the search query",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/QueryModel"
+                "$ref": "#/components/schemas/OwnedDataSearchModel"
               }
             }
           }
@@ -84,7 +75,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AccountBalanceReportModelEntitySearchResponse"
+                  "$ref": "#/components/schemas/BankTransactionReportModelEntitySearchResponse"
                 }
               }
             }
@@ -102,15 +93,97 @@
         }
       }
     },
-    "/v/balance/download": {
+    "/2021.11/banking/transactions/download": {
       "post": {
         "tags": [
-          "Accounts"
+          "Banking"
         ],
-        "summary": "A description about a specific API should go here",
-        "operationId": "Download Account Balances",
+        "summary": "Get bank transactions enriched with merchant and director details for a connected business",
+        "operationId": "Download Bank Transactions",
         "requestBody": {
-          "description": "A parameter description should go here",
+          "description": "The bank transaction model within the search query",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OwnedDataSearchModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BankTransactionReportModelEntitySearchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2021.11/commerce/search": {
+      "post": {
+        "tags": [
+          "Commerce"
+        ],
+        "summary": "Get all commerce accounts for a connected business",
+        "operationId": "Get Commerce Accounts",
+        "requestBody": {
+          "description": "The commerce transaction model within the search query, you can use this to sort or search for any column within the model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OwnedDataSearchModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommerceProviderModelEntitySearchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2021.11/commerce/download": {
+      "post": {
+        "tags": [
+          "Commerce"
+        ],
+        "summary": "Get all commerce accounts for a connected business",
+        "operationId": "Download Commerce Accounts",
+        "requestBody": {
+          "description": "The commerce transaction model within the search query, you can use this to sort or search for any column within the model",
           "content": {
             "application/json": {
               "schema": {
@@ -143,13 +216,54 @@
         }
       }
     },
-    "/v/commerce/download": {
+    "/2021.11/commerce/transactions": {
+      "post": {
+        "tags": [
+          "Commerce"
+        ],
+        "summary": "Get all commerce transactions for a connected business",
+        "operationId": "Get Commerce Transactions",
+        "requestBody": {
+          "description": "The commerce transaction model within the search query, you can use this to sort or search for any column within the model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OwnedDataSearchModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommerceTransactionReportModelEntitySearchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2021.11/commerce/transactions/download": {
       "post": {
         "tags": [
           "Commerce"
         ],
         "summary": "A description about a specific API should go here",
-        "operationId": "Download Commerce Accounts",
+        "operationId": "Download Commerce Transactions",
         "requestBody": {
           "description": "A parameter description should go here",
           "content": {
@@ -166,7 +280,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DownloadResponse"
+                  "$ref": "#/components/schemas/BankTransactionReportModelEntitySearchResponse"
                 }
               }
             }
@@ -184,7 +298,7 @@
         }
       }
     },
-    "/v/data-lists/currencies": {
+    "/2021.11/data-lists/currencies": {
       "post": {
         "tags": [
           "Data"
@@ -238,224 +352,16 @@
         }
       }
     },
-    "/v/reports/bank-transactions": {
-      "post": {
-        "tags": [
-          "Report"
-        ],
-        "summary": "A description about a specific API should go here",
-        "operationId": "Get Bank Transactions",
-        "requestBody": {
-          "description": "A parameter description should go here",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OwnedDataSearchModel"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BankTransactionReportModelEntitySearchResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v/reports/{id}": {
-      "get": {
-        "tags": [
-          "Report"
-        ],
-        "summary": "A description about a specific API should go here",
-        "operationId": "Get Bank Transaction",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BankTransactionReportModel"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v/reports/bank-transactions/download": {
-      "post": {
-        "tags": [
-          "Report"
-        ],
-        "summary": "A description about a specific API should go here",
-        "operationId": "Download Bank Transactions",
-        "requestBody": {
-          "description": "A parameter description should go here",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OwnedDataSearchModel"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BankTransactionReportModelEntitySearchResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v/reports/commerce-transactions": {
-      "post": {
-        "tags": [
-          "Report"
-        ],
-        "summary": "A description about a specific API should go here",
-        "operationId": "Commerce Transactions",
-        "requestBody": {
-          "description": "A parameter description should go here",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OwnedDataSearchModel"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CommerceTransactionReportModelEntitySearchResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v/reports/commerce-transactions/download": {
-      "post": {
-        "tags": [
-          "Report"
-        ],
-        "summary": "A description about a specific API should go here",
-        "operationId": "Commerce Transactions Download",
-        "requestBody": {
-          "description": "A parameter description should go here",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OwnedDataSearchModel"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BankTransactionReportModelEntitySearchResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v/snapshot/{snapshotType}": {
+    "/2021.11/snapshot/{snapshotType}": {
       "post": {
         "tags": [
           "Snapshot"
         ],
-        "summary": "A description about a specific API should go here",
         "operationId": "Get Snapshot",
         "parameters": [
           {
             "name": "snapshotType",
             "in": "path",
-            "description": "A parameter description should go here",
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/DashboardSnapshotType"
@@ -464,7 +370,6 @@
           {
             "name": "dayRange",
             "in": "query",
-            "description": "A parameter description should go here",
             "schema": {
               "type": "integer",
               "format": "int32",
@@ -474,7 +379,6 @@
           {
             "name": "statRange",
             "in": "query",
-            "description": "A parameter description should go here",
             "schema": {
               "type": "integer",
               "format": "int32",
@@ -484,14 +388,12 @@
           {
             "name": "integrationId",
             "in": "query",
-            "description": "A parameter description should go here",
             "schema": {
               "type": "string"
             }
           }
         ],
         "requestBody": {
-          "description": "A parameter description should go here",
           "content": {
             "application/json": {
               "schema": {
@@ -524,15 +426,13 @@
         }
       }
     },
-    "/v/snapshot/revenue": {
+    "/2021.11/snapshot/revenue": {
       "post": {
         "tags": [
           "Snapshot"
         ],
-        "summary": "A description about a specific API should go here",
         "operationId": "Get Revenue",
         "requestBody": {
-          "description": "A parameter description should go here",
           "content": {
             "application/json": {
               "schema": {
@@ -565,15 +465,13 @@
         }
       }
     },
-    "/v/snapshot/cashflow": {
+    "/2021.11/snapshot/cashflow": {
       "post": {
         "tags": [
           "Snapshot"
         ],
-        "summary": "A description about a specific API should go here",
         "operationId": "Get Cashflow",
         "requestBody": {
-          "description": "A parameter description should go here",
           "content": {
             "application/json": {
               "schema": {
@@ -981,6 +879,14 @@
         ],
         "type": "string"
       },
+      "AuthenticationState": {
+        "enum": [
+          "NotAuthenticated",
+          "Authenticating",
+          "Authenticated"
+        ],
+        "type": "string"
+      },
       "BankTransactionReportModel": {
         "required": [
           "amount",
@@ -1171,6 +1077,59 @@
           "iso18245MerchantCategoryCode": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CommerceProviderModel": {
+        "required": [
+          "authenticationState",
+          "entityStatus",
+          "integrationProviderId",
+          "name",
+          "provider",
+          "timeStamp"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "integrationProviderId": {
+            "type": "string"
+          },
+          "authenticationState": {
+            "$ref": "#/components/schemas/AuthenticationState"
+          },
+          "name": {
+            "type": "string"
+          },
+          "timeStamp": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "provider": {
+            "$ref": "#/components/schemas/IntegrationProviderReportModel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CommerceProviderModelEntitySearchResponse": {
+        "required": [
+          "paging",
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CommerceProviderModel"
+            }
+          },
+          "paging": {
+            "$ref": "#/components/schemas/EntitySearchPagingModel"
           }
         },
         "additionalProperties": false
@@ -2208,35 +2167,6 @@
         ],
         "type": "string"
       },
-      "QueryModel": {
-        "required": [
-          "page",
-          "recordsPerPage",
-          "search",
-          "sort"
-        ],
-        "type": "object",
-        "properties": {
-          "page": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "recordsPerPage": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "sort": {
-            "$ref": "#/components/schemas/EntitySearchSortModel"
-          },
-          "search": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SearchFilterModel"
-            }
-          }
-        },
-        "additionalProperties": false
-      },
       "SearchFilterModel": {
         "required": [
           "columnField",
@@ -2351,20 +2281,16 @@
   ],
   "tags": [
     {
-      "name": "Accounts",
-      "description": "A description for a group of APIs"
+      "name": "Balances",
+      "description": "A collection of APIs for bank account balances after a connected business links at least one of their bank accounts"
+    },
+    {
+      "name": "Banking",
+      "description": "A collection of banking APIs for a connected business after linking at least one of their bank accounts"
     },
     {
       "name": "Commerce",
-      "description": "A description for a group of APIs"
-    },
-    {
-      "name": "Report",
-      "description": "A description for a group of APIs"
-    },
-    {
-      "name": "Snapshot",
-      "description": "A description for a group of APIs"
+      "description": "A collection of APIs for commerce transactions after a connected business links at least one of its commerce, e-commerce, POS or marketplace accounts"
     }
   ]
 }

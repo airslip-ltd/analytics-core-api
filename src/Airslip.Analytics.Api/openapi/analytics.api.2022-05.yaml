@@ -1,0 +1,17 @@
+openapi: 3.0.1
+info:
+  title: Analytics API
+  description: Includes all API endpoints for data analytics.
+  version: '2022-05'
+servers:
+  - url: http://localhost:7101
+paths: { }
+components:
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      description: "e.g Bearer Api_Key.\n\nRequests to the Airslip API are authenticated using the applications `Api_Key`. You can view and manage your credentials in the Airslip Dashboard.\n\nAn Api_Key provides connectivity to all authenticated Airslip API endpoints, so it is important to keep these credentials secure. Do not share your Api_Key in publicly accessible areas such as GitHub, client-side code, or easily accessible configuration settings.\n\nAuthentication is performed using Bearer Authentication. Your Api_Key should be sent as the token.\n\nAll requests should be made via HTTPS."
+      name: Authorization
+      in: header
+security:
+  - Bearer: [ ]

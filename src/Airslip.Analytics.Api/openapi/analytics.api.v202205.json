@@ -3,7 +3,7 @@
   "info": {
     "title": "Analytics API",
     "description": "Includes all API endpoints for data analytics.",
-    "version": "2022-05"
+    "version": "202205"
   },
   "servers": [
     {
