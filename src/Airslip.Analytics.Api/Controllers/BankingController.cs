@@ -56,7 +56,7 @@ public class BankingController : ApiControllerBase
     /// </summary>
     /// <param name="query">The bank transaction model within the search query. You can use this to sort or search for any column within the model</param>
     [MapToApiVersion("2021.11")]
-    [HttpPost("transactions")]
+    [HttpPost("transactions/search")]
     [ProducesResponseType(typeof(EntitySearchResponse<BankTransactionReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetBankTransactions([FromBody] OwnedDataSearchModel query)
