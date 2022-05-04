@@ -20,14 +20,13 @@ using Serilog;
 namespace Airslip.Analytics.Api.Controllers.Poc.Payroll;
 
 /// <summary>
-/// A description for a group of APIs
+/// A collection of APIs that allows you to retrieve payroll for employees.
 /// </summary>
 [ApiController]
 [ApiVersion("2022.5")]
-[ApiExplorerSettings(GroupName = "Payroll")]
 [Consumes(Json.MediaType)]
 [Produces(Json.MediaType)]
-[Route("v{version:apiVersion}/payroll/{businessId}/employees")]
+[Route("{version:apiVersion}/payroll/{businessId}/employees")]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class EmployeesController : ApiControllerBase
 {

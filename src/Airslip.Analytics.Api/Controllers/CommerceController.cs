@@ -56,7 +56,7 @@ public class CommerceController : ApiControllerBase
     /// <param name="query">The commerce transaction model within the search query, you can use this to sort or search for any column within the model</param>
     [MapToApiVersion("2021.11")]
     [HttpPost]
-    [Route("search")]
+    [Route("accounts/search")]
     [ProducesResponseType(typeof(EntitySearchResponse<CommerceProviderModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetCommerceAccounts([FromBody] OwnedDataSearchModel query)
@@ -75,7 +75,7 @@ public class CommerceController : ApiControllerBase
     [HttpPost]
     [ProducesResponseType( typeof(DownloadResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
-    [Route("download")]
+    [Route("accounts/download")]
     public async Task<IActionResult> DownloadCommerceAccounts([FromBody] OwnedDataSearchModel query)
     {
         IResponse response = await _downloadService.Download<BankTransactionReportModel>(_commerceProviderReport, query, 
@@ -89,7 +89,7 @@ public class CommerceController : ApiControllerBase
     /// </summary>
     /// <param name="query">The commerce transaction model within the search query. You can use this to sort or search for any column within the model</param>
     [MapToApiVersion("2021.11")]
-    [HttpPost("transactions")]
+    [HttpPost("transactions/search")]
     [ProducesResponseType( typeof(EntitySearchResponse<CommerceTransactionReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetCommerceTransactions([FromBody] OwnedDataSearchModel query)
@@ -123,7 +123,7 @@ public class CommerceController : ApiControllerBase
     /// <param name="query">The commerce transaction model within the search query. You can use this to sort or search for any column within the model</param>
     /// <param name="businessId">The connected business identifier</param>
     [MapToApiVersion("2022.5")]
-    [HttpPost("{businessId}/transactions")]
+    [HttpPost("{businessId}/transactions/search")]
     [ProducesResponseType( typeof(EntitySearchResponse<CommerceTransactionReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetCommerceTransactions([FromRoute] string? businessId, [FromBody] QueryModel query)

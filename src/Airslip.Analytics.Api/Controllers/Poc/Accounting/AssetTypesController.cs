@@ -23,10 +23,9 @@ namespace Airslip.Analytics.Api.Controllers.Poc.Accounting;
 /// </summary>
 [ApiController]
 [ApiVersion("2022.5")]
-[ApiExplorerSettings(GroupName = "Assets")]
 [Consumes(Json.MediaType)]
 [Produces(Json.MediaType)]
-[Route("v{version:apiVersion}/asset-types")]
+[Route("{version:apiVersion}/assets/{businessId}/types")]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class AssetTypesController : ApiControllerBase
 {
@@ -41,11 +40,12 @@ public class AssetTypesController : ApiControllerBase
     /// <summary>
     /// Allows you to retrieve asset types
     /// </summary>
+    /// <param name="businessId">The connected business identifier</param>
     /// <param name="query">The search model for asset types. You can use this to sort or search for any column within the model</param>
     [HttpPost("search")]
     [ProducesResponseType(typeof(EntitySearchResponse<AssetTypeModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult GetAssetTypes([FromBody] QueryModel query)
+    public IActionResult GetAssetTypes([FromRoute] string? businessId, [FromBody] QueryModel query)
     {
         AssetTypeSearchModelExample example = new();
 
@@ -57,12 +57,13 @@ public class AssetTypesController : ApiControllerBase
     /// <summary>
     /// Use this method to get an asset type
     /// </summary>
+    /// <param name="businessId">The connected business identifier</param>
     /// <param name="id">The id of the employee</param>
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(AssetTypeModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(NotFoundResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult GetAssetType([FromRoute] string id)
+    public IActionResult GetAssetType([FromRoute] string? businessId, [FromRoute] string id)
     {
         AssetTypeSearchModelExample example = new();
         
@@ -74,11 +75,12 @@ public class AssetTypesController : ApiControllerBase
     /// <summary>
     /// Use this method to create asset types
     /// </summary>
+    /// <param name="businessId">The connected business identifier</param>
     /// <param name="body">The body of the asset type to create</param>
     [HttpPost]
     [ProducesResponseType(typeof(CreatedModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult CreateAssetType([FromBody] AssetModel body)
+    public IActionResult CreateAssetType([FromRoute] string? businessId, [FromBody] AssetModel body)
     {
         return HandleResponse<CreatedModel>(body);
     }
@@ -86,13 +88,14 @@ public class AssetTypesController : ApiControllerBase
     /// <summary>
     /// Use this method to update assets
     /// </summary>
+    /// <param name="businessId">The connected business identifier</param>
     /// <param name="id">The id of the asset type to update</param>
     /// <param name="body">The body of the asset type to update</param>
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(CreatedModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(NotFoundResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult UpdateAssetType([FromRoute] string id, [FromBody] AssetModel body)
+    public IActionResult UpdateAssetType([FromRoute] string? businessId, [FromRoute] string id, [FromBody] AssetModel body)
     {
         return HandleResponse<CreatedModel>(body);
     }

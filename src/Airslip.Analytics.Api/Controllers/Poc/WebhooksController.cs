@@ -24,7 +24,7 @@ namespace Airslip.Analytics.Api.Controllers.Poc;
 [ApiVersion("2022.5")]
 [Consumes(Json.MediaType)]
 [Produces(Json.MediaType)]
-[Route("v{version:apiVersion}/web-hooks/{businessId}")]
+[Route("{version:apiVersion}/web-hooks/{businessId}")]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class WebhooksController : ApiControllerBase
 {
@@ -39,11 +39,12 @@ public class WebhooksController : ApiControllerBase
     /// <summary>
     /// Create a webhook so you can get notified when a new event has occured
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="businessId">The connected business identifier</param>
+    /// <param name="model">The body of the webhook to create. You can use this to sort or search for any column within the model</param>
     [HttpPost]
     [ProducesResponseType(typeof(WebhookModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult CreateWebhook([FromBody] WebhookModel model)
+    public IActionResult CreateWebhook([FromRoute] string? businessId, [FromBody] WebhookModel model)
     {
         if (model.EnabledEvents.Contains(WebhookEvents.None))
             return BadRequest(new InvalidResource(nameof(model.EnabledEvents), "Must be a valid event"));

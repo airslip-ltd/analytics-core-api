@@ -76,34 +76,24 @@ builder.Services
         options.SwaggerDoc("2021.11",
             new OpenApiInfo
             {
-                Title = "Analytics API",
+                Title = "Internal Analytics API",
                 Version = "2021.11",
-                Description = "Includes all API endpoints for data analytics." // Need to be more descriptive
+                Description = "An internal only API used for any UI products"
             }
         );
         
         options.SwaggerDoc("2022.5",
             new OpenApiInfo
             {
-                Title = "Analytics API",
+                Title = "Airslip API",
                 Version = "2022.5",
-                Description = "Includes all API endpoints for data analytics." // Need to be more descriptive
+                Description = "Airslip API enables financial institutions to get access to real-time financial risk data on small and medium sized businesses." +
+                              "Financial institutions all assess risk differently and that is why we have built the platform so you get notified when only the risk you care about happens." +
+                              "- Get access to financials such as balance sheets, cashflow statements, P&L and cash position." +
+                              "- Get notified when new invoices are uploaded to accounting systems within seconds."
             }
         );
-        
-        options.TagActionsBy(api =>
-        {
-            if (api.GroupName == "v1" && api.ActionDescriptor is ControllerActionDescriptor controllerActionDescriptor)
-                return new[] { controllerActionDescriptor.ControllerName };
-            
-            if (api.GroupName != null)
-                return new[] { api.GroupName };
 
-            throw new InvalidOperationException("Unable to determine tag for endpoint.");
-        });
-
-        options.DocInclusionPredicate((_, _) => true);
-        
         options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
             Description = @"e.g Bearer Api_Key.

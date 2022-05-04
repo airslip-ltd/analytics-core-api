@@ -1,43 +1,11 @@
 openapi: 3.0.1
 info:
-  title: Analytics API
-  description: Includes all API endpoints for data analytics.
+  title: Airslip API
+  description: 'Airslip API enables financial institutions to get access to real-time financial risk data on small and medium sized businesses.Financial institutions all assess risk differently and that is why we have built the platform so you get notified when only the risk you care about happens.- Get access to financials such as balance sheets, cashflow statements, P&L and cash position.- Get notified when new invoices are uploaded to accounting systems within seconds.'
   version: '2022.5'
 servers:
   - url: http://localhost:7101
 paths:
-  '/2022.5/banking/{businessId}/balances/search':
-    post:
-      tags:
-        - Balances
-      summary: Search for balances for a connected business
-      operationId: Get Account Balances
-      parameters:
-        - name: businessId
-          in: path
-          description: The connected business identifier
-          required: true
-          schema:
-            type: string
-      requestBody:
-        description: The account balance model within the search query
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/QueryModel'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AccountBalanceReportModelEntitySearchResponse'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
   '/2022.5/banking/{businessId}/transactions/search':
     post:
       tags:
@@ -52,7 +20,7 @@ paths:
           schema:
             type: string
       requestBody:
-        description: The bank transaction model within the search query
+        description: The bank transaction model within the search query. You can use this to sort or search for any column within the model
         content:
           application/json:
             schema:
@@ -102,7 +70,39 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  '/2022.5/commerce/{businessId}/transactions':
+  '/2022.5/banking/{businessId}/balances/search':
+    post:
+      tags:
+        - Banking
+      summary: Search for balances for a connected business
+      operationId: Get Account Balances
+      parameters:
+        - name: businessId
+          in: path
+          description: The connected business identifier
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: The account balance model within the search query. You can use this to sort or search for any column within the model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryModel'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountBalanceReportModelEntitySearchResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  '/2022.5/commerce/{businessId}/transactions/search':
     post:
       tags:
         - Commerce
@@ -116,7 +116,7 @@ paths:
           schema:
             type: string
       requestBody:
-        description: 'The commerce transaction model within the search query, you can use this to sort or search for any column within the model'
+        description: The commerce transaction model within the search query. You can use this to sort or search for any column within the model
         content:
           application/json:
             schema:
@@ -134,7 +134,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  '/v2022.5/financials/{businessId}/balance-sheet':
+  '/2022.5/financials/{businessId}/balance-sheet':
     get:
       tags:
         - Financials
@@ -172,7 +172,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  '/v2022.5/financials/{businessId}/cashflow':
+  '/2022.5/financials/{businessId}/cashflow':
     get:
       tags:
         - Financials
@@ -210,7 +210,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  '/v2022.5/financials/{businessId}/profit-and-loss':
+  '/2022.5/financials/{businessId}/profit-and-loss':
     get:
       tags:
         - Financials
@@ -241,25 +241,64 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CashflowModel'
+                $ref: '#/components/schemas/ProfitLossModel'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /v2022.5/invoices:
+  '/2022.5/financials/{businessId}/cash-position':
+    get:
+      tags:
+        - Financials
+      summary: Summarizes the total cash position for each account for an org
+      operationId: Get Cash Position
+      parameters:
+        - name: businessId
+          in: path
+          description: The connected business identifier
+          required: true
+          schema:
+            type: string
+        - name: balanceDate
+          in: query
+          description: The `balance date` will return transactions based on the accounting date entered by the user. Transactions before the balanceDate will be included.
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CashPositionModel'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  '/2022.5/invoices/{businessId}/search':
     post:
       tags:
         - Invoices
       summary: "Use this method to retrieve one or many invoices.\r\nWhen you retrieve multiple invoices, only a summary of the contact is returned and no line details are returned - this is to keep the response more compact.\r\nThe line item details will be returned when you retrieve an individual invoice, either by specifying Invoice ID, Invoice Number, querying by Statuses or by using the optional paging parameter (below).\r\nWhen you retrieve invoices by querying by Statuses, pagination is enforced by default.\r\nIndividual invoices (e.g. Invoices/97c2dc5-cc47-4afd-8ec8-74990b8761e9) can also be returned as PDF's see our HTTP GET documentation"
       operationId: Get Invoices
+      parameters:
+        - name: businessId
+          in: path
+          description: The connected business identifier
+          required: true
+          schema:
+            type: string
       requestBody:
-        description: The invoice model within the search query
+        description: The invoice model within the search query. You can use this to sort or search for any column within the model
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OwnedDataSearchModel'
+              $ref: '#/components/schemas/QueryModel'
       responses:
         '200':
           description: Success
@@ -273,25 +312,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  '/v2022.5/invoices/{connectedAccountId}':
+  '/2022.5/invoices/{businessId}':
     post:
       tags:
         - Invoices
       summary: Use this method to create or update an invoice
       operationId: Create Invoice
       parameters:
-        - name: connectedAccountId
-          in: query
-          description: The Id of the connected account
-          schema:
-            type: string
-        - name: connectedAccountId
+        - name: businessId
           in: path
+          description: The connected business identifier
           required: true
           schema:
             type: string
       requestBody:
-        description: The body of the invoice to update or create
+        description: The body of the invoice to update or create. You can use this to sort or search for any column within the model
         content:
           application/json:
             schema:
@@ -303,6 +338,38 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CreatedModel'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  '/2022.5/web-hooks/{businessId}':
+    post:
+      tags:
+        - Webhooks
+      summary: Create a webhook so you can get notified when a new event has occured
+      operationId: Create Webhook
+      parameters:
+        - name: businessId
+          in: path
+          description: The connected business identifier
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: The body of the webhook to create. You can use this to sort or search for any column within the model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookModel'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookModel'
         '400':
           description: Bad Request
           content:
@@ -420,16 +487,6 @@ components:
         countryCode:
           $ref: '#/components/schemas/Alpha2CountryCodes'
       additionalProperties: false
-    AirslipUserType:
-      enum:
-        - Unknown
-        - Standard
-        - Merchant
-        - Unregistered
-        - Partner
-        - Administrator
-        - InternalApi
-      type: string
     Alpha2CountryCodes:
       enum:
         - AF
@@ -761,6 +818,17 @@ components:
         - Liability
         - Equity
       type: string
+    BankStatement:
+      required:
+        - currentStatement
+        - statementLines
+      type: object
+      properties:
+        statementLines:
+          $ref: '#/components/schemas/StatementLines'
+        currentStatement:
+          $ref: '#/components/schemas/CurrentStatement'
+      additionalProperties: false
     BankTransactionReportModel:
       required:
         - amount
@@ -875,6 +943,30 @@ components:
         - Customer
         - Supplier
       type: string
+    CashAccount:
+      required:
+        - accountBalance
+        - balanceCurrency
+        - startingBalance
+        - unreconciledNegativeAmount
+        - unreconciledPositionAmount
+      type: object
+      properties:
+        unreconciledPositionAmount:
+          type: integer
+          format: int32
+        unreconciledNegativeAmount:
+          type: integer
+          format: int32
+        startingBalance:
+          type: integer
+          format: int64
+        accountBalance:
+          type: integer
+          format: int64
+        balanceCurrency:
+          $ref: '#/components/schemas/Iso4217CurrencyCodes'
+      additionalProperties: false
     CashBalance:
       required:
         - closingCashBalance
@@ -891,6 +983,31 @@ components:
         netCashMovement:
           type: integer
           format: int64
+      additionalProperties: false
+    CashPositionModel:
+      required:
+        - accountId
+        - bankStatement
+        - cashAccount
+        - entityStatus
+        - statementBalance
+        - statementBalanceDate
+      type: object
+      properties:
+        accountId:
+          type: string
+        statementBalance:
+          $ref: '#/components/schemas/StatementBalance'
+        statementBalanceDate:
+          type: integer
+          format: int64
+        bankStatement:
+          $ref: '#/components/schemas/BankStatement'
+        cashAccount:
+          $ref: '#/components/schemas/CashAccount'
+        id:
+          type: string
+          nullable: true
       additionalProperties: false
     CashflowAccount:
       required:
@@ -1205,6 +1322,50 @@ components:
     CreditNote:
       type: object
       additionalProperties: false
+    CurrentStatement:
+      required:
+        - endBalance
+        - endDate
+        - importedDateTime
+        - importSourceType
+        - startBalance
+        - startDate
+      type: object
+      properties:
+        startDate:
+          type: integer
+          format: int64
+        endDate:
+          type: integer
+          format: int64
+        startBalance:
+          type: integer
+          format: int64
+        endBalance:
+          type: integer
+          format: int64
+        importedDateTime:
+          type: integer
+          format: int64
+        importSourceType:
+          $ref: '#/components/schemas/ImportSourceTypes'
+      additionalProperties: false
+    DataSource:
+      required:
+        - negativeTransactionCount
+        - positiveTransactionCount
+        - type
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/ImportSourceTypes'
+        positiveTransactionCount:
+          type: integer
+          format: int32
+        negativeTransactionCount:
+          type: integer
+          format: int32
+      additionalProperties: false
     DataSources:
       enum:
         - Yapily
@@ -1395,6 +1556,14 @@ components:
           items:
             $ref: '#/components/schemas/Link'
       additionalProperties: false
+    ImportSourceTypes:
+      enum:
+        - DirectBankFeed
+        - IndirectBankFeed
+        - FileUpload
+        - Manual
+        - Other
+      type: string
     IntegrationAccountDetailReportModel:
       required:
         - accountType
@@ -1897,33 +2066,6 @@ components:
           type: string
           nullable: true
       additionalProperties: false
-    OwnedDataSearchModel:
-      required:
-        - ownerAirslipUserType
-        - ownerEntityId
-        - page
-        - recordsPerPage
-        - search
-        - sort
-      type: object
-      properties:
-        ownerEntityId:
-          type: string
-        ownerAirslipUserType:
-          $ref: '#/components/schemas/AirslipUserType'
-        page:
-          type: integer
-          format: int32
-        recordsPerPage:
-          type: integer
-          format: int32
-        sort:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntitySearchSortModel'
-        search:
-          $ref: '#/components/schemas/EntitySearchModel'
-      additionalProperties: false
     Payment:
       required:
         - amount
@@ -1948,6 +2090,92 @@ components:
         - StandardPayment
         - PrePayment
         - OverPayment
+      type: string
+    ProfitLossAccount:
+      required:
+        - code
+        - id
+        - name
+        - reportingCode
+        - total
+      type: object
+      properties:
+        code:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        reportingCode:
+          type: string
+        total:
+          type: integer
+          format: int64
+      additionalProperties: false
+    ProfitLossAccountAccountType:
+      required:
+        - accounts
+        - total
+        - type
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/AccountingAccountTypes'
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProfitLossAccount'
+        total:
+          type: integer
+          format: int64
+      additionalProperties: false
+    ProfitLossModel:
+      required:
+        - endDate
+        - entityStatus
+        - netProfitLoss
+        - reports
+        - startDate
+      type: object
+      properties:
+        startDate:
+          type: integer
+          format: int64
+        endDate:
+          type: integer
+          format: int64
+        netProfitLoss:
+          type: integer
+          format: int64
+        reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProfitLossReport'
+        id:
+          type: string
+          nullable: true
+      additionalProperties: false
+    ProfitLossReport:
+      required:
+        - accountTypes
+        - profitLossType
+        - total
+      type: object
+      properties:
+        profitLossType:
+          $ref: '#/components/schemas/ProfitLossTypes'
+        accountTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProfitLossAccountAccountType'
+        total:
+          type: integer
+          format: int64
+      additionalProperties: false
+    ProfitLossTypes:
+      enum:
+        - Revenue
+        - Expense
       type: string
     QueryModel:
       required:
@@ -1988,6 +2216,92 @@ components:
         - Asc
         - Desc
       type: string
+    StatementBalance:
+      required:
+        - type
+        - value
+      type: object
+      properties:
+        value:
+          type: integer
+          format: int64
+        type:
+          $ref: '#/components/schemas/TransactionFlows'
+      additionalProperties: false
+    StatementLines:
+      required:
+        - averageNegativeDaysUnreconciled
+        - averagePositiveDaysUnreconciled
+        - dataSources
+        - deletedAmount
+        - earliestReconciledTransaction
+        - earliestUnreconciledTransaction
+        - latestReconciledTransaction
+        - latestUnreconciledTransaction
+        - reconciledLines
+        - reconciledNegativeAmount
+        - reconciledPositiveAmount
+        - totalAmount
+        - totalNegativeAmount
+        - totalPositiveAmount
+        - unreconciledAmountNeg
+        - unreconciledAmountPos
+        - unreconciledLines
+      type: object
+      properties:
+        unreconciledAmountPos:
+          type: integer
+          format: int64
+        unreconciledAmountNeg:
+          type: integer
+          format: int64
+        unreconciledLines:
+          type: integer
+          format: int32
+        averagePositiveDaysUnreconciled:
+          type: number
+          format: double
+        averageNegativeDaysUnreconciled:
+          type: number
+          format: double
+        earliestUnreconciledTransaction:
+          type: integer
+          format: int64
+        latestUnreconciledTransaction:
+          type: integer
+          format: int64
+        deletedAmount:
+          type: integer
+          format: int32
+        totalAmount:
+          type: integer
+          format: int32
+        dataSources:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataSource'
+        earliestReconciledTransaction:
+          type: integer
+          format: int64
+        latestReconciledTransaction:
+          type: integer
+          format: int64
+        reconciledPositiveAmount:
+          type: integer
+          format: int32
+        reconciledNegativeAmount:
+          type: integer
+          format: int32
+        reconciledLines:
+          type: integer
+          format: int32
+        totalPositiveAmount:
+          type: integer
+          format: int32
+        totalNegativeAmount:
+          type: integer
+          format: int32
+      additionalProperties: false
     TaxDetail:
       required:
         - amount
@@ -2014,6 +2328,62 @@ components:
         countryCode:
           $ref: '#/components/schemas/Alpha2CountryCodes'
       additionalProperties: false
+    TransactionFlows:
+      enum:
+        - Debit
+        - Credit
+      type: string
+    WebhookEvents:
+      enum:
+        - None
+        - InvoiceCreate
+        - InvoiceUpdate
+      type: string
+    WebhookModel:
+      required:
+        - apiVersion
+        - application
+        - created
+        - description
+        - enabledEvents
+        - entityStatus
+        - object
+        - secret
+        - status
+        - url
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        object:
+          type: string
+        apiVersion: { }
+        application: { }
+        created:
+          type: integer
+          description: ''
+          format: int64
+        description:
+          type: string
+        enabledEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebhookEvents'
+        status:
+          $ref: '#/components/schemas/WebhookStatus'
+        url:
+          type: string
+          description: The URL of the webhook endpoint.
+        secret:
+          type: string
+          description: 'The endpoint’s secret, used to generate webhook signatures. Only returned at creation.'
+      additionalProperties: false
+    WebhookStatus:
+      enum:
+        - Enabled
+        - Disabled
+      type: string
   securitySchemes:
     Bearer:
       type: apiKey
@@ -2023,13 +2393,11 @@ components:
 security:
   - Bearer: [ ]
 tags:
-  - name: Balances
-    description: A collection of APIs for bank account balances after a connected business links at least one of their bank accounts
   - name: Banking
     description: A collection of banking APIs for a connected business after linking at least one of their bank accounts
   - name: Commerce
     description: 'A collection of APIs for commerce transactions after a connected business links at least one of its commerce, e-commerce, POS or marketplace accounts'
-  - name: Financials
-    description: A description for a group of APIs
+  - name: Webhooks
+    description: "You can configure webhook endpoints via the API to be notified about events that happen in your for connected businesses.\r\nMost users configure webhooks from the dashboard, which provides a user interface for registering and testing your webhook endpoints."
   - name: Invoices
-    description: A description for a group of APIs
+    description: 'Get, search, create and update invoices for a particular business'

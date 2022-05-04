@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Analytics API",
-    "description": "Includes all API endpoints for data analytics.",
+    "title": "Internal Analytics API",
+    "description": "An internal only API used for any UI products",
     "version": "2021.11"
   },
   "servers": [
@@ -11,47 +11,6 @@
     }
   ],
   "paths": {
-    "/2021.11/banking/balances/search": {
-      "post": {
-        "tags": [
-          "Balances"
-        ],
-        "summary": "Search for balances for a connected business",
-        "operationId": "Get Account Balances",
-        "requestBody": {
-          "description": "The account balance model within the search query",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OwnedDataSearchModel"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AccountBalanceReportModelEntitySearchResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/2021.11/banking/transactions": {
       "post": {
         "tags": [
@@ -60,7 +19,7 @@
         "summary": "Get bank transactions enriched with merchant and director details for a connected business",
         "operationId": "Get Bank Transactions",
         "requestBody": {
-          "description": "The bank transaction model within the search query",
+          "description": "The bank transaction model within the search query. You can use this to sort or search for any column within the model",
           "content": {
             "application/json": {
               "schema": {
@@ -101,7 +60,7 @@
         "summary": "Get bank transactions enriched with merchant and director details for a connected business",
         "operationId": "Download Bank Transactions",
         "requestBody": {
-          "description": "The bank transaction model within the search query",
+          "description": "The bank transaction model within the search query. You can use this to sort or search for any column within the model",
           "content": {
             "application/json": {
               "schema": {
@@ -134,7 +93,48 @@
         }
       }
     },
-    "/2021.11/commerce/search": {
+    "/2021.11/banking/balances/search": {
+      "post": {
+        "tags": [
+          "Banking"
+        ],
+        "summary": "Search for balances for a connected business",
+        "operationId": "Get Account Balances",
+        "requestBody": {
+          "description": "The account balance model within the search query. You can use this to sort or search for any column within the model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OwnedDataSearchModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountBalanceReportModelEntitySearchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/2021.11/commerce/accounts/search": {
       "post": {
         "tags": [
           "Commerce"
@@ -175,7 +175,7 @@
         }
       }
     },
-    "/2021.11/commerce/download": {
+    "/2021.11/commerce/accounts/download": {
       "post": {
         "tags": [
           "Commerce"
@@ -183,7 +183,7 @@
         "summary": "Get all commerce accounts for a connected business",
         "operationId": "Download Commerce Accounts",
         "requestBody": {
-          "description": "The commerce transaction model within the search query, you can use this to sort or search for any column within the model",
+          "description": "The commerce transaction model within the search query. You can use this to sort or search for any column within the model",
           "content": {
             "application/json": {
               "schema": {
@@ -216,15 +216,15 @@
         }
       }
     },
-    "/2021.11/commerce/transactions": {
+    "/2021.11/commerce/transactions/search": {
       "post": {
         "tags": [
           "Commerce"
         ],
-        "summary": "Get all commerce transactions for a connected business",
+        "summary": "Get and search for commerce transactions for a connected business",
         "operationId": "Get Commerce Transactions",
         "requestBody": {
-          "description": "The commerce transaction model within the search query, you can use this to sort or search for any column within the model",
+          "description": "The commerce transaction model within the search query. You can use this to sort or search for any column within the model",
           "content": {
             "application/json": {
               "schema": {
@@ -262,10 +262,10 @@
         "tags": [
           "Commerce"
         ],
-        "summary": "A description about a specific API should go here",
+        "summary": "Download commerce transactions for a connected business",
         "operationId": "Download Commerce Transactions",
         "requestBody": {
-          "description": "A parameter description should go here",
+          "description": "The commerce transaction model within the search query. You can use this to sort or search for any column within the model",
           "content": {
             "application/json": {
               "schema": {
@@ -301,9 +301,9 @@
     "/2021.11/data-lists/currencies": {
       "post": {
         "tags": [
-          "Data"
+          "DataLists"
         ],
-        "operationId": "Get Accounts",
+        "operationId": "Get Currencies",
         "requestBody": {
           "content": {
             "application/json-patch+json": {
@@ -334,7 +334,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CurrencySnapshotDataSearchResponse"
+                  "$ref": "#/components/schemas/CurrencyDataSearchResponse"
                 }
               }
             }
@@ -1310,7 +1310,7 @@
         },
         "additionalProperties": false
       },
-      "CurrencySnapshot": {
+      "Currency": {
         "required": [
           "currencyCode"
         ],
@@ -1322,7 +1322,7 @@
         },
         "additionalProperties": false
       },
-      "CurrencySnapshotDataSearchResponse": {
+      "CurrencyDataSearchResponse": {
         "required": [
           "records"
         ],
@@ -1331,7 +1331,7 @@
           "records": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/CurrencySnapshot"
+              "$ref": "#/components/schemas/Currency"
             }
           }
         },
@@ -2280,10 +2280,6 @@
     }
   ],
   "tags": [
-    {
-      "name": "Balances",
-      "description": "A collection of APIs for bank account balances after a connected business links at least one of their bank accounts"
-    },
     {
       "name": "Banking",
       "description": "A collection of banking APIs for a connected business after linking at least one of their bank accounts"

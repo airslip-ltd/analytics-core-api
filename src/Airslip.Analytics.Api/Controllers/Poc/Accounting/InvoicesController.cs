@@ -25,7 +25,7 @@ namespace Airslip.Analytics.Api.Controllers.Poc.Accounting;
 [ApiVersion("2022.5")]
 [Consumes(Json.MediaType)]
 [Produces(Json.MediaType)]
-[Route("v{version:apiVersion}/invoices/{businessId}")]
+[Route("{version:apiVersion}/invoices/{businessId}")]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class InvoicesController : ApiControllerBase
 {

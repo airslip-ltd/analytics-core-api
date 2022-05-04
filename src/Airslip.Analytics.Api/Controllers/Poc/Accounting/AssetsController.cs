@@ -24,10 +24,9 @@ namespace Airslip.Analytics.Api.Controllers.Poc.Accounting;
 /// </summary>
 [ApiController]
 [ApiVersion("2022.5")]
-[ApiExplorerSettings(GroupName = "Assets")]
 [Consumes(Json.MediaType)]
 [Produces(Json.MediaType)]
-[Route("v{version:apiVersion}/assets")]
+[Route("{version:apiVersion}/assets/{businessId}")]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class AssetsController : ApiControllerBase
 {
@@ -42,11 +41,12 @@ public class AssetsController : ApiControllerBase
     /// <summary>
     /// Allows you to retrieve assets
     /// </summary>
+    /// <param name="businessId">The connected business identifier</param>
     /// <param name="query">The search model for assets. You can use this to sort or search for any column within the model</param>
     [HttpPost("search")]
     [ProducesResponseType(typeof(EntitySearchResponse<AssetModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult GetAssets([FromBody] QueryModel query)
+    public IActionResult GetAssets([FromRoute] string? businessId, [FromBody] QueryModel query)
     {
         AssetSearchModelExample example = new();
 
@@ -58,12 +58,13 @@ public class AssetsController : ApiControllerBase
     /// <summary>
     /// Use this method to get an asset
     /// </summary>
+    /// <param name="businessId">The connected business identifier</param>
     /// <param name="id">The id of the asset</param>
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(AssetModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(NotFoundResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult GetAsset([FromRoute] string id)
+    public IActionResult GetAsset([FromRoute] string? businessId, [FromRoute] string id)
     {
         AssetSearchModelExample example = new();
 
@@ -75,11 +76,12 @@ public class AssetsController : ApiControllerBase
     /// <summary>
     /// Use this method to create draft fixed assets.
     /// </summary>
+    /// <param name="businessId">The connected business identifier</param>
     /// <param name="body">The body of the asset to create</param>
     [HttpPost]
     [ProducesResponseType(typeof(CreatedModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult CreateAsset([FromBody] AssetModel body)
+    public IActionResult CreateAsset([FromRoute] string? businessId, [FromBody] AssetModel body)
     {
         return HandleResponse<CreatedModel>(body);
     }
@@ -87,13 +89,14 @@ public class AssetsController : ApiControllerBase
     /// <summary>
     /// Use this method to update assets.   
     /// </summary>
+    /// <param name="businessId">The connected business identifier</param>
     /// <param name="id">The id of the asset to update</param>
     /// <param name="body">The body of the asset to update</param>
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(Success), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(NotFoundResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult UpdateAsset([FromRoute] string id, [FromBody] AssetModel body)
+    public IActionResult UpdateAsset([FromRoute] string? businessId, [FromRoute] string id, [FromBody] AssetModel body)
     {
         return HandleResponse<Success>(body);
     }
