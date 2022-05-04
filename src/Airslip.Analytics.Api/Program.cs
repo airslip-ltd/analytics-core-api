@@ -18,6 +18,7 @@ using Airslip.Common.Types.Configuration;
 using Airslip.Common.Utilities.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
@@ -77,6 +78,19 @@ builder.Services
                 Description = "Includes all API endpoints for data analytics." // Need to be more descriptive
             }
         );
+        
+        options.TagActionsBy(api =>
+        {
+            if (api.GroupName == "v1" && api.ActionDescriptor is ControllerActionDescriptor controllerActionDescriptor)
+                return new[] { controllerActionDescriptor.ControllerName };
+            
+            if (api.GroupName != null)
+                return new[] { api.GroupName };
+
+            throw new InvalidOperationException("Unable to determine tag for endpoint.");
+        });
+
+        options.DocInclusionPredicate((_, _) => true);
         
         options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {

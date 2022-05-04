@@ -54,7 +54,7 @@ public class SqlServerContext : AirslipSqlServerContextBase
         modelBuilder.Entity<DashboardMetricSnapshot>().HasNoKey().ToView(null);
         modelBuilder.Entity<RevenueAndRefundsByYear>().HasNoKey().ToView(null);
         modelBuilder.Entity<DebitsAndCreditsByYear>().HasNoKey().ToView(null);
-        modelBuilder.Entity<CurrencySnapshot>().HasNoKey().ToView(null);
+        modelBuilder.Entity<Currency>().HasNoKey().ToView(null);
         
         // Table names
         modelBuilder.AddTableWithDefaults<Integration>();

@@ -49,9 +49,9 @@ public class ReportController : ApiControllerBase
     }
     
     /// <summary>
-    /// A description about a specific API should go here
+    /// Get and search for banking transactions
     /// </summary>
-    /// <param name="query">A parameter description should go here</param>
+    /// <param name="query">The search model for banking transactions</param>
     [HttpPost]
     [ProducesResponseType(typeof(EntitySearchResponse<BankTransactionReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
@@ -64,9 +64,27 @@ public class ReportController : ApiControllerBase
     }
     
     /// <summary>
-    /// A description about a specific API should go here
+    /// Downloadable bank transactions
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="query">The search model for banking transactions</param>
+    [HttpPost]
+    [ProducesResponseType( typeof(EntitySearchResponse<BankTransactionReportModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
+    [Route("bank-transactions/download")]
+    public async Task<IActionResult> DownloadBankTransactions([FromBody] OwnedDataSearchModel query)
+    {
+        IResponse response = await _downloadService.Download<BankTransactionReportModel>(
+            _bankTransactionReport, 
+            query, 
+            "bank-transactions");
+
+        return HandleResponse<DownloadResponse>(response);
+    }
+    
+    /// <summary>
+    /// Get a particular bank transaction
+    /// </summary>
+    /// <param name="id">The id of the bank transactions</param>
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(BankTransactionReportModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
@@ -78,27 +96,11 @@ public class ReportController : ApiControllerBase
             
         return HandleResponse<BankTransactionReportModel>(response);
     }
-    
-    /// <summary>
-    /// A description about a specific API should go here
-    /// </summary>
-    /// <param name="query">A parameter description should go here</param>
-    [HttpPost]
-    [ProducesResponseType( typeof(EntitySearchResponse<BankTransactionReportModel>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
-    [Route("bank-transactions/download")]
-    public async Task<IActionResult> DownloadBankTransactions([FromBody] OwnedDataSearchModel query)
-    {
-        IResponse response = await _downloadService.Download<BankTransactionReportModel>(_bankTransactionReport, query, 
-            "bank-transactions");
 
-        return HandleResponse<DownloadResponse>(response);
-    }
-    
     /// <summary>
-    /// A description about a specific API should go here
+    /// Get and search for commerce transactions
     /// </summary>
-    /// <param name="query">A parameter description should go here</param>
+    /// <param name="query">The search model for commerce transactions</param>
     [HttpPost]
     [ProducesResponseType( typeof(EntitySearchResponse<CommerceTransactionReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
@@ -111,9 +113,9 @@ public class ReportController : ApiControllerBase
     }
     
     /// <summary>
-    /// A description about a specific API should go here
+    /// Download commerce transactions
     /// </summary>
-    /// <param name="query">A parameter description should go here</param>
+    /// <param name="query">The search model for commerce transactions</param>
     [HttpPost]
     [ProducesResponseType( typeof(EntitySearchResponse<BankTransactionReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]

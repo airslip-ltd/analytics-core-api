@@ -46,7 +46,7 @@ public class SnapshotController : ApiControllerBase
     }
         
     /// <summary>
-    /// A description about a specific API should go here
+    /// 
     /// </summary>
     /// <param name="snapshotType">A parameter description should go here</param>
     /// <param name="query">A parameter description should go here</param>

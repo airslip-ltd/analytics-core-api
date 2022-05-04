@@ -28,11 +28,11 @@ namespace Airslip.Analytics.Api.Controllers;
 [Produces(Json.MediaType)]
 [Route("v{version:apiVersion}/data-lists")]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-public class DataController : ApiControllerBase
+public class DataListsController : ApiControllerBase
 {
     private readonly IDataListService _dataListService;
 
-    public DataController(IDataListService dataListService,
+    public DataListsController(IDataListService dataListService,
         ITokenDecodeService<UserToken> tokenDecodeService, 
         IOptions<PublicApiSettings> publicApiOptions, ILogger logger) 
         : base(tokenDecodeService, publicApiOptions, logger)
@@ -42,13 +42,13 @@ public class DataController : ApiControllerBase
         
     [HttpPost]
     [Route("currencies")]
-    [ProducesResponseType(typeof(DataSearchResponse<CurrencySnapshot>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(DataSearchResponse<Currency>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAccounts([FromBody] DataSearchModel query)
+    public async Task<IActionResult> GetCurrencies([FromBody] DataSearchModel query)
     {
         IResponse response = await _dataListService
             .GetCurrencies(query);
             
-        return HandleResponse<DataSearchResponse<CurrencySnapshot>>(response);
+        return HandleResponse<DataSearchResponse<Currency>>(response);
     }
 }
