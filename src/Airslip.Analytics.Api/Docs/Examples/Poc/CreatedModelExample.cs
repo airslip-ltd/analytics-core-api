@@ -1,5 +1,4 @@
-﻿using Airslip.Analytics.Api.Controllers.Poc;
-using Airslip.Analytics.Reports.Models.Poc;
+﻿using Airslip.Analytics.Reports.Models.Poc;
 using Swashbuckle.AspNetCore.Filters;
 
 namespace Airslip.Analytics.Api.Docs.Examples.Poc;
