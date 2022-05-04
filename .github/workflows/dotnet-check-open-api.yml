@@ -6,23 +6,14 @@ on:
     branches: [ main ]
 
 jobs:
-  migration:
+  validate:
     runs-on: ubuntu-latest
     env:
       SPEC_PATH: ./src/Airslip.Analytics.Api/openapi
 
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Get OpenAPI files
-      id: getfiles
-      run:  |
-        # Using step output (space separated file list)
-        FILES="$(find lib -type f -iname "*.yaml")"
-        echo "::set-output name=file_list::$FILES"
-      working-directory: ${{ env.SPEC_PATH }}
-
-    - name: swagger-validator
-      uses: mbowman100/swagger-validator-action@master
-      with:
-        files: ${{ steps.getfiles.outputs.file_list }} # For if you're using output
+      - uses: actions/checkout@v2
+      - name: Validate OpenAPI definition
+        uses: char0n/swagger-editor-validate@v1
+        with:
+          definition-file: ${{ env.SPEC_PATH }}/analytics.api.2021.11.yaml
