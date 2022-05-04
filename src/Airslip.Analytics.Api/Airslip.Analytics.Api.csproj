@@ -44,4 +44,20 @@
       <ProjectReference Include="..\Airslip.Analytics.Services.SqlServer\Airslip.Analytics.Services.SqlServer.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="openapi" />
+    </ItemGroup>
+	
+	<Target Name="Tools" BeforeTargets="Build" Condition="$(Configuration)=='Debug'">
+		<Exec Command="dotnet tool restore" WorkingDirectory="$(ProjectDir)" />
+	</Target>
+
+	<Target Name="OpenAPI" AfterTargets="Build" Condition="$(Configuration)=='Debug'">
+		<Exec Command="dotnet swagger tofile --output ./openapi/analytics.api.v1.yaml --yaml $(OutputPath)$(AssemblyName).dll v1" WorkingDirectory="$(ProjectDir)" />
+		<Exec Command="dotnet swagger tofile --output ./openapi/analytics.api.v1.json $(OutputPath)$(AssemblyName).dll v1" WorkingDirectory="$(ProjectDir)" />
+
+		<Exec Command="dotnet swagger tofile --output ./openapi/analytics.api.v202205.yaml --yaml $(OutputPath)$(AssemblyName).dll v202205" WorkingDirectory="$(ProjectDir)" />
+		<Exec Command="dotnet swagger tofile --output ./openapi/analytics.api.v202205.json $(OutputPath)$(AssemblyName).dll v202205" WorkingDirectory="$(ProjectDir)" />
+	</Target>
+
 </Project>
