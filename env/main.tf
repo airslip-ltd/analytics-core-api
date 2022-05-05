@@ -194,7 +194,9 @@ module "api_management" {
     "EnvironmentSettings:EnvironmentName" : var.environment,
     "Serilog:MinimumLevel:Default" : local.log_level,
     "RepositorySettings:IncludeMetrics" : local.include_metrics,
-    "PublicApiSettings:Settings:ExternalApi:BaseUri": local.external_api_url
+    "PublicApiSettings:Settings:ExternalApi:BaseUri": local.external_api_url,
+    "PublicApiSettings:Settings:Base:BaseUri": "https://${local.apim_hostname}",
+    "PublicApiSettings:Settings:Base:UriSuffix": "analytics"
   }
 }
 
