@@ -15,3 +15,4 @@ additional_ip_addresses = [
 ]
 apim_hostname = "https://qa-app.airslip.com"
 portal_url = "https://qa-secure.airslip.com"
+external_api_url = "https://qa-api.airslip.com"
