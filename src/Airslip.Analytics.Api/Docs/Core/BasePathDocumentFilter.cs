@@ -13,7 +13,7 @@ public class BasePathDocumentFilter : IDocumentFilter
 
     public BasePathDocumentFilter(IOptions<PublicApiSettings> publicApiOptions)
     {
-        _baseUri = publicApiOptions.Value.GetSettingByName("Base").BaseUri;
+        _baseUri = publicApiOptions.Value.GetSettingByName("ExternalApi").ToBaseUri();
     }
 
     public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
