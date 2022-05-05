@@ -42,6 +42,7 @@ locals {
   min_capacity                = var.min_capacity
   auto_pause_delay_in_minutes = var.auto_pause_delay_in_minutes
   include_metrics             = var.include_metrics
+  external_api_url            = var.external_api_url
 }
 
 data "azurerm_eventhub_namespace" "core_infrastructure" {
@@ -113,7 +114,7 @@ module "sql_server" {
   }
 
   failover_settings = {
-    use_failover = true,
+    use_failover      = true,
     failover_location = "East US"
   }
 
@@ -192,7 +193,8 @@ module "api_management" {
     "ConnectionStrings:SqlServer" : module.sql_server.connection_string,
     "EnvironmentSettings:EnvironmentName" : var.environment,
     "Serilog:MinimumLevel:Default" : local.log_level,
-    "RepositorySettings:IncludeMetrics" : local.include_metrics
+    "RepositorySettings:IncludeMetrics" : local.include_metrics,
+    "PublicApiSettings:Settings:ExternalApi:BaseUri": local.external_api_url
   }
 }
 

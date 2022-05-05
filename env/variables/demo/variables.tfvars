@@ -13,5 +13,6 @@ additional_ip_addresses = [
     end_ip_address   = "88.202.245.245"
   }
 ]
-apim_hostname = "https://demo-app.airslip.com"
-portal_url    = "https://demo-secure.airslip.com"
+apim_hostname    = "https://demo-app.airslip.com"
+portal_url       = "https://demo-secure.airslip.com"
+external_api_url = "https://demo-api.airslip.com"

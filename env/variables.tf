@@ -41,3 +41,4 @@ variable "additional_hosts" {
 variable "include_metrics"{
   default = false
 }
+variable "external_api_url" {}
