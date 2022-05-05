@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://dev-api.airslip.com/analytics"
+      "url": "http://localhost:7101"
     }
   ],
   "paths": {
@@ -16,10 +16,10 @@
         "tags": [
           "Banking"
         ],
-        "summary": "Get bank transactions enriched with merchant and director details for a connected business",
+        "summary": "Get bank transactions enriched with merchant and director details for a connected business.",
         "operationId": "Get Bank Transactions",
         "requestBody": {
-          "description": "The bank transaction model within the search query. You can use this to sort or search for any column within the model",
+          "description": "The bank transaction model within the search query. You can use this to sort or search for any column within the model.",
           "content": {
             "application/json": {
               "schema": {
@@ -57,10 +57,10 @@
         "tags": [
           "Banking"
         ],
-        "summary": "Get bank transactions enriched with merchant and director details for a connected business",
+        "summary": "Get bank transactions enriched with merchant and director details for a connected business.",
         "operationId": "Download Bank Transactions",
         "requestBody": {
-          "description": "The bank transaction model within the search query. You can use this to sort or search for any column within the model",
+          "description": "The bank transaction model within the search query. You can use this to sort or search for any column within the model.",
           "content": {
             "application/json": {
               "schema": {
@@ -98,10 +98,10 @@
         "tags": [
           "Banking"
         ],
-        "summary": "Search for balances for a connected business",
+        "summary": "Search for balances for a connected business.",
         "operationId": "Get Account Balances",
         "requestBody": {
-          "description": "The account balance model within the search query. You can use this to sort or search for any column within the model",
+          "description": "The account balance model within the search query. You can use this to sort or search for any column within the model.",
           "content": {
             "application/json": {
               "schema": {
@@ -139,10 +139,10 @@
         "tags": [
           "Commerce"
         ],
-        "summary": "Get all commerce accounts for a connected business",
+        "summary": "Get all commerce accounts for a connected business.",
         "operationId": "Get Commerce Accounts",
         "requestBody": {
-          "description": "The commerce transaction model within the search query, you can use this to sort or search for any column within the model",
+          "description": "The commerce transaction model within the search query, you can use this to sort or search for any column within the model.",
           "content": {
             "application/json": {
               "schema": {
@@ -180,10 +180,10 @@
         "tags": [
           "Commerce"
         ],
-        "summary": "Get all commerce accounts for a connected business",
+        "summary": "Get all commerce accounts for a connected business.",
         "operationId": "Download Commerce Accounts",
         "requestBody": {
-          "description": "The commerce transaction model within the search query. You can use this to sort or search for any column within the model",
+          "description": "The commerce transaction model within the search query. You can use this to sort or search for any column within the model.",
           "content": {
             "application/json": {
               "schema": {
@@ -221,10 +221,10 @@
         "tags": [
           "Commerce"
         ],
-        "summary": "Get and search for commerce transactions for a connected business",
+        "summary": "Get and search for commerce transactions for a connected business.",
         "operationId": "Get Commerce Transactions",
         "requestBody": {
-          "description": "The commerce transaction model within the search query. You can use this to sort or search for any column within the model",
+          "description": "The commerce transaction model within the search query. You can use this to sort or search for any column within the model.",
           "content": {
             "application/json": {
               "schema": {
@@ -262,10 +262,10 @@
         "tags": [
           "Commerce"
         ],
-        "summary": "Download commerce transactions for a connected business",
+        "summary": "Download commerce transactions for a connected business.",
         "operationId": "Download Commerce Transactions",
         "requestBody": {
-          "description": "The commerce transaction model within the search query. You can use this to sort or search for any column within the model",
+          "description": "The commerce transaction model within the search query. You can use this to sort or search for any column within the model.",
           "content": {
             "application/json": {
               "schema": {
@@ -2282,11 +2282,11 @@
   "tags": [
     {
       "name": "Banking",
-      "description": "A collection of banking APIs for a connected business after linking at least one of their bank accounts"
+      "description": "A collection of banking APIs for a connected business.\r\nYou can use this API to retrieve bank transactions, categorised line by line merchant details, director information and account balances."
     },
     {
       "name": "Commerce",
-      "description": "A collection of APIs for commerce transactions after a connected business links at least one of its commerce, e-commerce, POS or marketplace accounts"
+      "description": "A collection of APIs for commerce transactions after a connected business links at least one of its commerce, e-commerce, POS or marketplace accounts."
     }
   ]
 }

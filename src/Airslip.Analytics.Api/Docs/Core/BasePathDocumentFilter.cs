@@ -9,18 +9,22 @@ namespace Airslip.Analytics.Api.Docs.Core;
 
 public class BasePathDocumentFilter : IDocumentFilter
 {
-    private readonly string _baseUri;
+    private readonly PublicApiSettings _publicApiSettings;
 
     public BasePathDocumentFilter(IOptions<PublicApiSettings> publicApiOptions)
     {
-        _baseUri = publicApiOptions.Value.GetSettingByName("ExternalApi").ToBaseUri();
+        _publicApiSettings = publicApiOptions.Value;
     }
 
     public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
     {
+        string settingName = context.DocumentName == "2021.11" ? "Base" : "ExternalApi";
+        
+        string baseUri = _publicApiSettings.GetSettingByName(settingName).ToBaseUri();
+        
         swaggerDoc.Servers = new List<OpenApiServer>
         {
-            new() { Url = _baseUri },
+            new() { Url = baseUri },
         };
     }
 }

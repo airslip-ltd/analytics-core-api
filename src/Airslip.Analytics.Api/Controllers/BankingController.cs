@@ -22,7 +22,8 @@ using System.Threading.Tasks;
 namespace Airslip.Analytics.Api.Controllers;
 
 /// <summary>
-/// A collection of banking APIs for a connected business after linking at least one of their bank accounts
+/// A collection of banking APIs for a connected business.
+/// You can use this API to retrieve bank transactions, categorised line by line merchant details, director information and account balances.
 /// </summary>
 [ApiController]
 [ApiVersion("2021.11")]
@@ -52,9 +53,9 @@ public class BankingController : ApiControllerBase
     }
 
     /// <summary>
-    /// Get bank transactions enriched with merchant and director details for a connected business
+    /// Get bank transactions enriched with merchant and director details for a connected business.
     /// </summary>
-    /// <param name="query">The bank transaction model within the search query. You can use this to sort or search for any column within the model</param>
+    /// <param name="query">The bank transaction model within the search query. You can use this to sort or search for any column within the model.</param>
     [MapToApiVersion("2021.11")]
     [HttpPost("transactions/search")]
     [ProducesResponseType(typeof(EntitySearchResponse<BankTransactionReportModel>), StatusCodes.Status200OK)]
@@ -67,9 +68,9 @@ public class BankingController : ApiControllerBase
     }
 
     /// <summary>
-    /// Get bank transactions enriched with merchant and director details for a connected business
+    /// Get bank transactions enriched with merchant and director details for a connected business.
     /// </summary>
-    /// <param name="query">The bank transaction model within the search query. You can use this to sort or search for any column within the model</param>
+    /// <param name="query">The bank transaction model within the search query. You can use this to sort or search for any column within the model.</param>
     [MapToApiVersion("2021.11")]
     [HttpPost("transactions/download")]
     [ProducesResponseType(typeof(EntitySearchResponse<BankTransactionReportModel>), StatusCodes.Status200OK)]
@@ -83,9 +84,9 @@ public class BankingController : ApiControllerBase
     }
     
     /// <summary>
-    /// Search for balances for a connected business
+    /// Search for balances for a connected business.
     /// </summary>
-    /// <param name="query">The account balance model within the search query. You can use this to sort or search for any column within the model</param>
+    /// <param name="query">The account balance model within the search query. You can use this to sort or search for any column within the model.</param>
     [MapToApiVersion("2021.11")]
     [HttpPost("balances/search")]
     [ProducesResponseType(typeof(EntitySearchResponse<AccountBalanceReportModel>), StatusCodes.Status200OK)]
@@ -99,9 +100,9 @@ public class BankingController : ApiControllerBase
     }
 
     /// <summary>
-    /// Download balances for a connected business
+    /// Download balances for a connected business.
     /// </summary>
-    /// <param name="query">The download account balance model within the search query. You can use this to sort or search for any column within the model</param>
+    /// <param name="query">The download account balance model within the search query. You can use this to sort or search for any column within the model.</param>
     [MapToApiVersion("2021.5")]
     [HttpPost("balances/download")]
     [ProducesResponseType(typeof(DownloadResponse), StatusCodes.Status200OK)]
@@ -118,10 +119,10 @@ public class BankingController : ApiControllerBase
 
     /// External API
     /// <summary>
-    /// Search for bank transactions for a connected business
+    /// Search for bank transactions for a connected business.
     /// </summary>
-    /// <param name="query">The bank transaction model within the search query. You can use this to sort or search for any column within the model</param>
-    /// <param name="businessId">The connected business identifier</param>
+    /// <param name="query">The bank transaction model within the search query. You can use this to sort or search for any column within the model.</param>
+    /// <param name="businessId">The connected business identifier.</param>
     [MapToApiVersion("2022.5")]
     [HttpPost("{businessId}/transactions/search")]
     [ProducesResponseType(typeof(EntitySearchResponse<BankTransactionReportModel>), StatusCodes.Status200OK)]
@@ -134,10 +135,10 @@ public class BankingController : ApiControllerBase
     }
 
     /// <summary>
-    /// Get a singular bank transaction by id
+    /// Get a singular bank transaction by id.
     /// </summary>
-    /// <param name="businessId">The connected business identifier</param>
-    /// <param name="id">The identifier for the bank transaction</param>
+    /// <param name="businessId">The connected business identifier.</param>
+    /// <param name="id">The identifier for the bank transaction.</param>
     [MapToApiVersion("2022.5")]
     [HttpGet("{businessId}/transactions/{id}")]
     [ProducesResponseType(typeof(BankTransactionReportModel), StatusCodes.Status200OK)]
@@ -152,10 +153,10 @@ public class BankingController : ApiControllerBase
     }
 
     /// <summary>
-    /// Search for balances for a connected business
+    /// Search for balances for a connected business.
     /// </summary>
-    /// <param name="query">The account balance model within the search query. You can use this to sort or search for any column within the model</param>
-    /// <param name="businessId">The connected business identifier</param>
+    /// <param name="query">The account balance model within the search query. You can use this to sort or search for any column within the model.</param>
+    /// <param name="businessId">The connected business identifier.</param>
     [MapToApiVersion("2022.5")]
     [HttpPost("{businessId}/balances/search")]
     [ProducesResponseType(typeof(EntitySearchResponse<AccountBalanceReportModel>), StatusCodes.Status200OK)]

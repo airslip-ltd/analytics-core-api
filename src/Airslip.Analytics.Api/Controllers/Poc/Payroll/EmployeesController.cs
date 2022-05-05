@@ -39,13 +39,14 @@ public class EmployeesController : ApiControllerBase
     }
 
     /// <summary>
-    /// Allows you to search for employees
+    /// Allows you to search for employees.
     /// </summary>
-    /// <param name="query">The search model for employees. You can use this to sort or search for any column within the model</param>
+    /// <param name="businessId">The connected business identifier.</param>
+    /// <param name="query">The search model for employees. You can use this to sort or search for any column within the model.</param>
     [HttpPost("search")]
     [ProducesResponseType(typeof(EntitySearchResponse<EmployeeModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult GetEmployees([FromBody] QueryModel query)
+    public IActionResult GetEmployees([FromRoute] string? businessId, [FromBody] QueryModel query)
     {
         EmployeeSearchModelExample example = new();
 
@@ -55,14 +56,15 @@ public class EmployeesController : ApiControllerBase
     }
     
     /// <summary>
-    /// Use this method to get an employee   
+    /// Use this method to get an employee.
     /// </summary>
-    /// <param name="id">The id of the employee</param>
+    /// <param name="businessId">The connected business identifier.</param>
+    /// <param name="id">The id of the employee.</param>
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(EmployeeModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(NotFoundResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult GetEmployee([FromRoute] string id)
+    public IActionResult GetEmployee([FromRoute] string? businessId, [FromRoute] string id)
     {
         EmployeeSearchModelExample example = new();
         
@@ -72,27 +74,29 @@ public class EmployeesController : ApiControllerBase
     }
 
     /// <summary>
-    /// Use this method to create an employee
+    /// Use this method to create an employee.
     /// </summary>
-    /// <param name="body">The body of the employee to create</param>
+    /// <param name="businessId">The connected business identifier.</param>
+    /// <param name="body">The body of the employee to create.</param>
     [HttpPost]
     [ProducesResponseType(typeof(CreatedModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult CreateEmployee([FromBody] EmployeeModel body)
+    public IActionResult CreateEmployee([FromRoute] string? businessId, [FromBody] EmployeeModel body)
     {
         return HandleResponse<CreatedModel>(body);
     }
     
     /// <summary>
-    /// Use this method to update an employee   
+    /// Use this method to update an employee.
     /// </summary>
-    /// <param name="id">The id of the employee to update</param>
-    /// <param name="body">The body of the employee to update</param>
+    /// <param name="businessId">The connected business identifier.</param>
+    /// <param name="id">The id of the employee to update.</param>
+    /// <param name="body">The body of the employee to update.</param>
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(Success), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(NotFoundResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult UpdateEmployee([FromRoute] string id, [FromBody] EmployeeModel body)
+    public IActionResult UpdateEmployee([FromRoute] string? businessId, [FromRoute] string id, [FromBody] EmployeeModel body)
     {
         return HandleResponse<Success>(body);
     }

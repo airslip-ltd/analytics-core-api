@@ -17,7 +17,7 @@ using Serilog;
 namespace Airslip.Analytics.Api.Controllers.Poc;
 
 /// <summary>
-/// You can configure webhook endpoints via the API to be notified about events that happen in your for connected businesses.
+/// You can configure webhook endpoints via the API to be notified about events that happen in for connected businesses.
 /// Most users configure webhooks from the dashboard, which provides a user interface for registering and testing your webhook endpoints.
 /// </summary>
 [ApiController]
@@ -37,10 +37,10 @@ public class WebhooksController : ApiControllerBase
     }
 
     /// <summary>
-    /// Create a webhook so you can get notified when a new event has occured
+    /// Create a webhook so you can get notified when a new event has occured.
     /// </summary>
-    /// <param name="businessId">The connected business identifier</param>
-    /// <param name="model">The body of the webhook to create. You can use this to sort or search for any column within the model</param>
+    /// <param name="businessId">The connected business identifier.</param>
+    /// <param name="model">The body of the webhook to create. You can use this to sort or search for any column within the model.</param>
     [HttpPost]
     [ProducesResponseType(typeof(WebhookModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]

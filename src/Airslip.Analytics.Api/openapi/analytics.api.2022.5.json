@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "Airslip API",
-    "description": "Airslip API enables financial institutions to get access to real-time financial risk data on small and medium sized businesses.Financial institutions all assess risk differently and that is why we have built the platform so you get notified when only the risk you care about happens.- Get access to financials such as balance sheets, cashflow statements, P&L and cash position.- Get notified when new invoices are uploaded to accounting systems within seconds.",
+    "description": "\nAirslip API enables financial institutions to get access to real-time financial risk data on small and medium sized businesses. \n                              \nFinancial institutions all assess risk differently and that is why we have built the platform so you get notified when only the risk you care about happens.\n\nThe Airslip API will help you:\n                            \n- Get access to financials such as balance sheets, cashflow statements, P&L and cash position.\n                              \n- Get notified when new invoices are uploaded to accounting systems within seconds.\n\n- Get categorised bank transactions.\n\n- Get categorised commerce transactions.",
     "version": "2022.5"
   },
   "servers": [
@@ -16,13 +16,13 @@
         "tags": [
           "Assets"
         ],
-        "summary": "Allows you to retrieve assets",
+        "summary": "Allows you to retrieve assets.",
         "operationId": "Get Assets",
         "parameters": [
           {
             "name": "businessId",
             "in": "path",
-            "description": "The connected business identifier",
+            "description": "The connected business identifier.",
             "required": true,
             "schema": {
               "type": "string"
@@ -30,7 +30,7 @@
           }
         ],
         "requestBody": {
-          "description": "The search model for assets. You can use this to sort or search for any column within the model",
+          "description": "The search model for assets. You can use this to sort or search for any column within the model.",
           "content": {
             "application/json": {
               "schema": {
@@ -68,13 +68,13 @@
         "tags": [
           "Assets"
         ],
-        "summary": "Use this method to get an asset",
+        "summary": "Use this method to get an asset.",
         "operationId": "Get Asset",
         "parameters": [
           {
             "name": "businessId",
             "in": "path",
-            "description": "The connected business identifier",
+            "description": "The connected business identifier.",
             "required": true,
             "schema": {
               "type": "string"
@@ -83,7 +83,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The id of the asset",
+            "description": "The id of the asset.",
             "required": true,
             "schema": {
               "type": "string"
@@ -133,7 +133,7 @@
           {
             "name": "businessId",
             "in": "path",
-            "description": "The connected business identifier",
+            "description": "The connected business identifier.",
             "required": true,
             "schema": {
               "type": "string"
@@ -142,7 +142,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The id of the asset to update",
+            "description": "The id of the asset to update.",
             "required": true,
             "schema": {
               "type": "string"
@@ -150,7 +150,7 @@
           }
         ],
         "requestBody": {
-          "description": "The body of the asset to update",
+          "description": "The body of the asset to update.",
           "content": {
             "application/json": {
               "schema": {
@@ -204,7 +204,7 @@
           {
             "name": "businessId",
             "in": "path",
-            "description": "The connected business identifier",
+            "description": "The connected business identifier.",
             "required": true,
             "schema": {
               "type": "string"
@@ -212,7 +212,7 @@
           }
         ],
         "requestBody": {
-          "description": "The body of the asset to create",
+          "description": "The body of the asset to create.",
           "content": {
             "application/json": {
               "schema": {
@@ -250,13 +250,13 @@
         "tags": [
           "AssetTypes"
         ],
-        "summary": "Allows you to retrieve asset types",
+        "summary": "Allows you to retrieve asset types.",
         "operationId": "Get Asset Types",
         "parameters": [
           {
             "name": "businessId",
             "in": "path",
-            "description": "The connected business identifier",
+            "description": "The connected business identifier.",
             "required": true,
             "schema": {
               "type": "string"
@@ -264,7 +264,7 @@
           }
         ],
         "requestBody": {
-          "description": "The search model for asset types. You can use this to sort or search for any column within the model",
+          "description": "The search model for asset types. You can use this to sort or search for any column within the model.",
           "content": {
             "application/json": {
               "schema": {
@@ -302,13 +302,13 @@
         "tags": [
           "AssetTypes"
         ],
-        "summary": "Use this method to get an asset type",
+        "summary": "Use this method to get an asset type.",
         "operationId": "Get Asset Type",
         "parameters": [
           {
             "name": "businessId",
             "in": "path",
-            "description": "The connected business identifier",
+            "description": "The connected business identifier.",
             "required": true,
             "schema": {
               "type": "string"
@@ -317,7 +317,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The id of the employee",
+            "description": "The id of the employee.",
             "required": true,
             "schema": {
               "type": "string"
@@ -361,13 +361,13 @@
         "tags": [
           "AssetTypes"
         ],
-        "summary": "Use this method to update assets",
+        "summary": "Use this method to update assets.",
         "operationId": "Update Asset Type",
         "parameters": [
           {
             "name": "businessId",
             "in": "path",
-            "description": "The connected business identifier",
+            "description": "The connected business identifier.",
             "required": true,
             "schema": {
               "type": "string"
@@ -376,7 +376,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The id of the asset type to update",
+            "description": "The id of the asset type to update.",
             "required": true,
             "schema": {
               "type": "string"
@@ -384,7 +384,7 @@
           }
         ],
         "requestBody": {
-          "description": "The body of the asset type to update",
+          "description": "The body of the asset type to update.",
           "content": {
             "application/json": {
               "schema": {
@@ -432,13 +432,13 @@
         "tags": [
           "AssetTypes"
         ],
-        "summary": "Use this method to create asset types",
+        "summary": "Use this method to create asset types.",
         "operationId": "Create Asset Type",
         "parameters": [
           {
             "name": "businessId",
             "in": "path",
-            "description": "The connected business identifier",
+            "description": "The connected business identifier.",
             "required": true,
             "schema": {
               "type": "string"
@@ -446,7 +446,7 @@
           }
         ],
         "requestBody": {
-          "description": "The body of the asset type to create",
+          "description": "The body of the asset type to create.",
           "content": {
             "application/json": {
               "schema": {
@@ -484,13 +484,13 @@
         "tags": [
           "Banking"
         ],
-        "summary": "Search for bank transactions for a connected business",
+        "summary": "Search for bank transactions for a connected business.",
         "operationId": "Get Bank Transactions",
         "parameters": [
           {
             "name": "businessId",
             "in": "path",
-            "description": "The connected business identifier",
+            "description": "The connected business identifier.",
             "required": true,
             "schema": {
               "type": "string"
@@ -498,7 +498,7 @@
           }
         ],
         "requestBody": {
-          "description": "The bank transaction model within the search query. You can use this to sort or search for any column within the model",
+          "description": "The bank transaction model within the search query. You can use this to sort or search for any column within the model.",
           "content": {
             "application/json": {
               "schema": {
@@ -536,13 +536,13 @@
         "tags": [
           "Banking"
         ],
-        "summary": "Get a singular bank transaction by id",
+        "summary": "Get a singular bank transaction by id.",
         "operationId": "Get Bank Transaction",
         "parameters": [
           {
             "name": "businessId",
             "in": "path",
-            "description": "The connected business identifier",
+            "description": "The connected business identifier.",
             "required": true,
             "schema": {
               "type": "string"
@@ -551,7 +551,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The identifier for the bank transaction",
+            "description": "The identifier for the bank transaction.",
             "required": true,
             "schema": {
               "type": "string"
@@ -587,13 +587,13 @@
         "tags": [
           "Banking"
         ],
-        "summary": "Search for balances for a connected business",
+        "summary": "Search for balances for a connected business.",
         "operationId": "Get Account Balances",
         "parameters": [
           {
             "name": "businessId",
             "in": "path",
-            "description": "The connected business identifier",
+            "description": "The connected business identifier.",
             "required": true,
             "schema": {
               "type": "string"
@@ -601,7 +601,7 @@
           }
         ],
         "requestBody": {
-          "description": "The account balance model within the search query. You can use this to sort or search for any column within the model",
+          "description": "The account balance model within the search query. You can use this to sort or search for any column within the model.",
           "content": {
             "application/json": {
               "schema": {
@@ -639,13 +639,13 @@
         "tags": [
           "Commerce"
         ],
-        "summary": "Get all commerce transactions for a connected business",
+        "summary": "Get all commerce transactions for a connected business.",
         "operationId": "Get Commerce Transactions",
         "parameters": [
           {
             "name": "businessId",
             "in": "path",
-            "description": "The connected business identifier",
+            "description": "The connected business identifier.",
             "required": true,
             "schema": {
               "type": "string"
@@ -653,7 +653,7 @@
           }
         ],
         "requestBody": {
-          "description": "The commerce transaction model within the search query. You can use this to sort or search for any column within the model",
+          "description": "The commerce transaction model within the search query. You can use this to sort or search for any column within the model.",
           "content": {
             "application/json": {
               "schema": {
@@ -691,12 +691,13 @@
         "tags": [
           "Employees"
         ],
-        "summary": "Allows you to search for employees",
+        "summary": "Allows you to search for employees.",
         "operationId": "Get Employees",
         "parameters": [
           {
             "name": "businessId",
             "in": "path",
+            "description": "The connected business identifier.",
             "required": true,
             "schema": {
               "type": "string"
@@ -704,7 +705,7 @@
           }
         ],
         "requestBody": {
-          "description": "The search model for employees. You can use this to sort or search for any column within the model",
+          "description": "The search model for employees. You can use this to sort or search for any column within the model.",
           "content": {
             "application/json": {
               "schema": {
@@ -742,21 +743,22 @@
         "tags": [
           "Employees"
         ],
-        "summary": "Use this method to get an employee",
+        "summary": "Use this method to get an employee.",
         "operationId": "Get Employee",
         "parameters": [
           {
-            "name": "id",
+            "name": "businessId",
             "in": "path",
-            "description": "The id of the employee",
+            "description": "The connected business identifier.",
             "required": true,
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "businessId",
+            "name": "id",
             "in": "path",
+            "description": "The id of the employee.",
             "required": true,
             "schema": {
               "type": "string"
@@ -800,21 +802,22 @@
         "tags": [
           "Employees"
         ],
-        "summary": "Use this method to update an employee",
+        "summary": "Use this method to update an employee.",
         "operationId": "Update Employee",
         "parameters": [
           {
-            "name": "id",
+            "name": "businessId",
             "in": "path",
-            "description": "The id of the employee to update",
+            "description": "The connected business identifier.",
             "required": true,
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "businessId",
+            "name": "id",
             "in": "path",
+            "description": "The id of the employee to update.",
             "required": true,
             "schema": {
               "type": "string"
@@ -822,7 +825,7 @@
           }
         ],
         "requestBody": {
-          "description": "The body of the employee to update",
+          "description": "The body of the employee to update.",
           "content": {
             "application/json": {
               "schema": {
@@ -870,12 +873,13 @@
         "tags": [
           "Employees"
         ],
-        "summary": "Use this method to create an employee",
+        "summary": "Use this method to create an employee.",
         "operationId": "Create Employee",
         "parameters": [
           {
             "name": "businessId",
             "in": "path",
+            "description": "The connected business identifier.",
             "required": true,
             "schema": {
               "type": "string"
@@ -883,7 +887,7 @@
           }
         ],
         "requestBody": {
-          "description": "The body of the employee to create",
+          "description": "The body of the employee to create.",
           "content": {
             "application/json": {
               "schema": {
@@ -927,7 +931,7 @@
           {
             "name": "businessId",
             "in": "path",
-            "description": "The connected business identifier",
+            "description": "The connected business identifier.",
             "required": true,
             "schema": {
               "type": "string"
@@ -936,7 +940,7 @@
           {
             "name": "balanceDate",
             "in": "query",
-            "description": "Specifies the date for balance sheet report",
+            "description": "Specifies the date for balance sheet report.",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -945,7 +949,7 @@
           {
             "name": "months",
             "in": "query",
-            "description": "The number of months to run the balance sheet for",
+            "description": "The number of months to run the balance sheet for.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -987,7 +991,7 @@
           {
             "name": "businessId",
             "in": "path",
-            "description": "The connected business identifier",
+            "description": "The connected business identifier.",
             "required": true,
             "schema": {
               "type": "string"
@@ -1047,7 +1051,7 @@
           {
             "name": "businessId",
             "in": "path",
-            "description": "The connected business identifier",
+            "description": "The connected business identifier.",
             "required": true,
             "schema": {
               "type": "string"
@@ -1056,7 +1060,7 @@
           {
             "name": "startDate",
             "in": "query",
-            "description": "Specifies the start date for profit and loss report\r\n            If no parameter is provided, the date of 12 months before the end date will be used.",
+            "description": "Specifies the start date for profit and loss report. If no parameter is provided, the date of 12 months before the end date will be used.",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -1065,7 +1069,7 @@
           {
             "name": "endDate",
             "in": "query",
-            "description": "Specifies the end date for profit and loss report\r\n            If no parameter is provided, the current date will be used.",
+            "description": "Specifies the end date for profit and loss report. If no parameter is provided, the current date will be used.",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -1101,13 +1105,13 @@
         "tags": [
           "Financials"
         ],
-        "summary": "Summarizes the total cash position for each account for an org",
+        "summary": "Summarizes the total cash position for each account for an org.",
         "operationId": "Get Cash Position",
         "parameters": [
           {
             "name": "businessId",
             "in": "path",
-            "description": "The connected business identifier",
+            "description": "The connected business identifier.",
             "required": true,
             "schema": {
               "type": "string"
@@ -1158,7 +1162,7 @@
           {
             "name": "businessId",
             "in": "path",
-            "description": "The connected business identifier",
+            "description": "The connected business identifier.",
             "required": true,
             "schema": {
               "type": "string"
@@ -1204,13 +1208,13 @@
         "tags": [
           "Invoices"
         ],
-        "summary": "Use this method to create or update an invoice",
+        "summary": "Use this method to create or update an invoice.",
         "operationId": "Create Invoice",
         "parameters": [
           {
             "name": "businessId",
             "in": "path",
-            "description": "The connected business identifier",
+            "description": "The connected business identifier.",
             "required": true,
             "schema": {
               "type": "string"
@@ -1218,7 +1222,7 @@
           }
         ],
         "requestBody": {
-          "description": "The body of the invoice to update or create. You can use this to sort or search for any column within the model",
+          "description": "The body of the invoice to update or create. You can use this to sort or search for any column within the model.",
           "content": {
             "application/json": {
               "schema": {
@@ -1256,13 +1260,13 @@
         "tags": [
           "Webhooks"
         ],
-        "summary": "Create a webhook so you can get notified when a new event has occured",
+        "summary": "Create a webhook so you can get notified when a new event has occured.",
         "operationId": "Create Webhook",
         "parameters": [
           {
             "name": "businessId",
             "in": "path",
-            "description": "The connected business identifier",
+            "description": "The connected business identifier.",
             "required": true,
             "schema": {
               "type": "string"
@@ -1270,7 +1274,7 @@
           }
         ],
         "requestBody": {
-          "description": "The body of the webhook to create. You can use this to sort or search for any column within the model",
+          "description": "The body of the webhook to create. You can use this to sort or search for any column within the model.",
           "content": {
             "application/json": {
               "schema": {
@@ -4267,15 +4271,15 @@
   "tags": [
     {
       "name": "Banking",
-      "description": "A collection of banking APIs for a connected business after linking at least one of their bank accounts"
+      "description": "A collection of banking APIs for a connected business.\r\nYou can use this API to retrieve bank transactions, categorised line by line merchant details, director information and account balances."
     },
     {
       "name": "Commerce",
-      "description": "A collection of APIs for commerce transactions after a connected business links at least one of its commerce, e-commerce, POS or marketplace accounts"
+      "description": "A collection of APIs for commerce transactions after a connected business links at least one of its commerce, e-commerce, POS or marketplace accounts."
     },
     {
       "name": "Webhooks",
-      "description": "You can configure webhook endpoints via the API to be notified about events that happen in your for connected businesses.\r\nMost users configure webhooks from the dashboard, which provides a user interface for registering and testing your webhook endpoints."
+      "description": "You can configure webhook endpoints via the API to be notified about events that happen in for connected businesses.\r\nMost users configure webhooks from the dashboard, which provides a user interface for registering and testing your webhook endpoints."
     },
     {
       "name": "Employees",
@@ -4291,7 +4295,7 @@
     },
     {
       "name": "Invoices",
-      "description": "Get, search, create and update invoices for a particular business"
+      "description": "Get, search, create and update invoices for a particular business."
     }
   ]
 }

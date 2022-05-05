@@ -87,10 +87,20 @@ builder.Services
             {
                 Title = "Airslip API",
                 Version = "2022.5",
-                Description = "Airslip API enables financial institutions to get access to real-time financial risk data on small and medium sized businesses." +
-                              "Financial institutions all assess risk differently and that is why we have built the platform so you get notified when only the risk you care about happens." +
-                              "- Get access to financials such as balance sheets, cashflow statements, P&L and cash position." +
-                              "- Get notified when new invoices are uploaded to accounting systems within seconds."
+                Description = @"
+Airslip API enables financial institutions to get access to real-time financial risk data on small and medium sized businesses. 
+                              
+Financial institutions all assess risk differently and that is why we have built the platform so you get notified when only the risk you care about happens.
+
+The Airslip API will help you:
+                            
+- Get access to financials such as balance sheets, cashflow statements, P&L and cash position.
+                              
+- Get notified when new invoices are uploaded to accounting systems within seconds.
+
+- Get categorised bank transactions.
+
+- Get categorised commerce transactions."
             }
         );
 
