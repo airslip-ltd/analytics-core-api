@@ -38,10 +38,10 @@ public class AssetTypesController : ApiControllerBase
     }
 
     /// <summary>
-    /// Allows you to retrieve asset types
+    /// Allows you to retrieve asset types.
     /// </summary>
-    /// <param name="businessId">The connected business identifier</param>
-    /// <param name="query">The search model for asset types. You can use this to sort or search for any column within the model</param>
+    /// <param name="businessId">The connected business identifier.</param>
+    /// <param name="query">The search model for asset types. You can use this to sort or search for any column within the model.</param>
     [HttpPost("search")]
     [ProducesResponseType(typeof(EntitySearchResponse<AssetTypeModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
@@ -55,10 +55,10 @@ public class AssetTypesController : ApiControllerBase
     }
     
     /// <summary>
-    /// Use this method to get an asset type
+    /// Use this method to get an asset type.
     /// </summary>
-    /// <param name="businessId">The connected business identifier</param>
-    /// <param name="id">The id of the employee</param>
+    /// <param name="businessId">The connected business identifier.</param>
+    /// <param name="id">The id of the employee.</param>
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(AssetTypeModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(NotFoundResponse), StatusCodes.Status404NotFound)]
@@ -73,10 +73,10 @@ public class AssetTypesController : ApiControllerBase
     }
 
     /// <summary>
-    /// Use this method to create asset types
+    /// Use this method to create asset types.
     /// </summary>
-    /// <param name="businessId">The connected business identifier</param>
-    /// <param name="body">The body of the asset type to create</param>
+    /// <param name="businessId">The connected business identifier.</param>
+    /// <param name="body">The body of the asset type to create.</param>
     [HttpPost]
     [ProducesResponseType(typeof(CreatedModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
@@ -86,11 +86,11 @@ public class AssetTypesController : ApiControllerBase
     }
     
     /// <summary>
-    /// Use this method to update assets
+    /// Use this method to update assets.
     /// </summary>
-    /// <param name="businessId">The connected business identifier</param>
-    /// <param name="id">The id of the asset type to update</param>
-    /// <param name="body">The body of the asset type to update</param>
+    /// <param name="businessId">The connected business identifier.</param>
+    /// <param name="id">The id of the asset type to update.</param>
+    /// <param name="body">The body of the asset type to update.</param>
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(CreatedModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(NotFoundResponse), StatusCodes.Status404NotFound)]

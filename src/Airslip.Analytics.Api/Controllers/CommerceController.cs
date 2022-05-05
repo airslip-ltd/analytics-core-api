@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 namespace Airslip.Analytics.Api.Controllers;
 
 /// <summary>
-/// A collection of APIs for commerce transactions after a connected business links at least one of its commerce, e-commerce, POS or marketplace accounts
+/// A collection of APIs for commerce transactions after a connected business links at least one of its commerce, e-commerce, POS or marketplace accounts.
 /// </summary>
 [ApiController]    
 [ApiVersion("2021.11")]
@@ -51,9 +51,9 @@ public class CommerceController : ApiControllerBase
     }
         
     /// <summary>
-    /// Get all commerce accounts for a connected business 
+    /// Get all commerce accounts for a connected business.
     /// </summary>
-    /// <param name="query">The commerce transaction model within the search query, you can use this to sort or search for any column within the model</param>
+    /// <param name="query">The commerce transaction model within the search query, you can use this to sort or search for any column within the model.</param>
     [MapToApiVersion("2021.11")]
     [HttpPost]
     [Route("accounts/search")]
@@ -68,9 +68,9 @@ public class CommerceController : ApiControllerBase
     }
         
     /// <summary>
-    /// Get all commerce accounts for a connected business 
+    /// Get all commerce accounts for a connected business.
     /// </summary>
-    /// <param name="query">The commerce transaction model within the search query. You can use this to sort or search for any column within the model</param>
+    /// <param name="query">The commerce transaction model within the search query. You can use this to sort or search for any column within the model.</param>
     [MapToApiVersion("2021.11")]
     [HttpPost]
     [ProducesResponseType( typeof(DownloadResponse), StatusCodes.Status200OK)]
@@ -85,9 +85,9 @@ public class CommerceController : ApiControllerBase
     }
     
     /// <summary>
-    /// Get and search for commerce transactions for a connected business
+    /// Get and search for commerce transactions for a connected business.
     /// </summary>
-    /// <param name="query">The commerce transaction model within the search query. You can use this to sort or search for any column within the model</param>
+    /// <param name="query">The commerce transaction model within the search query. You can use this to sort or search for any column within the model.</param>
     [MapToApiVersion("2021.11")]
     [HttpPost("transactions/search")]
     [ProducesResponseType( typeof(EntitySearchResponse<CommerceTransactionReportModel>), StatusCodes.Status200OK)]
@@ -100,9 +100,9 @@ public class CommerceController : ApiControllerBase
     }
     
     /// <summary>
-    /// Download commerce transactions for a connected business
+    /// Download commerce transactions for a connected business.
     /// </summary>
-    /// <param name="query">The commerce transaction model within the search query. You can use this to sort or search for any column within the model</param>
+    /// <param name="query">The commerce transaction model within the search query. You can use this to sort or search for any column within the model.</param>
     [MapToApiVersion("2021.11")]
     [HttpPost("transactions/download")]
     [ProducesResponseType( typeof(EntitySearchResponse<BankTransactionReportModel>), StatusCodes.Status200OK)]
@@ -118,10 +118,10 @@ public class CommerceController : ApiControllerBase
     /// External API
     
     /// <summary>
-    /// Get all commerce transactions for a connected business
+    /// Get all commerce transactions for a connected business.
     /// </summary>
-    /// <param name="query">The commerce transaction model within the search query. You can use this to sort or search for any column within the model</param>
-    /// <param name="businessId">The connected business identifier</param>
+    /// <param name="query">The commerce transaction model within the search query. You can use this to sort or search for any column within the model.</param>
+    /// <param name="businessId">The connected business identifier.</param>
     [MapToApiVersion("2022.5")]
     [HttpPost("{businessId}/transactions/search")]
     [ProducesResponseType( typeof(EntitySearchResponse<CommerceTransactionReportModel>), StatusCodes.Status200OK)]
