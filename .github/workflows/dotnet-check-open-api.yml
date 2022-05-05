@@ -1,0 +1,25 @@
+name: Validate OpenAPI Documents
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    env:
+      SPEC_PATH: ./src/Airslip.Analytics.Api/openapi
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Validate Internal document
+        uses: char0n/swagger-editor-validate@v1
+        with:
+          definition-file: ${{ env.SPEC_PATH }}/analytics.api.2021.11.yaml
+
+      - name: Validate External document
+        uses: char0n/swagger-editor-validate@v1
+        with:
+          definition-file: ${{ env.SPEC_PATH }}/analytics.api.2022.5.yaml

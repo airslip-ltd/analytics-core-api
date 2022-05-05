@@ -14,6 +14,7 @@
         <PackageReference Include="Airslip.Common.Metrics" Version="6.0.2" />
         <PackageReference Include="FluentValidation" Version="10.4.0" />
         <PackageReference Include="MicroElements.Swashbuckle.FluentValidation" Version="5.5.0" />
+        <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.8" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
         <PackageReference Include="Serilog" Version="2.10.0" />
@@ -43,5 +44,21 @@
       <ProjectReference Include="..\Airslip.Analytics.Reports\Airslip.Analytics.Reports.csproj" />
       <ProjectReference Include="..\Airslip.Analytics.Services.SqlServer\Airslip.Analytics.Services.SqlServer.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="openapi" />
+    </ItemGroup>
+	
+	<Target Name="Tools" BeforeTargets="Build" Condition="$(Configuration)=='Debug'">
+		<Exec Command="dotnet tool restore" WorkingDirectory="$(ProjectDir)" />
+	</Target>
+
+	<Target Name="OpenAPI" AfterTargets="Build" Condition="$(Configuration)=='Debug'">
+		<Exec Command="dotnet swagger tofile --output ./openapi/analytics.api.2021.11.yaml --yaml $(OutputPath)$(AssemblyName).dll 2021.11" WorkingDirectory="$(ProjectDir)" />
+		<Exec Command="dotnet swagger tofile --output ./openapi/analytics.api.2021.11.json $(OutputPath)$(AssemblyName).dll 2021.11" WorkingDirectory="$(ProjectDir)" />
+
+		<Exec Command="dotnet swagger tofile --output ./openapi/analytics.api.2022.5.yaml --yaml $(OutputPath)$(AssemblyName).dll 2022.5" WorkingDirectory="$(ProjectDir)" />
+		<Exec Command="dotnet swagger tofile --output ./openapi/analytics.api.2022.5.json $(OutputPath)$(AssemblyName).dll 2022.5" WorkingDirectory="$(ProjectDir)" />
+	</Target>
 
 </Project>

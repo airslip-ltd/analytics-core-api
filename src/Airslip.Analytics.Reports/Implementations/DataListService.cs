@@ -25,8 +25,8 @@ public class DataListService : IDataListService
     
     public async Task<IResponse> GetCurrencies(DataSearchModel query)
     {
-        IQueryable<CurrencySnapshot> q = _context
-            .Set<CurrencySnapshot>()
+        IQueryable<Currency> q = _context
+            .Set<Currency>()
             .FromSqlRaw(@$"dbo.GetCurrencies @ViewerEntityId = {{0}}, 
 @ViewerAirslipUserType = {{1}}, @OwnerEntityId = {{2}}, @OwnerAirslipUserType = {{3}}",
                 _userToken.EntityId,
@@ -34,8 +34,8 @@ public class DataListService : IDataListService
                 query.OwnerEntityId,
                 query.OwnerAirslipUserType);
 
-        List<CurrencySnapshot> metrics = await q.ToListAsync();
+        List<Currency> metrics = await q.ToListAsync();
 
-        return new DataSearchResponse<CurrencySnapshot>(metrics);
+        return new DataSearchResponse<Currency>(metrics);
     }
 }

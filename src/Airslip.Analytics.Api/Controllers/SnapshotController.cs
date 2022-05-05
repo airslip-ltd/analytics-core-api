@@ -17,14 +17,11 @@ using System.Threading.Tasks;
 
 namespace Airslip.Analytics.Api.Controllers;
 
-/// <summary>
-/// A description for a group of APIs
-/// </summary>
 [ApiController]
-[ApiVersion("1.0")]
+[ApiVersion("2021.11")]
 [Consumes(Json.MediaType)]
 [Produces(Json.MediaType)]
-[Route("v{version:apiVersion}/snapshot")]
+[Route("{version:apiVersion}/snapshot")]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class SnapshotController : ApiControllerBase
 {
@@ -44,15 +41,7 @@ public class SnapshotController : ApiControllerBase
         _revenueAndRefundsService = revenueAndRefundsService;
         _debitsAndCreditsService = debitsAndCreditsService;
     }
-        
-    /// <summary>
-    /// A description about a specific API should go here
-    /// </summary>
-    /// <param name="snapshotType">A parameter description should go here</param>
-    /// <param name="query">A parameter description should go here</param>
-    /// <param name="dayRange">A parameter description should go here</param>
-    /// <param name="statRange">A parameter description should go here</param>
-    /// <param name="integrationId">A parameter description should go here</param>
+    
     [HttpPost]
     [Route("{snapshotType}")]
     [ProducesResponseType(typeof(DashboardSnapshotModel), StatusCodes.Status200OK)]
@@ -68,11 +57,7 @@ public class SnapshotController : ApiControllerBase
             
         return HandleResponse<DashboardSnapshotModel>(response);
     }
-        
-    /// <summary>
-    /// A description about a specific API should go here
-    /// </summary>
-    /// <param name="query">A parameter description should go here</param>
+    
     [HttpPost]
     [Route("revenue")]
     [ProducesResponseType(typeof(DashboardGraphSeriesModel), StatusCodes.Status200OK)]
@@ -85,11 +70,7 @@ public class SnapshotController : ApiControllerBase
             
         return HandleResponse<DashboardGraphSeriesModel>(response);
     }
-        
-    /// <summary>
-    /// A description about a specific API should go here
-    /// </summary>
-    /// <param name="query">A parameter description should go here</param>
+    
     [HttpPost]
     [Route("cashflow")]
     [ProducesResponseType(typeof(DashboardGraphSeriesModel), StatusCodes.Status200OK)]

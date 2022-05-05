@@ -1,3 +1,4 @@
+using Airslip.Analytics.Api.Controllers;
 using Airslip.Analytics.Api.Docs.Core;
 using Airslip.Analytics.Core.Models;
 using Airslip.Analytics.Logic;
@@ -18,6 +19,7 @@ using Airslip.Common.Types.Configuration;
 using Airslip.Common.Utilities.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
@@ -32,6 +34,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Web.Http.Routing;
 
 [assembly: InternalsVisibleTo("Airslip.Analytics.Api.Tests")]
 
@@ -63,21 +66,34 @@ builder.Services.AddSwaggerGenNewtonsoftSupport();
 builder.Services
     .AddSwaggerGen(options =>
     {
+        
         options.DocumentFilter<BasePathDocumentFilter>();
         options.SchemaFilter<RequireNonNullablePropertiesSchemaFilter>();
         options.SchemaFilter<SwaggerExcludeSchemaFilter>();
 
         options.ExampleFilters();
         
-        options.SwaggerDoc("v1",
+        options.SwaggerDoc("2021.11",
             new OpenApiInfo
             {
-                Title = "Analytics API",
-                Version = "1",
-                Description = "Includes all API endpoints for data analytics." // Need to be more descriptive
+                Title = "Internal Analytics API",
+                Version = "2021.11",
+                Description = "An internal only API used for any UI products"
             }
         );
         
+        options.SwaggerDoc("2022.5",
+            new OpenApiInfo
+            {
+                Title = "Airslip API",
+                Version = "2022.5",
+                Description = "Airslip API enables financial institutions to get access to real-time financial risk data on small and medium sized businesses." +
+                              "Financial institutions all assess risk differently and that is why we have built the platform so you get notified when only the risk you care about happens." +
+                              "- Get access to financials such as balance sheets, cashflow statements, P&L and cash position." +
+                              "- Get notified when new invoices are uploaded to accounting systems within seconds."
+            }
+        );
+
         options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
             Description = @"e.g Bearer Api_Key.
@@ -126,10 +142,13 @@ All requests should be made via HTTPS.",
     });
 
 builder.Services
-    .AddApiVersioning(options => { options.ReportApiVersions = true; })
+    .AddApiVersioning(options =>
+    {
+        options.ReportApiVersions = true;
+    })
     .AddVersionedApiExplorer(options =>
     {
-        options.GroupNameFormat = "'v'VVV";
+        options.GroupNameFormat = "VVV";
         options.SubstituteApiVersionInUrl = true;
     })
     .AddSwaggerExamplesFromAssemblies(Assembly.GetEntryAssembly());
@@ -188,7 +207,8 @@ if (app.Environment.IsDevelopment())
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Airslip.Analytics.Api v1");
+    c.SwaggerEndpoint("/swagger/2021.11/swagger.json", "Airslip.Analytics.Api 2021.11");
+    c.SwaggerEndpoint("/swagger/2022.5/swagger.json", "Airslip.Analytics.Api 2022.5");
     c.RoutePrefix = string.Empty;
 });
 
