@@ -719,7 +719,7 @@ paths:
     post:
       tags:
         - Invoices
-      summary: "Use this method to retrieve one or many invoices.\r\nWhen you retrieve multiple invoices, only a summary of the contact is returned and no line details are returned - this is to keep the response more compact.\r\nThe line item details will be returned when you retrieve an individual invoice, either by specifying Invoice ID, Invoice Number, querying by Statuses or by using the optional paging parameter (below).\r\nWhen you retrieve invoices by querying by Statuses, pagination is enforced by default.\r\nIndividual invoices (e.g. Invoices/97c2dc5-cc47-4afd-8ec8-74990b8761e9) can also be returned as PDF's see our HTTP GET documentation"
+      summary: Use this method to retrieve one or many invoices.
       operationId: Get Invoices
       parameters:
         - name: businessId
@@ -3108,13 +3108,13 @@ components:
         - Disabled
       type: string
   securitySchemes:
-    Bearer:
+    ApiKey:
       type: apiKey
-      description: "e.g Bearer Api_Key.\n\nRequests to the Airslip API are authenticated using the applications `Api_Key`. You can view and manage your credentials in the Airslip Dashboard.\n\nAn Api_Key provides connectivity to all authenticated Airslip API endpoints, so it is important to keep these credentials secure. Do not share your Api_Key in publicly accessible areas such as GitHub, client-side code, or easily accessible configuration settings.\n\nAuthentication is performed using Bearer Authentication. Your Api_Key should be sent as the token.\n\nAll requests should be made via HTTPS."
+      description: "e.g\nRequests to the Airslip API are authenticated using the applications `Api_Key`. You can view and manage your credentials in the Airslip Dashboard.\n\nAn Api_Key provides connectivity to all authenticated Airslip API endpoints, so it is important to keep these credentials secure. Do not share your Api_Key in publicly accessible areas such as GitHub, client-side code, or easily accessible configuration settings.\n\nAuthentication is performed using ApiKey Authentication. Your Api_Key should be sent as the token.\n\nAll requests should be made via HTTPS."
       name: Authorization
       in: header
 security:
-  - Bearer: [ ]
+  - ApiKey: [ ]
 tags:
   - name: Banking
     description: "A collection of banking APIs for a connected business.\r\nYou can use this API to retrieve bank transactions, categorised line by line merchant details, director information and account balances."
