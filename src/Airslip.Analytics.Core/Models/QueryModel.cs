@@ -20,16 +20,16 @@ public static class QueryModelExtensions
         OwnedDataSearchModel model = new(
             queryModel.Page,
             queryModel.RecordsPerPage,
-            new List<EntitySearchSortModel>
-            {
-                queryModel.Sort
-            },
+            new List<EntitySearchSortModel>(),
             new EntitySearchModel(queryModel.Search)
         )
         {
             OwnerEntityId = businessId ?? entityId,
             OwnerAirslipUserType = AirslipUserType.Merchant
         };
+        
+        if (queryModel.Sort != null) model.Sort.Add(queryModel.Sort);
+        
         return model;
     }
 }

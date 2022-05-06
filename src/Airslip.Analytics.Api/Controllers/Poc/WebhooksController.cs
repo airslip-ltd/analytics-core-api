@@ -1,6 +1,7 @@
 using Airslip.Analytics.Api.Docs.Examples.Poc;
 using Airslip.Analytics.Core.Poc;
 using Airslip.Common.Auth.AspNetCore.Implementations;
+using Airslip.Common.Auth.AspNetCore.Schemes;
 using Airslip.Common.Auth.Interfaces;
 using Airslip.Common.Auth.Models;
 using Airslip.Common.Types.Configuration;
@@ -25,7 +26,7 @@ namespace Airslip.Analytics.Api.Controllers.Poc;
 [Consumes(Json.MediaType)]
 [Produces(Json.MediaType)]
 [Route("{version:apiVersion}/web-hooks/{businessId}")]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[Authorize(AuthenticationSchemes = ApiKeyAuthenticationSchemeOptions.ApiKeyScheme)]
 public class WebhooksController : ApiControllerBase
 {
     public WebhooksController(

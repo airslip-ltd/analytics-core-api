@@ -6,6 +6,8 @@ using Airslip.Analytics.Reports;
 using Airslip.Analytics.Services.SqlServer;
 using Airslip.Common.Auth.AspNetCore.Extensions;
 using Airslip.Common.Auth.AspNetCore.Middleware;
+using Airslip.Common.Auth.AspNetCore.Schemes;
+using Airslip.Common.Auth.Enums;
 using Airslip.Common.Metrics;
 using Airslip.Common.Middleware;
 using Airslip.Common.Monitoring;
@@ -114,10 +116,10 @@ An Api_Key provides connectivity to all authenticated Airslip API endpoints, so 
 Authentication is performed using ApiKey Authentication. Your Api_Key should be sent as the token.
 
 All requests should be made via HTTPS.",
-            Name = "Authorization",
+            Name = ApiKeyAuthenticationSchemeOptions.ApiKeyHeaderField,
             In = ParameterLocation.Header,
             Type = SecuritySchemeType.ApiKey,
-            Scheme = "ApiKey"
+            Scheme = ApiKeyAuthenticationSchemeOptions.ApiKeyScheme
         });
         
         options.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -130,10 +132,9 @@ All requests should be made via HTTPS.",
                         Type = ReferenceType.SecurityScheme,
                         Id = "ApiKey"
                     },
-                    Scheme = "ApiKey",
+                    Scheme = ApiKeyAuthenticationSchemeOptions.ApiKeyScheme,
                     Name = "ApiKey",
-                    In = ParameterLocation.Header,
-
+                    In = ParameterLocation.Header
                 },
                 new List<string>()
             }
@@ -173,7 +174,7 @@ builder.Services
     .Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = true; });
 
 builder.Services
-    .AddAirslipJwtAuth(builder.Configuration);
+    .AddAirslipJwtAuth(builder.Configuration, AuthType.All);
 
 builder.Services
     .AddHttpClient();
@@ -200,11 +201,6 @@ builder
 builder
     .Services
     .UseMonitoring();
-
-ServiceDescriptor? type = builder.Services.FirstOrDefault(o => o.ServiceType == typeof(IQueryBuilder));
-if(type is not null)
-    builder.Services.Remove(type);
-builder.Services.AddScoped<IQueryBuilder, QueryBuilderTEMP>();
 
 WebApplication app = builder.Build();
 

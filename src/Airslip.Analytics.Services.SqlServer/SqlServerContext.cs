@@ -5,6 +5,7 @@ using Airslip.Analytics.Services.SqlServer.Extensions;
 using Airslip.Common.Repository.Types.Entities;
 using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
+using Airslip.Common.Repository.Types.Models;
 using Airslip.Common.Services.Excel.Implementations;
 using Airslip.Common.Services.Excel.Interfaces;
 using Airslip.Common.Services.SqlServer.Implementations;
@@ -12,6 +13,8 @@ using Airslip.Common.Services.SqlServer.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Airslip.Analytics.Services.SqlServer;
 
