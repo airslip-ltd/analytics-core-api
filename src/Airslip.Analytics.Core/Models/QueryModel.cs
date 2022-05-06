@@ -7,28 +7,30 @@ namespace Airslip.Analytics.Core.Models;
 public record QueryModel(
     int Page,
     int RecordsPerPage,
-    EntitySearchSortModel Sort,
-    List<SearchFilterModel> Search);
+    EntitySearchSortModel? Sort = null,
+    List<SearchFilterModel>? Search = null);
 
 public static class QueryModelExtensions
 {
     public static OwnedDataSearchModel ToOwnedDataSearchModel(
         this QueryModel queryModel, 
-        string? businessId, 
-        string entityId)
+        string businessId, 
+        EntitySearchSortModel? defaultSearch = null)
     {
         OwnedDataSearchModel model = new(
             queryModel.Page,
             queryModel.RecordsPerPage,
             new List<EntitySearchSortModel>(),
-            new EntitySearchModel(queryModel.Search)
+            new EntitySearchModel(queryModel.Search ?? new List<SearchFilterModel>())
         )
         {
-            OwnerEntityId = businessId ?? entityId,
+            OwnerEntityId = businessId,
             OwnerAirslipUserType = AirslipUserType.Merchant
         };
+
+        defaultSearch = queryModel.Sort ?? defaultSearch;  
         
-        if (queryModel.Sort != null) model.Sort.Add(queryModel.Sort);
+        if (defaultSearch != null) model.Sort.Add(defaultSearch);
         
         return model;
     }

@@ -1,11 +1,15 @@
 using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
+using Airslip.Common.Repository.Types.Models;
 using Airslip.Common.Types.Enums;
 
 namespace Airslip.Analytics.Reports.Models;
 
 public class CommerceTransactionReportModel : IModel
 {
+    public static EntitySearchSortModel DefaultSort = new(
+        nameof(Datetime), SortOrder.Desc); 
+
     public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
     public DataSources DataSource { get; set; }

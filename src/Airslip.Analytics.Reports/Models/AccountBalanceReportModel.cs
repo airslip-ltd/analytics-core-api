@@ -1,12 +1,16 @@
 using Airslip.Analytics.Core.Enums;
 using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
+using Airslip.Common.Repository.Types.Models;
 using Airslip.Integrations.Banking.Types.Enums;
 
 namespace Airslip.Analytics.Reports.Models;
 
 public class AccountBalanceReportModel : IModel
 {
+    public static EntitySearchSortModel DefaultSort = new(
+        nameof(Balance), SortOrder.Asc); 
+    
     /// <summary>
     /// A description about the property should go here
     /// </summary>

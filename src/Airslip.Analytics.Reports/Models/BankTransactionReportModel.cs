@@ -2,6 +2,7 @@ using Airslip.Analytics.Core.Models;
 using Airslip.Analytics.Core.Poc;
 using Airslip.Common.Repository.Types.Enums;
 using Airslip.Common.Repository.Types.Interfaces;
+using Airslip.Common.Repository.Types.Models;
 using Airslip.Common.Types.Interfaces;
 using Newtonsoft.Json;
 
@@ -9,6 +10,9 @@ namespace Airslip.Analytics.Reports.Models;
 
 public class BankTransactionReportModel : IModel, ISuccess
 {
+    public static EntitySearchSortModel DefaultSort = new(
+        nameof(CapturedDate), SortOrder.Desc); 
+
     public string? Id { get; set; }
     public string BankTransactionId { get; set; } = string.Empty;
     public string? TransactionHash { get; set; }

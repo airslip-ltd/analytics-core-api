@@ -8,6 +8,7 @@ using Airslip.Common.Auth.Interfaces;
 using Airslip.Common.Auth.Models;
 using Airslip.Common.Repository.Types.Models;
 using Airslip.Common.Types.Configuration;
+using Airslip.Common.Types.Enums;
 using Airslip.Common.Types.Failures;
 using Airslip.Common.Types.Interfaces;
 using Airslip.Common.Types.Responses;
@@ -129,9 +130,11 @@ public class BankingController : ApiControllerBase
     [ProducesResponseType(typeof(EntitySearchResponse<BankTransactionReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
     [Authorize(AuthenticationSchemes = ApiKeyAuthenticationSchemeOptions.ApiKeyScheme)]
-    public async Task<IActionResult> GetBankTransactions([FromRoute] string? businessId, [FromBody] QueryModel query)
+    public async Task<IActionResult> GetBankTransactions([FromRoute] string businessId, [FromBody] QueryModel? query)
     {
-        OwnedDataSearchModel model = query.ToOwnedDataSearchModel(businessId, Token.EntityId);
+        OwnedDataSearchModel model = 
+            query?.ToOwnedDataSearchModel(businessId, BankTransactionReportModel.DefaultSort) ?? 
+            OwnedDataSearchModel.EmptySearch(businessId, AirslipUserType.Merchant, BankTransactionReportModel.DefaultSort);
 
         return await GetBankTransactions(model);
     }
@@ -165,9 +168,11 @@ public class BankingController : ApiControllerBase
     [ProducesResponseType(typeof(EntitySearchResponse<AccountBalanceReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
     [Authorize(AuthenticationSchemes = ApiKeyAuthenticationSchemeOptions.ApiKeyScheme)]
-    public async Task<IActionResult> GetAccountBalances([FromRoute] string? businessId, [FromBody] QueryModel query)
+    public async Task<IActionResult> GetAccountBalances([FromRoute] string businessId, [FromBody] QueryModel? query)
     {
-        OwnedDataSearchModel model = query.ToOwnedDataSearchModel(businessId, Token.EntityId);
+        OwnedDataSearchModel model = 
+            query?.ToOwnedDataSearchModel(businessId, AccountBalanceReportModel.DefaultSort) ?? 
+            OwnedDataSearchModel.EmptySearch(businessId, AirslipUserType.Merchant, AccountBalanceReportModel.DefaultSort);
 
         return await GetAccountBalances(model);
     }

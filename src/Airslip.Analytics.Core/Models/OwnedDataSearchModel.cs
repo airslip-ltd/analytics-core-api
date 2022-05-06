@@ -1,4 +1,5 @@
 using Airslip.Analytics.Core.Interfaces;
+using Airslip.Common.Auth.Models;
 using Airslip.Common.Repository.Types.Models;
 using Airslip.Common.Types.Enums;
 using System.Collections.Generic;
@@ -20,4 +21,14 @@ public record OwnedDataSearchModel : EntitySearchQueryModel, IOwnedSearch
     [Required] public string OwnerEntityId { get; init; } = string.Empty;
 
     [Required] public AirslipUserType OwnerAirslipUserType { get; init; } = AirslipUserType.Unknown;
+
+    public static OwnedDataSearchModel EmptySearch(string entityId, AirslipUserType airslipUserType, 
+        EntitySearchSortModel defaultSort) =>
+        new (0, 0, 
+            new List<EntitySearchSortModel> { defaultSort },
+            new EntitySearchModel(new List<SearchFilterModel>()))
+        {
+            OwnerEntityId = entityId,
+            OwnerAirslipUserType = airslipUserType
+        };
 }
