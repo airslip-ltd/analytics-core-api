@@ -8,6 +8,7 @@ using Airslip.Common.Auth.Interfaces;
 using Airslip.Common.Auth.Models;
 using Airslip.Common.Repository.Types.Models;
 using Airslip.Common.Types.Configuration;
+using Airslip.Common.Types.Enums;
 using Airslip.Common.Types.Failures;
 using Airslip.Common.Types.Interfaces;
 using Airslip.Common.Types.Responses;
@@ -18,6 +19,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Serilog;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Airslip.Analytics.Api.Controllers;
@@ -128,9 +130,11 @@ public class CommerceController : ApiControllerBase
     [ProducesResponseType( typeof(EntitySearchResponse<CommerceTransactionReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
     [Authorize(AuthenticationSchemes = ApiKeyAuthenticationSchemeOptions.ApiKeyScheme)]
-    public async Task<IActionResult> GetCommerceTransactions([FromRoute] string? businessId, [FromBody] QueryModel query)
+    public async Task<IActionResult> GetCommerceTransactions([FromRoute] string businessId, [FromBody] QueryModel? query)
     {
-        OwnedDataSearchModel model = query.ToOwnedDataSearchModel(businessId, Token.EntityId);
+        OwnedDataSearchModel model = 
+            query?.ToOwnedDataSearchModel(businessId, CommerceTransactionReportModel.DefaultSort) ?? 
+            OwnedDataSearchModel.EmptySearch(businessId, AirslipUserType.Merchant, CommerceTransactionReportModel.DefaultSort);
 
         return await GetCommerceTransactions(model);
     }

@@ -3975,7 +3975,6 @@
         "required": [
           "page",
           "recordsPerPage",
-          "search",
           "sort"
         ],
         "type": "object",
@@ -3995,7 +3994,8 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SearchFilterModel"
-            }
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false

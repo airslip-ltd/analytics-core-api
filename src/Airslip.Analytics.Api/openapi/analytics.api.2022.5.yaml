@@ -2901,7 +2901,6 @@ components:
       required:
         - page
         - recordsPerPage
-        - search
         - sort
       type: object
       properties:
@@ -2917,6 +2916,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SearchFilterModel'
+          nullable: true
       additionalProperties: false
     SearchFilterModel:
       required:
