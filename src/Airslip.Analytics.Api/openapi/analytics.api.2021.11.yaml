@@ -1717,13 +1717,13 @@ components:
           $ref: '#/components/schemas/PeriodType'
       additionalProperties: false
   securitySchemes:
-    ApiKey:
+    x-api-key:
       type: apiKey
-      description: "e.g\nRequests to the Airslip API are authenticated using the applications `Api_Key`. You can view and manage your credentials in the Airslip Dashboard.\n\nAn Api_Key provides connectivity to all authenticated Airslip API endpoints, so it is important to keep these credentials secure. Do not share your Api_Key in publicly accessible areas such as GitHub, client-side code, or easily accessible configuration settings.\n\nAuthentication is performed using ApiKey Authentication. Your Api_Key should be sent as the token.\n\nAll requests should be made via HTTPS."
+      description: "\ne.g `x-api-key` API_KEY\n\nRequests to the Airslip API are authenticated using the applications API Key. You can view and manage your credentials in the Airslip Dashboard.\n\nAn API Key provides connectivity to all authenticated Airslip API endpoints, so it is important to keep these credentials secure. Do not share your API Key in publicly accessible areas such as GitHub, client-side code, or easily accessible configuration settings.\n\nAll requests should be made via HTTPS."
       name: x-api-key
       in: header
 security:
-  - ApiKey: [ ]
+  - x-api-key: [ ]
 tags:
   - name: Banking
     description: "A collection of banking APIs for a connected business.\r\nYou can use this API to retrieve bank transactions, categorised line by line merchant details, director information and account balances."
