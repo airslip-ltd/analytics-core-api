@@ -106,14 +106,14 @@ The Airslip API will help you:
             }
         );
 
-        options.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
+        options.AddSecurityDefinition("x-api-key", new OpenApiSecurityScheme
         {
-            Description = @"e.g
-Requests to the Airslip API are authenticated using the applications `Api_Key`. You can view and manage your credentials in the Airslip Dashboard.
+            Description = @"
+e.g `x-api-key` API_KEY
 
-An Api_Key provides connectivity to all authenticated Airslip API endpoints, so it is important to keep these credentials secure. Do not share your Api_Key in publicly accessible areas such as GitHub, client-side code, or easily accessible configuration settings.
+Requests to the Airslip API are authenticated using the applications API Key. You can view and manage your credentials in the Airslip Dashboard.
 
-Authentication is performed using ApiKey Authentication. Your Api_Key should be sent as the token.
+An API Key provides connectivity to all authenticated Airslip API endpoints, so it is important to keep these credentials secure. Do not share your API Key in publicly accessible areas such as GitHub, client-side code, or easily accessible configuration settings.
 
 All requests should be made via HTTPS.",
             Name = ApiKeyAuthenticationSchemeOptions.ApiKeyHeaderField,
@@ -130,10 +130,10 @@ All requests should be made via HTTPS.",
                     Reference = new OpenApiReference
                     {
                         Type = ReferenceType.SecurityScheme,
-                        Id = "ApiKey"
+                        Id = "x-api-key"
                     },
                     Scheme = ApiKeyAuthenticationSchemeOptions.ApiKeyScheme,
-                    Name = "ApiKey",
+                    Name = "x-api-key",
                     In = ParameterLocation.Header
                 },
                 new List<string>()
