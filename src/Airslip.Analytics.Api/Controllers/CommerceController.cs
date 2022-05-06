@@ -3,6 +3,7 @@ using Airslip.Analytics.Core.Models;
 using Airslip.Analytics.Reports.Interfaces;
 using Airslip.Analytics.Reports.Models;
 using Airslip.Common.Auth.AspNetCore.Implementations;
+using Airslip.Common.Auth.AspNetCore.Schemes;
 using Airslip.Common.Auth.Interfaces;
 using Airslip.Common.Auth.Models;
 using Airslip.Common.Repository.Types.Models;
@@ -126,6 +127,7 @@ public class CommerceController : ApiControllerBase
     [HttpPost("{businessId}/transactions/search")]
     [ProducesResponseType( typeof(EntitySearchResponse<CommerceTransactionReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse),StatusCodes.Status400BadRequest)]
+    [Authorize(AuthenticationSchemes = ApiKeyAuthenticationSchemeOptions.ApiKeyScheme)]
     public async Task<IActionResult> GetCommerceTransactions([FromRoute] string? businessId, [FromBody] QueryModel query)
     {
         OwnedDataSearchModel model = query.ToOwnedDataSearchModel(businessId, Token.EntityId);

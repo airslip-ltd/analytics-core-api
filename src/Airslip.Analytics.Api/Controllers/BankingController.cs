@@ -3,6 +3,7 @@ using Airslip.Analytics.Core.Models;
 using Airslip.Analytics.Reports.Interfaces;
 using Airslip.Analytics.Reports.Models;
 using Airslip.Common.Auth.AspNetCore.Implementations;
+using Airslip.Common.Auth.AspNetCore.Schemes;
 using Airslip.Common.Auth.Interfaces;
 using Airslip.Common.Auth.Models;
 using Airslip.Common.Repository.Types.Models;
@@ -127,6 +128,7 @@ public class BankingController : ApiControllerBase
     [HttpPost("{businessId}/transactions/search")]
     [ProducesResponseType(typeof(EntitySearchResponse<BankTransactionReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [Authorize(AuthenticationSchemes = ApiKeyAuthenticationSchemeOptions.ApiKeyScheme)]
     public async Task<IActionResult> GetBankTransactions([FromRoute] string? businessId, [FromBody] QueryModel query)
     {
         OwnedDataSearchModel model = query.ToOwnedDataSearchModel(businessId, Token.EntityId);
@@ -143,6 +145,7 @@ public class BankingController : ApiControllerBase
     [HttpGet("{businessId}/transactions/{id}")]
     [ProducesResponseType(typeof(BankTransactionReportModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [Authorize(AuthenticationSchemes = ApiKeyAuthenticationSchemeOptions.ApiKeyScheme)]
     public IActionResult GetBankTransaction([FromRoute] string? businessId, [FromRoute] string id)
     {
         BankTransactionReportModelExample example = new();
@@ -161,6 +164,7 @@ public class BankingController : ApiControllerBase
     [HttpPost("{businessId}/balances/search")]
     [ProducesResponseType(typeof(EntitySearchResponse<AccountBalanceReportModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [Authorize(AuthenticationSchemes = ApiKeyAuthenticationSchemeOptions.ApiKeyScheme)]
     public async Task<IActionResult> GetAccountBalances([FromRoute] string? businessId, [FromBody] QueryModel query)
     {
         OwnedDataSearchModel model = query.ToOwnedDataSearchModel(businessId, Token.EntityId);

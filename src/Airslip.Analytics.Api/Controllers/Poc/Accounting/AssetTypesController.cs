@@ -2,6 +2,7 @@ using Airslip.Analytics.Api.Docs.Examples.Poc;
 using Airslip.Analytics.Core.Models;
 using Airslip.Analytics.Reports.Models.Poc;
 using Airslip.Common.Auth.AspNetCore.Implementations;
+using Airslip.Common.Auth.AspNetCore.Schemes;
 using Airslip.Common.Auth.Interfaces;
 using Airslip.Common.Auth.Models;
 using Airslip.Common.Repository.Types.Models;
@@ -26,7 +27,7 @@ namespace Airslip.Analytics.Api.Controllers.Poc.Accounting;
 [Consumes(Json.MediaType)]
 [Produces(Json.MediaType)]
 [Route("{version:apiVersion}/assets/{businessId}/types")]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[Authorize(AuthenticationSchemes = ApiKeyAuthenticationSchemeOptions.ApiKeyScheme)]
 public class AssetTypesController : ApiControllerBase
 {
     public AssetTypesController(
